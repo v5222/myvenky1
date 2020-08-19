@@ -1,0 +1,36 @@
+.ant-table-thead > tr > th {
+  color: #eff2f7 !important;
+  font-weight: 500;
+
+  text-align: left;
+  background: #004178 !important;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.3s ease;
+}
+
+.ant-table table {
+  width: 100%;
+  text-align: left;
+  border-radius: 2px 2px 0 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #dedede !important;
+}
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: #ecfff9 !important;
+}
+
+.ant-table-cell {
+  font-size: 16px !important;
+  color: black !important;
+}
+.ant-table-column-sorter-full {
+  margin-top: -0.6em !important;
+  margin-bottom: 0;
+}
+.ant-table-column-sorter {
+  margin-top: 0.15em;
+  margin-bottom: -0.15em;
+  margin-left: 5px !important;
+  color: #bfbfbf;
+}
