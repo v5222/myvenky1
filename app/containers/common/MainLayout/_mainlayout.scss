@@ -31,11 +31,18 @@
 }
 
 .tvsit_main-logo {
-  height: 65px;
-  margin-left: 20px;
+  width: 100px;
+  height: 120px;
+  margin: 10px auto 20px auto;
   display: block;
 }
-
+.tvsit_main-logo2 {
+  height: 10px;
+  width: 150px;
+  transform: translateY(-20px);
+  margin: 10px auto 20px auto;
+  display: block;
+}
 .tvsit-main-layout-title {
   font-size: 22px;
   font-weight: 500;
@@ -45,4 +52,118 @@
 
 .tvsit-main-menu {
   padding-left: 15px !important;
+  background: #1890ff !important;
+  border-radius: 30px !important;
+  width: 95% !important;
+  // marginRight: "10px",
+  margin-left: 5px !important;
+  margin-top: 22px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+.tvsit-main-menu-selected {
+  padding-left: 15px !important;
+  background: #002776 !important;
+  border-radius: 30px !important;
+  width: 95% !important;
+  // marginRight: "10px",
+  margin-left: 5px !important;
+  margin-top: 22px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+.tvsit-header-lg {
+  background: #fff;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 22px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .tvsit_main-layoutUnFold {
+    margin-left: 0px;
+  }
+  .tvsit-main-layout-title {
+    font-size: 16px;
+    margin-left: 10px;
+    color: black;
+  }
+  .tvsit_main-logo {
+    height: 55px;
+    width: 83px;
+    margin: 20px auto;
+    display: block;
+  }
+  .tvsit-header-lg {
+    padding: 0 10px;
+  }
+  .tvsit-main-menu {
+    padding-left: 15px !important;
+    background: #002776;
+    border-radius: 30px;
+    width: 100%;
+    // marginRight: "10px",
+    margin-left: 0px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  // .tvsit_main-layoutUnFold {
+  //   margin-left: 0px;
+  // }
+  // .tvsit-main-layout-title {
+  //   font-size: 14px;
+  //   margin-left: 10px;
+  //   color: black;
+  // }
+  // .tvsit-main-menu {
+  //   padding-left: 15px !important;
+  //   background: #002776;
+  //   border-radius: 30px;
+  //   width: 100%;
+  //   // marginRight: "10px",
+  //   margin-left: 0px;
+  //   font-size: 12px;
+  //   font-weight: 500;
+  // }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .tvsit_main-layoutUnFold {
+    margin-left: 0px;
+  }
+  // .tvsit-main-layout-title {
+  //   font-size: 14px;
+  // }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .tvsit_main-layoutUnFold {
+    margin-left: 200px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .tvsit_main-layoutUnFold {
+    margin-left: 200px;
+  }
+  // .tvsit-main-menu {
+  //   padding-left: 15px !important;
+  //   background: #002776;
+  //   border-radius: 30px;
+  //   width: 100%;
+  //   // marginRight: "10px",
+  //   margin-left: 0px;
+  //   font-size: 12px;
+  //   font-weight: 500;
+  // }
 }

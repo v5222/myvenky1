@@ -4,30 +4,37 @@ import Menu from "antd/lib/menu";
 import message from "antd/lib/message";
 import Dropdown from "antd/lib/dropdown";
 import Avatar from "antd/lib/avatar";
-// Menu, message, Dropdown, Avatar }
-import {
-  UserOutlined,
-  BarChartOutlined,
-  LogoutOutlined,
-  RightOutlined
-} from "@ant-design/icons";
+import MenuDrawer from "components/MenuDrawer";
+import SupplyChainSVG from "../../../images/SVG/360svg.svg";
+import UserOutlined from "@ant-design/icons/UserOutlined";
+import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
+import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
+import DashboardOutlined from "@ant-design/icons/DashboardOutlined";
 import { SET_LOGIN } from "containers/App/constants";
 import clsx from "clsx";
 import Logo from "../../../images/TVS-SCS-Logo.png";
+import Logo2 from "../../../images/TVS-SCS-Tagline-Color.png";
 const { Header, Content, Footer, Sider } = Layout;
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "utils/history";
-
 class MainLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: false
+      collapsed: false,
+      selected: history.location.pathname,
     };
   }
+  componentDidUpdate() {
+    if (this.state.selected !== history.location.pathname) {
+      this.setState({ selected: history.location.pathname }, () => {
+        console.log(this.state.selected);
+      });
+    }
+  }
 
-  onCollapse = collapsed => {
+  onCollapse = (collapsed) => {
     console.log(collapsed);
     this.setState({ collapsed });
   };
@@ -42,7 +49,7 @@ class MainLayout extends React.Component {
         key="2"
         onClick={() => {
           this.props.logout();
-           localStorage.setItem("loggedIn",false)
+          localStorage.setItem("loggedIn", false);
           history.push("/");
           window.location.reload();
         }}
@@ -51,7 +58,11 @@ class MainLayout extends React.Component {
       </Menu.Item>
     </Menu>
   );
-
+  handleSelect = ({ item, key, keyPath, selectedKeys, domEvent }) => {
+    this.setState({
+      selected: key,
+    });
+  };
   render() {
     return (
       <Layout style={{ minHeight: "100vh" }}>
@@ -59,85 +70,89 @@ class MainLayout extends React.Component {
           // collapsible
           // collapsed={this.state.collapsed}
           // onCollapse={this.onCollapse}
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            console.log(broken);
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+          }}
           style={{
             overflow: "auto",
             height: "100vh",
             position: "fixed",
             left: 0,
-            backgroundColor: "#1890ff"
+            backgroundColor: "#1890ff",
           }}
         >
-          <div
-            style={{
-              margin: "10px 0px",
-              width: "100%",
-              height: "80px"
-            }}
-          >
-            {" "}
-            {/* <img src={Logo} className="tvsit_main-logo" /> */}
+          <div>
+            <img src={Logo} className="tvsit_main-logo" />
+            <img src={Logo2} className="tvsit_main-logo2" />
           </div>
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[this.state.selected]}
             style={{ background: "#1890ff" }}
+            onSelect={this.handleSelect}
           >
             <Menu.Item
-              key="1"
+              key="/podDashboard"
               icon={<BarChartOutlined />}
-              className="tvsit-main-menu"
-              style={{
-                background: "#002776",
-                borderRadius: "30px",
-                width: "88%",
-                // marginRight: "10px",
-                marginLeft: "12px",
-                fontSize: "12px",
-                fontWeight: 500
-              }}
+              className={
+                this.state.selected === "/podDashboard"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+              onClick={() => history.push("/podDashboard")}
             >
-              POD Dashboard{" "}
-              <RightOutlined
-                style={{ fontSize: "12px", fontWeight: 500, marginLeft: "5px" }}
-              />
+              POD Dashboard
             </Menu.Item>
-            {/* <Menu.Item key="2" icon={<CloudOutlined />}>
-              User Management
-            </Menu.Item>
-            <Menu.Item key="3" icon={<TeamOutlined />}>
-              Profiles
+            {/* <Menu.Item
+              key="/courierManagement"
+              icon={<DashboardOutlined />}
+              className={
+                this.state.selected === "/courierManagement"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+              // className="tvsit-main-menu-selected"
+              onClick={() => history.push("/courierManagement")}
+            >
+              Courier Management
             </Menu.Item> */}
           </Menu>
         </Sider>
         <Layout
           className={clsx({
             "tvsit_main-layoutFold": this.state.collapsed === true,
-            "tvsit_main-layoutUnFold": this.state.collapsed === false
+            "tvsit_main-layoutUnFold": this.state.collapsed === false,
           })}
         >
-          <Header
-            style={{
-              background: "#fff",
-              justifyContent: "space-between",
-              display: "flex",
-              alignItems: "center",
-              position: "relative",
-              padding: "0 22px"
-            }}
-          >
-            <h1 className="tvsit-main-layout-title">POD compliance</h1>
+          <Header className="tvsit-header-lg">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <MenuDrawer style={{ marginRight: "10px" }} />
+              <div className="tvsit-main-layout-title">
+                {this.state.selected === "/podDashboard"
+                  ? "POD Compliance"
+                  : "Courier Management"}
+              </div>
+            </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit_main-layout-avatar">
                 <Dropdown overlay={this.menu} trigger={["click"]}>
                   <Avatar
                     size={48}
                     icon={<UserOutlined />}
-                    onClick={e => e.preventDefault()}
+                    onClick={(e) => e.preventDefault()}
                   />
                 </Dropdown>
               </div>
-              <img src={Logo} className="tvsit_main-logo" />
+              {/* <img
+                src={Logo}
+                style={{ width: "55px", height: "60px", marginLeft: "10px" }}
+              /> */}
             </div>
           </Header>
           <Content>{this.props.children}</Content>
@@ -147,11 +162,11 @@ class MainLayout extends React.Component {
     );
   }
 }
-const mapDispatchtoProps = dispatch => {
+const mapDispatchtoProps = (dispatch) => {
   return {
     logout: () => {
       dispatch({ type: SET_LOGIN, loggedIn: false });
-    }
+    },
   };
 };
 export default connect(

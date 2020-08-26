@@ -1,0 +1,57 @@
+.tvsit-pod_table-title {
+  font-size: 22px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.tvsit-pod_table-download {
+  background-color: #004178;
+  border-radius: 5px;
+  border: none;
+
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 6px 24px;
+  text-decoration: none;
+}
+.tvsit_pod-filters-row {
+  margin: 22px;
+  margin-left: 22px !important;
+  margin-right: 22px !important;
+}
+@media only screen and (max-width: 600px) {
+  .tvsit-pod_table-title {
+    font-size: 14px;
+  }
+  .tvsit-pod_table-download {
+    font-size: 10px;
+  }
+  .tvsit_pod-filters {
+    margin-top: 15px;
+  }
+  .tvsit_pod-filters-row {
+    margin: 10px;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  //   .tvsit-pod_table-title {
+  //     font-size: 14px;
+  //   }
+  //   .tvsit-pod_table-download {
+  //     font-size: 10px;
+  //   }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  //   .tvsit-pod_table-title {
+  //     font-size: 14px;
+  //   }
+  //   .tvsit-pod_table-download {
+  //     font-size: 10px;
+  //   }
+}

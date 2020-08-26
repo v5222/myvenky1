@@ -23,7 +23,7 @@ import {
   GET_EPOD24HRS,
   SET_SELECTED,
   SET_LOADING,
-  GET_ETA
+  GET_ETA,
 } from "./constants";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
@@ -41,7 +41,7 @@ import {
   makeSelectselected,
   makeSelectloading,
   makeSelectTableData,
-  makeSelectEta
+  makeSelectEta,
 } from "./selectors";
 import { makeSelectLogin } from "containers/App/selectors";
 import { motion } from "framer-motion";
@@ -53,7 +53,7 @@ const { RangePicker } = DatePicker;
 const data = {
   completed: [235, 150],
   lessthan24hr: [235, 12],
-  verified: [235, 103]
+  verified: [235, 103],
 };
 function PodDashboard({
   totaltrips,
@@ -71,7 +71,7 @@ function PodDashboard({
   tableData,
   loggedIn,
   getEta,
-  etaCount
+  etaCount,
 }) {
   const { Option } = Select;
   const [customer, setCustomer] = useState([]);
@@ -92,7 +92,7 @@ function PodDashboard({
     divisioncode: "All",
     filterdate: "MTD",
     sdate: "2020-08-08",
-    edate: "2020-08-11"
+    edate: "2020-08-11",
   });
   const isInitialMount = useRef(true);
 
@@ -103,9 +103,9 @@ function PodDashboard({
   useInjectSaga({ key, saga });
   useEffect(() => {
     let temp = tableData;
-    let customer_temp = new Set(temp.map(i => i.customer));
-    let entity_temp = new Set(temp.map(i => i.divisioncode));
-    let customertype_temp = new Set(temp.map(i => i.customertype));
+    let customer_temp = new Set(temp.map((i) => i.customer));
+    let entity_temp = new Set(temp.map((i) => i.divisioncode));
+    let customertype_temp = new Set(temp.map((i) => i.customertype));
 
     setCustomer([...customer_temp]);
     setEntity([...entity_temp]);
@@ -119,7 +119,7 @@ function PodDashboard({
     if (selected === "ETA") {
       getDataonLoad({
         ...options,
-        ["type"]: selected
+        ["type"]: selected,
       });
     } else {
       getDataonLoad({ ...options, ["metrics"]: selected });
@@ -143,18 +143,18 @@ function PodDashboard({
   const handleChange = (label, value) => {
     setOptions({ ...options, [label]: value });
   };
-  const handleDateRange = dates => {
+  const handleDateRange = (dates) => {
     setOptions({
       ...options,
       ["sdate"]: moment(dates[0]).format(),
-      ["edate"]: moment(dates[1]).format()
+      ["edate"]: moment(dates[1]).format(),
     });
     // console.log(dates, "from date range");
   };
-  const handleVisibleChange = flag => {
+  const handleVisibleChange = (flag) => {
     setVisible(flag);
   };
-  const handleMenuClick = e => {
+  const handleMenuClick = (e) => {
     if (e.key === "1") {
       setfilterType("DATE");
       setOptions({ ...options, ["filterdate"]: "DATE" });
@@ -174,8 +174,13 @@ function PodDashboard({
     <div>
       {!loggedIn && <Redirect to="/" />}
       <MainLayout>
-        <Row gutter={10} style={{ margin: "22px" }}>
-          <Col className="gutter-row" span={3} style={{ paddingLeft: "0px" }}>
+        <Row gutter={10} className="tvsit_pod-filters-row">
+          <Col
+            className="gutter-row"
+            lg={3}
+            xs={12}
+            style={{ paddingLeft: "0px" }}
+          >
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
@@ -186,7 +191,7 @@ function PodDashboard({
               <Select
                 defaultValue="All"
                 style={{ width: "100%" }}
-                onChange={value => handleChange("divisioncode", value)}
+                onChange={(value) => handleChange("divisioncode", value)}
                 name="divisioncode"
                 ref={isInitialMount}
               >
@@ -205,7 +210,7 @@ function PodDashboard({
               </Select>
             </div>
           </Col>
-          <Col className="gutter-row" span={3}>
+          <Col className="gutter-row" lg={3} xs={12}>
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
@@ -216,7 +221,7 @@ function PodDashboard({
               <Select
                 defaultValue="All"
                 style={{ width: "100%" }}
-                onChange={value => {
+                onChange={(value) => {
                   handleChange("customertype", value);
                   if (value === "P2P") {
                     setDynamicTitle("updated <7days");
@@ -240,7 +245,7 @@ function PodDashboard({
               </Select>
             </div>
           </Col>
-          <Col className="gutter-row" span={5}>
+          <Col className="gutter-row" lg={5} xs={10}>
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
@@ -251,7 +256,7 @@ function PodDashboard({
               <Select
                 defaultValue="All"
                 style={{ width: "100%" }}
-                onChange={value => handleChange("customer", value)}
+                onChange={(value) => handleChange("customer", value)}
               >
                 {customer.map((i, index) => {
                   return (
@@ -270,7 +275,7 @@ function PodDashboard({
           </Col>
           {filterType === "MTD" ? (
             <>
-              <Col className="gutter-row" span={5}>
+              <Col className="gutter-row" lg={5} xs={12}>
                 <div className="tvsit_pod-filters">
                   <div
                     className="tvsit_pod-title"
@@ -281,7 +286,7 @@ function PodDashboard({
                   <Select
                     defaultValue="MTD"
                     style={{ width: "100%" }}
-                    onChange={value => handleChange("filterdate", value)}
+                    onChange={(value) => handleChange("filterdate", value)}
                   >
                     <Option value="MTD">MTD</Option>
                     <Option value="YTD">YTD</Option>
@@ -293,7 +298,7 @@ function PodDashboard({
             </>
           ) : (
             <>
-              <Col className="gutter-row" span={6}>
+              <Col className="gutter-row" lg={6} xs={12}>
                 <div className="tvsit_pod-filters">
                   <div
                     className="tvsit_pod-title"
@@ -305,14 +310,14 @@ function PodDashboard({
                     onChange={handleDateRange}
                     defaultValue={[
                       moment("2020-08-08", "YYYY-MM-DD"),
-                      moment("2020-08-11", "YYYY-MM-DD")
+                      moment("2020-08-11", "YYYY-MM-DD"),
                     ]}
                   />
                 </div>
               </Col>
             </>
           )}
-          <Col className="gutter-row" span={4}>
+          <Col className="gutter-row" lg={4} xs={2}>
             <div className="tvsit_pod-filters">
               <div className="tvsit_pod-title" style={{ color: "transparent" }}>
                 Filter
@@ -324,7 +329,7 @@ function PodDashboard({
               >
                 <CalendarOutlined
                   style={{ fontSize: "28px" }}
-                  onClick={e => e.preventDefault()}
+                  onClick={(e) => e.preventDefault()}
                 />
               </Dropdown>
             </div>
@@ -338,11 +343,11 @@ function PodDashboard({
           style={{
             margin: "22px 0px",
             padding: "15px 22px",
-            backgroundColor: "#ffff"
+            backgroundColor: "#ffff",
           }}
         >
           <Row gutter={16}>
-            <Col className="gutter-row" span={6}>
+            <Col className="gutter-row" lg={6} xs={12}>
               <Spin spinning={loading}>
                 <div
                   className={
@@ -370,7 +375,7 @@ function PodDashboard({
                 </div>
               </Spin>
             </Col>
-            <Col className="gutter-row" span={6}>
+            <Col className="gutter-row" lg={6} xs={12}>
               <Spin spinning={loading}>
                 <div
                   className={
@@ -393,7 +398,7 @@ function PodDashboard({
                 </div>
               </Spin>
             </Col>
-            <Col className="gutter-row" span={6}>
+            <Col className="gutter-row" lg={6} xs={12}>
               <Spin spinning={loading}>
                 <div
                   className={
@@ -416,7 +421,7 @@ function PodDashboard({
                 </div>
               </Spin>
             </Col>
-            <Col className="gutter-row" span={6}>
+            <Col className="gutter-row" lg={6} xs={12}>
               <Spin spinning={loading}>
                 <div
                   className={
@@ -444,16 +449,10 @@ function PodDashboard({
               display: "flex",
               justifyContent: "space-between",
               margin: "30px 0 10px 0",
-              alignItems: "flex-end"
+              alignItems: "flex-end",
             }}
           >
-            <div
-              style={{
-                fontSize: "22px",
-                textTransform: "uppercase",
-                fontWeight: 600
-              }}
-            >
+            <div className="tvsit-pod_table-title">
               Details{" "}
               {selected === "iscompleted"
                 ? "OF COMPLETED TRIPS"
@@ -467,19 +466,7 @@ function PodDashboard({
               <CsvDownload
                 data={tableData}
                 filename="data.csv"
-                style={{
-                  //pass other props, like styles
-
-                  backgroundColor: "#004178",
-                  borderRadius: "5px",
-                  border: "none",
-
-                  cursor: "pointer",
-                  color: "#ffffff",
-                  fontSize: "14px",
-                  padding: "6px 24px",
-                  textDecoration: "none"
-                }}
+                className="tvsit-pod_table-download"
               >
                 Export CSV
               </CsvDownload>
@@ -510,34 +497,34 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectloading(),
   tableData: makeSelectTableData(),
   loggedIn: makeSelectLogin(),
-  etaCount: makeSelectEta()
+  etaCount: makeSelectEta(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getDataonLoad: values => {
+    getDataonLoad: (values) => {
       dispatch({
         type: GET_COMPLETED,
-        payload: values
+        payload: values,
       });
     },
-    getData: values => {
+    getData: (values) => {
       dispatch({
         type: GET_COMPLETED,
-        payload: values
+        payload: values,
       });
     },
     getEta: () => {
       dispatch({
-        type: GET_ETA
+        type: GET_ETA,
       });
     },
-    toggleSelected: value => {
+    toggleSelected: (value) => {
       dispatch({ type: SET_SELECTED, selected: value });
     },
-    setLoading: value => {
+    setLoading: (value) => {
       dispatch({ type: SET_LOADING, loading: value });
-    }
+    },
   };
 }
 const withConnect = connect(

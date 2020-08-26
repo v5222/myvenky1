@@ -13,7 +13,9 @@ import { Helmet } from "react-helmet";
 import LoginPage from "containers/LoginPage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
 import PodDashboard from "containers/PodDashboard/Loadable";
+import CourierManagement from "containers/CourierManagement/Loadable";
 import GlobalStyle from "../../global-styles";
+import TestPage from "../Testing/TestPage";
 
 // import
 // const checkLogin = ()=>{
@@ -29,6 +31,8 @@ export default function App({ history }) {
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/podDashboard" component={PodDashboard} />
+        <Route exact path="/test" component={TestPage} />
+        <Route exact path="/courierManagement" component={CourierManagement} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  background: #004178;
+  padding: 15px 5px 15px 16px;
+  margin: 20px 0px;
+  justify-content: space-between;
+  align-items: center;
+  .wrapper {
+    width: calc(100% / 6.3);
+    .title {
+      font-size: 14px;
+      line-height: 18px;
+      /* identical to box height */
+      justify-content: space-between;
+      color: #ffffff;
+    }
+    .select {
+      width: 100%;
+    }
+  }
+  .wrapperDate {
+    width: calc(100% / 4);
+    .title_date {
+      font-size: 14px;
+      line-height: 18px;
+      /* identical to box height */
+      justify-content: space-between;
+      color: #ffffff;
+    }
+  }
+  .wrapper_clear {
+    width: calc(20% / 7);
+    margin-right: 10px;
+    cursor: pointer;
+    .clearfilter {
+      font-size: 12px;
+      color: white;
+    }
+    &:hover {
+      .clearfilter {
+        color: blue;
+      }
+    }
+  }
+}

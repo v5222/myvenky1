@@ -15,8 +15,13 @@ import {
   makeSelectUserData,
   makeSelectloading,
   makeSelectOTPstatus,
-  makeSelectOTPval
+  makeSelectOTPval,
 } from "./selector";
+import LoginSVg1 from "../../images/SVG/loginSvg1.svg";
+import LoginSvg2 from "../../images/SVG/loginSvg2.svg";
+import LoginSvg3 from "../../images/SVG/loginSvg3.svg";
+import logo from "../../images/TVS-SCS-Logo-Tagline-Color.png";
+import UserOutlined from "@ant-design/icons/UserOutlined";
 import {
   GET_OTP,
   CHECK_OTP,
@@ -24,7 +29,7 @@ import {
   SET_USER_DATA,
   SET_OTP_STATUS,
   SET_OTP_VAL,
-  ADFS_LOGIN
+  ADFS_LOGIN,
 } from "./constants";
 import { SET_LOGIN } from "../App/constants";
 import { createStructuredSelector } from "reselect";
@@ -33,8 +38,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import saga from "./saga";
 import reducer from "./reducer";
-import Logo from "../../images/TVS-SCS-Logo-Tagline-Color.png";
-// import { Link } from "react-router-dom";
 import history from "utils/history";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
@@ -57,28 +60,28 @@ function LoginPage({
 
   const [ecode, setEcode] = useState("");
   const [otpgen, setOtpgen] = useState({
-    type: "OTPGEN"
+    type: "OTPGEN",
   });
   const [otpval, setOtpval] = useState({
     type: "OTPVAL",
-    otp: ""
+    otp: "",
   });
 
   const [error, setError] = useState(false);
   useEffect(() => {
     console.log(otpStatus, "from checking");
   }, [otpStatus]);
-  const handleChange = event => {
+  const handleChange = (event) => {
     setEcode(event.target.value);
   };
-  const handleChangeOtp = event => {
+  const handleChangeOtp = (event) => {
     setOtpval({ ...otpval, ["otp"]: event.target.value });
   };
   useEffect(() => {
     if (props.location.search !== "") {
       console.log(props.location.search);
       setLoggedIn();
-       localStorage.setItem("loggedIn",true)
+      localStorage.setItem("loggedIn", true);
       history.push("/podDashboard");
     }
   }, []);
@@ -95,31 +98,36 @@ function LoginPage({
   };
 
   return (
-    <div className="tvsit-login">
-      <main className="tvsit-login_wrapper">
-        <img className="tvsit-login_img" src={Logo} />
-        <div className="tvsit-login_title">SIGN IN</div>
-        <Button
-          type="primary"
-          block
-          className="tvsit-login_adfs"
-          size="large"
-          onClick={checkAdfs}
-        >
-          LOGIN WITH ADFS
-        </Button>
-        <div style={{ fontSize: "18px", margin: "10px 0" }}>OR</div>
-        <div className="tvsit-login_input-wrapper">
+    <main>
+      <div className="tvsit-loginPage_svg">
+        <img src={LoginSVg1} alt="svg" className="tvsit-loginPage_svg-1" />
+        <img src={LoginSvg2} alt="svg" className="tvsit-loginPage_svg-2" />
+        <img src={LoginSvg3} alt="svg" className="tvsit-loginPage_svg-3" />
+      </div>
+      <div className="tvsit-loginPage_content-wrapper">
+        <div className="tvsit-loginPage_content">
+          <img src={logo} alt="logo" className="tvsit-loginPage_content-img" />
+          <div className="tvsit-loginPage_content-title">SIGN IN</div>
+          <Button
+            className="tvsit-loginPage_content-btn"
+            size="large"
+            onClick={checkAdfs}
+          >
+            Login with ADFS
+          </Button>
+          <div className="tvsit-loginPage_content-title">OR</div>
           {otpStatus.status === false ? (
             <>
               <Input
+                placeholder="Enter your Emplyoee code"
                 size="large"
-                placeholder="Enter Employee Code"
-                onChange={e => handleChange(e)}
+                onChange={(e) => handleChange(e)}
+                prefix={<UserOutlined style={{ color: "#00A5E6" }} />}
               />
               <Button
+                className="tvsit-loginPage_content-btn"
+                style={{ marginTop: "10px" }}
                 size="large"
-                type="primary"
                 onClick={handleOTPgen}
                 loading={loading}
               >
@@ -132,48 +140,63 @@ function LoginPage({
 
           {otpStatus.status === true ? (
             <>
-              <Input size="large" defaultValue={ecode} disabled={true} />
-              <Input
-                size="large"
-                placeholder="Enter OTP"
-                onChange={e => handleChangeOtp(e)}
-              />
-              <Button
-                size="large"
-                type="primary"
-                onClick={() => {
-                  setLoading(true);
-                  verifyOtp({ ...otpval, ["ecode"]: ecode });
-                }}
-                loading={loading}
-              >
-                Login
-              </Button>
+              <div className="d-flex justify-between">
+                <Input
+                  size="large"
+                  disabled
+                  defaultValue={ecode}
+                  style={{ marginRight: "10px" }}
+                />
+                <Input
+                  size="large"
+                  placeholder="Enter OTP"
+                  style={{ marginRight: "10px" }}
+                  onChange={(e) => handleChangeOtp(e)}
+                />
+                <Button
+                  size="large"
+                  className="tvsit-loginPage_content-btn"
+                  onClick={() => {
+                    setLoading(true);
+                    verifyOtp({ ...otpval, ["ecode"]: ecode });
+                  }}
+                  loading={loading}
+                >
+                  Login
+                </Button>
+              </div>
             </>
           ) : (
             ""
           )}
+
+          {error && (
+            <div style={{ color: "red" }}>Please Enter Emplyoee code</div>
+          )}
+
+          {otpStatus.status && (
+            <>
+              {" "}
+              <div
+                className="tvsit-login_feedback"
+                style={{ fontSize: "14px", color: "black" }}
+              >
+                {otpStatus.message}
+              </div>
+              <a
+                className="tvsit-loginPage_resend"
+                onClick={() => getOtp({ ...otpgen, ["ecode"]: ecode })}
+              >
+                Resend OTP
+              </a>
+            </>
+          )}
         </div>
-        {error && (
-          <div style={{ color: "red" }}>Please Enter Emplyoee code</div>
-        )}
-        {!otpVal.status && <div style={{ color: "red" }}>{otpVal.message}</div>}
-        {otpStatus.status && (
-          <>
-            {" "}
-            <div
-              className="tvsit-login_feedback"
-              style={{ fontSize: "14px", color: "black" }}
-            >
-              {otpStatus.message}
-            </div>
-            <a className="tvsit-login_resend" onClick={() => getOtp(otpgen)}>
-              Resend
-            </a>
-          </>
-        )}
-      </main>
-    </div>
+        <div className="tvsit-loginPage_copyrights">
+          &#169; copy rights reserverd 2020
+        </div>
+      </div>
+    </main>
   );
 }
 
@@ -181,39 +204,39 @@ const mapStateToProps = createStructuredSelector({
   loggedIn: makeSelectloggedIn(),
   loading: makeSelectloading(),
   otpStatus: makeSelectOTPstatus(),
-  otpVal: makeSelectOTPval()
+  otpVal: makeSelectOTPval(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getOtp: value => {
+    getOtp: (value) => {
       dispatch({
         type: GET_OTP,
         payload: {
-          values: value
-        }
+          values: value,
+        },
       });
     },
-    verifyOtp: value => {
+    verifyOtp: (value) => {
       dispatch({
         type: CHECK_OTP,
         payload: {
           values: value,
-          history: history
-        }
+          history: history,
+        },
       });
     },
     checkAdfs: () => {
       dispatch({ type: ADFS_LOGIN });
     },
-    setLoading: value => {
+    setLoading: (value) => {
       dispatch({ type: SET_LOADING, loading: value });
     },
     setLoggedIn: () =>
       dispatch({
         type: SET_LOGIN,
-        loggedIn: true
-      })
+        loggedIn: true,
+      }),
   };
 }
 const withConnect = connect(

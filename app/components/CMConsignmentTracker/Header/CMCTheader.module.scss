@@ -1,0 +1,12 @@
+@import "../../../root.scss";
+.wrapper {
+  height: 69px;
+  background-color: $color-primary;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+  align-items: center;
+  &_select1 {
+    width: 256px;
+  }
+}

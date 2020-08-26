@@ -1,0 +1,32 @@
+.tvsit-cmdashboard_table {
+  padding: 1rem;
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+    width: 100%;
+
+    tr {
+      width: 100%;
+      :last-child {
+        td {
+          border-bottom: 0;
+          width: 100%;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      width: 100%;
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}

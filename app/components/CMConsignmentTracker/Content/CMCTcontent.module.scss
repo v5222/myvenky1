@@ -1,0 +1,40 @@
+.wrapper {
+  background: white;
+  padding: 20px;
+  max-height: 100%;
+  min-height: 450px;
+  height: 400px;
+}
+.empty {
+  margin: 80px auto;
+  width: 40%;
+}
+.emptytext {
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  color: #bfbfbf;
+}
+.container {
+  .steps {
+    padding: 0px 50px;
+  }
+  .content {
+    background: #e6f7ff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 50px;
+    justify-content: space-between;
+    &_wrapper {
+      width: calc(100% / 3);
+    }
+    &_title {
+      font-size: 16px;
+      color: black;
+    }
+    &_value {
+      font-size: 14px;
+      color: #595959;
+    }
+  }
+}

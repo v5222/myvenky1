@@ -2,19 +2,20 @@
  * COMMON WEBPACK CONFIGURATION
  */
 
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = options => ({
+module.exports = (options) => ({
   mode: options.mode,
   entry: options.entry,
   output: Object.assign(
     {
       // Compile into js/build.js
-      path: path.resolve(process.cwd(), 'build'),
-      publicPath: '/',
+      path: path.resolve(process.cwd(), "build"),
+      publicPath: "/",
     },
-    options.output,
+    options.output
   ), // Merge with env dependent settings
   optimization: options.optimization,
   module: {
@@ -23,33 +24,83 @@ module.exports = options => ({
         test: /\.jsx?$/, // Transform all .js and .jsx files required somewhere with Babel
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: options.babelQuery,
         },
       },
+
+      // Preprocess our own .css files
+      // This is the place to add your own loaders (e.g. sass/less etc.)
+      // for a list of loaders, see https://webpack.js.org/loaders/#styling
+      // test: /\.scss$/,
+      // exclude: /node_modules/,
+      // // use: ["style-loader", "css-loader", "sass-loader"],
+      // use: [
+      //   "style-loader",
+      //   {
+      //     loader: "sass-loader",
+      //     options: {
+      //       modules: true,
+      //     },
+      //   },
+      // ],
       {
-        // Preprocess our own .css files
-        // This is the place to add your own loaders (e.g. sass/less etc.)
-        // for a list of loaders, see https://webpack.js.org/loaders/#styling
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.module\.s(a|c)ss$/,
+        loader: [
+          options.mode === "development"
+            ? "style-loader"
+            : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              camelCase: true,
+              modules: true,
+              localIdentName: "[name]_[local]_[hash:base64:5]",
+              sourceMap: false,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: false,
+            },
+          },
+        ],
       },
+      {
+        test: /\.s(a|c)ss$/,
+        exclude: /\.module.(s(a|c)ss)$/,
+        loader: [
+          options.mode === "development"
+            ? "style-loader"
+            : MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+
+            options: {
+              sourceMap: false,
+            },
+          },
+        ],
+      },
+
       {
         // Preprocess 3rd party .css files located in node_modules
         test: /\.css$/,
         include: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
+
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
-        use: 'file-loader',
+        use: "file-loader",
       },
       {
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-url-loader',
+            loader: "svg-url-loader",
             options: {
               // Inline files smaller than 10 kB
               limit: 10 * 1024,
@@ -62,14 +113,14 @@ module.exports = options => ({
         test: /\.(jpg|png|gif)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               // Inline files smaller than 10 kB
               limit: 10 * 1024,
             },
           },
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               mozjpeg: {
                 enabled: false,
@@ -85,7 +136,7 @@ module.exports = options => ({
                 optimizationLevel: 7,
               },
               pngquant: {
-                quality: '65-90',
+                quality: "65-90",
                 speed: 4,
               },
             },
@@ -94,12 +145,12 @@ module.exports = options => ({
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: "html-loader",
       },
       {
         test: /\.(mp4|webm)$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
           },
@@ -112,15 +163,21 @@ module.exports = options => ({
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: "development",
+    }),
+    new MiniCssExtractPlugin({
+      filename:
+        options.mode === "development" ? "[name].css" : "[name].[hash].css",
+      chunkFilename:
+        options.mode === "development" ? "[id].css" : "[id].[hash].css",
     }),
   ]),
   resolve: {
-    modules: ['node_modules', 'app'],
-    extensions: ['.js', '.jsx', '.react.js'],
-    mainFields: ['browser', 'jsnext:main', 'main'],
+    modules: ["node_modules", "app"],
+    extensions: [".js", ".jsx", ".react.js", ".scss"],
+    mainFields: ["browser", "jsnext:main", "main"],
   },
   devtool: options.devtool,
-  target: 'web', // Make web variables accessible to webpack, e.g. window
+  target: "web", // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
 });

@@ -1,0 +1,50 @@
+//carousel
+.tvsit-card_carousel {
+  .ant-carousel .slick-dots-bottom {
+    bottom: -40px !important;
+  }
+  .ant-carousel .slick-dots li.slick-active {
+    /* width: 24px; */
+  }
+  .ant-carousel .slick-dots li {
+    position: relative;
+    display: inline-block;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 10px !important;
+    height: 10px !important;
+    margin: 0 2px;
+    margin-right: 3px;
+    margin-left: 3px;
+    padding: 0;
+    text-align: center;
+    text-indent: -999px;
+    vertical-align: top;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+  .ant-carousel .slick-dots li.slick-active button {
+    background: #00a5e6;
+    opacity: 1;
+  }
+  .ant-carousel .slick-dots li button {
+    display: block;
+    width: 10px !important;
+    height: 10px !important;
+
+    padding: 0;
+    color: transparent;
+    font-size: 0;
+    background: #00a5e6 !important;
+    border: 0;
+    border-radius: 50% !important;
+    outline: none;
+    cursor: pointer;
+    opacity: 0.3;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+}

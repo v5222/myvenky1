@@ -3,6 +3,23 @@ html {
     font-family: "Roboto", sans-serif;
   }
 }
+//variables
+$color-primary: #004178;
+$color-secondary: #00a5e6;
+
+//helpers
+.d-flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
 
 //container
 @import "./containers/all";

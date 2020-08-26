@@ -20,25 +20,25 @@ const PodTable = ({ data, loading, selected }) => {
       title: "BOOKINGID",
       dataIndex: "bookingid",
       key: "bookingid",
-      align: "left"
+      align: "left",
     },
     {
       title: "CUSTOMER",
       dataIndex: "customer",
       key: "customer",
-      align: "left"
+      align: "left",
     },
     {
       title: "CUSTOMER TYPE",
       dataIndex: "customertype",
       key: "customertype",
-      align: "left"
+      align: "left",
     },
     {
       title: "DIVISION CODE",
       dataIndex: "divisioncode",
       key: "divisioncode",
-      align: "left"
+      align: "left",
     },
     ,
     {
@@ -46,13 +46,13 @@ const PodTable = ({ data, loading, selected }) => {
       dataIndex: "tripstartedtimestamp",
       sorter: {
         compare: (a, b) => a.tripstartedtimestamp - b.tripstartedtimestamp,
-        multiple: 1
+        multiple: 1,
       },
       key: "tripstartedtimestamp",
       align: "left",
       render: (text, podverified, index) => {
         return moment(text).format("DD-MM-YYYY");
-      }
+      },
     },
     {
       title: "POD VERIFIED",
@@ -67,7 +67,7 @@ const PodTable = ({ data, loading, selected }) => {
         } else {
           return moment(text).format("DD-MM-YYYY");
         }
-      }
+      },
     },
     {
       title: "ETA",
@@ -80,8 +80,8 @@ const PodTable = ({ data, loading, selected }) => {
         } else {
           return moment(text).format("DD-MM-YYYY");
         }
-      }
-    }
+      },
+    },
   ];
 
   const onChange = (pagination, filters, sorter, extra) => {
@@ -90,25 +90,27 @@ const PodTable = ({ data, loading, selected }) => {
   };
 
   return (
-    <Table
-      rowClassName={(record, index) =>
-        index % 2 === 0 ? "table-row-light" : "table-row-dark"
-      }
-      size="middle"
-      tableLayout="auto"
-      columns={columns}
-      dataSource={data}
-      onChange={onChange}
-      loading={loading}
-      className="tvsit-pod_table"
-      onHeaderCell={column => {
-        return {
-          onClick: () => {
-            console.log(column);
-          }
-        };
-      }}
-    />
+    <div className="tvsit-podTable_wrapper">
+      <Table
+        rowClassName={(record, index) =>
+          index % 2 === 0 ? "table-row-light" : "table-row-dark"
+        }
+        size="middle"
+        tableLayout="auto"
+        columns={columns}
+        dataSource={data}
+        onChange={onChange}
+        loading={loading}
+        className="tvsit-pod_table"
+        onHeaderCell={(column) => {
+          return {
+            onClick: () => {
+              console.log(column);
+            },
+          };
+        }}
+      />
+    </div>
   );
 };
 
