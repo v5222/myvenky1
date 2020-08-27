@@ -43,13 +43,13 @@ module.exports = (options) => ({
       //       modules: true,
       //     },
       //   },
-      // ],
+      // ],,
+
       {
         test: /\.module\.s(a|c)ss$/,
         loader: [
-          options.mode === "development"
-            ? "style-loader"
-            : MiniCssExtractPlugin.loader,
+          "style-loader",
+
           {
             loader: "css-loader",
             options: {
@@ -71,9 +71,8 @@ module.exports = (options) => ({
         test: /\.s(a|c)ss$/,
         exclude: /\.module.(s(a|c)ss)$/,
         loader: [
-          options.mode === "development"
-            ? "style-loader"
-            : MiniCssExtractPlugin.loader,
+          "style-loader",
+
           "css-loader",
           {
             loader: "sass-loader",
