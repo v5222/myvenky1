@@ -22,12 +22,10 @@ function CMdashboardTable() {
       {
         Header: "Age",
         accessor: "age",
-        width: 50,
       },
       {
         Header: "Visits",
         accessor: "visits",
-        width: 60,
       },
       {
         Header: "Status",
@@ -41,6 +39,78 @@ function CMdashboardTable() {
     []
   );
   const data = [
+    {
+      firstName: "hashim",
+      lastName: "aslam",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "asdc",
+      lastName: "asdcbd",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "klaspm",
+      lastName: "twirybc",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "hashim",
+      lastName: "aslam",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "asdc",
+      lastName: "asdcbd",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "klaspm",
+      lastName: "twirybc",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "hashim",
+      lastName: "aslam",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "asdc",
+      lastName: "asdcbd",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
+    {
+      firstName: "klaspm",
+      lastName: "twirybc",
+      age: 12,
+      visits: 23,
+      progress: 123,
+      status: "single",
+    },
     {
       firstName: "hashim",
       lastName: "aslam",
@@ -158,14 +228,16 @@ function Table({ columns, data }) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        <FixedSizeList
-          height={400}
-          itemCount={rows.length}
-          itemSize={35}
-          width={totalColumnsWidth}
-        >
-          {RenderRow}
-        </FixedSizeList>
+        <div style={{ overflowX: "overlay" }}>
+          <FixedSizeList
+            height={300}
+            itemCount={rows.length}
+            itemSize={35}
+            width={totalColumnsWidth}
+          >
+            {RenderRow}
+          </FixedSizeList>
+        </div>
         {/* {rows.map((row, i) => {
     prepareRow(row)
     return (
