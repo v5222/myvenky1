@@ -103,6 +103,7 @@ function PodDashboard({
   const [visible, setVisible] = useState(false);
   const [tableLoad, setTableLoad] = useState(loading);
   const [dynamicTitle, setDynamicTitle] = useState("updated <24hrs");
+  const [showCSV, setShowCSV] = useState(false);
   const [options, setOptions] = useState({
     type: "GETDATA",
     metrics: selected,
@@ -210,6 +211,11 @@ function PodDashboard({
       setfilterType("MTD");
       setOptions({ ...options, ["filterdate"]: "MTD" });
     }
+  };
+
+  //collapse change handler
+  const handleCollapse = () => {
+    console.log("triggered");
   };
 
   //Menu Component for Date Filters
@@ -433,7 +439,7 @@ function PodDashboard({
                   }
                   onClick={() => toggleSelected("iscompleted")}
                 >
-                  <div className="tvsit-charts_heading">Completed Trips</div>
+                  <div className="tvsit-charts_heading">Completed</div>
                   <div className="tvsit-charts_border">
                     {/* <PodCharts
                       title="Completed Trips"
@@ -489,7 +495,7 @@ function PodDashboard({
                   <div className="tvsit-charts_heading">POD {dynamicTitle}</div>
                   <div className="tvsit-charts_border">
                     <PodData
-                      title1="completed trips"
+                      title1="completed"
                       title2={dynamicTitle}
                       title3="updated percentage"
                       total={completedCount}
@@ -525,7 +531,11 @@ function PodDashboard({
           </Row>
 
           {/* table sections starts here */}
-          <Collapse defaultActiveKey={["0"]} style={{ marginTop: "20px" }}>
+          <Collapse
+            defaultActiveKey={["0"]}
+            style={{ marginTop: "20px" }}
+            onChange={() => setShowCSV((prev) => !prev)}
+          >
             <Panel
               header={
                 selected === "iscompleted"
@@ -535,6 +545,21 @@ function PodDashboard({
                   : selected === "podverifieddays"
                   ? `Details OF ${dynamicTitle}`
                   : " Details OF ETA"
+              }
+              extra={
+                <>
+                  {showCSV && (
+                    <div>
+                      <CsvDownload
+                        data={tableData}
+                        filename="data.csv"
+                        className="tvsit-pod_table-download"
+                      >
+                        Export CSV
+                      </CsvDownload>
+                    </div>
+                  )}
+                </>
               }
               key="1"
               className="tvsit-pod_table-title"
@@ -557,7 +582,7 @@ function PodDashboard({
                     ? `OF ${dynamicTitle}`
                     : "OF ETA"}
                 </div> */}
-                <div>
+                {/* <div>
                   <CsvDownload
                     data={tableData}
                     filename="data.csv"
@@ -565,7 +590,7 @@ function PodDashboard({
                   >
                     Export CSV
                   </CsvDownload>
-                </div>
+                </div> */}
               </div>
               <div style={{ marginTop: "10px" }}>
                 <PodTable
