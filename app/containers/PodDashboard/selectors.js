@@ -1,71 +1,85 @@
 import { createSelector } from "reselect";
 import { initialState } from "./reducer";
 
-const selectPodDashboard = state => state.podDashboard || initialState;
+const selectPodDashboard = (state) => state.podDashboard || initialState;
 
-const selectRouter = state => state.router;
+const selectRouter = (state) => state.router;
 
 console.log(selectPodDashboard, "podState");
 const makeSelecttotalTripsCount = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.totalTripsCount
+    (podState) => podState.totalTripsCount
   );
 
 const makeSelectcompletedCount = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.completedCount
+    (podState) => podState.completedCount
   );
 
 const makeSelectcompletedData = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.completedData
+    (podState) => podState.completedData
   );
 
 const makeSelectpodCount = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.podCount
+    (podState) => podState.podCount
   );
 
 const makeSelectpodData = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.podData
+    (podState) => podState.podData
   );
 const makeSelectpod24hrsCount = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.pod24hrsCount
+    (podState) => podState.pod24hrsCount
   );
 const makeSelectpod24hrsData = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.pod24hrsData
+    (podState) => podState.pod24hrsData
   );
 const makeSelectselected = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.selected
+    (podState) => podState.selected
   );
 const makeSelectloading = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.loading
+    (podState) => podState.loading
   );
 const makeSelectTableData = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.tableData
+    (podState) => podState.tableData
   );
 const makeSelectEta = () =>
   createSelector(
     selectPodDashboard,
-    podState => podState.etaCount
+    (podState) => podState.etaCount
   );
-
+// const makeSelectCustomer = () =>
+//   createSelector(
+//     selectPodDashboard,
+//     (podState) => podState.customer
+//   );
+// const makeSelectCustomertype = () =>
+//   createSelector(
+//     selectPodDashboard,
+//     (podState) => podState.customertype
+//   );
+// const makeSelectDivisionCode = () =>
+//   createSelector(
+//     selectPodDashboard,
+//     (podState) => podState.divisioncode
+//   );
 export {
   makeSelecttotalTripsCount,
   makeSelectcompletedCount,
@@ -77,5 +91,8 @@ export {
   makeSelectselected,
   makeSelectloading,
   makeSelectTableData,
-  makeSelectEta
+  makeSelectEta,
+  // makeSelectCustomer,
+  // makeSelectCustomertype,
+  // makeSelectDivisionCode,
 };

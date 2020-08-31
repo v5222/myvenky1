@@ -5,7 +5,10 @@ import Menu from "antd/lib/menu";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import RightOutlined from "@ant-design/icons/RightOutlined";
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
-const MenuDrawer = () => {
+import Logo from "../../images/TVS-SCS-Logo-full-White.png";
+import Logo2 from "../../images/TVS-SCS-Tagline-White.png";
+import history from "utils/history";
+const MenuDrawer = ({ selected }) => {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -15,9 +18,6 @@ const MenuDrawer = () => {
   };
   return (
     <>
-      {/* <Button type="primary" onClick={showDrawer}>
-        Open
-      </Button> */}
       <MenuFoldOutlined onClick={showDrawer} className="tvsit-header_menu-sm" />
       <Drawer
         placement="left"
@@ -30,13 +30,14 @@ const MenuDrawer = () => {
       >
         <div
           style={{
-            margin: "10px 0px",
+            margin: "10px auto 70px auto",
             width: "100%",
             height: "80px",
           }}
         >
           {" "}
-          {/* <img src={Logo} className="tvsit_main-logo" /> */}
+          <img src={Logo} className="tvsit_drawer_logo" />
+          <img src={Logo2} className="tvsit_drawer_logo2" />
         </div>
         <Menu
           theme="dark"
@@ -45,23 +46,16 @@ const MenuDrawer = () => {
           style={{ background: "#1890ff" }}
         >
           <Menu.Item
-            key="1"
+            key="/podDashboard"
             icon={<BarChartOutlined />}
-            className="tvsit-main-menu"
-            style={{
-              background: "#002776",
-              borderRadius: "30px",
-              width: "88%",
-              // marginRight: "10px",
-              marginLeft: "12px",
-              fontSize: "12px",
-              fontWeight: 500,
-            }}
+            className={
+              selected === "/podDashboard"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+            onClick={() => history.push("/podDashboard")}
           >
-            POD Dashboard{" "}
-            <RightOutlined
-              style={{ fontSize: "12px", fontWeight: 500, marginLeft: "5px" }}
-            />
+            POD Dashboard
           </Menu.Item>
           {/* <Menu.Item key="2" icon={<CloudOutlined />}>
               User Management

@@ -5,23 +5,23 @@ import {
   SET_USER_DATA,
   SET_OTP_STATUS,
   SET_OTP_VAL,
-  ADFS_LOGIN
+  ADFS_LOGIN,
 } from "./constants";
 import { SET_LOGIN } from "containers/App/constants";
 import history from "utils/history";
-
+import { apiURL } from "../../containers/App/services";
 import request from "utils/request";
 import { call, put, takeLatest } from "redux-saga/effects";
 
 export function* OtpValidation(action) {
   const { values } = action.payload;
 
-  const requestURL = `https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vendorapp/getdata`;
+  const requestURL = apiURL;
   const options = {
     method: "POST",
     body: JSON.stringify({
-      body: values
-    })
+      body: values,
+    }),
   };
   console.log(options, "options");
   try {
@@ -33,21 +33,21 @@ export function* OtpValidation(action) {
           type: SET_OTP_STATUS,
           payload: {
             status: false,
-            message: data.body.bodymsg
-          }
+            message: data.body.bodymsg,
+          },
         });
       } else {
         yield put({
           type: SET_OTP_STATUS,
           payload: {
             status: true,
-            message: data.body.bodymsg
-          }
+            message: data.body.bodymsg,
+          },
         });
       }
       yield put({
         type: SET_LOADING,
-        loading: false
+        loading: false,
       });
     }
     if (values.type === "OTPVAL") {
@@ -56,28 +56,28 @@ export function* OtpValidation(action) {
           type: SET_OTP_VAL,
           payload: {
             status: false,
-            message: data.body.bodymsg
-          }
+            message: data.body.bodymsg,
+          },
         });
       } else {
         yield put({
           type: SET_OTP_VAL,
           payload: {
             status: true,
-            message: data.body.bodymsg
-          }
+            message: data.body.bodymsg,
+          },
         });
         yield put({
           type: SET_LOGIN,
-          loggedIn: true
+          loggedIn: true,
         });
-        localStorage.setItem("loggedIn",true)
+        localStorage.setItem("loggedIn", true);
         history.push("/podDashboard");
       }
     }
     yield put({
       type: SET_LOADING,
-      loading: false
+      loading: false,
     });
   } catch (error) {
     console.log(error);

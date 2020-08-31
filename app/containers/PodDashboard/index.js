@@ -1,13 +1,14 @@
 import React, { useState, useEffect, memo, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import MainLayout from "../common/MainLayout/index.js";
-import PodCharts from "../../components/PodCharts";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Select from "antd/lib/select";
+import Collapse from "antd/lib/collapse";
 
 import DatePicker from "antd/lib/date-picker";
 import Spin from "antd/lib/spin";
+import { useQuery } from "react-query";
 
 import CalendarOutlined from "@ant-design/icons/CalendarOutlined";
 import Menu from "antd/lib/menu";
@@ -24,6 +25,7 @@ import {
   SET_SELECTED,
   SET_LOADING,
   GET_ETA,
+  GET_FILTERS,
 } from "./constants";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
@@ -42,11 +44,14 @@ import {
   makeSelectloading,
   makeSelectTableData,
   makeSelectEta,
+  // makeSelectDivisionCode,
+  // makeSelectCustomertype,
+  // makeSelectCustomer,
 } from "./selectors";
 import { makeSelectLogin } from "containers/App/selectors";
 import { motion } from "framer-motion";
 import CsvDownload from "react-json-to-csv";
-
+import { apiURL } from "containers/App/services";
 const key = "podDashboard";
 
 const { RangePicker } = DatePicker;
@@ -55,6 +60,7 @@ const data = {
   lessthan24hr: [235, 12],
   verified: [235, 103],
 };
+const { Panel } = Collapse;
 function PodDashboard({
   totaltrips,
   completedCount,
@@ -72,11 +78,25 @@ function PodDashboard({
   loggedIn,
   getEta,
   etaCount,
+  // customer,
+  // customertype,
+  // divisioncode,
+  getFilters,
 }) {
+  // Saga and Reducer injectors
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  //testing
+  // const { isLoading, error, data } = useQuery("repoData", () =>
+  //   fetch(apiURL).then((res) => res.json())
+  // );
+
+  //Local States
   const { Option } = Select;
   const [customer, setCustomer] = useState([]);
-  const [entity, setEntity] = useState([]);
-  const [customerType, setCustomerType] = useState([]);
+  const [divisioncode, setdivisioncode] = useState([]);
+  const [customertype, setCustomertype] = useState([]);
   // const [tableData, setTableData] = useState(completedData);
   const [api, setApidata] = useState();
   const [filterType, setfilterType] = useState("MTD");
@@ -96,24 +116,63 @@ function PodDashboard({
   });
   const isInitialMount = useRef(true);
 
+  //Component Mount Hook
   useEffect(() => {
-    console.log(loggedIn, "from loggedin");
-  }, [loggedIn]);
-  useInjectReducer({ key, reducer });
-  useInjectSaga({ key, saga });
+    getDataonLoad(options);
+    getEta();
+    // getFilters(options);
+    fetchFilters();
+
+    setLoading(true);
+  }, []);
+
+  //Table or Grid Data updation hook
   useEffect(() => {
     let temp = tableData;
-    let customer_temp = new Set(temp.map((i) => i.customer));
-    let entity_temp = new Set(temp.map((i) => i.divisioncode));
-    let customertype_temp = new Set(temp.map((i) => i.customertype));
 
-    setCustomer([...customer_temp]);
-    setEntity([...entity_temp]);
-    setCustomerType([...customertype_temp]);
     setTableLoad(false);
     // setTableData(completedData);
   }, [tableData]);
 
+  /*
+  Testing hooks AND functions will come here should be removed while refactoring
+*/
+  const fetchFilters = () => {
+    let filterOption = { ...options, type: "FILTERS" };
+    let bodyoption = {
+      method: "POST",
+      body: JSON.stringify({
+        body: filterOption,
+      }),
+    };
+    fetch(apiURL, bodyoption)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setCustomertype(data.body.bodymsg.customertype);
+        setCustomer(data.body.bodymsg.customer);
+        setdivisioncode(data.body.bodymsg.divisioncode);
+      });
+  };
+
+  //Filters hook to change filter dropdown values
+  useEffect(() => {
+    // getFilters(options);
+    fetchFilters();
+  }, [options]);
+  // useEffect(() => {
+  //   console.log(filtersData, "filters data");
+  //   if (filtersData !== undefined) {
+  //     // let customer = filtersData.customer;
+  //     // let divisioncode = filtersData.divisioncode;
+  //     // let customertype = filtersData.customertype;
+  //     // setCustomer([...customer.customer]);
+  //     // setEntity([...divisioncode.divisioncode]);
+  //     // setCustomerType([...customertype.customertype]);
+  //   }
+  // }, [filtersData]);
+
+  //Grid and Tile Data Selection Hook one of type ETA, podverified, iscompleted,  podverifieddays(< 24hrs and 7 days)
   useEffect(() => {
     setLoading(true);
     if (selected === "ETA") {
@@ -125,21 +184,9 @@ function PodDashboard({
       getDataonLoad({ ...options, ["metrics"]: selected });
     }
     setTableLoad(true);
-
-    console.log(selected);
   }, [selected, options]);
-  useEffect(() => {
-    getDataonLoad(options);
 
-    setLoading(true);
-  }, []);
-  useEffect(() => {
-    console.log(selected, "from selected");
-    getDataonLoad(options);
-    // toggleSelected("iscompleted");
-    getEta();
-    setLoading(true);
-  }, []);
+  //Event Handlers
   const handleChange = (label, value) => {
     setOptions({ ...options, [label]: value });
   };
@@ -164,12 +211,15 @@ function PodDashboard({
       setOptions({ ...options, ["filterdate"]: "MTD" });
     }
   };
+
+  //Menu Component for Date Filters
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">Date Picker</Menu.Item>
       <Menu.Item key="2">Date Type</Menu.Item>
     </Menu>
   );
+
   return (
     <div>
       {!loggedIn && <Redirect to="/" />}
@@ -189,21 +239,28 @@ function PodDashboard({
                 Entity
               </div>
               <Select
-                defaultValue="All"
+                value={
+                  divisioncode !== undefined
+                    ? divisioncode.length === 1
+                      ? divisioncode[0].divisioncode
+                      : "All"
+                    : "All"
+                }
                 style={{ width: "100%" }}
                 onChange={(value) => handleChange("divisioncode", value)}
                 name="divisioncode"
-                ref={isInitialMount}
               >
-                {entity.map((i, index) => {
-                  return (
-                    <>
-                      <Option key={index} value={i}>
-                        {i}
-                      </Option>
-                    </>
-                  );
-                })}
+                {divisioncode !== undefined
+                  ? divisioncode.map((i, index) => {
+                      return (
+                        <>
+                          <Option key={index} value={i.divisioncode}>
+                            {i.divisioncode}
+                          </Option>
+                        </>
+                      );
+                    })
+                  : ""}
                 <Option key="All" value="All">
                   All
                 </Option>
@@ -216,10 +273,14 @@ function PodDashboard({
                 className="tvsit_pod-title"
                 style={{ color: "black", fontWeight: 500 }}
               >
-                Customer Type
+                Trip Type
               </div>
               <Select
-                defaultValue="All"
+                value={
+                  customertype !== undefined && customertype.length === 1
+                    ? customertype[0].customertype
+                    : "All"
+                }
                 style={{ width: "100%" }}
                 onChange={(value) => {
                   handleChange("customertype", value);
@@ -230,15 +291,16 @@ function PodDashboard({
                   }
                 }}
               >
-                {customerType.map((i, index) => {
-                  return (
-                    <>
-                      <Option key={index} value={i}>
-                        {i}
-                      </Option>
-                    </>
-                  );
-                })}
+                {customertype !== undefined &&
+                  customertype.map((i, index) => {
+                    return (
+                      <>
+                        <Option key={index} value={i.customertype}>
+                          {i.customertype}
+                        </Option>
+                      </>
+                    );
+                  })}
                 <Option key="All" value="All">
                   All
                 </Option>
@@ -254,19 +316,33 @@ function PodDashboard({
                 Customer
               </div>
               <Select
-                defaultValue="All"
+                value={
+                  customer !== undefined
+                    ? customer.length === 1
+                      ? customer[0].customer
+                      : "All"
+                    : "All"
+                }
                 style={{ width: "100%" }}
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
                 onChange={(value) => handleChange("customer", value)}
               >
-                {customer.map((i, index) => {
-                  return (
-                    <>
-                      <Option key={index} value={i}>
-                        {i}
-                      </Option>
-                    </>
-                  );
-                })}
+                {customer !== undefined
+                  ? customer.map((i, index) => {
+                      return (
+                        <>
+                          <Option key={index} value={i.customer}>
+                            {i.customer}
+                          </Option>
+                        </>
+                      );
+                    })
+                  : ""}
                 <Option key="All" value="All">
                   All
                 </Option>
@@ -370,6 +446,7 @@ function PodDashboard({
                       title3="completed percentage"
                       total={totaltrips}
                       completed={completedCount}
+                      showPercentage={false}
                     />
                   </div>
                 </div>
@@ -393,6 +470,7 @@ function PodDashboard({
                       title3="updated percentage"
                       total={completedCount}
                       completed={podCount}
+                      showPercentage={true}
                     />
                   </div>
                 </div>
@@ -411,11 +489,12 @@ function PodDashboard({
                   <div className="tvsit-charts_heading">POD {dynamicTitle}</div>
                   <div className="tvsit-charts_border">
                     <PodData
-                      title1="pod updated"
+                      title1="completed trips"
                       title2={dynamicTitle}
                       title3="updated percentage"
-                      total={podCount}
+                      total={completedCount}
                       completed={pod24hrsCount}
+                      showPercentage={true}
                     />
                   </div>
                 </div>
@@ -444,42 +523,60 @@ function PodDashboard({
               </Spin>
             </Col>
           </Row>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "30px 0 10px 0",
-              alignItems: "flex-end",
-            }}
-          >
-            <div className="tvsit-pod_table-title">
-              Details{" "}
-              {selected === "iscompleted"
-                ? "OF COMPLETED TRIPS"
-                : selected === "ispodverified"
-                ? "OF EPOD UPDATED"
-                : selected === "podverifieddays"
-                ? `OF ${dynamicTitle}`
-                : "OF ETA"}
-            </div>
-            <div>
-              <CsvDownload
-                data={tableData}
-                filename="data.csv"
-                className="tvsit-pod_table-download"
+
+          {/* table sections starts here */}
+          <Collapse defaultActiveKey={["0"]} style={{ marginTop: "20px" }}>
+            <Panel
+              header={
+                selected === "iscompleted"
+                  ? " Details OF COMPLETED TRIPS"
+                  : selected === "ispodverified"
+                  ? "Details OF EPOD UPDATED"
+                  : selected === "podverifieddays"
+                  ? `Details OF ${dynamicTitle}`
+                  : " Details OF ETA"
+              }
+              key="1"
+              className="tvsit-pod_table-title"
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  margin: "30px 0 10px 0",
+                  alignItems: "flex-end",
+                }}
               >
-                Export CSV
-              </CsvDownload>
-            </div>
-          </div>
-          <div style={{ marginTop: "10px" }}>
-            <PodTable
-              data={tableData}
-              loading={tableLoad}
-              setLoading={setTableLoad}
-              selected={selected}
-            />
-          </div>
+                {/* <div className="tvsit-pod_table-title">
+                  Details{" "}
+                  {selected === "iscompleted"
+                    ? "OF COMPLETED TRIPS"
+                    : selected === "ispodverified"
+                    ? "OF EPOD UPDATED"
+                    : selected === "podverifieddays"
+                    ? `OF ${dynamicTitle}`
+                    : "OF ETA"}
+                </div> */}
+                <div>
+                  <CsvDownload
+                    data={tableData}
+                    filename="data.csv"
+                    className="tvsit-pod_table-download"
+                  >
+                    Export CSV
+                  </CsvDownload>
+                </div>
+              </div>
+              <div style={{ marginTop: "10px" }}>
+                <PodTable
+                  data={tableData}
+                  loading={tableLoad}
+                  setLoading={setTableLoad}
+                  selected={selected}
+                />
+              </div>
+            </Panel>
+          </Collapse>
         </section>
       </MainLayout>
     </div>
@@ -498,6 +595,9 @@ const mapStateToProps = createStructuredSelector({
   tableData: makeSelectTableData(),
   loggedIn: makeSelectLogin(),
   etaCount: makeSelectEta(),
+  // customer: makeSelectCustomer(),
+  // customertype: makeSelectCustomertype(),
+  // divisioncode: makeSelectDivisionCode(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -517,6 +617,12 @@ export function mapDispatchToProps(dispatch) {
     getEta: () => {
       dispatch({
         type: GET_ETA,
+      });
+    },
+    getFilters: (values) => {
+      dispatch({
+        type: GET_FILTERS,
+        payload: { ...values, type: "FILTERS" },
       });
     },
     toggleSelected: (value) => {

@@ -7,10 +7,11 @@ import {
   SET_SELECTED,
   SET_LOADING,
   SET_CHART_COUNTS,
-  SET_ETA
+  SET_ETA,
+  SET_FILTERS,
 } from "./constants";
 
-// The initial state of the App
+// The initial state of the PodDashboard
 export const initialState = {
   totalTripsCount: "",
   completedCount: "",
@@ -19,12 +20,15 @@ export const initialState = {
   pod24hrsCount: "",
   etaCount: "",
   selected: "iscompleted",
-  loading: false
+  loading: false,
+  customer: [],
+  customertype: [],
+  divisioncode: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const podReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case SET_CHART_COUNTS:
         draft.totalTripsCount = action.totalTripsCount;
@@ -45,6 +49,13 @@ const podReducer = (state = initialState, action) =>
         break;
       case SET_LOADING:
         draft.loading = action.loading;
+      // case SET_FILTERS:
+      //   return {
+      //     ...state,
+      //     customer: action.customer,
+      //     customertype: action.customertype,
+      //     divisioncode: action.divisioncode,
+      //   };
     }
   });
 

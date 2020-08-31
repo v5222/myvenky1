@@ -89,6 +89,7 @@
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
     "react-json-to-csv": "^1.0.4",
+    "react-query": "^2.12.1",
     "react-redux": "7.0.2",
     "react-router-dom": "5.0.0",
     "react-score-indicator": "^2.2.1",

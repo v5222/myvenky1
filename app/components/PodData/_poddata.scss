@@ -6,12 +6,15 @@
   -webkit-box-shadow: 5px 5px 6px 0px rgba(50, 50, 50, 0.52);
   -moz-box-shadow: 5px 5px 6px 0px rgba(50, 50, 50, 0.52);
   box-shadow: 5px 5px 6px 0px rgba(50, 50, 50, 0.52);
-  justify-content: space-between;
+  justify-content: center;
   &_container {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     margin-right: 20px;
+  }
+  &_wrapper {
+    text-align: center;
   }
   &_vrline {
     width: 2px;

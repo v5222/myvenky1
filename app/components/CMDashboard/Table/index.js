@@ -228,12 +228,13 @@ function Table({ columns, data }) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        <div style={{ overflowX: "overlay" }}>
+        <div>
           <FixedSizeList
             height={300}
             itemCount={rows.length}
             itemSize={35}
             width={totalColumnsWidth}
+            className="fixedList"
           >
             {RenderRow}
           </FixedSizeList>

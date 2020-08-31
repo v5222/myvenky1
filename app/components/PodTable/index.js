@@ -43,27 +43,32 @@ const PodTable = ({ data, loading, selected }) => {
     ,
     {
       title: "TRIP ENDED",
-      dataIndex: "tripstartedtimestamp",
+      dataIndex: "tripendtimestamp",
       sorter: {
-        compare: (a, b) => a.tripstartedtimestamp - b.tripstartedtimestamp,
+        compare: (a, b) => a.tripendtimestamp - b.tripendtimestamp,
         multiple: 1,
       },
-      key: "tripstartedtimestamp",
+      key: "tripendtimestamp",
       align: "left",
       render: (text, podverified, index) => {
-        return moment(text).format("DD-MM-YYYY");
+        if (text === null) {
+          return "NA";
+        } else {
+          return moment(text).format("DD-MM-YYYY");
+        }
       },
     },
     {
       title: "POD VERIFIED",
-      dataIndex: "podverified",
-      sorter: (a, b) => moment(a.podverified) - moment(b.podverified),
+      dataIndex: "podverifiedtimestamp",
+      sorter: (a, b) =>
+        moment(a.podverifiedtimestamp) - moment(b.podverifiedtimestamp),
       sortDirections: ["descend", "ascend"],
-      key: "podverified",
+      key: "podverifiedtimestamp",
       align: "left",
       render: (text, podverified, index) => {
         if (text === null) {
-          return "Not Updated";
+          return "NA";
         } else {
           return moment(text).format("DD-MM-YYYY");
         }
@@ -71,21 +76,49 @@ const PodTable = ({ data, loading, selected }) => {
     },
     {
       title: "ETA",
-      dataIndex: "eta",
-      key: "eta",
+      dataIndex: selected !== "ETA" ? "eta" : "etatimestamp",
+      key: selected !== "ETA" ? "eta" : "etatimestamp",
       align: "left",
       render: (text, eta, index) => {
         if (text === null) {
-          return "Null";
+          return "NA";
         } else {
           return moment(text).format("DD-MM-YYYY");
         }
       },
     },
   ];
+  const [columnData, setColumnData] = useState(columns);
+  const vehicleData = {
+    title: "VEHICLE NO",
+    dataIndex: "vehicleno",
+    key: "vehicleno",
+    align: "left",
+    render: (text, eta, index) => {
+      if (text === null) {
+        return "";
+      } else {
+        return text;
+      }
+    },
+  };
+  useEffect(() => {
+    console.log(columnData, "coulmn data");
+  }, [columnData]);
+  useEffect(() => {
+    if (selected === "ETA") {
+      setColumnData((prev) => {
+        let newData = [...prev, vehicleData];
+        return newData.filter((i) => i !== undefined);
+      });
+    } else {
+      setColumnData(columns);
+    }
+    // console.log(selected, "from selected hook");
+  }, [selected]);
 
   const onChange = (pagination, filters, sorter, extra) => {
-    console.log("sorted called");
+    // console.log("sorted called");
     // setLoading(true);
   };
 
@@ -97,7 +130,7 @@ const PodTable = ({ data, loading, selected }) => {
         }
         size="middle"
         tableLayout="auto"
-        columns={columns}
+        columns={columnData}
         dataSource={data}
         onChange={onChange}
         loading={loading}

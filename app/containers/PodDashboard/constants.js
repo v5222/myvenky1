@@ -11,3 +11,5 @@ export const SET_CHART_COUNTS = "tvsit-client/podDashboard/SET_CHART_COUNTS";
 export const SET_TABLE_DATA = "tvsit-client/podDashboard/SET_TABLE_DATA";
 export const SET_ETA = "tvsit-client/podDashboard/SET_ETA";
 export const GET_ETA = "tvsit-client/podDashboard/GET_ETA";
+export const GET_FILTERS = "tvsit-client/podDashboard/GET_FILTERS";
+export const SET_FILTERS = "tvsit-client/podDashboard/SET_FILTERS";
