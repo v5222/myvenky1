@@ -97,6 +97,9 @@ function PodDashboard({
   const [customer, setCustomer] = useState([]);
   const [divisioncode, setdivisioncode] = useState([]);
   const [customertype, setCustomertype] = useState([]);
+  const [custValue, setCustValue] = useState("All");
+  const [custTValue, setCustTvalue] = useState("All");
+  const [divValue, setDivValue] = useState("All");
   // const [tableData, setTableData] = useState(completedData);
   const [api, setApidata] = useState();
   const [filterType, setfilterType] = useState("MTD");
@@ -138,7 +141,7 @@ function PodDashboard({
   /*
   Testing hooks AND functions will come here should be removed while refactoring
 */
-  const fetchFilters = () => {
+  const fetchFilters = (options) => {
     let filterOption = { ...options, type: "FILTERS" };
     let bodyoption = {
       method: "POST",
@@ -150,6 +153,18 @@ function PodDashboard({
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        let tempCust = data.body.bodymsg.customer;
+        let tempCustT = data.body.bodymsg.customertype;
+        let tempDiv = data.body.bodymsg.divisioncode;
+        tempCust.length === 1
+          ? setCustValue(tempCust[0].customer)
+          : setCustValue(options.customer);
+        tempCustT.length === 1
+          ? setCustTvalue(tempCustT[0].customertype)
+          : setCustTvalue(options.customertype);
+        tempDiv.length === 1
+          ? setDivValue(tempDiv[0].divisioncode)
+          : setDivValue(options.divisioncode);
         setCustomertype(data.body.bodymsg.customertype);
         setCustomer(data.body.bodymsg.customer);
         setdivisioncode(data.body.bodymsg.divisioncode);
@@ -159,7 +174,8 @@ function PodDashboard({
   //Filters hook to change filter dropdown values
   useEffect(() => {
     // getFilters(options);
-    fetchFilters();
+    console.log(options);
+    fetchFilters(options);
   }, [options]);
   // useEffect(() => {
   //   console.log(filtersData, "filters data");
@@ -245,15 +261,19 @@ function PodDashboard({
                 Entity
               </div>
               <Select
-                value={
-                  divisioncode !== undefined
-                    ? divisioncode.length === 1
-                      ? divisioncode[0].divisioncode
-                      : "All"
-                    : "All"
-                }
+                // defaultValue={
+                //   divisioncode !== undefined
+                //     ? divisioncode.length === 1
+                //       ? divisioncode[0].divisioncode
+                //       : "All"
+                //     : "All"
+                // }
+                value={divValue}
                 style={{ width: "100%" }}
-                onChange={(value) => handleChange("divisioncode", value)}
+                onChange={(value) => {
+                  setDivValue(value);
+                  handleChange("divisioncode", value);
+                }}
                 name="divisioncode"
               >
                 {divisioncode !== undefined
@@ -282,13 +302,15 @@ function PodDashboard({
                 Trip Type
               </div>
               <Select
-                value={
-                  customertype !== undefined && customertype.length === 1
-                    ? customertype[0].customertype
-                    : "All"
-                }
+                value={custTValue}
+                // defaultValue={
+                //   customertype !== undefined && customertype.length === 1
+                //     ? customertype[0].customertype
+                //     : "All"
+                // }
                 style={{ width: "100%" }}
                 onChange={(value) => {
+                  setCustTvalue(value);
                   handleChange("customertype", value);
                   if (value === "P2P") {
                     setDynamicTitle("updated <7days");
@@ -322,21 +344,29 @@ function PodDashboard({
                 Customer
               </div>
               <Select
-                value={
-                  customer !== undefined
-                    ? customer.length === 1
-                      ? customer[0].customer
-                      : "All"
-                    : "All"
-                }
+                value={custValue}
+                // defaultValue={
+                //   customer !== undefined && customer.length === 1
+                //     ? customer[0].customer
+                //     : "All"
+                // }
                 style={{ width: "100%" }}
                 showSearch
                 optionFilterProp="children"
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-                onChange={(value) => handleChange("customer", value)}
+                filterOption={(input, option) => {
+                  console.log(input, option);
+                  if (option.children !== null) {
+                    return (
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    );
+                  }
+                }}
+                onChange={(value) => {
+                  setCustValue(value);
+                  handleChange("customer", value);
+                }}
               >
                 {customer !== undefined
                   ? customer.map((i, index) => {
