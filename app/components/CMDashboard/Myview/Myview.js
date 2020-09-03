@@ -4,6 +4,7 @@ import ViewCard from "./ViewCard";
 import Flickity from "react-flickity-component";
 import "./flickity.scss";
 import Carousel from "antd/lib/carousel";
+import Preference from "../Preferences";
 
 const flickityOptions = {
   initialIndex: 0,
@@ -30,9 +31,7 @@ function Myview() {
       <div className={styles.container}>
         <div className={styles.d_flex}>
           <div className={styles.title}>My View</div>
-          <div className={styles.title_preference}>
-            Change Display Data Preference
-          </div>
+          <Preference />
         </div>
 
         {/* <Flickity

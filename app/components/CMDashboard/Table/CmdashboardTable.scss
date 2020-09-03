@@ -23,12 +23,16 @@
         font-size: 16px;
         color: black;
 
-        // td:nth-child(even) {
-        //   background-color: #f2f2f2;
-        // }
-      }
-      tr > td {
-        padding: 20px;
+        // background-color: #f2f2f2;
+        td {
+          padding: 12px;
+        }
+        &:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        &:nth-child(odd) {
+          background: #d9d9d9;
+        }
       }
     }
 
