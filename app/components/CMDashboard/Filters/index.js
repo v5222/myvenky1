@@ -19,7 +19,7 @@ function Filters() {
         <div className={styles.wrapper}>
           <div className={styles.title}>Customer</div>
           <Select
-            placeholder="Select Customer"
+            placeholder="All"
             onChange={handleChange}
             className={styles.select}
           >
@@ -33,7 +33,7 @@ function Filters() {
         <div className={styles.wrapper}>
           <div className={styles.title}>Status</div>
           <Select
-            placeholder="Select Staus"
+            placeholder="All"
             onChange={handleChange}
             className={styles.select}
           >
@@ -47,7 +47,7 @@ function Filters() {
         <div className={styles.wrapper}>
           <div className={styles.title}>Location</div>
           <Select
-            placeholder="Select Location"
+            placeholder="All"
             onChange={handleChange}
             className={styles.select}
           >
@@ -60,7 +60,9 @@ function Filters() {
 
         <div className={styles.wrapperDate}>
           <div className={styles.title_date}>Date</div>
-          <RangePicker />
+          <RangePicker bordered={true} />
+
+          
         </div>
         <div className={styles.wrapper_clear}>
           <div

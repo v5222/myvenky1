@@ -29,10 +29,10 @@ function Myview() {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.d_flex}>
-          <div className={styles.title}>My View</div>
+         {/* <div className={styles.d_flex}>
+            <div className={styles.title}>My View</div>
           <Preference />
-        </div>
+            </div> */}
 
         {/* <Flickity
           className={"carousel"} // default ''
@@ -87,6 +87,7 @@ function Myview() {
           </Carousel>
         </div>
       </div>
+     
     </>
   );
 }

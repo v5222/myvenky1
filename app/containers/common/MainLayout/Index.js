@@ -4,11 +4,21 @@ import Menu from "antd/lib/menu";
 import message from "antd/lib/message";
 import Dropdown from "antd/lib/dropdown";
 import Avatar from "antd/lib/avatar";
+import { Pagination } from "antd";
+
 import MenuDrawer from "components/MenuDrawer";
-import SupplyChainSVG from "../../../images/SVG/360svg.svg";
+import Question from "../../../images/SVG/question.svg";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import LogoutOutlined from "@ant-design/icons/LogoutOutlined";
+import {
+  SmileOutlined,
+  MailOutlined,
+  QuestionCircleOutlined,
+  BellOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
+
 import DashboardOutlined from "@ant-design/icons/DashboardOutlined";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { SET_LOGIN } from "containers/App/constants";
@@ -19,6 +29,10 @@ const { Header, Content, Footer, Sider } = Layout;
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "utils/history";
+import { Typography } from "antd";
+
+const { Text } = Typography;
+
 class MainLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +70,28 @@ class MainLayout extends React.Component {
           window.location.reload();
         }}
       >
+        Test Name <SmileOutlined />
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        // onClick={() => {
+        //   this.props.logout();
+        //   localStorage.setItem("loggedIn", false);
+        //   history.push("/");
+        //   window.location.reload();
+        // }}
+      >
+        dev.support9@tvslsl.com <MailOutlined />
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        // onClick={() => {
+        //   this.props.logout();
+        //   localStorage.setItem("loggedIn", false);
+        //   history.push("/");
+        //   window.location.reload();
+        // }}
+      >
         Logout <LogoutOutlined />
       </Menu.Item>
     </Menu>
@@ -79,28 +115,43 @@ class MainLayout extends React.Component {
               <img src={Logo} className="tvsit_main-logo" />
             </div>
 
-            <div style={{ display: "flex", alignItems: "center" }}>
+            {/*<div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit-main-layout-title">
                 {this.state.selected === "/podDashboard"
                   ? "POD Compliance"
                   : "Courier Management"}
-              </div>
-            </div>
+        </div>
+            </div> */}
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit_main-layout-avatar">
+                <QuestionCircleOutlined className="qn_icon" />
+                <BellOutlined className="bell_icon" />
+
                 <Dropdown overlay={this.menu} trigger={["click"]}>
                   <Avatar
-                    size={48}
+                    size={32}
                     icon={<UserOutlined />}
                     onClick={(e) => e.preventDefault()}
+                    className="avatar"
                   />
                 </Dropdown>
               </div>
+              <Text className="tvsit_main-layout-name">R Shankar</Text>
+              {/*  <DownOutlined  className='.tvsit_main-layout-dropdown'/> */}
             </div>
           </Header>
+
           <Content>{this.props.children}</Content>
-          <Footer style={{ textAlign: "center" }}>
-            Copyright &#169; 2020 TVS SCS All rights reservered
+          {/* // <Footer style={{ textAlign: "center" }}>
+          //   Copyright &#169; 2020 TVS SCS All rights reservered
+          // </Footer> */}
+          {/*<Pagination
+      defaultCurrent={3}
+      total={500}
+      className='cm_pagination'
+           /> */}
+          <Footer className="footer">
+            Copyright © 2020 TVS SCS . All rights reserved{" "}
           </Footer>
         </Layout>
       </Layout>

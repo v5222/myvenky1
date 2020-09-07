@@ -260,6 +260,8 @@ function PodDashboard({
   return (
     <div>
       <MainLayout logout={logout} user={user}>
+        {/* {!loggedIn && <Redirect to="/" />} */}
+        {/* <MainLayout> */}
         <Row gutter={10} className="tvsit_pod-filters-row">
           <Col
             className="gutter-row"

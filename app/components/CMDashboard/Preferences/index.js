@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import styles from "./Preferences.module.scss";
+import vector from '../../../images/SVG/vector.svg'
 class Preference extends React.Component {
   state = {
     modal1Visible: false,
@@ -22,7 +23,8 @@ class Preference extends React.Component {
           className={styles.title_preference}
           onClick={() => this.setModal1Visible(true)}
         >
-          Change Display Data Preference
+        <img src={vector} alt="prefereence" style={{paddingRight:'5px'}} />
+                  Change Display Data Preference
         </div>
         <Modal
           title="20px to Top"
