@@ -39,6 +39,11 @@ function CMdashboardTable() {
         Header: "Percentage",
         accessor: "percentage",
       },
+      {
+        Header:'',
+        accessor:"view",
+      }
+      
     ],
     []
   );
@@ -52,6 +57,7 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "45%",
+      view:'view details'
     },
     {
       customer: "Sony",
@@ -62,6 +68,8 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "68%",
+      view:'view details'
+
     },
     {
       customer: "BOSCH",
@@ -72,6 +80,9 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "68%",
+      view:'view details'
+
+
     },
     {
       customer: "JCH",
@@ -82,6 +93,8 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "68%",
+      view:'view details'
+
     },
     {
       customer: "EFL",
@@ -92,6 +105,8 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "68%",
+      view:'view details'
+
     },
     {
       customer: "WonderCheif",
@@ -102,7 +117,10 @@ function CMdashboardTable() {
       intransit: 13,
       cwb: 60,
       percentage: "68%",
+      view:'view details'
+
     },
+    
   ];
 
   return (
@@ -185,8 +203,8 @@ function Table({ columns, data }) {
     //   </div>
     // </div>
 
-    <table {...getTableProps()}>
-      <thead>
+    <table {...getTableProps()} >
+      <thead cellspacing="4" cellpadding="2">
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (

@@ -1,3 +1,22 @@
 .tvsit-cm-container {
-  margin: 22px;
+ margin: 22px;
+}
+
+.dashboard_header{
+border-radius:15px 15px 0px 0px;
+padding-top: 40px;
+}
+
+.cm_title{
+  position: absolute;
+  padding-left: 15px;
+  color: #262626c0;
+  font-size:17px;
+  font-weight: 600;
+  margin-top: 12px;
+
+}
+.cm_pagination{
+  margin-left: 56rem;
+ margin-top: 20px;
 }
