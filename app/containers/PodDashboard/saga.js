@@ -88,7 +88,7 @@ export function* getEta(action) {
   };
   const data = yield call(request, requestURL, options);
   const bodymsg = data.body.bodymsg;
-  console.log(data, "data from eta");
+  // console.log(data, "data from eta");
   try {
     // Call our request helper (see 'utils/request')
 
@@ -112,7 +112,7 @@ Filter DropDown Data handler
 
 function* getFilters(action) {
   const values = action.payload;
-  console.log(action.payload, "from saga filters");
+  // console.log(action.payload, "from saga filters");
   const requestURL = apiURL;
   const options = {
     method: "POST",
@@ -125,7 +125,7 @@ function* getFilters(action) {
   const bodymsg = data.body.bodymsg;
 
   try {
-    console.log("trycat", bodymsg.customer);
+    // console.log("trycat", bodymsg.customer);
     yield put({
       type: SET_FILTERS,
 

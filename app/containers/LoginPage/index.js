@@ -41,6 +41,8 @@ import reducer from "./reducer";
 import history from "utils/history";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
+// import withAuthProvider from "containers/app/AuthProvider";
+
 const key = "loginPage";
 function LoginPage({
   getOtp,
@@ -53,6 +55,9 @@ function LoginPage({
   history,
   setLoading,
   setLoggedIn,
+  isAuthenticated,
+  login,
+  logout,
   ...props
 }) {
   useInjectReducer({ key, reducer });
@@ -78,13 +83,20 @@ function LoginPage({
     setOtpval({ ...otpval, ["otp"]: event.target.value });
   };
   useEffect(() => {
-    if (props.location.search !== "") {
-      console.log(props.location.search);
-      setLoggedIn();
-      localStorage.setItem("loggedIn", true);
+    // if (props.location.search !== "") {
+    //   console.log(props.location.search);
+    //   setLoggedIn();
+    //   localStorage.setItem("loggedIn", true);
+    //   history.push("/podDashboard");
+    // }
+  }, []);
+
+  useEffect(() => {
+    console.log(isAuthenticated, "From ADFS");
+    if (isAuthenticated === true) {
       history.push("/podDashboard");
     }
-  }, []);
+  }, [isAuthenticated]);
   const handleOTPgen = () => {
     setLoading(true);
     if (ecode === "") {
@@ -111,7 +123,7 @@ function LoginPage({
           <Button
             className="tvsit-loginPage_content-btn"
             size="large"
-            onClick={checkAdfs}
+            onClick={login}
           >
             Login with ADFS
           </Button>

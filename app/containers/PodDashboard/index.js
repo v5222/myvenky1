@@ -52,6 +52,7 @@ import { makeSelectLogin } from "containers/App/selectors";
 import { motion } from "framer-motion";
 import CsvDownload from "react-json-to-csv";
 import { apiURL } from "containers/App/services";
+
 const key = "podDashboard";
 
 const { RangePicker } = DatePicker;
@@ -64,24 +65,26 @@ const { Panel } = Collapse;
 function PodDashboard({
   totaltrips,
   completedCount,
-  completedData,
   getDataonLoad,
   podCount,
-  podData,
   pod24hrsCount,
-  pod24hrsData,
   selected,
   toggleSelected,
   loading,
   setLoading,
   tableData,
-  loggedIn,
   getEta,
   etaCount,
+  isAuthenticated,
+  logout,
+  user,
+  getAccessToken,
+  login,
   // customer,
   // customertype,
   // divisioncode,
   getFilters,
+  getUserProfile,
 }) {
   // Saga and Reducer injectors
   useInjectReducer({ key, reducer });
@@ -107,6 +110,7 @@ function PodDashboard({
   const [tableLoad, setTableLoad] = useState(loading);
   const [dynamicTitle, setDynamicTitle] = useState("updated <24hrs");
   const [showCSV, setShowCSV] = useState(false);
+  const [token, setToken] = useState("");
   const [options, setOptions] = useState({
     type: "GETDATA",
     metrics: selected,
@@ -118,16 +122,20 @@ function PodDashboard({
     sdate: "2020-08-08",
     edate: "2020-08-11",
   });
-  const isInitialMount = useRef(true);
+  // const isInitialMount = useRef(true);
+
+  const checkLogin = async () => {
+    let token = await getUserProfile();
+  };
 
   //Component Mount Hook
   useEffect(() => {
+    setLoading(true);
+    checkLogin();
     getDataonLoad(options);
     getEta();
     // getFilters(options);
     fetchFilters();
-
-    setLoading(true);
   }, []);
 
   //Table or Grid Data updation hook
@@ -141,6 +149,13 @@ function PodDashboard({
   /*
   Testing hooks AND functions will come here should be removed while refactoring
 */
+  useEffect(() => {
+    console.log("from AdFS", user, isAuthenticated);
+  }, [isAuthenticated, user]);
+  useEffect(() => {
+    // console.log(token, "adfs token");
+  }, [token]);
+
   const fetchFilters = (options) => {
     let filterOption = { ...options, type: "FILTERS" };
     let bodyoption = {
@@ -174,7 +189,7 @@ function PodDashboard({
   //Filters hook to change filter dropdown values
   useEffect(() => {
     // getFilters(options);
-    console.log(options);
+    // console.log(options);
     fetchFilters(options);
   }, [options]);
   // useEffect(() => {
@@ -244,8 +259,7 @@ function PodDashboard({
 
   return (
     <div>
-      {!loggedIn && <Redirect to="/" />}
-      <MainLayout>
+      <MainLayout logout={logout} user={user}>
         <Row gutter={10} className="tvsit_pod-filters-row">
           <Col
             className="gutter-row"

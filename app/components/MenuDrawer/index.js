@@ -3,7 +3,7 @@ import Drawer from "antd/lib/drawer";
 import Button from "antd/lib/button";
 import Menu from "antd/lib/menu";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
-import RightOutlined from "@ant-design/icons/RightOutlined";
+import CloudOutlined from "@ant-design/icons/CloudOutlined";
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
 import Logo from "../../images/TVS-SCS-Logo-full-White.png";
 import Logo2 from "../../images/TVS-SCS-Tagline-White.png";
@@ -57,12 +57,21 @@ const MenuDrawer = ({ selected }) => {
           >
             POD Dashboard
           </Menu.Item>
-          {/* <Menu.Item key="2" icon={<CloudOutlined />}>
-              User Management
-            </Menu.Item>
-            <Menu.Item key="3" icon={<TeamOutlined />}>
-              Profiles
-            </Menu.Item> */}
+          <Menu.Item
+            key="2"
+            icon={<CloudOutlined />}
+            onClick={() => history.push("/courierManagement")}
+            className={
+              selected === "/courierManagement"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            User Management
+          </Menu.Item>
+          {/* <Menu.Item key="3" icon={<TeamOutlined />}>
+            Profiles
+          </Menu.Item> */}
         </Menu>
       </Drawer>
     </>

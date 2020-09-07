@@ -1,5 +1,5 @@
 export const config = {
-  appId: "a08788cd-f304-4c86-86c8-75c04f0d77ab",
+  appId: "003658e9-acd7-4b96-b2f6-4498c128517b",
   redirectUri: "http://localhost:3000",
   scopes: ["user.read", "calendars.read"],
 };

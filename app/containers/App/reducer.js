@@ -1,12 +1,12 @@
 import produce from "immer";
 import { SET_LOGIN } from "./constants";
-let login = localStorage.getItem("loggedIn")
+// let login = localStorage.getItem("loggedIn")
 export const initialState = {
-  loggedIn: login?true:false
+  loggedIn: false,
 };
 
 const appReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case SET_LOGIN:
         draft.loggedIn = action.loggedIn;

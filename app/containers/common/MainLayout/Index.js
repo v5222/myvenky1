@@ -29,9 +29,10 @@ class MainLayout extends React.Component {
     };
   }
   componentDidUpdate() {
+    console.log(history.location.pathname);
     if (this.state.selected !== history.location.pathname) {
       this.setState({ selected: history.location.pathname }, () => {
-        console.log(this.state.selected);
+        console.log(this.state.selected, "selected");
       });
     }
   }
@@ -44,11 +45,13 @@ class MainLayout extends React.Component {
 
   menu = (
     <Menu onClick={this.onClick}>
+      <Menu.Item key="1">{this.props.user.displayName}</Menu.Item>
+      <Menu.Item key="2">{this.props.user.email}</Menu.Item>
       <Menu.Item
-        key="2"
+        key="3"
         onClick={() => {
           this.props.logout();
-          localStorage.setItem("loggedIn", false);
+          // localStorage.setItem("loggedIn", false);
           history.push("/");
           window.location.reload();
         }}
@@ -96,7 +99,9 @@ class MainLayout extends React.Component {
             </div>
           </Header>
           <Content>{this.props.children}</Content>
-          <Footer style={{ textAlign: "center" }}>TVS Logistics Pvt Ltd</Footer>
+          <Footer style={{ textAlign: "center" }}>
+            Copyright &#169; 2020 TVS SCS All rights reservered
+          </Footer>
         </Layout>
       </Layout>
     );
@@ -104,9 +109,9 @@ class MainLayout extends React.Component {
 }
 const mapDispatchtoProps = (dispatch) => {
   return {
-    logout: () => {
-      dispatch({ type: SET_LOGIN, loggedIn: false });
-    },
+    // logout: () => {
+    //   dispatch({ type: SET_LOGIN, loggedIn: false });
+    // },
   };
 };
 export default connect(

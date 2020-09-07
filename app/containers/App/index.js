@@ -7,8 +7,8 @@
  *
  */
 
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import LoginPage from "containers/LoginPage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
@@ -16,12 +16,30 @@ import PodDashboard from "containers/PodDashboard/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
+import withAuthProvider from "containers/app/AuthProvider";
+import { connect } from "react-redux";
+import { makeSelectLogin } from "./selectors";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
 
 // import
 // const checkLogin = ()=>{
 
 // }
-export default function App({ history }) {
+function App({
+  history,
+  login,
+  isAuthenticated,
+  logout,
+  user,
+  getAccessToken,
+  getUserProfile,
+  loggedIn,
+}) {
+  let authenticated = false;
+  if (loggedIn === true || isAuthenticated === true) {
+    authenticated = true;
+  }
   return (
     <div>
       <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">
@@ -29,13 +47,58 @@ export default function App({ history }) {
       </Helmet>
 
       <Switch>
-        <Route exact path="/" component={LoginPage} />
-        <Route exact path="/podDashboard" component={PodDashboard} />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <LoginPage
+              {...props}
+              login={login}
+              logout={logout}
+              isAuthenticated={isAuthenticated}
+              // getAccessToken={getAccessToken}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/podDashboard"
+          render={(props) =>
+            authenticated ? (
+              <PodDashboard
+                {...props}
+                logout={logout}
+                login={login}
+                isAuthenticated={isAuthenticated}
+                user={user}
+                getAccessToken={getAccessToken}
+                getUserProfile={getUserProfile}
+              />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
         <Route exact path="/test" component={TestPage} />
-        <Route exact path="/courierManagement" component={CourierManagement} />
+        <Route
+          exact
+          path="/courierManagement"
+          render={(props) =>
+            authenticated ? (
+              <CourierManagement {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
     </div>
   );
 }
+const mapStateToProps = createStructuredSelector({
+  loggedIn: makeSelectLogin(),
+});
+
+export default connect(mapStateToProps)(withAuthProvider(App));

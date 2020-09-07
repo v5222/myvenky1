@@ -23,10 +23,10 @@ export function* OtpValidation(action) {
       body: values,
     }),
   };
-  console.log(options, "options");
+  // console.log(options, "options");
   try {
     const data = yield call(request, requestURL, options);
-    console.log(data, "from saga");
+    // console.log(data, "from saga");
     if (values.type === "OTPGEN") {
       if (data.body.statuscode !== 200) {
         yield put({
@@ -71,7 +71,7 @@ export function* OtpValidation(action) {
           type: SET_LOGIN,
           loggedIn: true,
         });
-        localStorage.setItem("loggedIn", true);
+        // localStorage.setItem("loggedIn", true);
         history.push("/podDashboard");
       }
     }

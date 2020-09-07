@@ -4,13 +4,13 @@ import Menu from "antd/lib/menu";
 // import CMConsignmentTracker from "../../components/CMConsignmentTracker";
 import CMDashboard from "../../components/CMDashboard";
 const { SubMenu } = Menu;
-function CourierManagement() {
+function CourierManagement({ logout, user }) {
   const [current, setCurrent] = useState("dashboard");
   const handleClick = (e) => {
     setCurrent(e.key);
   };
   return (
-    <MainLayout>
+    <MainLayout logout={logout} user={user}>
       <main className="tvsit-cm-container">
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
           {/* <Menu.Item key="tracker">Courier Consginment Tracker</Menu.Item>
