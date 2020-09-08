@@ -43,11 +43,11 @@ function CourierManagement({ logout, user }) {
         <div className="tvsit-cm-wrapper">
           {/* <CMConsignmentTracker /> */}
           <CMDashboard />
-          <Pagination
+          {/* <Pagination
             defaultCurrent={3}
             total={500}
             className="cm_pagination"
-          />
+          /> */}
         </div>
       </main>
     </MainLayout>

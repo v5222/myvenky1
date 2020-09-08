@@ -1,16 +1,16 @@
 .tvsit-cmdashboard_table {
   table {
-     border-spacing: 0;
+    border-spacing: 0;
     table-layout: auto;
     width: 95%;
-    border: 1px solid #2D9CDB;
-    margin:0 auto ;
-     border-collapse: collapse;
-      border-radius: 1em;
-      overflow: hidden;    
+    border: 1px solid #2d9cdb;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-radius: 1em;
+    overflow: hidden;
 
     thead {
-      background: #2D9CDB;
+      background: #2d9cdb;
       color: white;
       font-size: 14px;
       font-weight: 600;
@@ -20,7 +20,6 @@
       border-spacing: 0;
       tr > th {
         padding: 12px 8px;
-
       }
     }
     tbody {
@@ -28,16 +27,15 @@
         font-size: 14px;
         color: #595959;
 
-
         // background-color: #f2f2f2;
         td {
           padding: 12px;
         }
         &:nth-child(even) {
-          background-color:#FFFFFF;
+          background-color: #ffffff;
         }
         &:nth-child(odd) {
-          background: #F2F2F2 ;
+          background: #f2f2f2;
         }
       }
     }
@@ -60,4 +58,18 @@
   }
 }
 
+.tvsit_cmdashboard-viewDetails {
+  font-size: 14px;
+  color: #2d9cdb;
+  border: 1px solid #2d9cdb;
+  padding: 5px 10px;
+  text-align: center;
+}
 
+.tvsit_cmdashboard-viewDetails-title {
+  font-size: 22px;
+  color: black;
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}

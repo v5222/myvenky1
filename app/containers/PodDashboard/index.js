@@ -277,13 +277,6 @@ function PodDashboard({
                 Entity
               </div>
               <Select
-                // defaultValue={
-                //   divisioncode !== undefined
-                //     ? divisioncode.length === 1
-                //       ? divisioncode[0].divisioncode
-                //       : "All"
-                //     : "All"
-                // }
                 value={divValue}
                 style={{ width: "100%" }}
                 onChange={(value) => {

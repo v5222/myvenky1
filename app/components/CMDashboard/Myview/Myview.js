@@ -1,73 +1,63 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Myview.module.scss";
 import ViewCard from "./ViewCard";
-import Flickity from "react-flickity-component";
 import "./flickity.scss";
 import Carousel from "antd/lib/carousel";
-import Preference from "../Preferences";
-
-const flickityOptions = {
-  initialIndex: 0,
-  wrapAround: false,
-  setGallerySize: true,
-  cellAlign: "left",
-  contain: true,
-};
+import { apiURLCourier } from "../../../containers/App/services";
 
 function Myview() {
+  const [data, setData] = useState([]);
   function onChange(a, b, c) {
     console.log(a, b, c);
   }
 
-  const contentStyle = {
-    height: "160px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
+  const fetchData = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    let bodyoption = {
+      method: "POST",
+      body: JSON.stringify({
+        body: {
+          ecode: "KARSHA01",
+          type: "FILTER-1",
+          customer: "All",
+          location: "All",
+          status: "All",
+          filterdate: "DATE",
+          sdate: "2020-06-02",
+          edate: "2020-08-31",
+        },
+      }),
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(apiURLCourier, bodyoption)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "from views");
+        const { bodymsg } = data.body;
+        const { statuscode } = data.body;
+        statuscode === 201 ? setData([]) : setData(bodymsg);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className={styles.container}>
-         {/* <div className={styles.d_flex}>
-            <div className={styles.title}>My View</div>
-          <Preference />
-            </div> */}
-
-        {/* <Flickity
-          className={"carousel"} // default ''
-          elementType={"div"} // default 'div'
-          options={flickityOptions} // takes flickity options {}
-          disableImagesLoaded={false} // default false
-          reloadOnUpdate // default false
-          static // default false
-        >
-          <div className={styles.d_flex}>
-            <ViewCard />
-            <ViewCard />
-            <ViewCard />
-          </div>
-
-          <div className={styles.d_flex}>
-            <ViewCard />
-            <ViewCard />
-            <ViewCard />
-          </div>
-
-          <div className={styles.d_flex}>
-            <ViewCard />
-            <ViewCard />
-            <ViewCard />
-          </div>
-         
-        </Flickity> */}
         <div className="tvsit-card_carousel">
           <Carousel afterChange={onChange} dots={styles.dots}>
             <div>
               <div className={styles.d_flex}>
-                <ViewCard />
-                <ViewCard />
-                <ViewCard />
+                <ViewCard data={data[0]} />
+                <ViewCard data={data[1]} />
+                <ViewCard data={data[0]} />
               </div>
             </div>
             <div>
@@ -87,7 +77,6 @@ function Myview() {
           </Carousel>
         </div>
       </div>
-     
     </>
   );
 }

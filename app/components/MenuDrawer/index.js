@@ -67,7 +67,7 @@ const MenuDrawer = ({ selected }) => {
                 : "tvsit-main-menu"
             }
           >
-            User Management
+            Courier Management
           </Menu.Item>
           {/* <Menu.Item key="3" icon={<TeamOutlined />}>
             Profiles
