@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { makeSelectLogin } from "./selectors";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
-
+import { useClearCache } from "react-clear-cache";
 // import
 // const checkLogin = ()=>{
 
@@ -36,9 +36,13 @@ function App({
   getUserProfile,
   loggedIn,
 }) {
+  const { isLatestVersion, emptyCacheStorage } = useClearCache();
   let authenticated = false;
   if (loggedIn === true || isAuthenticated === true) {
     authenticated = true;
+  }
+  if (!isLatestVersion) {
+    emptyCacheStorage();
   }
   return (
     <div>

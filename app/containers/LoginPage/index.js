@@ -136,6 +136,9 @@ function LoginPage({
                 onChange={(e) => handleChange(e)}
                 prefix={<UserOutlined style={{ color: "#00A5E6" }} />}
               />
+              {!otpStatus.status && (
+                <div style={{ color: "red" }}> {otpStatus.message}</div>
+              )}
               <Button
                 className="tvsit-loginPage_content-btn"
                 style={{ marginTop: "10px" }}
@@ -165,6 +168,7 @@ function LoginPage({
                   style={{ marginRight: "10px" }}
                   onChange={(e) => handleChangeOtp(e)}
                 />
+
                 <Button
                   size="large"
                   className="tvsit-loginPage_content-btn"
@@ -177,6 +181,9 @@ function LoginPage({
                   Login
                 </Button>
               </div>
+              {!otpVal.status && (
+                <div style={{ color: "red" }}>{otpVal.message}</div>
+              )}
             </>
           ) : (
             ""
