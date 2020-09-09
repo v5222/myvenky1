@@ -11,6 +11,10 @@ function CMDashboard() {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [columns, setColumns] = useState(cloumns1);
+  const [dates, setDates] = useState({
+    sdate: "2020-06-02",
+    edate: "2020-08-31",
+  });
   const fetchData = (values) => {
     console.log(apiURLCourier, values);
     setLoading(true);
@@ -28,7 +32,12 @@ function CMDashboard() {
         console.log(data);
         const { bodymsg } = data.body;
         const { statuscode } = data.body;
-        statuscode === 201 ? setTableData([]) : setTableData(bodymsg);
+        if (statuscode === 201) {
+          setTableData([]);
+        } else {
+          setTableData(bodymsg);
+          setDates({ edate: values.edate, sdate: values.sdate });
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -54,6 +63,7 @@ function CMDashboard() {
         columnData={filtersOn === false ? cloumns1 : column2}
         // columnData2={column2}
         // filtersOn={filtersOn}
+        dates={dates}
         data={tableData}
       />
     </div>

@@ -36,10 +36,10 @@ function App({
   getUserProfile,
   loggedIn,
 }) {
-  let authenticated = true;
-  // if (loggedIn === true || isAuthenticated === true) {
-  //   authenticated = true;
-  // }
+  let authenticated = false;
+  if (loggedIn === true || isAuthenticated === true) {
+    authenticated = true;
+  }
   return (
     <div>
       <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">

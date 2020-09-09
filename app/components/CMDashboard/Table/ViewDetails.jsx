@@ -4,7 +4,7 @@ import Button from "antd/lib/button";
 import CMdashboardTable from "../Table";
 import { apiURLCourier } from "../../../containers/App/services";
 
-function ViewDetails({ customer }) {
+function ViewDetails({ customer, dates }) {
   const [visible, setVisible] = useState(false);
   const [delivered, setDelivered] = useState([]);
   const [undelivered, setUndelivered] = useState([]);
@@ -25,8 +25,8 @@ function ViewDetails({ customer }) {
           location: "All",
           status: type,
           filterdate: "DATE",
-          sdate: "2020-06-02",
-          edate: "2020-08-31",
+          sdate: dates.sdate,
+          edate: dates.edate,
         },
       }),
       headers: myHeaders,
@@ -48,7 +48,6 @@ function ViewDetails({ customer }) {
         }
       })
       .catch((err) => {
-        setLoading(false);
         console.log(err);
       });
   };
@@ -57,6 +56,7 @@ function ViewDetails({ customer }) {
     fetchData("DELIVERED");
     fetchData("UNDELIVERED");
     fetchData("IN TRANSIT");
+    console.log(dates);
   }, [customer]);
   return (
     <div>
@@ -69,6 +69,7 @@ function ViewDetails({ customer }) {
         width={1000}
         closable={true}
         destroyOnClose={true}
+        onCancel={() => setVisible(false)}
         footer={[
           <Button key="back" onClick={() => setVisible(false)}>
             Close

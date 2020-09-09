@@ -96,101 +96,103 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <div className={styles.title}>Customer</div>
-          <Select
-            value={custValue}
-            onChange={(value) => {
-              setCustValue(value);
-              handleChange("customer", value);
-            }}
-            className={styles.select}
-            showSearch
-            optionFilterProp="children"
-            filterOption={(input, option) => {
-              if (option.children !== null) {
-                return (
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                );
-              }
-            }}
-          >
-            {custData.length > 0
-              ? custData.map((i, index) => {
+        <div className={styles.inner1}>
+          <div className={styles.wrapper}>
+            <div className={styles.title}>Customer</div>
+            <Select
+              value={custValue}
+              onChange={(value) => {
+                setCustValue(value);
+                handleChange("customer", value);
+              }}
+              className={styles.select}
+              showSearch
+              optionFilterProp="children"
+              filterOption={(input, option) => {
+                if (option.children !== null) {
                   return (
-                    <>
-                      <Option key={index} value={i.consignor}>
-                        {i.consignor}
-                      </Option>
-                    </>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
                   );
-                })
-              : ""}
-            <Option key="All" value="All">
-              All
-            </Option>
-            {/* <Option value="lucy">Bosch</Option>
+                }
+              }}
+            >
+              {custData.length > 0
+                ? custData.map((i, index) => {
+                    return (
+                      <>
+                        <Option key={index} value={i.consignor}>
+                          {i.consignor}
+                        </Option>
+                      </>
+                    );
+                  })
+                : ""}
+              <Option key="All" value="All">
+                All
+              </Option>
+              {/* <Option value="lucy">Bosch</Option>
 
             <Option value="Yiminghe">JCH</Option> */}
-          </Select>
+            </Select>
+          </div>
+
+          <div className={styles.wrapper}>
+            <div className={styles.title}>Status</div>
+            <Select
+              defaultValue="All"
+              onChange={(value) => {
+                setCustValue(value);
+                handleChange("status", value);
+              }}
+              className={styles.select}
+              disabled={!filtersOn}
+            >
+              <Option value="DELIVERED">DELIVERED</Option>
+              <Option value="UNDELIVERED">UNDELIVERED</Option>
+
+              <Option value="IN TRANSIT">IN TRANSIT</Option>
+              <Option key="All" value="All">
+                All
+              </Option>
+            </Select>
+          </div>
+
+          <div className={styles.wrapper}>
+            <div className={styles.title}>Location</div>
+            <Select
+              value={location}
+              onChange={(value) => {
+                setCustValue(value);
+                handleChange("location", value);
+              }}
+              className={styles.select}
+              disabled={!filtersOn}
+            >
+              {locationData.length > 0
+                ? locationData.map((i, index) => {
+                    return (
+                      <>
+                        <Option key={index} value={i.origin}>
+                          {i.origin}
+                        </Option>
+                      </>
+                    );
+                  })
+                : ""}
+              <Option key="All" value="All">
+                All
+              </Option>
+            </Select>
+          </div>
+
+          <div className={styles.wrapperDate}>
+            <div className={styles.title_date}>Date</div>
+            <RangePicker bordered={true} onChange={handleDateRange} />
+          </div>
         </div>
-
-        <div className={styles.wrapper}>
-          <div className={styles.title}>Status</div>
-          <Select
-            defaultValue="All"
-            onChange={(value) => {
-              setCustValue(value);
-              handleChange("status", value);
-            }}
-            className={styles.select}
-            disabled={!filtersOn}
-          >
-            <Option value="DELIVERED">DELIVERED</Option>
-            <Option value="UNDELIVERED">UNDELIVERED</Option>
-
-            <Option value="IN TRANSIT">IN TRANSIT</Option>
-            <Option key="All" value="All">
-              All
-            </Option>
-          </Select>
-        </div>
-
-        <div className={styles.wrapper}>
-          <div className={styles.title}>Location</div>
-          <Select
-            value={location}
-            onChange={(value) => {
-              setCustValue(value);
-              handleChange("location", value);
-            }}
-            className={styles.select}
-            disabled={!filtersOn}
-          >
-            {locationData.length > 0
-              ? locationData.map((i, index) => {
-                  return (
-                    <>
-                      <Option key={index} value={i.origin}>
-                        {i.origin}
-                      </Option>
-                    </>
-                  );
-                })
-              : ""}
-            <Option key="All" value="All">
-              All
-            </Option>
-          </Select>
-        </div>
-
-        <div className={styles.wrapperDate}>
-          <div className={styles.title_date}>Date</div>
-          <RangePicker bordered={true} onChange={handleDateRange} />
-        </div>
-
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper_csv}>
           <div
             style={{
               color: "transparent",
@@ -200,7 +202,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
           >
             dummy
           </div>
-          {/* <Button type="primary" icon={<DownloadOutlined />}> */}
+
           <CsvDownload
             data={tableData}
             filename="data.csv"
@@ -211,7 +213,6 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
             </span>
             Download Report
           </CsvDownload>
-          {/* </Button> */}
         </div>
       </div>
     </>

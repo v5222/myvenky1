@@ -4,12 +4,12 @@ import { FixedSizeList } from "react-window";
 import styles from "./CmdashboardTable.scss";
 import Empty from "antd/lib/empty";
 import ViewDetails from "./ViewDetails";
-function CMdashboardTable({ columnData, data }) {
+function CMdashboardTable({ columnData, data, dates }) {
   const columns = React.useMemo(() => columnData, []);
 
   return (
     <div className="tvsit-cmdashboard_table">
-      <Table columns={columnData} data={data} />
+      <Table columns={columnData} data={data} dates={dates} />
       {data.length < 1 ? (
         <div
           style={{
@@ -29,7 +29,7 @@ function CMdashboardTable({ columnData, data }) {
 }
 
 //table
-function Table({ columns, data }) {
+function Table({ columns, data, dates }) {
   // Use the state and functions returned from useTable to build your UI
   let height = data.length < 1 ? 10 : 300;
 
@@ -71,7 +71,7 @@ function Table({ columns, data }) {
               let customerValue = cell.row.values.consignor;
               return (
                 <td {...cell.getCellProps()}>
-                  <ViewDetails customer={customerValue} />
+                  <ViewDetails customer={customerValue} dates={dates} />
                 </td>
               );
             } else {
