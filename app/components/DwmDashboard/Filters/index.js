@@ -17,7 +17,7 @@ function Filters() {
     <>
       <div className={styles.container}>
         <div className={styles.wrapper}>
-          <div className={styles.title}>Customer</div>
+          <div className={styles.title}>Capability</div>
           <Select
             placeholder="All"
             onChange={handleChange}
@@ -31,13 +31,13 @@ function Filters() {
         </div>
 
         <div className={styles.wrapper}>
-          <div className={styles.title}>Status</div>
+          <div className={styles.title}>Customer</div>
           <Select
             placeholder="All"
             onChange={handleChange}
             className={styles.select}
           >
-            <Option value="delivered">Delivered</Option>
+            <Option value="delivered">Owner</Option>
             <Option value="notdelivered">Not Delivered</Option>
 
             <Option value="intransit">In Transit</Option>
@@ -58,47 +58,29 @@ function Filters() {
           </Select>
         </div>
 
-        <div className={styles.wrapperDate}>
-          <div className={styles.title_date}>Date</div>
-          <RangePicker bordered={true} />
+        <div className={styles.wrapper}>
+          <div className={styles.title}>Date Type & Range Picker </div>
+          <Select
+           placeholder="All"  
+          onChange={handleChange}
+          className={styles.select}
+        >
+          <Option default value="Today">Today</Option>
+          <Option value="WTD">WTD</Option>
+
+          <Option value="MTD">MTD</Option>
+          <Option value="YTD">YTD</Option>
+        </Select>
+          
 
           
         </div>
-     {/* <div className={styles.wrapper_clear}>
-          <div
-            style={{
-              color: "red",
-              fontSize: "14px",
-              lineHeight: "18px",
-            }}
-            className={styles.clearfilter}
-          >
-            dummy
-          </div>
-          <div className={styles.clearfilter}>clear filters</div>
-        </div>
-        <div className={styles.wrapper}>
-          <div
-            style={{
-              color: "red",
-              fontSize: "14px",
-              lineHeight: "18px",
-            }}
-            className={styles.clearfilter}
-          >
-            dummy
-          </div>
-         <Button type="primary" style={{marginLeft:'auto'}} icon={<DownloadOutlined />}>
-            Download Report
-          </Button> 
-        </div> */}
+     
         
-          <Button type="primary" style={{margin:'auto'}} icon={<DownloadOutlined  />}>
-            Download Report
-          </Button> 
+          
       </div> 
     </>
   );
 }
 
-export default Filters;
+export default Filters; 

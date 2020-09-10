@@ -67,8 +67,20 @@ const MenuDrawer = ({ selected }) => {
                 : "tvsit-main-menu"
             }
           >
-            User Management
+            Courier Management
           </Menu.Item>
+          <Menu.Item
+            key="3"
+            icon={<CloudOutlined />}
+            onClick={() => history.push("/dwmApplication")}
+            className={
+              selected === "/dwmApplication"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+          Dwm Application
+            </Menu.Item>
           {/* <Menu.Item key="3" icon={<TeamOutlined />}>
             Profiles
           </Menu.Item> */}

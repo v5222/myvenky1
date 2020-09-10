@@ -1,9 +1,9 @@
 import React from "react";
 import { useTable, useBlockLayout } from "react-table";
 import { FixedSizeList } from "react-window";
-import styles from "./CmdashboardTable.scss";
+import styles from "./DwmdashboardTable.scss";
 
-function CMdashboardTable() {
+function DwmdashboardTable() {
   const columns = React.useMemo(
     () => [
       {
@@ -124,7 +124,7 @@ function CMdashboardTable() {
   ];
 
   return (
-    <div className="tvsit-cmdashboard_table">
+    <div className="tvsit-dwmdashboard_table">
     <div className='tabel_scroll'>
     <Table columns={columns} data={data} />
     </div>
@@ -244,4 +244,4 @@ function Table({ columns, data }) {
   );
 }
 
-export default CMdashboardTable;
+export default DwmdashboardTable;

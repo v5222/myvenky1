@@ -41,13 +41,13 @@ function CourierManagement({ logout, user }) {
           {/* <Menu.Item style={{marginLeft:'61rem'}}><Preferance /></Menu.Item> */}
         </Menu>
         <div className="tvsit-cm-wrapper">
-          {/* <CMConsignmentTracker /> */}
+          {/* <CMConsignmentTracker />  */}
           <CMDashboard />
-          <Pagination
+         {/* <Pagination
             defaultCurrent={3}
             total={500}
             className="cm_pagination"
-          />
+          /> */}
         </div>
       </main>
     </MainLayout>

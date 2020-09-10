@@ -59,10 +59,35 @@ body {
           box-shadow: 0 0 black;
 }
 
+.tvsit_main-layout-avatar {
+  margin-right: 15px;
+}
+
+.tvsit_main-layout-name {
+  position: relative;
+  margin-left: -7px;
+  margin-right: 6px;
+  margin-top: -7px;
+}
+
+.qn_icon {
+  margin-right: 35px;
+  font-size: 18px;
+}
+
+.bell_icon {
+  margin-right: 35px;
+  font-size: 18px;
+}
+
+.avatar {
+  margin-bottom: 10px;
+}
+
 .tvsit_main-logo {
-  height: 47px;
-  width: 45px;
-  margin-left: 10px;
+  height: 52px;
+  width: 48px;
+  margin-left: 15px;
   display: block;
 }
 
@@ -145,6 +170,11 @@ body {
   height: 50px;
 }
 
+.cm_pagination {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
 .footer {
   text-align: center;
   background-color: #EEEEEE;
@@ -155,33 +185,40 @@ body {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  .tvsit_main-layoutUnFold {
-    margin-left: 0px;
+  .tvsit_main-layout-avatar {
+    margin-right: 0px;
   }
-  .tvsit-main-layout-title {
-    font-size: 16px;
+  .tvsit_main-layout-name {
+    position: relative;
     margin-left: 10px;
-    color: black;
+    margin-right: 2px;
+    margin-top: -7px;
+    font-size: 13px;
+  }
+  .qn_icon {
+    margin-right: 20px;
+    font-size: 15px;
+  }
+  .bell_icon {
+    margin-right: 20px;
+    font-size: 15px;
+  }
+  .avatar {
+    margin-bottom: 10px;
   }
   .tvsit_main-logo {
-    height: 40px;
+    height: 47px;
+    width: 45px;
     margin-left: 10px;
     display: block;
   }
-  .tvsit-header-lg {
-    padding: 0 10px;
-  }
-  .tvsit-main-menu {
-    padding-left: 15px !important;
-    background: #002776;
-    border-radius: 30px;
-    width: 100%;
-    margin-left: 0px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .trigger {
-    display: none;
+  .tvsit_main-logo2 {
+    height: 10px;
+    width: 150px;
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+    margin: 10px auto 20px auto;
+    display: block;
   }
 }
 
@@ -390,6 +427,44 @@ body {
 /* Medium devices (landscape tablets, 768px and up) */
 .tvsit-cm-container {
   margin: 22px;
+}
+
+.dashboard_header {
+  border-radius: 15px 15px 0px 0px;
+  padding-top: 40px;
+}
+
+.cm_title {
+  position: absolute;
+  padding-left: 15px;
+  color: #262626c0;
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.cm_pagination {
+  margin-left: 56rem;
+  margin-top: 20px;
+}
+
+.tvsit-dwm-container {
+  margin: 22px;
+}
+
+.dashboard_header {
+  padding-top: 40px;
+  border-radius: 15px 15px 0px 0px;
+}
+
+.dwm_title {
+  position: absolute;
+  padding-left: 15px;
+  color: #262626c0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  margin-top: 12px;
 }
 
 .ant-table-thead > tr > th {

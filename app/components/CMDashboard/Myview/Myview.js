@@ -28,7 +28,7 @@ function Myview() {
   };
   return (
     <>
-      <div className={styles.container}>
+      
          {/* <div className={styles.d_flex}>
             <div className={styles.title}>My View</div>
           <Preference />
@@ -61,6 +61,7 @@ function Myview() {
           </div>
          
         </Flickity> */}
+        <div className={styles.container}>
         <div className="tvsit-card_carousel">
           <Carousel afterChange={onChange} dots={styles.dots}>
             <div>
@@ -86,6 +87,20 @@ function Myview() {
             </div>
           </Carousel>
         </div>
+      </div>
+
+     {/* mobile device container */}
+
+      <div className={styles.mob_container}>
+
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+     
+     
+
       </div>
      
     </>

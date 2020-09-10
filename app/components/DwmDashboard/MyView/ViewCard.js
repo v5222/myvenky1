@@ -3,13 +3,14 @@ import styles from "./Viewcard.module.scss";
 import conveyor from "../../../images/SVG/conveyor.svg";
 import delivered from "../../../images/SVG/delivered.svg";
 import transit from "../../../images/SVG/transit.svg";
+
 function ViewCard() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.d_flex}>
           <div className={styles.icon}>
-            <img src={conveyor} className='asdf' alt="total" />
+            <img src={conveyor} alt="total" />
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>5890</div>

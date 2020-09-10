@@ -14,6 +14,7 @@ import LoginPage from "containers/LoginPage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
 import PodDashboard from "containers/PodDashboard/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
+import DwmApplication from "containers/DwmApplication/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -36,10 +37,10 @@ function App({
   getUserProfile,
   loggedIn,
 }) {
-  let authenticated = false;
-  if (loggedIn === true || isAuthenticated === true) {
-    authenticated = true;
-  }
+  let authenticated = true;
+  // if (loggedIn === true || isAuthenticated === true) {
+  //   authenticated = true;
+  // }
   return (
     <div>
       <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">
@@ -86,6 +87,17 @@ function App({
           render={(props) =>
             authenticated ? (
               <CourierManagement {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/dwmApplication"
+          render={(props) =>
+            authenticated ? (
+              <DwmApplication {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )
