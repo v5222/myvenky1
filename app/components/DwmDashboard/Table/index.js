@@ -2,122 +2,110 @@ import React from "react";
 import { useTable, useBlockLayout } from "react-table";
 import { FixedSizeList } from "react-window";
 import styles from "./DwmdashboardTable.scss";
+// import { apiURLCourier } from "../../containers/App/services";
+// import Empty from "antd/lib/empty";
+
 
 function DwmdashboardTable() {
+
   const columns = React.useMemo(
     () => [
       {
-        Header: "Customer",
-        accessor: "customer",
+        Header: "Capability",
+        accessor: "Capability",
       },
       {
-        Header: "Location",
-        accessor: "locations",
+        Header: "Project",
+        accessor: "Project",
       },
       {
-        Header: "Total Invoices",
-        accessor: "invoices",
+        Header: "User",
+        accessor: "User",
       },
 
       {
-        Header: "Delivered",
-        accessor: "delivered",
+        Header: "Today Target",
+        accessor: "TodayTarget",
       },
       {
-        Header: "Not Delivered",
-        accessor: "notdelivered",
+        Header: "Today Achievement",
+        accessor: "TodayAchievement",
       },
       {
-        Header: "Intransit",
-        accessor: "intransit",
+        Header: "Monthly Target",
+        accessor: "MonthlyTarget",
       },
       {
-        Header: "CWB",
-        accessor: "cwb",
+        Header: "Monthly Achievement",
+        accessor: "MonthlyAchievement",
       },
-      {
-        Header: "Percentage",
-        accessor: "percentage",
-      },
-      {
-        Header:'',
-        accessor:"view",
-      }
       
     ],
     []
   );
+
   const data = [
     {
-      customer: "Modicare",
-      locations: 10,
-      invoices: 212,
-      delivered: 23,
-      notdelivered: 11,
-      intransit: 13,
-      cwb: 60,
-      percentage: "45%",
-      view:'view details'
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 212,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
+      
     },
     {
-      customer: "Sony",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 312,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
+     
 
     },
     {
-      customer: "BOSCH",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 312,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
+      
+
+    },
+    {
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 312,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
+      
+    },
+    {
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 312,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
 
 
     },
     {
-      customer: "JCH",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    {
-      customer: "EFL",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    {
-      customer: "Wonder",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
+      Capability: "AMW",
+      Project: "ASHOK LEYLAND",
+      User: 312,
+      TodayTarget: 22,
+      TodayAchievement: 4,
+      MonthlyTarget: 4,
+      MonthlyAchievement: 0,
 
     },
     
@@ -180,31 +168,7 @@ function Table({ columns, data }) {
 
   // Render the UI for your table
   return (
-    // <div {...getTableProps()} className="table">
-    //   <div>
-    //     {headerGroups.map((headerGroup) => (
-    //       <div {...headerGroup.getHeaderGroupProps()} className="tr">
-    //         {headerGroup.headers.map((column) => (
-    //           <div {...column.getHeaderProps()} className="th">
-    //             {column.render("Header")}
-    //           </div>
-    //         ))}
-    //       </div>
-    //     ))}
-    //   </div>
-
-    //   <div {...getTableBodyProps()}>
-    //     <FixedSizeList
-    //       height={400}
-    //       itemCount={rows.length}
-    //       itemSize={35}
-    //       width={totalColumnsWidth}
-    //     >
-    //       {RenderRow}
-    //     </FixedSizeList>
-    //   </div>
-    // </div>
-
+    
     <table {...getTableProps()}>
       <thead >
         {headerGroups.map((headerGroup) => (

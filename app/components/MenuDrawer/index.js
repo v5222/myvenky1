@@ -3,10 +3,12 @@ import Drawer from "antd/lib/drawer";
 import Button from "antd/lib/button";
 import Menu from "antd/lib/menu";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
-import CloudOutlined from "@ant-design/icons/CloudOutlined";
+import PieChartOutlined from "@ant-design/icons/PieChartOutlined";
+import LineChartOutlined from "@ant-design/icons/LineChartOutlined";
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
-import Logo from "../../images/TVS-SCS-Logo-full-White.png";
-import Logo2 from "../../images/TVS-SCS-Tagline-White.png";
+import Logo from "../../images/logo-full.png";
+import Logo2 from "../../images/TVS-SCS-Tagline-Color.png";
+import Courier from '../../images/SVG/couriersidebar.svg'
 import history from "utils/history";
 const MenuDrawer = ({ selected }) => {
   const [visible, setVisible] = useState(false);
@@ -25,41 +27,48 @@ const MenuDrawer = ({ selected }) => {
         onClose={onClose}
         visible={visible}
         bodyStyle={{
-          backgroundColor: "#1890ff",
+          backgroundColor: "#ECECEC",
+          width:'100%',
+          padding:'10px 0 10px 0'
         }}
       >
         <div
           style={{
-            margin: "10px auto 70px auto",
+             margin: "10px 0 50px 0 ",
             width: "100%",
-            height: "80px",
+            height: "70px",
+            
           }}
         >
-          {" "}
+          {" "} 
           <img src={Logo} className="tvsit_drawer_logo" />
           <img src={Logo2} className="tvsit_drawer_logo2" />
+          <div style={{borderBottom:'1px solid #D9D9D9', width:'100%',paddingLeft:'0px'}}></div>
         </div>
+        
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          style={{ background: "#1890ff" }}
+          style={{ background: "#ECECEC",marginLeft:'10px'}}
+
         >
           <Menu.Item
             key="/podDashboard"
-            icon={<BarChartOutlined />}
             className={
               selected === "/podDashboard"
                 ? "tvsit-main-menu-selected"
                 : "tvsit-main-menu"
-            }
+                
+            }            
+            icon={<PieChartOutlined />}
             onClick={() => history.push("/podDashboard")}
           >
             POD Dashboard
           </Menu.Item>
           <Menu.Item
             key="2"
-            icon={<CloudOutlined />}
+             icon={<LineChartOutlined /> }
             onClick={() => history.push("/courierManagement")}
             className={
               selected === "/courierManagement"
@@ -71,7 +80,7 @@ const MenuDrawer = ({ selected }) => {
           </Menu.Item>
           <Menu.Item
             key="3"
-            icon={<CloudOutlined />}
+            icon={<BarChartOutlined />}
             onClick={() => history.push("/dwmApplication")}
             className={
               selected === "/dwmApplication"
@@ -81,9 +90,7 @@ const MenuDrawer = ({ selected }) => {
           >
           Dwm Application
             </Menu.Item>
-          {/* <Menu.Item key="3" icon={<TeamOutlined />}>
-            Profiles
-          </Menu.Item> */}
+         
         </Menu>
       </Drawer>
     </>

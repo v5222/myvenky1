@@ -16,10 +16,13 @@ function DwmApplication({ logout, user }) {
   const handleClick = (e) => {
     setCurrent(e.key);
   };
+
+
+  
   return (
     <MainLayout logout={logout} user={user}>
       <main className="tvsit-dwm-container">
-        <Breadcrumb style={{ margin: "10px" }}>
+        <Breadcrumb className="breadcrumb">
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>DWM Application</Breadcrumb.Item>
         </Breadcrumb>

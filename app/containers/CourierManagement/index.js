@@ -19,7 +19,7 @@ function CourierManagement({ logout, user }) {
   return (
     <MainLayout logout={logout} user={user}>
       <main className="tvsit-cm-container">
-        <Breadcrumb style={{ margin: "10px" }}>
+        <Breadcrumb className="breadcrumb">
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>Courier Management</Breadcrumb.Item>
         </Breadcrumb>
@@ -43,11 +43,7 @@ function CourierManagement({ logout, user }) {
         <div className="tvsit-cm-wrapper">
           {/* <CMConsignmentTracker />  */}
           <CMDashboard />
-         {/* <Pagination
-            defaultCurrent={3}
-            total={500}
-            className="cm_pagination"
-          /> */}
+          
         </div>
       </main>
     </MainLayout>

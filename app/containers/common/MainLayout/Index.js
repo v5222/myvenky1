@@ -59,38 +59,17 @@ class MainLayout extends React.Component {
 
   menu = (
     <Menu onClick={this.onClick}>
-      <Menu.Item key="1">{this.props.user.displayName}</Menu.Item>
+      {/* <Menu.Item key="1">{this.props.user.displayName}</Menu.Item> */}
       <Menu.Item key="2">{this.props.user.email}</Menu.Item>
+
       <Menu.Item
-        key="3"
+        key="2"
         onClick={() => {
           this.props.logout();
           // localStorage.setItem("loggedIn", false);
           history.push("/");
           window.location.reload();
         }}
-      >
-        Test Name <SmileOutlined />
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        // onClick={() => {
-        //   this.props.logout();
-        //   localStorage.setItem("loggedIn", false);
-        //   history.push("/");
-        //   window.location.reload();
-        // }}
-      >
-        dev.support9@tvslsl.com <MailOutlined />
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        // onClick={() => {
-        //   this.props.logout();
-        //   localStorage.setItem("loggedIn", false);
-        //   history.push("/");
-        //   window.location.reload();
-        // }}
       >
         Logout <LogoutOutlined />
       </Menu.Item>
@@ -129,14 +108,16 @@ class MainLayout extends React.Component {
 
                 <Dropdown overlay={this.menu} trigger={["click"]}>
                   <Avatar
-                    size={32}
+                    size={34}
                     icon={<UserOutlined />}
                     onClick={(e) => e.preventDefault()}
                     className="avatar"
                   />
                 </Dropdown>
               </div>
-              <Text className="tvsit_main-layout-name">R Shankar</Text>
+              <Text className="tvsit_main-layout-name">
+                {this.props.user.displayName}
+              </Text>
               {/*  <DownOutlined  className='.tvsit_main-layout-dropdown'/> */}
             </div>
           </Header>

@@ -4,12 +4,15 @@ import Button from "antd/lib/button";
 import DownloadOutlined from "@ant-design/icons/DownloadOutlined";
 import DatePicker from "antd/lib/date-picker";
 
+import Calendar from '../../../images/SVG/calendar.svg'
+
 const { RangePicker } = DatePicker;
 import styles from "./Filters.module.scss";
 
 const { Option } = Select;
 
 function Filters() {
+
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
@@ -45,7 +48,7 @@ function Filters() {
         </div>
 
         <div className={styles.wrapper}>
-          <div className={styles.title}>Location</div>
+          <div className={styles.title}>Owner</div>
           <Select
             placeholder="All"
             onChange={handleChange}
@@ -61,20 +64,19 @@ function Filters() {
         <div className={styles.wrapper}>
           <div className={styles.title}>Date Type & Range Picker </div>
           <Select
-           placeholder="All"  
+          placeholder="All"  
           onChange={handleChange}
           className={styles.select}
         >
-          <Option default value="Today">Today</Option>
-          <Option value="WTD">WTD</Option>
+          <Option  value="Today">Today</Option>
+          <Option selected value="WTD">WTD</Option>
 
           <Option value="MTD">MTD</Option>
           <Option value="YTD">YTD</Option>
         </Select>
-          
-
-          
         </div>
+        <div className={styles.calendar}> <img src={Calendar}/> </div>
+        <div className={styles.refresh}><p style={{fontFamily:'Open sans'}}>Last Refresh Date :<span className={styles.refreshdate}>10/09/2020</span> </p></div>
      
         
           

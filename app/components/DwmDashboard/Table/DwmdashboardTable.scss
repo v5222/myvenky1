@@ -1,26 +1,27 @@
 .tvsit-dwmdashboard_table {
-
+  padding: 10px 25px;
   table {
     border-spacing: 0;
     table-layout: auto;
-    width: 95%;
-    border: 1px solid #2D9CDB;
-    margin:0 auto ;
+    width: 100%;
+    border: 1px solid #C1E3FF;
+     margin:0 auto ;
     border-collapse: collapse;
-    border-radius: 6em;
-    overflow-x:auto ;
+    overflow:hidden;
+    border-radius:1em;
        
     thead {
-      background: #2D9CDB;
-      color: white;
+      background: #C1E3FF;
+      color: #123F74;
       font-size: 14px;
-      font-weight: 600;
+      font-weight:600;
       width: 100%;
-      text-align: left;
+      text-align: center;
       border-collapse: separate;
       border-spacing: 0;
       tr > th {
-        padding: 12px 8px;
+        padding: 12px 5px;
+
 
       }
     }
@@ -29,8 +30,6 @@
         font-size: 14px;
         color: #595959;
 
-
-        // background-color: #f2f2f2;
         td {
           padding: 12px;
         }
@@ -45,11 +44,8 @@
 
     th,
     td {
-      // margin: 0;
-
-      // // border-bottom: 1px solid black;
-      // // border-right: 1px solid black;
       width: 100%;
+      text-align: center;
 
       &:last-child {
         border-right: 0;
@@ -70,7 +66,7 @@
 
 @media only screen and (max-width:600px) {
   .tvsit-dwmdashboard_table {
-    table {
+    table { 
        border-spacing: 0;
        table-layout: auto;
       border: 1px solid #2D9CDB;
@@ -115,16 +111,9 @@
   
       th,
       td {
-        // margin: 0;
-  
-        // // border-bottom: 1px solid black;
-        // // border-right: 1px solid black;
-        width: 100%;
        
-  
-        // &:last-child {
-        //   border-right: 0;
-        // }
+        width: 100%;
+      
       }
     }
 

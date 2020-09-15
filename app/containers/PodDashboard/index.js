@@ -9,8 +9,11 @@ import Collapse from "antd/lib/collapse";
 import DatePicker from "antd/lib/date-picker";
 import Spin from "antd/lib/spin";
 import { useQuery } from "react-query";
+import { Breadcrumb } from "antd";
+
 
 import CalendarOutlined from "@ant-design/icons/CalendarOutlined";
+import FileExcelOutlined from "@ant-design/icons/FileExcelOutlined";
 import Menu from "antd/lib/menu";
 import Dropdown from "antd/lib/dropdown";
 import PodTable from "components/PodTable";
@@ -262,7 +265,15 @@ function PodDashboard({
       <MainLayout logout={logout} user={user}>
         {/* {!loggedIn && <Redirect to="/" />} */}
         {/* <MainLayout> */}
-        <Row gutter={10} className="tvsit_pod-filters-row">
+        <Breadcrumb className="pod_breadcrumb">
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>POD Usage Report</Breadcrumb.Item>
+        </Breadcrumb>
+       <main className="tvsit-pod-container">
+       <h1 className="pod_title">POD Usage Report</h1>
+
+       
+        <Row gutter={10 } className="tvsit_pod-filters-row">
           <Col
             className="gutter-row"
             lg={3}
@@ -272,18 +283,12 @@ function PodDashboard({
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
-                style={{ color: "black", fontWeight: 500 }}
+                style={{ color: "#004178", fontWeight: 500 }}
               >
                 Entity
               </div>
+
               <Select
-                // defaultValue={
-                //   divisioncode !== undefined
-                //     ? divisioncode.length === 1
-                //       ? divisioncode[0].divisioncode
-                //       : "All"
-                //     : "All"
-                // }
                 value={divValue}
                 style={{ width: "100%" }}
                 onChange={(value) => {
@@ -307,13 +312,14 @@ function PodDashboard({
                   All
                 </Option>
               </Select>
+
             </div>
           </Col>
           <Col className="gutter-row" lg={3} xs={12}>
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
-                style={{ color: "black", fontWeight: 500 }}
+                style={{ color: "#004178", fontWeight: 500 }}
               >
                 Trip Type
               </div>
@@ -355,7 +361,7 @@ function PodDashboard({
             <div className="tvsit_pod-filters">
               <div
                 className="tvsit_pod-title"
-                style={{ color: "black", fontWeight: 500 }}
+                style={{ color: "#004178", fontWeight: 500 }}
               >
                 Customer
               </div>
@@ -407,7 +413,7 @@ function PodDashboard({
                 <div className="tvsit_pod-filters">
                   <div
                     className="tvsit_pod-title"
-                    style={{ color: "black", fontWeight: 500 }}
+                    style={{ color: "#004178", fontWeight:500 }}
                   >
                     Date Type & Range Picker
                   </div>
@@ -456,7 +462,7 @@ function PodDashboard({
                 visible={visible}
               >
                 <CalendarOutlined
-                  style={{ fontSize: "28px" }}
+                  style={{ fontSize: "33px", color:'#ADADAD', marginLeft:'6px' }}
                   onClick={(e) => e.preventDefault()}
                 />
               </Dropdown>
@@ -464,6 +470,9 @@ function PodDashboard({
           </Col>
         </Row>
         {/* filter section ends here */}
+
+
+      
 
         {/* sections start here */}
 
@@ -486,7 +495,6 @@ function PodDashboard({
                   onClick={() => toggleSelected("iscompleted")}
                 >
                   <div className="tvsit-charts_heading">Completed</div>
-                  <div className="tvsit-charts_border">
                     {/* <PodCharts
                       title="Completed Trips"
                       total={totaltrips}
@@ -501,7 +509,6 @@ function PodDashboard({
                       showPercentage={false}
                     />
                   </div>
-                </div>
               </Spin>
             </Col>
             <Col className="gutter-row" lg={6} xs={12}>
@@ -515,7 +522,6 @@ function PodDashboard({
                   onClick={() => toggleSelected("ispodverified")}
                 >
                   <div className="tvsit-charts_heading">POD updated</div>
-                  <div className="tvsit-charts_border">
                     <PodData
                       title1="completed"
                       title2="pod updated"
@@ -524,7 +530,6 @@ function PodDashboard({
                       completed={podCount}
                       showPercentage={true}
                     />
-                  </div>
                 </div>
               </Spin>
             </Col>
@@ -537,9 +542,8 @@ function PodDashboard({
                       : "tvsit-charts_unselected"
                   }
                   onClick={() => toggleSelected("podverifieddays")}
-                >
-                  <div className="tvsit-charts_heading">POD {dynamicTitle}</div>
-                  <div className="tvsit-charts_border">
+                >                    
+                <div className="tvsit-charts_heading">POD {dynamicTitle}</div>
                     <PodData
                       title1="completed"
                       title2={dynamicTitle}
@@ -549,7 +553,7 @@ function PodDashboard({
                       showPercentage={true}
                     />
                   </div>
-                </div>
+              
               </Spin>
             </Col>
             <Col className="gutter-row" lg={6} xs={12}>
@@ -562,16 +566,15 @@ function PodDashboard({
                   }
                   onClick={() => toggleSelected("ETA")}
                 >
-                  <div className="tvsit-charts_heading">ETA</div>
-                  <div className="tvsit-charts_border">
+                  <div className="tvsit-charts_heading">Estimated Trip to be Arrived</div>
                     <div className="tvsit-poddata_eta">
                       <div className="tvsit-poddata_eta-value">{etaCount}</div>
-                      <div className="tvsit-poddata_eta-title">
+                    {/**   <div className="tvsit-poddata_eta-title">
                         Estimated Trips To be Arrived
-                      </div>
+                      </div>   */}
                     </div>
                   </div>
-                </div>
+                
               </Spin>
             </Col>
           </Row>
@@ -601,7 +604,7 @@ function PodDashboard({
                         filename="data.csv"
                         className="tvsit-pod_table-download"
                       >
-                        Export CSV
+                      <FileExcelOutlined /> Export CSV
                       </CsvDownload>
                     </div>
                   )}
@@ -649,6 +652,7 @@ function PodDashboard({
             </Panel>
           </Collapse>
         </section>
+        </main>
       </MainLayout>
     </div>
   );

@@ -1,8 +1,10 @@
 .container {        //previous css, enhance css is below
   padding: 20px;
   border-bottom: 1px solid #E5E5E5;
-  padding-bottom: 50px;
-  // background:red; //sample will delete later
+  padding-bottom: 60px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  margin-bottom: 10px;
 }
 
 .mob_container{
@@ -45,8 +47,8 @@
       overflow: scroll;
       -webkit-overflow-scrolling: touch;
       padding-top: 15px;
-      margin: auto;
-      align-items: center
+      margin: auto  auto;
+      align-items: center;
       
     
 

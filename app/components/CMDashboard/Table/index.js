@@ -2,139 +2,37 @@ import React from "react";
 import { useTable, useBlockLayout } from "react-table";
 import { FixedSizeList } from "react-window";
 import styles from "./CmdashboardTable.scss";
+import Empty from "antd/lib/empty";
+import ViewDetails from "./ViewDetails";
 
-function CMdashboardTable() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Customer",
-        accessor: "customer",
-      },
-      {
-        Header: "Location",
-        accessor: "locations",
-      },
-      {
-        Header: "Total Invoices",
-        accessor: "invoices",
-      },
-
-      {
-        Header: "Delivered",
-        accessor: "delivered",
-      },
-      {
-        Header: "Not Delivered",
-        accessor: "notdelivered",
-      },
-      {
-        Header: "Intransit",
-        accessor: "intransit",
-      },
-      {
-        Header: "CWB",
-        accessor: "cwb",
-      },
-      {
-        Header: "Percentage",
-        accessor: "percentage",
-      },
-      {
-        Header:'',
-        accessor:"view",
-      }
-      
-    ],
-    []
-  );
-  const data = [
-    {
-      customer: "Modicare",
-      locations: 10,
-      invoices: 212,
-      delivered: 23,
-      notdelivered: 11,
-      intransit: 13,
-      cwb: 60,
-      percentage: "45%",
-      view:'view details'
-    },
-    {
-      customer: "Sony",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    {
-      customer: "BOSCH",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-
-    },
-    {
-      customer: "JCH",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    {
-      customer: "EFL",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    {
-      customer: "Wonder",
-      locations: 24,
-      invoices: 312,
-      delivered: 89,
-      notdelivered: 36,
-      intransit: 13,
-      cwb: 60,
-      percentage: "68%",
-      view:'view details'
-
-    },
-    
-  ];
+function CMdashboardTable({ columnData, data, dates }) {
+  const columns = React.useMemo(() => columnData, []);
 
   return (
     <div className="tvsit-cmdashboard_table">
-    <div className='tabel_scroll'>
-    <Table columns={columns} data={data} />
-    </div>
+      <Table columns={columnData} data={data} dates={dates} />
+      {data.length < 1 ? (
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "22px",
+            color: "black",
+            margin: "0 auto",
+          }}
+        >
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
 
 //table
-function Table({ columns, data }) {
+function Table({ columns, data, dates }) {
   // Use the state and functions returned from useTable to build your UI
+  let height = data.length < 1 ? 10 : 300;
 
   const defaultColumn = React.useMemo(
     () => ({
@@ -170,7 +68,16 @@ function Table({ columns, data }) {
           })}
         >
           {row.cells.map((cell) => {
-            return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+            if (cell.column.Header === "Actions") {
+              let customerValue = cell.row.values.consignor;
+              return (
+                <td {...cell.getCellProps()}>
+                  <ViewDetails customer={customerValue} dates={dates} />
+                </td>
+              );
+            } else {
+              return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+            }
           })}
         </tr>
       );
@@ -180,31 +87,6 @@ function Table({ columns, data }) {
 
   // Render the UI for your table
   return (
-    // <div {...getTableProps()} className="table">
-    //   <div>
-    //     {headerGroups.map((headerGroup) => (
-    //       <div {...headerGroup.getHeaderGroupProps()} className="tr">
-    //         {headerGroup.headers.map((column) => (
-    //           <div {...column.getHeaderProps()} className="th">
-    //             {column.render("Header")}
-    //           </div>
-    //         ))}
-    //       </div>
-    //     ))}
-    //   </div>
-
-    //   <div {...getTableBodyProps()}>
-    //     <FixedSizeList
-    //       height={400}
-    //       itemCount={rows.length}
-    //       itemSize={35}
-    //       width={totalColumnsWidth}
-    //     >
-    //       {RenderRow}
-    //     </FixedSizeList>
-    //   </div>
-    // </div>
-
     <table {...getTableProps()}>
       <thead >
         {headerGroups.map((headerGroup) => (
@@ -218,7 +100,7 @@ function Table({ columns, data }) {
       <tbody {...getTableBodyProps()}  >
         <div >
           <FixedSizeList
-            height={300}
+            height={height}
             itemCount={rows.length}
             itemSize={50}
             width={totalColumnsWidth}
@@ -227,18 +109,6 @@ function Table({ columns, data }) {
             {RenderRow}
           </FixedSizeList>
         </div>
-        {/* {rows.map((row, i) => {
-    prepareRow(row)
-    return (
-      <tr   {...row.getRowProps({
-        style,
-      })}>
-        {row.cells.map(cell => {
-          return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-        })}
-      </tr>
-    )
-  })} */}
       </tbody>
     </table>
   );
