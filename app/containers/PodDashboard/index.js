@@ -5,12 +5,12 @@ import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Select from "antd/lib/select";
 import Collapse from "antd/lib/collapse";
-
 import DatePicker from "antd/lib/date-picker";
 import Spin from "antd/lib/spin";
-import { useQuery } from "react-query";
+// import { useQuery } from "react-query";
 
 import CalendarOutlined from "@ant-design/icons/CalendarOutlined";
+import SyncOutlined from "@ant-design/icons/SyncOutlined";
 import Menu from "antd/lib/menu";
 import Dropdown from "antd/lib/dropdown";
 import PodTable from "components/PodTable";
@@ -52,6 +52,7 @@ import { makeSelectLogin } from "containers/App/selectors";
 import { motion } from "framer-motion";
 import CsvDownload from "react-json-to-csv";
 import { apiURL } from "containers/App/services";
+import { isError } from "lodash";
 
 const key = "podDashboard";
 
@@ -103,6 +104,7 @@ function PodDashboard({
   const [custValue, setCustValue] = useState("All");
   const [custTValue, setCustTvalue] = useState("All");
   const [divValue, setDivValue] = useState("All");
+  const [refreshData, setRefreshDate] = useState(moment().format("DD/MM/YYYY"));
   // const [tableData, setTableData] = useState(completedData);
   const [api, setApidata] = useState();
   const [filterType, setfilterType] = useState("MTD");
@@ -136,6 +138,8 @@ function PodDashboard({
     getEta();
     // getFilters(options);
     fetchFilters();
+
+    getMaxDate();
   }, []);
 
   //Table or Grid Data updation hook
@@ -247,6 +251,24 @@ function PodDashboard({
   //collapse change handler
   const handleCollapse = () => {
     console.log("triggered");
+  };
+
+  //MaxDate function
+  const getMaxDate = () => {
+    let options = {
+      method: "POST",
+      body: JSON.stringify({ body: { type: "MAXDATE", ecode: "9999" } }),
+    };
+    fetch(apiURL, options)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "from date");
+        let TemprefreshData = moment(data.bodymsg[0].date).format("DD/MM/YYYY");
+        setRefreshDate(TemprefreshData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //Menu Component for Date Filters
@@ -438,7 +460,7 @@ function PodDashboard({
               </Col>
             </>
           )}
-          <Col className="gutter-row" lg={4} xs={2}>
+          <Col className="gutter-row" lg={1} xs={2}>
             <div className="tvsit_pod-filters">
               <div className="tvsit_pod-title" style={{ color: "transparent" }}>
                 Filter
@@ -453,6 +475,30 @@ function PodDashboard({
                   onClick={(e) => e.preventDefault()}
                 />
               </Dropdown>
+            </div>
+          </Col>
+          <Col lg={6} xs={12}>
+            <div className="tvsit_pod-title" style={{ color: "transparent" }}>
+              Filter
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "2px",
+              }}
+            >
+              <div style={{ marginRight: "5px" }}>
+                <SyncOutlined
+                  style={{
+                    fontSize: "18px",
+                    lineHeight: 0.8,
+                  }}
+                />
+              </div>
+              <div style={{ lineHeight: 1, fontSize: "18px" }}>
+                Last Refresh Date : {refreshData}
+              </div>
             </div>
           </Col>
         </Row>

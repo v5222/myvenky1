@@ -1,0 +1,64 @@
+.reportType {
+  font-size: 14px;
+  font-weight: bold;
+
+  color: black;
+  text-align: end;
+  margin-right: 200px;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 10px;
+  border: 1px solid grey;
+  border-radius: 10px;
+
+  .logo {
+    align-self: flex-start;
+  }
+  .companyDetails {
+    width: 50%;
+    margin-left: 10px;
+    .companyName {
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+    }
+    .companyAddr {
+      margin-top: 5px;
+      font-size: 14px;
+      color: black;
+    }
+  }
+}
+
+.invoiceNo {
+  span {
+    font-weight: bolder;
+  }
+}
+.invoiceNo1 {
+  text-align: right;
+  span {
+    font-weight: bolder;
+  }
+}
+
+.subcontainer {
+  padding: 10px 30px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  .subheading {
+    font-size: 18px;
+  }
+  .subheading1 {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+.subtabletd {
+  font-size: 14px;
+}
+.qrcode {
+  align-self: center;
+}

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   p,
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
+    line-height: 1.1em;
   }
 `;
 

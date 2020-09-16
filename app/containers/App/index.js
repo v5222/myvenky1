@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet";
 import LoginPage from "containers/LoginPage/Loadable";
 import NotFoundPage from "containers/NotFoundPage/Loadable";
 import PodDashboard from "containers/PodDashboard/Loadable";
+import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
@@ -22,6 +23,7 @@ import { makeSelectLogin } from "./selectors";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
+import "bootstrap/dist/css/bootstrap.min.css";
 // import
 // const checkLogin = ()=>{
 
@@ -37,10 +39,10 @@ function App({
   loggedIn,
 }) {
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  let authenticated = false;
-  if (loggedIn === true || isAuthenticated === true) {
-    authenticated = true;
-  }
+  let authenticated = true;
+  // if (loggedIn === true || isAuthenticated === true) {
+  //   authenticated = true;
+  // }
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
@@ -94,6 +96,13 @@ function App({
               <Redirect to="/" />
             )
           }
+        />
+        <Route
+          exact
+          path="/einvoice"
+          render={(props) => (
+            <Einvoice {...props} logout={logout} user={user} />
+          )}
         />
         <Route component={NotFoundPage} />
       </Switch>

@@ -59,14 +59,13 @@ class MainLayout extends React.Component {
 
   menu = (
     <Menu onClick={this.onClick}>
-      {/* <Menu.Item key="1">{this.props.user.displayName}</Menu.Item> */}
       <Menu.Item key="2">{this.props.user.email}</Menu.Item>
 
       <Menu.Item
         key="2"
         onClick={() => {
           this.props.logout();
-          // localStorage.setItem("loggedIn", false);
+
           history.push("/");
           window.location.reload();
         }}
@@ -94,13 +93,6 @@ class MainLayout extends React.Component {
               <img src={Logo} className="tvsit_main-logo" />
             </div>
 
-            {/*<div style={{ display: "flex", alignItems: "center" }}>
-              <div className="tvsit-main-layout-title">
-                {this.state.selected === "/podDashboard"
-                  ? "POD Compliance"
-                  : "Courier Management"}
-        </div>
-            </div> */}
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit_main-layout-avatar">
                 <QuestionCircleOutlined className="qn_icon" />
@@ -118,19 +110,11 @@ class MainLayout extends React.Component {
               <Text className="tvsit_main-layout-name">
                 {this.props.user.displayName}
               </Text>
-              {/*  <DownOutlined  className='.tvsit_main-layout-dropdown'/> */}
             </div>
           </Header>
 
           <Content>{this.props.children}</Content>
-          {/* // <Footer style={{ textAlign: "center" }}>
-          //   Copyright &#169; 2020 TVS SCS All rights reservered
-          // </Footer> */}
-          {/*<Pagination
-      defaultCurrent={3}
-      total={500}
-      className='cm_pagination'
-           /> */}
+
           <Footer className="footer">
             Copyright © 2020 TVS SCS . All rights reserved{" "}
           </Footer>

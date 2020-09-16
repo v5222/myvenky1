@@ -5,15 +5,16 @@ import moment from "moment";
 const PodTable = ({ data, loading, selected }) => {
   const [poddata, setPoddata] = useState([]);
   const [load, setLoading] = useState(loading);
-  // useEffect(() => {
-  //   setPoddata(data);
-  //   console.log(data, "from table");
-  //   setLoading(true);
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, [data]);
+  useEffect(() => {
+    // setPoddata(data);
+    // console.log(data, "from table");
+    // setLoading(true);
+    // const timer = setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
+    // return () => clearTimeout(timer);
+    console.log(data);
+  }, [data]);
 
   const columns = [
     {
@@ -87,6 +88,19 @@ const PodTable = ({ data, loading, selected }) => {
         }
       },
     },
+    {
+      title: "VEHICLE NO",
+      dataIndex: "vehicleno",
+      key: "vehicleno",
+      align: "left",
+      render: (text, eta, index) => {
+        if (text === null) {
+          return "";
+        } else {
+          return text;
+        }
+      },
+    },
   ];
   const [columnData, setColumnData] = useState(columns);
   const vehicleData = {
@@ -102,19 +116,18 @@ const PodTable = ({ data, loading, selected }) => {
       }
     },
   };
+  useEffect(() => {}, [columnData]);
   useEffect(() => {
-    console.log(columnData, "coulmn data");
-  }, [columnData]);
-  useEffect(() => {
-    if (selected === "ETA") {
-      setColumnData((prev) => {
-        let newData = [...prev, vehicleData];
-        return newData.filter((i) => i !== undefined);
-      });
-    } else {
-      setColumnData(columns);
-    }
+    // if (selected === "ETA") {
+    //   setColumnData((prev) => {
+    //     let newData = [...prev, vehicleData];
+    //     return newData.filter((i) => i !== undefined);
+    //   });
+    // } else {
+    //   setColumnData(columns);
+    // }
     // console.log(selected, "from selected hook");
+    setColumnData(columns);
   }, [selected]);
 
   const onChange = (pagination, filters, sorter, extra) => {
