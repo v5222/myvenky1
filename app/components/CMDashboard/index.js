@@ -6,7 +6,7 @@ import CMdashboardTable from "./Table";
 import styles from "./Cmdashboard.module.scss";
 import { apiURLCourier } from "../../containers/App/services";
 function CMDashboard() {
-  // const [filtersOn, setFiltersOn] = useState(false);
+
   const [filtersOn, setFiltersOn] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,6 +15,7 @@ function CMDashboard() {
     sdate: "2020-06-02",
     edate: "2020-08-31",
   });
+
   const fetchData = (values) => {
     console.log(apiURLCourier, values);
     setLoading(true);
@@ -50,6 +51,7 @@ function CMDashboard() {
       setColumns(column2);
     }
   }, [filtersOn]);
+
   return (
     <div className={styles.container}>
       <Myview />
@@ -61,8 +63,6 @@ function CMDashboard() {
       />
       <CMdashboardTable
         columnData={filtersOn === false ? cloumns1 : column2}
-        // columnData2={column2}
-        // filtersOn={filtersOn}
         dates={dates}
         data={tableData}
       />

@@ -4,6 +4,7 @@ import { FixedSizeList } from "react-window";
 import styles from "./CmdashboardTable.scss";
 import Empty from "antd/lib/empty";
 import ViewDetails from "./ViewDetails";
+
 function CMdashboardTable({ columnData, data, dates }) {
   const columns = React.useMemo(() => columnData, []);
 
@@ -87,23 +88,23 @@ function Table({ columns, data, dates }) {
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
-      <thead cellspacing="4" cellpadding="2">
+      <thead >
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps()} >{column.render("Header")}</th>
             ))}
           </tr>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}>
-        <div>
+      <tbody {...getTableBodyProps()}  >
+        <div >
           <FixedSizeList
             height={height}
             itemCount={rows.length}
             itemSize={50}
             width={totalColumnsWidth}
-            className="fixedList"
+            className={styles.FixedList}
           >
             {RenderRow}
           </FixedSizeList>

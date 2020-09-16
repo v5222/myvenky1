@@ -46,6 +46,7 @@ function Myview() {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   return (
@@ -77,6 +78,21 @@ function Myview() {
           </Carousel>
         </div>
       </div>
+
+     {/* mobile device container */}
+
+      <div className={styles.mob_container}>
+
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+      <ViewCard />
+     
+     
+
+      </div>
+     
     </>
   );
 }

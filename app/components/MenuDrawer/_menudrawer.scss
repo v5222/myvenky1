@@ -43,7 +43,7 @@
     font-size: 18px;
   }
   .tvsit_drawer_logo {
-    height: 70x;
+    height: 70px;
     // margin-left: 10px;
     margin: 0 auto;
     display: block;
@@ -59,19 +59,19 @@
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  .tvsit-header_menu-sm {
-    display: block;
-    font-size: 22px;
-  }
+
+  //
+  
+  
   .tvsit_drawer_logo {
-    height: 70x;
-    // margin-left: 10px;
+    height: 70px;
+    width: 77.42px;
     margin: 0 auto;
     display: block;
   }
   .tvsit_drawer_logo2 {
-    height: 18px;
-    width: 200px;
+    height: 10px;
+    width: 206px;
     transform: translateY(0px);
     margin: 10px auto 20px auto;
     display: block;
@@ -80,19 +80,21 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+
+
   .tvsit-header_menu-sm {
     display: block;
     font-size: 22px;
   }
   .tvsit_drawer_logo {
-    height: 70x;
-    // margin-left: 10px;
+    height: 70px;
+    width: 77.42px;
     margin: 0 auto;
     display: block;
   }
   .tvsit_drawer_logo2 {
-    height: 18px;
-    width: 200px;
+    height: 10px;
+    width: 206px;
     transform: translateY(0px);
     margin: 10px auto 20px auto;
     display: block;

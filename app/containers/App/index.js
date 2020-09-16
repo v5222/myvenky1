@@ -15,6 +15,7 @@ import NotFoundPage from "containers/NotFoundPage/Loadable";
 import PodDashboard from "containers/PodDashboard/Loadable";
 import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
+import DwmApplication from "containers/DwmApplication/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -23,7 +24,7 @@ import { makeSelectLogin } from "./selectors";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 // import
 // const checkLogin = ()=>{
 
@@ -103,6 +104,17 @@ function App({
           render={(props) => (
             <Einvoice {...props} logout={logout} user={user} />
           )}
+        />
+        <Route
+          exact
+          path="/dwmApplication"
+          render={(props) =>
+            authenticated ? (
+              <DwmApplication {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
         />
         <Route component={NotFoundPage} />
       </Switch>

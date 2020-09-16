@@ -129,7 +129,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
                     );
                   })
                 : ""}
-              <Option key="All" value="All">
+              <Option key="All" value="All" >
                 All
               </Option>
               {/* <Option value="lucy">Bosch</Option>
@@ -199,6 +199,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
               fontSize: "14px",
               lineHeight: "18px",
             }}
+            className={styles.clearfilter}
           >
             dummy
           </div>
@@ -208,7 +209,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
             filename="data.csv"
             className={styles.csvbtn}
           >
-            <span style={{ marginRight: "5px" }}>
+            <span className='wrapper'>
               <DownloadOutlined />
             </span>
             Download Report

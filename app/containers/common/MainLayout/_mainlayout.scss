@@ -50,13 +50,16 @@
   font-size: 18px;
 }
 .avatar{
-  margin-bottom: 10px;
+  position: absolute;
+  top:13%;
+  right: 3.42%;
+  border: 1px solid #123F74;
 
 }
 
 .tvsit_main-logo {
-  height: 52px;
-  width: 48px;
+  height: 45px;
+  width: 39px;
   margin-left: 15px;
   display: block;
 }
@@ -87,14 +90,12 @@
 }
 
 .tvsit-main-menu {
-  padding-left: 15px !important;
+  //  padding: auto !important;
   background: #1890ff !important;
   border-radius: 30px !important;
-  width: 95% !important;
-  // marginRight: "10px",
+  width: 90% !important;
   color: white !important;
-  margin-left: 5px !important;
-  margin-top: 22px !important;
+  margin-top: 15px !important;
   font-size: 14px !important;
   font-weight: 500 !important;
 }
@@ -111,14 +112,13 @@
   font-weight: 500 !important;
 }
 .tvsit-main-menu-selected {
-  padding-left: 15px !important;
+  // padding: auto 200px !important;
   background: #002776 !important;
   border-radius: 30px !important;
-  width: 95% !important;
-  // marginRight: "10px",
-  margin-left: 5px !important;
-  margin-top: 22px !important;
-  font-size: 12px !important;
+  width:90% !important;
+  margin-left: 1px !important;
+  margin-top: 15px !important;
+  font-size: 14px !important;
   font-weight: 500 !important;
 }
 .tvsit-main-menu-selected_collapsed {

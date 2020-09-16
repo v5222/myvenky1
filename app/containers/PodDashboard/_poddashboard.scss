@@ -1,40 +1,300 @@
+.pod_breadcrumb{
+  margin: 5px 0 -12px 30px;
+}
+
+.tvsit-pod-container{
+  background-color: white;
+  border-radius: 1rem;
+  margin: 20px;
+ 
+
+  .pod_title{
+    padding-left: 22px;
+    font-style: normal;
+    color: #262626c0;
+    font-size:19px;
+    line-height: 28px;
+    font-weight: 600;
+    padding-top: 7px;
+  }
+  .tvsit_pod-title{
+    margin-bottom: 3px;
+   
+  }
+  .tvsit-charts_heading{
+    position: absolute;
+    padding-bottom: 6px;
+    font-size: 18px;
+    color: #123F74;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 17px;
+    margin-left: 15px;
+  
+  }
+
+
+.pod_completed{
+  margin-bottom: 20px;
+}
+
 .tvsit-pod_table-title {
   font-size: 22px;
   text-transform: uppercase;
   font-weight: 600;
 }
 .tvsit-pod_table-download {
-  background-color: #004178;
+  color: #004178;
   border-radius: 5px;
   border: none;
-
   cursor: pointer;
-  color: #ffffff;
   font-size: 14px;
   padding: 6px 24px;
   text-decoration: none;
 }
 .tvsit_pod-filters-row {
-  margin: 22px;
-  margin-left: 22px !important;
+  margin-left: 26px !important;
   margin-right: 22px !important;
+  margin-top: 17px !important;
 }
+.tvsit-poddata {
+  height: 200px;
+  display: flex;
+  border-radius: 15px;
+
+  padding: 15px 1px;
+   background-color: #C1E3FF;
+   -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  &_container {
+    display: flex;
+    //  justify-content: space-between;
+     flex-direction: row ;
+    margin-right: 16px;
+    margin-top: 48px;
+  }
+  &_wrapper {
+     text-align: center;
+    margin-right: 4px;
+    // margin-right: 10px;
+  margin-left: 10px;
+  }
+  &_wrapper2 {
+     text-align: center;
+  margin-left: 55px;
+  }
+  &_vrline {
+    width: 2px;
+    background-color: #d9d8d7;
+    border-radius: 1px;
+  }
+  &_title {
+    font-size: 13px !important;
+    color: #123F74;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &_data {
+    color: #008DC5;
+    font-size: 36px !important;
+    font-weight: 400;
+    line-height: 44px;
+  }
+  &_percentage {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    &-value {
+      font-size: 32px;
+      font-weight: 500;
+      width: 100%;
+      line-height: 32px;
+      color: #3F3F3F;
+      position: absolute;
+      margin-top: 100px;
+      margin-right: 85%;
+
+    }
+    .tvsit-poddata_title {
+      color: white;
+      font-size: 12px;
+    }
+  }
+  // &_wrapper:not(:first-child) {
+  //   margin-top: 5px;
+  // }
+  &_eta {
+    padding: 34px;
+    text-align: center;
+    height: 200px;
+    border-radius: 15px;
+
+    background-color: #C1E3FF;
+    -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    &-title {
+      font-size: 16px !important;
+      color: black !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+    }
+    &-value {
+      margin-top: 20%;
+      font-size: 36px !important;
+      color: #008DC5 !important;
+      line-height: 1.1;
+      font-weight: 500;
+    }
+  }
+}
+.tvsit-charts_border {
+  background-color: white;
+  // padding: 10px;
+  // border-top: 10px solid #00a5e6;
+}
+.tvsit-charts_selected {
+  // border: 1px solid #002776;
+  cursor: pointer;
+  .tvsit-charts_border {
+    // background-color: #002776;
+    .tvsit-poddata_title {
+      // color: white;
+    }
+    .tvsit-poddata_percentage-value {
+      // color: white;
+    }
+    .tvsit-poddata_data {
+      // color: white;
+    }
+    .tvsit-poddata_eta {
+      &-title {
+        // color: white;
+      }
+      &-value {
+        // color: white;
+      }
+    }
+  }
+}
+.tvsit-charts_unselected {
+  // background-color: white;
+  // padding: 10px;
+  // border-top: 10px solid #002776;
+  cursor: pointer;
+  // transition: all 0.3s ease-in;
+  // &:hover {
+  //   transform: scale(1.03);
+  // }
+}
+
+
+/* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+ 
+  .tvsit-pod-container{
+    background-color: red;
+    border-radius: 1rem;
+    margin: 20px;
+   
+  
+    .pod_title{
+      padding-left: 22px;
+      font-style: normal;
+      color: #262626c0;
+      font-size:19px;
+      line-height: 28px;
+      font-weight: 600;
+      padding-top: 7px;
+    }
+    .tvsit_pod-title{
+      margin-bottom: 3px;
+     
+    }
+    .tvsit-charts_heading{
+      position: absolute;
+      padding-bottom: 6px;
+      font-size: 18px;
+      color: #123F74;
+      font-weight: bold;
+      font-style: normal;
+      margin-top: 17px;
+      margin-left: 15px;
+    
+    }
+  
+  
+  .pod_completed{
+    margin-bottom: 20px;
+  }
+  
   .tvsit-pod_table-title {
-    font-size: 14px;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 600;
   }
   .tvsit-pod_table-download {
-    font-size: 10px;
-  }
-  .tvsit_pod-filters {
-    margin-top: 15px;
+    color: #004178;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 24px;
+    text-decoration: none;
   }
   .tvsit_pod-filters-row {
-    margin: 10px;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    margin-left: 26px !important;
+    margin-right: 22px !important;
+    margin-top: 17px !important;
+  }
+    .tvsit-poddata {
+    padding: 10px 10px;
+    margin-bottom: 10px;
+
+    &_container {
+      margin-right: 10px;
+     
+    }
+    &_title {
+      font-size: 10px;
+    }
+    &_data {
+      font-size: 28px;
+    }
+    &_percentage {
+      &-value {
+        font-size: 30px;
+      }
+    }
+  }
+  .tvsit-charts_heading {
+    font-size: 14px;
   }
 }
+
+  @media only screen and (max-width: 600px) {
+    .tvsit-pod_table-title {
+      font-size: 14px;
+    }
+    .tvsit-pod_table-download {
+      font-size: 10px;
+    }
+    .tvsit_pod-filters {
+      margin-top: 15px;
+    
+    }
+    .tvsit_pod-filters-row {
+      margin: 10px;
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+    }
+  }
+  }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
@@ -54,4 +314,5 @@
   //   .tvsit-pod_table-download {
   //     font-size: 10px;
   //   }
+}
 }

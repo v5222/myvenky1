@@ -12,7 +12,7 @@ function ViewCard({ data }) {
       <div className={styles.content}>
         <div className={styles.d_flex}>
           <div className={styles.icon}>
-            <img src={conveyor} alt="total" />
+            <img src={conveyor} className='asdf' alt="total" />
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>

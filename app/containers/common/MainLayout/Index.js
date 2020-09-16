@@ -95,12 +95,12 @@ class MainLayout extends React.Component {
 
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit_main-layout-avatar">
-                <QuestionCircleOutlined className="qn_icon" />
-                <BellOutlined className="bell_icon" />
+             {/*    <QuestionCircleOutlined className="qn_icon" /> 
+                <BellOutlined className="bell_icon" /> */}
 
                 <Dropdown overlay={this.menu} trigger={["click"]}>
                   <Avatar
-                    size={32}
+                    size={34}
                     icon={<UserOutlined />}
                     onClick={(e) => e.preventDefault()}
                     className="avatar"

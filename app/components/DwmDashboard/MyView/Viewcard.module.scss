@@ -1,0 +1,142 @@
+.container {
+    background-color: white;
+    padding: 16px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background-color: #C1E3FF;
+    height: 172.97px;
+    width: 406px;
+    // width: calc(95% / 3);
+    .title {
+      font-size: 18px;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 22px;
+      color: #123F74;
+      // margin: 10px 0px 0px 70px;
+      margin-top: 30px ;
+      margin-left: 120px;
+    }
+    // img{
+    //   height: 26px;
+    //   width: 47px;
+    // }
+    .content {
+      display: flex;
+      justify-content: space-around;
+      .icon {
+        margin-right: 10px;
+        // height: 9px;
+        // width: 47px;
+        
+      }
+      .value {
+        &_1 {
+          font-weight: 700;
+          font-style: bold;
+          font-size: 14px;
+          line-height: 18px;
+          color:  #123F74;
+
+          font-family: Open Sans;
+        }
+        &_2 {
+          font-size: 36px;
+          line-height: 22px;
+          color: #008DC5;
+          padding-top: 10px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .d_flex {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 35px;
+    }
+  
+  
+  
+    @media only screen and (max-width: 600px) {
+      
+       
+      .container {
+        
+        background-color: white;
+        padding:  14px 40px 10px 9px;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        background-color: #C1E3FF;
+        height: 106.26px;
+        margin: 0 45px 0 5px ;
+        width: 300px;
+        // width: calc(95% / 3);
+        .title {
+          font-size: 12px;
+          font-family: Open Sans;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 25px;
+          color: #123F74;
+          margin: 7px 0px 7px 11px;
+          padding-left: 20px;
+      
+        }
+      
+        .content {
+          display: flex;
+          justify-content: space-between;
+          
+          
+          .icon {
+            margin-right: 3px;
+            
+          }
+          img{
+            height: 25px;
+             width: 36px;
+  
+             .asdf{
+               padding-top: 10px;
+             }
+          }
+          
+          .value {
+            &_1 {
+              font-weight: 500;
+              font-style: normal;
+              font-size: 15px;
+              line-height: 12px;
+              color: #008DC5;
+              font-family: Open Sans;
+              padding-top: 8px;
+  
+            }
+            &_2 {
+              font-size: 9px;
+              line-height: 15px;
+              color:  #123F74;
+              padding-top: 4px;
+            }
+          }
+          .d_flex{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 7px;
+            padding:6px 15px 0px 5px;
+            overflow: hidden;
+          }
+        }
+      }
+      
+      
+  
+    
+    
+    }
+  
+    
+      
+       

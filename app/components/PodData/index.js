@@ -17,13 +17,14 @@ function PodData({ title1, title2, total, completed, title3, showPercentage }) {
     <div className="tvsit-poddata">
       <div className="tvsit-poddata_container">
         <div className="tvsit-poddata_wrapper">
-          <div className="tvsit-poddata_data">{total}</div>
-          <div className="tvsit-poddata_title">{title1}</div>
+        <div className="tvsit-poddata_title">{title1}</div>
+        <div className="tvsit-poddata_data">{total}</div>
         </div>
         {/* <div className="tvsit-poddata_vrline" /> */}
-        <div className="tvsit-poddata_wrapper">
-          <div className="tvsit-poddata_data">{completed}</div>
+        <div className="tvsit-poddata_wrapper2">
           <div className="tvsit-poddata_title">{title2}</div>
+          <div className="tvsit-poddata_data">{completed}</div>
+
         </div>
       </div>
       <div className="tvsit-poddata_percentage">
