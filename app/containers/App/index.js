@@ -24,11 +24,13 @@ import { makeSelectLogin } from "./selectors";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
+import { QueryCache, ReactQueryCacheProvider } from "react-query";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import
 // const checkLogin = ()=>{
 
 // }
+
 function App({
   history,
   login,
@@ -47,8 +49,9 @@ function App({
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
+  const queryCache = new QueryCache();
   return (
-    <div>
+    <ReactQueryCacheProvider queryCache={queryCache}>
       <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">
         <meta name="description" content="TVS Logistics React Applications" />
       </Helmet>
@@ -119,7 +122,7 @@ function App({
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </div>
+    </ReactQueryCacheProvider>
   );
 }
 const mapStateToProps = createStructuredSelector({
