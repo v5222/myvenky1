@@ -1,12 +1,20 @@
-.Invoicetable {
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-}
+// .Invoicetable {
+//   table,
+//   th,
+//   td {
+//     border: 1px solid black;
+//     border-collapse: collapse;
+//     font-size: 14px;
+//     .asdf{
+//       padding-left: 7px;
+//     }
+    
+//   }
+
+// }
+
 .subcontainer_2 {
+  margin-top: 20px;
   border: 1px solid black;
   border-radius: 10px;
   .wrapper_1 {
@@ -15,16 +23,47 @@
       border-bottom: 1px solid black;
     }
 
+    
+   
+    
+
     .subwrapper_1 {
-      font-size: 14px;
+      font-size: 13px;
       color: black;
       padding: 10px 20px;
       border-right: 1px solid black;
-    }
+      
+      
+
+      .terms{
+        font-size: 10px;
+        color:#595959;
+        
+      }
+      .terms_heading{
+        font-size: 12px;
+        font-weight: 600;
+        
+        }
+        
+       
+
+      }
+      
+   
+     
     .subwrapper_2 {
       font-size: 14px;
       color: black;
-      padding: 10px 20px;
+      padding: 1px 20px;
     }
-  }
+    
+   
+  
+  } 
+  .footer_list{
+    font-size: 11px;
+    padding-top: 5px;
+  } 
+  
 }

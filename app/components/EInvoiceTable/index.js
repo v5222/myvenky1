@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./EinvoiceTable.module.scss";
 import CurrencyFormat from "react-currency-format";
 import Barcode from "react-barcode";
+import './einvoicetable2.scss'
 import { thru } from "lodash";
-import converter from "number-to-words";
+// import converter from "number-to-words";
+import convertor from 'rupees-to-words';
 class EinvoiceTable extends React.Component {
   constructor(props) {
     super(props);
@@ -25,27 +27,26 @@ class EinvoiceTable extends React.Component {
     let TempIGST = 0;
     let Total = 0;
     item.map((i) => {
-      TempGross = TempGross + parseInt(i.itemqty) * parseInt(i.itemunitprice);
-      TempTaxable = TempTaxable + parseInt(i.itemassamt);
-      TempUSGST = TempUSGST + parseInt(i.itemsgstamt);
-      TempCGST = TempCGST + parseInt(i.itemcgstamt);
-      TempIGST = TempIGST + parseInt(i.itemigstamt);
+      TempGross = TempGross + Number(i.itemqty) * Number(i.itemunitprice);
+      TempTaxable = TempTaxable + Number(i.itemassamt);
+      TempUSGST = TempUSGST + Number(i.itemsgstamt);
+      TempCGST = TempCGST + Number(i.itemcgstamt);
+      TempIGST = TempIGST + Number(i.itemigstamt);
       Total =
-        Total +
-        parseInt(i.itemassamt) +
-        parseInt(i.itemsgstamt) +
-        parseInt(i.itemcgstamt) +
-        parseInt(i.itemigstamt);
-      return null;
-    });
+        Total + Number(i.itemassamt) + Number(i.itemsgstamt) + Number(i.itemigstamt) + Number(i.itemcgstamt);
+       
+        
+        return null;
+    }
+    );
     this.setState(
       {
-        grossTotal: TempGross,
-        taxableTotal: TempTaxable,
+        grossTotal: TempGross.toFixed(2),
+        taxableTotal: TempTaxable.toFixed(2),
         usgstTotal: TempUSGST,
         cgstTotal: TempCGST,
         igstTotal: TempIGST,
-        itemTotal: Total,
+        itemTotal: Total.toFixed(2),
       },
       () => {
         console.log(this.state, "state");
@@ -65,10 +66,10 @@ class EinvoiceTable extends React.Component {
     } = this.state;
     console.log(item, "item");
     return (
-      <div className={styles.Invoicetable}>
+      <div className='Invoicetable'>
         <table
-          className="table table-striped table-dcnote"
-          style={{ width: "100%", fontSize: "14px" }}
+          className="table table-bordered"
+          style={{ width: "100%", fontSize: "14px",margin:'auto' }}
         >
           <tr>
             <th
@@ -87,6 +88,14 @@ class EinvoiceTable extends React.Component {
               rowSpan="2"
             >
               Description of goods/services
+            </th>
+           
+            <th
+              className="text-center txt-bld"
+              style={{ width: "5%" }}
+              rowSpan="2"
+            >
+              UOM
             </th>
 
             <th
@@ -120,15 +129,22 @@ class EinvoiceTable extends React.Component {
 
             <th
               className="text-center txt-bld"
-              style={{ width: "10%" }}
+              style={{ width: "5%" }}
               rowSpan="2"
             >
-              Discount
+              Disc.
+            </th>
+            <th
+              className="text-center txt-bld"
+              style={{ width: "5%" }}
+              rowSpan="2"
+            >
+              Other Charges(TCS).
             </th>
 
             <th
               className="text-center txt-bld"
-              style={{ width: "10%" }}
+              style={{ width: "8%" }}
               rowSpan="2"
             >
               Taxable Value
@@ -145,7 +161,7 @@ class EinvoiceTable extends React.Component {
               style={{ width: "10%" }}
               colSpan="2"
             >
-              SGST / UGST
+              SGST / UTGST
             </th>
             <th
               className="text-center txt-bld"
@@ -174,11 +190,11 @@ class EinvoiceTable extends React.Component {
             <td />
             <td /> */}
             <td>Rate</td>
-            <td>Amnt</td>
+            <td>Amt</td>
             <td>Rate</td>
-            <td>Amnt</td>
+            <td>Amt</td>
             <td>Rate</td>
-            <td>Amnt</td>
+            <td>Amt</td>
           </tr>
           {item.map((i, indexes) => (
             <tr key={Math.random()}>
@@ -189,11 +205,8 @@ class EinvoiceTable extends React.Component {
               >
                 {indexes + 1}
               </td>
-              {/* <td
-                  key={Math.random()}
-                  className="text-left"
-                  style={{ width: "5%" }}
-                /> */}
+
+
               <td
                 key={Math.random()}
                 className="text-left"
@@ -201,6 +214,11 @@ class EinvoiceTable extends React.Component {
               >
                 {i.itemprddesc}
               </td>
+              <td
+              key={Math.random()}
+              className="text-left"
+              style={{ width: "2%" }}
+            >{""} </td> 
 
               <td
                 key={Math.random()}
@@ -222,7 +240,7 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "7%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemunitprice)}
+                  value={Number(i.itemunitprice).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) => <div>{value}</div>}
@@ -235,7 +253,7 @@ class EinvoiceTable extends React.Component {
               >
                 <CurrencyFormat
                   value={(
-                    parseInt(i.itemqty) * parseInt(i.itemunitprice)
+                    Number(i.itemqty).toFixed(2) * Number(i.itemunitprice)
                   ).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
@@ -258,26 +276,31 @@ class EinvoiceTable extends React.Component {
                 </td> */}
               <td
                 key={Math.random()}
-                className="text-right"
+                className='text-right'
                 style={{ width: "10%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemdiscount).toFixed(2)}
+                  value={Number(i.itemdiscount).toFixed()}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) => <div>{value}</div>}
                 />
               </td>
               <td
+              key={Math.random()}
+              className="text-left"
+              style={{ width: "2%" }}
+            >{""} </td>
+              <td
                 key={Math.random()}
-                className="text-right"
+                className='text-right'
                 style={{ width: "10%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemassamt).toFixed(2)}
+                  value={Number(i.itemassamt).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
-                  renderText={(value) => <div>{value}</div>}
+                  renderText={(value) =>value!=0?(<div>{value}</div>):""}
                 />
               </td>
 
@@ -285,40 +308,40 @@ class EinvoiceTable extends React.Component {
               <td
                 key={Math.random()}
                 className="text-right"
-                style={{ width: "10%" }}
+                style={{ width: "5%" }}
               >
-                {parseInt(i.itemcgstrt)}%
+                {i.itemcgstrt===0 ? (Number(i.itemcgstrt +'%')):("")}
               </td>
               <td
                 key={Math.random()}
                 className="text-right"
-                style={{ width: "10%" }}
+                style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemcgstamt).toFixed(2)}
+                  value={Number(i.itemcgstamt)} 
                   displayType={"text"}
                   thousandSeparator={true}
-                  renderText={(value) => <div>{value}</div>}
+                  renderText={(value) =>value!=0?(<div>{value}</div>):""}
                 />
               </td>
               {/* sgst/ugst rate and amount */}
               <td
                 key={Math.random()}
                 className="text-right"
-                style={{ width: "10%" }}
+                style={{ width: "5%" }}
               >
-                {parseInt(i.itemsgstrt)}%
+              {i.itemsgstrt===0 ? (Number(i.itemsgstrt +'%')):("")}
               </td>
               <td
                 key={Math.random()}
                 className="text-right"
-                style={{ width: "10%" }}
+                style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemsgstamt).toFixed(2)}
+                  value={Number(i.itemsgstamt)}
                   displayType={"text"}
                   thousandSeparator={true}
-                  renderText={(value) => <div>{value}</div>}
+                  renderText={(value) =>value!=0?(<div>{value}</div>):""}
                 />
               </td>
               {/* Igst rate and amount */}
@@ -327,7 +350,7 @@ class EinvoiceTable extends React.Component {
                 className="text-right"
                 style={{ width: "10%" }}
               >
-                {parseInt(i.itemigstrt)}%
+                {i.itemigstrt===0 ? (Number(i.itemigstrt +'%')):("")}
               </td>
               <td
                 key={Math.random()}
@@ -335,10 +358,10 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "10%" }}
               >
                 <CurrencyFormat
-                  value={parseInt(i.itemigstamt).toFixed(2)}
+                  value={Number(i.itemigstamt)}
                   displayType={"text"}
                   thousandSeparator={true}
-                  renderText={(value) => <div>{value}</div>}
+                  renderText={(value) =>value!=0?(<div>{value}</div>):""}
                 />
               </td>
               <td
@@ -348,13 +371,15 @@ class EinvoiceTable extends React.Component {
               >
                 <CurrencyFormat
                   value={(
-                    parseInt(i.itemassamt) +
-                    parseInt(i.itemcgstamt) +
-                    parseInt(i.itemsgstamt)
+                    Number(i.itemassamt) +
+                    Number(i.itemcgstamt) +
+                    Number(i.itemsgstamt) +
+                    Number(i.itemigstamt)
                   ).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
-                  renderText={(value) => <div>{value}</div>}
+                  renderText={(value) =>value!==0?(<div>{value}</div>): ""}
+                  
                 />
               </td>
             </tr>
@@ -510,7 +535,7 @@ class EinvoiceTable extends React.Component {
             <td className="text-center txt-bld" colSpan="2">
               TOTAL :
             </td>
-            <td className="text-center txt-bld" colSpan="3" />
+            <td className="text-center txt-bld" colSpan="4" />
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
                 value={grossTotal}
@@ -519,7 +544,10 @@ class EinvoiceTable extends React.Component {
                 renderText={(value) => <div>{value}</div>}
               />
             </td>
-            <td className="text-center txt-bld" colSpan="1" />
+            <td className="text-center txt-bld" colSpan="1" /> 
+            <td className="text-center txt-bld" colSpan="1" /> 
+
+
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
                 value={taxableTotal}
@@ -528,16 +556,21 @@ class EinvoiceTable extends React.Component {
                 renderText={(value) => <div>{value}</div>}
               />
             </td>
-            {/* <td className="text-center txt-bld" colSpan="1" /> */}
-            <td className="text-center txt-bld" colSpan="2">
+            <td className="text-center txt-bld" colSpan="1" /> 
+
+            
+            
+            <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
                 value={cgstTotal}
                 displayType={"text"}
                 thousandSeparator={true}
-                renderText={(value) => <div>{value}</div>}
+                
+                renderText={(value) => <div >{value}</div>}
               />
             </td>
-            <td className="text-center txt-bld" colSpan="2">
+            <td className="text-center txt-bld" colSpan="1" />
+            <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
                 value={usgstTotal}
                 displayType={"text"}
@@ -545,12 +578,13 @@ class EinvoiceTable extends React.Component {
                 renderText={(value) => <div>{value}</div>}
               />
             </td>
-            <td className="text-center txt-bld" colSpan="2">
+            <td className="text-center txt-bld"  colSpan="1" />
+            <td className="text-center txt-bld"  colSpan="1">
               <CurrencyFormat
                 value={igstTotal}
                 displayType={"text"}
                 thousandSeparator={true}
-                renderText={(value) => <div>{value}</div>}
+                renderText={(value) =>value!=0?(<div>{value}</div>):""}
               />
             </td>
             <td key={Math.random()} className="text-right">
@@ -561,8 +595,10 @@ class EinvoiceTable extends React.Component {
                 renderText={(value) => <div>{value}</div>}
               />
             </td>
+            
           </tr>
         </table>
+
         <section className={styles.subcontainer_2}>
           <div className={styles.wrapper_1}>
             <div className={styles.subwrapper_1}>
@@ -572,7 +608,7 @@ class EinvoiceTable extends React.Component {
             </div>
             <div className={styles.subwrapper_2}>
               <div>
-                <strong> INR- {converter.toWords(itemTotal)}</strong>
+                <strong className='amt_words'> INR- {convertor(itemTotal)}</strong>
               </div>
               <div>N</div>
               <div>{item[0].itemisservc}</div>
@@ -584,27 +620,27 @@ class EinvoiceTable extends React.Component {
               style={{ borderRight: "none" }}
             >
               <div>
-                <h5 style={{ font: "bold" }}>Terms and Conditions</h5>
+                <h5 className={styles.terms_heading}>Terms and Conditions</h5>
               </div>
-              <h6 className="pad-top-10 font-12">
+              <h6 className={styles.terms}>
                 1) Any dispute with the Invoice shall be informed within 15 days
                 from the date of receipt of the Invoice
               </h6>
 
-              <h6 className="pad-top-10 font-12">
+              <h6 className={styles.terms}>
                 2) Payments shall be made by at par cheque / DD / ECS in the
                 name of TVS Supply Chain Solutions Limited
               </h6>
 
-              <h6 className="pad-top-10 font-12">
+              <h6 className={styles.terms}>
                 3) Interest shall be charged at 18 % p.a on delayed payments
               </h6>
 
-              <h6 className="pad-top-10 font-12">
+              <h6 className={styles.terms}>
                 4) The Agreement terms and conditions, if any shall prevail over
                 the above terms and conditions.
               </h6>
-              <h6 className="pad-top-10 font-12">
+              <h6 className={styles.terms}>
                 5) Payment Due In 30 Days From Invoice Date.
               </h6>
             </div>
@@ -618,11 +654,11 @@ class EinvoiceTable extends React.Component {
           </div>
           <div className={styles.wrapper_1}>
             <div className={styles.subwrapper_1}>
-              <h6 className="pad-top-10">
-                <strong>Electronic Reference Number</strong>
+              <h6 >
+                <strong className={styles.footer_list}>Electronic Reference Number</strong>
               </h6>
-              <h6 className="pad-top-10">
-                <strong>
+              <h6>
+                <strong className={styles.footer_list}>
                   Certified that the particulars given above are true and
                   correct
                 </strong>
@@ -633,7 +669,7 @@ class EinvoiceTable extends React.Component {
                 value="TVS SUPPLY CHAIN INVOICE"
                 className="img-responsive pad-top-20"
                 // style={{ height: "30px" }}
-                height={30}
+                height={25}
               />
             </div>
           </div>

@@ -88,7 +88,31 @@ const MenuDrawer = ({ selected }) => {
                 : "tvsit-main-menu"
             }
           >
-          Dwm Application
+          Dwm Insights
+            </Menu.Item>
+          <Menu.Item
+            key="4"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/dwmUsageReportApplication")}
+            className={
+              selected === "/dwmUsageReportApplication"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+          Dwm Usage Report
+            </Menu.Item>
+          <Menu.Item
+            key="5"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/einvoice")}
+            className={
+              selected === "/einvoice"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+          Einvoice Print
             </Menu.Item>
          
         </Menu>

@@ -8,25 +8,26 @@
 }
 .container {
   display: flex;
-  justify-content: space-around;
-  padding: 20px 10px;
+  // justify-content: space-around;
+  padding: 5px 5px;
   border: 1px solid grey;
   border-radius: 10px;
 
   .logo {
     align-self: flex-start;
+margin: -10px -24px 0 0px  ;    
   }
   .companyDetails {
     width: 50%;
-    margin-left: 10px;
+    margin-left: 60px;
     .companyName {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: bold;
       color: black;
     }
     .companyAddr {
       margin-top: 5px;
-      font-size: 14px;
+      font-size: 12px;
       color: black;
     }
   }
@@ -48,8 +49,9 @@
   padding: 10px 30px;
   border: 1px solid grey;
   border-radius: 10px;
+  
   .subheading {
-    font-size: 18px;
+    font-size: 14px;
   }
   .subheading1 {
     font-size: 14px;
@@ -62,3 +64,6 @@
 .qrcode {
   align-self: center;
 }
+
+
+

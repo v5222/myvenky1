@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../common/MainLayout/index.js";
-import CMDashboard from "../../components/CMDashboard";
-import DwmDasboard from '../../components/DwmDashboard'
+import DwmUsageReport from '../../components/DwmUsageReport'
 import Menu from "antd/lib/menu";
 import { Typography } from "antd";
 import { Pagination } from "antd";
@@ -11,10 +10,11 @@ import { Breadcrumb } from "antd";
 const { Title } = Typography;
 const { SubMenu } = Menu;
 
-function DwmApplication({ logout, user }) {
+function DwmUsageReportApplication({ logout, user }) {
   const [current, setCurrent] = useState("dashboard");
   const handleClick = (e) => {
     setCurrent(e.key);
+    console.log(e.key)
   };
 
 
@@ -24,10 +24,10 @@ function DwmApplication({ logout, user }) {
       <main className="tvsit-dwm-container">
         <Breadcrumb className="breadcrumb">
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>DWM Insights</Breadcrumb.Item>
+          <Breadcrumb.Item>DWM Usage Report</Breadcrumb.Item>
         </Breadcrumb>
 
-        <h1 className="dwm_title">DWM</h1>
+        <h1 className="dwm_title">DWM Usage Report</h1>
 
         <Menu
           onClick={handleClick}
@@ -38,7 +38,7 @@ function DwmApplication({ logout, user }) {
 
         </Menu>
         <div className="tvsit-dwm-wrapper">
-        <DwmDasboard />
+        <DwmUsageReport />
 
         </div>
 
@@ -50,4 +50,4 @@ function DwmApplication({ logout, user }) {
 
 }
 
-export default DwmApplication;
+export default DwmUsageReportApplication;

@@ -1,0 +1,138 @@
+.tvsit-dwmdashboard_table {
+  padding: 10px 25px;
+  table {
+    border-spacing: 0;
+    table-layout: auto;
+    width: 100%;
+    border: 1px solid #C1E3FF;
+     margin:0 auto ;
+    border-collapse: collapse;
+    overflow:hidden;
+    border-radius:1em;
+       
+    thead {
+      background: #C1E3FF;
+      color: #123F74;
+      font-size: 14px;
+      font-weight:600;
+      width: 100%;
+      text-align: center;
+      border-collapse: separate;
+      border-spacing: 0;
+      tr > th {
+        padding: 12px 5px;
+
+
+      }
+    }
+    tbody {
+      tr {
+        font-size: 14px;
+        color: #595959;
+
+        td {
+          padding: 12px;
+        }
+        &:nth-child(even) {
+          background-color:#FFFFFF;
+        }
+        &:nth-child(odd) {
+          background: #F2F2F2 ;
+        }
+      }
+    }
+
+    th,
+    td {
+      width: 100%;
+      text-align: center;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+  .fixedList {
+    overflow: overlay !important;
+
+  }
+
+
+  .fixedSizeList{
+    height: 300px;
+  }
+}
+
+
+@media only screen and (max-width:600px) {
+  .tvsit-dwmdashboard_table {
+    table { 
+       border-spacing: 0;
+       table-layout: auto;
+      border: 1px solid #2D9CDB;
+       border-collapse: collapse;
+      border-radius: 1em;
+      overflow-x: scroll;
+      width: 100%;
+
+  
+      thead {
+        background: #2D9CDB;
+        color: white;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: left;
+        border-collapse: separate;
+        border-spacing: 0;
+        tr > th {
+          padding: 12px 13px;
+          
+  
+        }
+      }
+      tbody {
+        tr {
+          font-size: 12px;
+          color: #595959;
+  
+  
+          // background-color: #f2f2f2;
+          td {
+            padding: 12px;
+          }
+          &:nth-child(even) {
+            background-color:#FFFFFF;
+          }
+          &:nth-child(odd) {
+            background: #F2F2F2 ;
+          }
+        }
+      }
+  
+      th,
+      td {
+       
+        width: 100%;
+      
+      }
+    }
+
+    
+
+    .fixedList {
+       overflow: overlay !important;
+
+    }
+    .dummy{
+      display: none;
+    }
+  
+}
+
+.tabel_scroll{
+  overflow-x: scroll;
+}
+
+}
+
+

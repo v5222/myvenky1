@@ -15,6 +15,7 @@ import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
 
+
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
@@ -48,6 +49,7 @@ class Einvoice extends React.Component {
       FormActivity: 1,
       selectStartDate: new Date(),
       selectEndDate: new Date(),
+      invNo:''
     };
   }
 
@@ -72,33 +74,47 @@ class Einvoice extends React.Component {
     });
   };
 
-  handleSearch = () => {
+  handleSearch = (e) => {
+
+
+    
+   
+
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
-    let options = {
-      method: "POST",
-      body: JSON.stringify({
-        body: {
-          type: "FILTERLISTREPORT",
-          no: "AP3PLCLI20000003",
-        },
-      }),
-    };
-    fetch(printUrl, options)
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data, "from Search");
-        this.setState({
-          isSuccess: true,
-          isError: false,
-          dataItems: data.body.bodymsg,
-          SubTotalList: SubTotalList,
-          TotalList: TotalList,
-          isActive: true,
+    if(this.state.invNo){
+      let options = {
+        method: "POST",
+        body: JSON.stringify({ body: { type: "FILTERLISTREPORT",no:this.state.invNo } }),
+      };
+      fetch(printUrl, options)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "from Search");
+          this.setState({
+            isSuccess: true,
+            isError: false,
+            dataItems: data.body.bodymsg,
+            SubTotalList: SubTotalList,
+            TotalList: TotalList,
+            isActive: true,
+          });
         });
-      });
+
+    }
+
+   
+    
   };
+
+  handleInvoice =(e)=>{
+    this.setState({
+      invNo:e.target.value 
+    })
+
+    
+  }
   BindOUInstance = () => {
     // var CompanyCode = document.getElementById("drpCompanyCode").value;
     fetch(
@@ -271,7 +287,7 @@ class Einvoice extends React.Component {
                   })}
                 </Select>
               </Col> */}
-              <Col span={4}>
+             {/** <Col span={4}>
                 <div className={styles.label}>OU</div>
                 <Select
                   style={{ width: "100%" }}
@@ -290,7 +306,7 @@ class Einvoice extends React.Component {
                     );
                   })}
                 </Select>
-              </Col>
+              </Col>  */}
               {/* <Col span={4}>
                 <div className={styles.label}>Finance Book</div>
                 <Select style={{ width: "100%" }}>
@@ -323,7 +339,7 @@ class Einvoice extends React.Component {
                   })}
                 </Select>
               </Col> */}
-              <Col span={4}>
+            {/*<Col span={4}>
                 <div className={styles.label}>Financial Period</div>
                 <Select
                   style={{ width: "100%" }}
@@ -347,7 +363,7 @@ class Einvoice extends React.Component {
                     );
                   })}
                 </Select>
-              </Col>
+              </Col> */}  
               {/* <Col span={4}>
                 <div className={styles.label}>Invoice Type</div>
                 <Select style={{ width: "100%" }}>
@@ -358,7 +374,7 @@ class Einvoice extends React.Component {
 
               {/* Testing Changes  */}
 
-              <Col span={4}>
+              <Col span={3}>
                 <div className={styles.label}>Date From</div>
                 <DatePicker
                   dateFormat="dd/MM/yyyy"
@@ -369,7 +385,7 @@ class Einvoice extends React.Component {
                   onKeyDown={(e) => e.preventDefault()}
                 />
               </Col>
-              <Col span={4}>
+              <Col span={3}>
                 <div className={styles.label}>Date To</div>
                 <DatePicker
                   id="txtDateTo"
@@ -382,25 +398,27 @@ class Einvoice extends React.Component {
                   onKeyDown={(e) => e.preventDefault()}
                 />
               </Col>
-              <Col span={4}>
+             {/* <Col span={4}>
                 <div className={styles.label}>Customer Code From</div>
                 <Input />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Customer Code To</div>
                 <Input />
-              </Col>
-            </Row>
-            <Row gutter={[20, 16]}>
+              </Col>  */}
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
-                <Input />
+                <Input 
+                value={this.state.invNo}
+                onChange={this.handleInvoice}
+                />
               </Col>
-              <Col span={4}>
+             <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input />
-              </Col>
-              <Col span={8}>
+                <Input 
+                  />
+              </Col>   
+              <Col span={6}>
                 <div className={styles.label}>Report Type</div>
                 <Select style={{ width: "100%" }}>
                   <Option value="ORIGINAL FOR RECIPIENT">
@@ -447,8 +465,70 @@ class Einvoice extends React.Component {
                     content={() => this.invoiceRef}
                   />
                 )}
-              </Col>
+                </Col>
             </Row>
+           {/* <Row gutter={[20, 16]}>
+              <Col span={4}>
+                <div className={styles.label}>Invoice No From</div>
+                <Input 
+                value={this.state.invNo}
+                onChange={this.handleInvoice}
+                />
+              </Col>
+             <Col span={4}>
+                <div className={styles.label}>Invoice No To</div>
+                <Input 
+                  />
+              </Col>   
+              <Col span={8}>
+                <div className={styles.label}>Report Type</div>
+                <Select style={{ width: "100%" }}>
+                  <Option value="ORIGINAL FOR RECIPIENT">
+                    ORIGINAL FOR RECIPIENT
+                  </Option>
+                  <Option value="DUPLICATE FOR TRANSPORTER">
+                    DUPLICATE FOR TRANSPORTER
+                  </Option>
+                  <Option value="DUPLICATE FOR SUPPLIER">
+                    DUPLICATE FOR SUPPLIER
+                  </Option>
+                  <Option value="TRIPLICATE FOR SUPPLIER">
+                    TRIPLICATE FOR SUPPLIER
+                  </Option>
+                </Select>
+              </Col>
+              <Col span={2}>
+                <div className={styles.label} style={{ color: "transparent" }}>
+                  dummy
+                </div>
+                <Button
+                  icon={<SearchOutlined />}
+                  type="primary"
+                  onClick={this.handleSearch}
+                >
+                  Search
+                </Button>
+              </Col>
+              <Col span={2}>
+                <div className={styles.label} style={{ color: "transparent " }}>
+                  dummy
+                </div>
+                {/* <Button icon={<PrinterOutlined />} onClick={handlePrint}> ///this lines is already commented
+                  Print
+                </Button> //// closing will come here
+                {isActive && (
+                  <ReactToPrint
+                    bodyClass={styles.reactPrintContent}
+                    trigger={() => {
+                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                      // to the root node of the returned component as it will be overwritten.
+                      return <Button icon={<PrinterOutlined />}>Print</Button>;
+                    }}
+                    content={() => this.invoiceRef}
+                  />
+                )}
+                </Col>
+            </Row>    */}
 
             <Row gutter={[20, 16]} />
           </section>

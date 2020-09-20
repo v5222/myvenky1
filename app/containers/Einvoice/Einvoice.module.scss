@@ -12,3 +12,21 @@
 .reactPrintContent {
   padding: 30px;
 }
+
+@media only print {
+  .container {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+  }
+  .label {
+    font-size: 14px;
+    color: black;
+    margin: 0px 0px 8px 0px;
+  }
+  
+  .reactPrintContent {
+    padding: 30px;
+  }
+
+}

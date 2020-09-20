@@ -16,6 +16,7 @@ import PodDashboard from "containers/PodDashboard/Loadable";
 import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
+import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -102,7 +103,12 @@ function App({
           exact
           path="/einvoice"
           render={(props) => (
-            <Einvoice {...props} logout={logout} user={user} />
+            authenticated ? (
+              <Einvoice {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+            
           )}
         />
         <Route
@@ -111,6 +117,17 @@ function App({
           render={(props) =>
             authenticated ? (
               <DwmApplication {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/dwmUsageReportApplication"
+          render={(props) =>
+            authenticated ? (
+              <DwmUsageReportApplication {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )
