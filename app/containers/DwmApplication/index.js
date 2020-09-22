@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../common/MainLayout/index.js";
 import CMDashboard from "../../components/CMDashboard";
-import DwmDasboard from '../../components/DwmDashboard'
+import DwmDasboard from "../../components/DwmDashboard";
 import Menu from "antd/lib/menu";
 import { Typography } from "antd";
 import { Pagination } from "antd";
@@ -17,8 +17,6 @@ function DwmApplication({ logout, user }) {
     setCurrent(e.key);
   };
 
-
-  
   return (
     <MainLayout logout={logout} user={user}>
       <main className="tvsit-dwm-container">
@@ -34,20 +32,13 @@ function DwmApplication({ logout, user }) {
           selectedKeys={[current]}
           mode="horizontal"
           className="dashboard_header"
-        >
-
-        </Menu>
+        />
         <div className="tvsit-dwm-wrapper">
-        <DwmDasboard />
-
+          <DwmDasboard />
         </div>
-
       </main>
     </MainLayout>
-  )
-
-
-
+  );
 }
 
 export default DwmApplication;

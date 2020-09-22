@@ -58,6 +58,7 @@ function LoginPage({
   isAuthenticated,
   login,
   logout,
+  user,
   ...props
 }) {
   useInjectReducer({ key, reducer });
@@ -94,7 +95,11 @@ function LoginPage({
   useEffect(() => {
     console.log(isAuthenticated, "From ADFS");
     if (isAuthenticated === true) {
-      history.push("/podDashboard");
+      if (user.email === "srinim@tvslsl.com") {
+        history.push("/dwmApplication");
+      } else {
+        history.push("/podDashboard");
+      }
     }
   }, [isAuthenticated]);
   const handleOTPgen = () => {

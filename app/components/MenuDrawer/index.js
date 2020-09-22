@@ -8,9 +8,9 @@ import LineChartOutlined from "@ant-design/icons/LineChartOutlined";
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
 import Logo from "../../images/logo-full.png";
 import Logo2 from "../../images/TVS-SCS-Tagline-Color.png";
-import Courier from '../../images/SVG/couriersidebar.svg'
+import Courier from "../../images/SVG/couriersidebar.svg";
 import history from "utils/history";
-const MenuDrawer = ({ selected }) => {
+const MenuDrawer = ({ selected, user }) => {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -28,56 +28,65 @@ const MenuDrawer = ({ selected }) => {
         visible={visible}
         bodyStyle={{
           backgroundColor: "#ECECEC",
-          width:'100%',
-          padding:'10px 0 10px 0'
+          width: "100%",
+          padding: "10px 0 10px 0",
         }}
       >
         <div
           style={{
-             margin: "10px 0 50px 0 ",
+            margin: "10px 0 50px 0 ",
             width: "100%",
             height: "70px",
-            
           }}
         >
-          {" "} 
+          {" "}
           <img src={Logo} className="tvsit_drawer_logo" />
           <img src={Logo2} className="tvsit_drawer_logo2" />
-          <div style={{borderBottom:'1px solid #D9D9D9', width:'100%',paddingLeft:'0px'}}></div>
+          <div
+            style={{
+              borderBottom: "1px solid #D9D9D9",
+              width: "100%",
+              paddingLeft: "0px",
+            }}
+          />
         </div>
-        
+
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          style={{ background: "#ECECEC",marginLeft:'10px'}}
-
+          style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          <Menu.Item
-            key="/podDashboard"
-            className={
-              selected === "/podDashboard"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-                
-            }            
-            icon={<PieChartOutlined />}
-            onClick={() => history.push("/podDashboard")}
-          >
-            POD Dashboard
-          </Menu.Item>
-          <Menu.Item
-            key="2"
-             icon={<LineChartOutlined /> }
-            onClick={() => history.push("/courierManagement")}
-            className={
-              selected === "/courierManagement"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Courier Management
-          </Menu.Item>
+          {user.email !== "srinim@tvslsl.com" && (
+            <Menu.Item
+              key="/podDashboard"
+              className={
+                selected === "/podDashboard"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+              icon={<PieChartOutlined />}
+              onClick={() => history.push("/podDashboard")}
+            >
+              POD Dashboard
+            </Menu.Item>
+          )}
+
+          {user.email !== "srinim@tvslsl.com" && (
+            <Menu.Item
+              key="2"
+              icon={<LineChartOutlined />}
+              onClick={() => history.push("/courierManagement")}
+              className={
+                selected === "/courierManagement"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Courier Management
+            </Menu.Item>
+          )}
+
           <Menu.Item
             key="3"
             icon={<BarChartOutlined />}
@@ -88,8 +97,8 @@ const MenuDrawer = ({ selected }) => {
                 : "tvsit-main-menu"
             }
           >
-          Dwm Insights
-            </Menu.Item>
+            Dwm Insights
+          </Menu.Item>
           <Menu.Item
             key="4"
             icon={<BarChartOutlined />}
@@ -100,21 +109,22 @@ const MenuDrawer = ({ selected }) => {
                 : "tvsit-main-menu"
             }
           >
-          Dwm Usage Report
+            Dwm Usage Report
+          </Menu.Item>
+          {user.email !== "srinim@tvslsl.com" && (
+            <Menu.Item
+              key="5"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/einvoice")}
+              className={
+                selected === "/einvoice"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Einvoice Print
             </Menu.Item>
-          <Menu.Item
-            key="5"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/einvoice")}
-            className={
-              selected === "/einvoice"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-          Einvoice Print
-            </Menu.Item>
-         
+          )}
         </Menu>
       </Drawer>
     </>

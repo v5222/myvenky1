@@ -286,7 +286,7 @@ function PodDashboard({
 
   return (
     <div>
-      <MainLayout logout={logout} user={user} >
+      <MainLayout logout={logout} user={user}>
         {/* {!loggedIn && <Redirect to="/" />} */}
         {/* <MainLayout> */}
         <Breadcrumb className="pod_breadcrumb">
@@ -513,13 +513,16 @@ function PodDashboard({
                     style={{
                       fontSize: "14px",
                       lineHeight: 0.8,
-                      marginTop:'13px',
-                      color:'#7E7E7E'
+                      marginTop: "13px",
+                      color: "#7E7E7E",
                     }}
                   />
                 </div>
-                <div style={{ lineHeight: 1, fontSize: "14px", marginTop:'13px' }}>
-                  <span style={{color:'#7E7E7E'}}>Last Refresh Date</span> : {refreshData}
+                <div
+                  style={{ lineHeight: 1, fontSize: "14px", marginTop: "13px" }}
+                >
+                  <span style={{ color: "#7E7E7E" }}>Last Refresh Date</span> :{" "}
+                  {refreshData}
                 </div>
               </div>
             </Col>

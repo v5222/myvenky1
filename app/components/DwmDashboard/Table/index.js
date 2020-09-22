@@ -5,117 +5,12 @@ import styles from "./DwmdashboardTable.scss";
 // import { apiURLCourier } from "../../containers/App/services";
 // import Empty from "antd/lib/empty";
 
-
-function DwmdashboardTable() {
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Capability",
-        accessor: "Capability",
-      },
-      {
-        Header: "Project",
-        accessor: "Project",
-      },
-      {
-        Header: "User",
-        accessor: "User",
-      },
-
-      {
-        Header: "Today Target",
-        accessor: "TodayTarget",
-      },
-      {
-        Header: "Today Achievement",
-        accessor: "TodayAchievement",
-      },
-      {
-        Header: "Monthly Target",
-        accessor: "MonthlyTarget",
-      },
-      {
-        Header: "Monthly Achievement",
-        accessor: "MonthlyAchievement",
-      },
-      
-    ],
-    []
-  );
-
-  const data = [
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 212,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-      
-    },
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 312,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-     
-
-    },
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 312,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-      
-
-    },
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 312,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-      
-    },
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 312,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-
-
-    },
-    {
-      Capability: "AMW",
-      Project: "ASHOK LEYLAND",
-      User: 312,
-      TodayTarget: 22,
-      TodayAchievement: 4,
-      MonthlyTarget: 4,
-      MonthlyAchievement: 0,
-
-    },
-    
-  ];
-
+function DwmdashboardTable({ tableData, column }) {
   return (
     <div className="tvsit-dwmdashboard_table">
-    <div className='tabel_scroll'>
-    <Table columns={columns} data={data} />
-    </div>
+      <div className="tabel_scroll">
+        <Table columns={column} data={tableData} />
+      </div>
     </div>
   );
 }
@@ -168,29 +63,27 @@ function Table({ columns, data }) {
 
   // Render the UI for your table
   return (
-    
     <table {...getTableProps()}>
-      <thead >
+      <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} >{column.render("Header")}</th>
+              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}  >
-        <div >
-          <FixedSizeList
-            height={300}
-            itemCount={rows.length}
-            itemSize={50}
-            width={totalColumnsWidth}
-            className={styles.FixedList}
-          >
-            {RenderRow}
-          </FixedSizeList>
-        </div>
+      <tbody {...getTableBodyProps()}>
+        <FixedSizeList
+          height={300}
+          itemCount={rows.length}
+          itemSize={50}
+          width={totalColumnsWidth}
+          className={styles.FixedList}
+        >
+          {RenderRow}
+        </FixedSizeList>
+
         {/* {rows.map((row, i) => {
     prepareRow(row)
     return (
