@@ -25,7 +25,7 @@ class InvoicePrint extends React.Component {
           <div className={styles.companyDetails}>
             <div
               style={{
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: "bolder",
                 marginBottom: "5px",
                 textTransform: "uppercase",
@@ -61,15 +61,10 @@ class InvoicePrint extends React.Component {
 
         {/**   {InvoiceDetailsList[0].itemisservc === "N" ? ( */}
           {InvoiceDetailsList[0] ? (
-            <div className={styles.companyDetails} style={{marginRight:'100px'}}>
+            <div className={styles.companyDetails} style={{marginRight:'70px'}}>
               <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "bolder",
-                  marginBottom: "5px",
-                  textTransform: "uppercase",
-                  color:'black'
-                }}
+                
+                className={styles.dispatch}
               >
                 Dispatch Details
               </div>
@@ -99,7 +94,7 @@ class InvoicePrint extends React.Component {
               <div className={styles.companyAddr}>GSTIN :{details.shipgstin} </div>
             </div>
           ) : (
-            "data not coming properly from api"
+            ""
           )}
 
 
@@ -118,6 +113,7 @@ class InvoicePrint extends React.Component {
             </div>
           </div>
         </section>
+
         <div
           style={{
             display: "flex",
@@ -126,34 +122,29 @@ class InvoicePrint extends React.Component {
           }}
         >
           <div
-            style={{
-              fontSize: "12px",
-            }}
+            className={styles.supplytype}
           >
             Supply Type : {details.suptyp}
           </div>
           <div
-            style={{
-              transform: "translateX(100px)",
-              fontSize: "12px",
-              fontWeight: 600,
-            }}
+            
+            className={styles.invoicetype}
+            
           >
             {"TAX INVOICE "+'('+ details.typ +')'}
           </div>
           <div
             style={{
               justifySelf: "center",
-              fontSize: "12px",
             }}
+            className={styles.supplytype}
+            
           >
             Document Period: {details.refinvstdt} - {details.refinvenddt}
           </div>
         </div>
         <div
-          style={{
-            fontSize: "12px",
-          }}
+        className={styles.supplytype}
         >
           Place of Supply : {details.shipstcd} - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
         </div>
@@ -184,7 +175,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>Bill To Customer</div>
                 <div
                   className={styles.subheading1}
-                  style={{ fontSize: "12px", fontWeight: "bold" }}
+                  style={{fontWeight: "bold" }}
                 >
                   {details.buyerlglnm}
                 </div>
@@ -216,7 +207,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>Ship To Customer</div>
                 <div
                   className={styles.subheading1}
-                  style={{ fontSize: "12px", fontWeight: "bold" }}
+                  style={{ fontWeight: "bold" }}
                 >
                   {details.shiplglnm}
                 </div>

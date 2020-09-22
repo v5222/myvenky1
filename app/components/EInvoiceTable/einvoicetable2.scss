@@ -14,6 +14,7 @@
       padding: 5px;
       vertical-align: top;
       border-top: 1px solid black;
+      
     }
   
     thead th {
@@ -164,10 +165,7 @@
 .amt_words{
    text-transform: capitalize;
    font-size: 14px;
-   
-   
-  
-}
+   }
 
 
 ///responsive for print
@@ -333,6 +331,15 @@
           }
         }
     }
+    .amt_words{
+      text-transform: capitalize;
+      font-size: 12px;
+      
+      }
+      .charges{
+        font-size: 10px;
+      }
+    
   
 }
 

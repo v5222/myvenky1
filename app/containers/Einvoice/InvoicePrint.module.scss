@@ -18,9 +18,18 @@
     align-self: flex-start;
 margin: -10px -24px 0 0px  ;    
   }
+ 
   .companyDetails {
     width: 50%;
     margin-left: 40px;
+    line-height: 15px;
+    .dispatch{
+      font-size: 14px;
+      font-weight: bolder;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      color:'black'
+    }
     .companyName {
       font-size: 12px;
       font-weight: bold;
@@ -31,8 +40,17 @@ margin: -10px -24px 0 0px  ;
       font-size: 12px;
       // color: black;
     }
+   
   }
+ 
 }
+.supplytype{
+  font-size: 12px;
+}
+.invoicetype{
+  margin-left: 100px;
+}
+
 
 .invoiceNo {
   font-size: 12px;
@@ -90,10 +108,12 @@ margin: -10px -24px 0 0px  ;
 
 }
 
+ // Print Responsive 
 
 @media only print {
+  
   .reportType {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
   
     color: black;
@@ -103,7 +123,7 @@ margin: -10px -24px 0 0px  ;
   .container {
     display: flex;
      justify-content: space-around;
-    padding: 5px 17px;
+    padding: 6px 10px 0 10px;
     border: 1px solid grey;
     border-radius: 10px;
     width: 100%;
@@ -112,72 +132,97 @@ margin: -10px -24px 0 0px  ;
       align-self: flex-start;
   margin: -10px -24px 0 0px  ;    
     }
+    
     .companyDetails {
-      width: 50%;
+      width: 100%;
       margin-left: 40px;
+      line-height: 12px;
+      padding: 5px -15px;
+      .dispatch{
+        margin-top: 5px;
+        font-size: 8px;
+        font-weight: bolder;
+        margin-bottom: 1px;
+        text-transform: uppercase;
+        color:'black'
+      }
       .companyName {
-        font-size: 12px;
+        font-size: 8px;
         font-weight: bold;
         color: black;
+        // margin-left: 5px;
       }
       .companyAddr {
-        margin-top: 4px;
-        font-size: 12px;
+        margin-top: 2px;
+        font-size: 8px;
         // color: black;
       }
     }
   }
+
+  .supplytype{
+    font-size: 8px;
+  }
+  .invoicetype{
+    font-size: 8px;
+    color: black;
+    text-align: center;
+    margin-right: 185px;
+    transform: translateX(100px);
+    font-weight: 600;
+  }
   
   .invoiceNo {
-    font-size: 12px;
+    font-size: 8px;
   
     span {
       font-weight: bolder;
-      font-size: 12px;
+      font-size: 8px;
   
     }
   }
   .invoiceNo1 {
     text-align: right;
-    font-size: 12px;
+    font-size: 8px;
     span {
       font-weight: bolder;
-      font-size: 12px;
+      font-size: 8px;
   
     }
   }
   
   .subcontainer {
-    padding: 10px 0 10px 30px;
+    padding: 10px 0 2px 30px;
     border: 1px solid grey;
     border-radius: 10px;
-    line-height: 20px;
+    line-height: 14px;
   
-    .asdf{
-      padding-bottom: 38px;
-    }
+    // .asdf{
+    //   padding-bottom: 28px;
+    // }
     
     .subheading {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 600;
     }
     .subheading1 {
-      font-size: 12px;
+      font-size: 9px;
       margin-top: 0;
     }
   }
   .subtabletd {
-    font-size: 12px;
+    font-size: 9px;
   }
   .qrcode {
     align-self: center;
     // margin-right: 80px;
     height: 200px;
+    margin-top: 20px;
   }
   
   .subcontainer1{
-     padding: 0 0 30px 30px;
-     line-height: 18px;
+     padding: 0 0 10px 30px;
+     line-height: 16px;
     
     border: 1px solid grey;
     border-radius: 10px;

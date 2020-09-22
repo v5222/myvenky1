@@ -15,8 +15,6 @@ import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
 
-import { Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 
 
 const urls =
@@ -24,13 +22,7 @@ const urls =
 const printUrl =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
 
-  const props = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text',
-    }
-  }
+
 class Einvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -263,19 +255,6 @@ class Einvoice extends React.Component {
   };
 
   
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-  
-  };
-
   render() {
     const { logout, user } = this.props;
     const {
@@ -296,7 +275,7 @@ class Einvoice extends React.Component {
         
           <section className={styles.container}>
          
-            <Row gutter={[20, 16]} style={{marginTop:'0px'}}>
+            <Row gutter={[20, 16]} >
               {/* <Col span={4}>
                 <div className={styles.label}>Company</div>
                 <Select
@@ -557,15 +536,7 @@ class Einvoice extends React.Component {
                 )}
                 </Col>
             </Row>    */}
-            <Row style={{marginLeft:'66rem',marginTop:'10px'}}>
-          <Col span={6} >
-            <Upload {...props}>
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-
-        </Col>
-
-        </Row>
+           
 
             <Row gutter={[20, 16]} />
           </section>

@@ -68,7 +68,7 @@ class EinvoiceTable extends React.Component {
       <div className='Invoicetable'>
         <table
           className="table table-bordered"
-          style={{ width: "100%", fontSize: "14px",margin:'auto',pageBreakInside:'auto' }}
+          style={{ maxWidth: "100%",margin:'auto',fontSize:'10px' }}
         >
           <tr>
             <th
@@ -610,8 +610,8 @@ class EinvoiceTable extends React.Component {
               <div>
                 <strong className='amt_words'> INR- {convertor(itemTotal)}</strong>
               </div>
-              <div>N</div>
-              <div>{item[0].itemisservc}</div>
+              <div className='charges'>N</div>
+              <div className='charges'>{item[0].itemisservc}</div>
             </div>
           </div>
 
@@ -657,7 +657,7 @@ class EinvoiceTable extends React.Component {
           </div>
 
           <div className={styles.wrapper_1}>
-            <div className={styles.subwrapper_1}>
+            <div className={styles.subwrapper_footer}>
               <h6 >
                 <strong className={styles.footer_list}>Electronic Reference Number</strong>
               </h6>
@@ -671,9 +671,9 @@ class EinvoiceTable extends React.Component {
             <div className={styles.subwrapper_2}>
               <Barcode
                 value="TVS SUPPLY CHAIN INVOICE"
-                className="img-responsive pad-top-20"
+                className="bar_code"
                 // style={{ height: "30px" }}
-                height={22}
+                height={18}
               />
             </div>
           </div>
