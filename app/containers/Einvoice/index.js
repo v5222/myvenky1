@@ -4,7 +4,7 @@ import styles from "./Einvoice.module.scss";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Select from "antd/lib/select";
-import DatePicker from "react-datepicker";
+
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import Button from "antd/lib/button";
@@ -14,16 +14,21 @@ import { useReactToPrint } from "react-to-print";
 import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
+<<<<<<< HEAD
 
 
 
 
 
+=======
+import InvoiceUpload from "components/Einvoiceupload";
+import DatePicker from "antd/lib/date-picker";
+const { RangePicker } = DatePicker;
+>>>>>>> 7f4c834e9dbe4c1cc74daea651b36b236781aba2
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
-
 
 class Einvoice extends React.Component {
   constructor(props) {
@@ -54,7 +59,7 @@ class Einvoice extends React.Component {
       FormActivity: 1,
       selectStartDate: new Date(),
       selectEndDate: new Date(),
-      invNo: ''
+      invNo: "",
     };
   }
 
@@ -86,7 +91,9 @@ class Einvoice extends React.Component {
     if (this.state.invNo) {
       let options = {
         method: "POST",
-        body: JSON.stringify({ body: { type: "FILTERLISTREPORT", no: this.state.invNo } }),
+        body: JSON.stringify({
+          body: { type: "FILTERLISTREPORT", no: this.state.invNo },
+        }),
       };
       fetch(printUrl, options)
         .then((res) => res.json())
@@ -101,20 +108,14 @@ class Einvoice extends React.Component {
             isActive: true,
           });
         });
-
     }
-
-
-
   };
 
   handleInvoice = (e) => {
     this.setState({
-      invNo: e.target.value
-    })
-
-
-  }
+      invNo: e.target.value,
+    });
+  };
   BindOUInstance = () => {
     // var CompanyCode = document.getElementById("drpCompanyCode").value;
     fetch(
@@ -130,7 +131,7 @@ class Einvoice extends React.Component {
           this.BindFinancialYear();
           this.BindFinanceBook();
         },
-        (error) => { }
+        (error) => {}
       );
   };
 
@@ -149,7 +150,7 @@ class Einvoice extends React.Component {
           });
           this.BindFinancialPeriod();
         },
-        (error) => { }
+        (error) => {}
       );
   };
 
@@ -170,7 +171,7 @@ class Einvoice extends React.Component {
 
           this.BindFinancialDates(result[0].POFinMonthList);
         },
-        (error) => { }
+        (error) => {}
       );
   };
 
@@ -188,7 +189,7 @@ class Einvoice extends React.Component {
             FinBookList: result[0].POFinBookList,
           });
         },
-        (error) => { }
+        (error) => {}
       );
   };
 
@@ -250,8 +251,9 @@ class Einvoice extends React.Component {
       isLoader: false,
     });
   };
-
-  
+  handleDateRange = (dates) => {
+    console.log(dates);
+  };
   render() {
     const { logout, user } = this.props;
     const {
@@ -269,10 +271,8 @@ class Einvoice extends React.Component {
     return (
       <>
         <MainLayout logout={logout} user={user}>
-        
           <section className={styles.container}>
-         
-            <Row gutter={[20, 16]} >
+            <Row gutter={[20, 16]}>
               {/* <Col span={4}>
                 <div className={styles.label}>Company</div>
                 <Select
@@ -376,8 +376,15 @@ class Einvoice extends React.Component {
               </Col> */}
 
               {/* Testing Changes  */}
-
-              <Col span={3} style={{marginRight:'45px'}}>
+              <Col span={6}>
+                <div className={styles.label}>Dates</div>
+                <RangePicker
+                  allowClear={false}
+                  onChange={this.handleDateRange}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              {/* <Col span={3} style={{ marginRight: "45px" }}>
                 <div className={styles.label}>Date From</div>
                 <DatePicker
                   dateFormat="dd/MM/yyyy"
@@ -388,7 +395,7 @@ class Einvoice extends React.Component {
                   onKeyDown={(e) => e.preventDefault()}
                 />
               </Col>
-              <Col span={3} style={{marginRight:'45px'}}>
+              <Col span={3} style={{ marginRight: "45px" }}>
                 <div className={styles.label}>Date To</div>
                 <DatePicker
                   id="txtDateTo"
@@ -400,7 +407,7 @@ class Einvoice extends React.Component {
                   maxDate={this.state.endDate}
                   onKeyDown={(e) => e.preventDefault()}
                 />
-              </Col>
+              </Col> */}
               {/* <Col span={4}>
                 <div className={styles.label}>Customer Code From</div>
                 <Input />
@@ -411,15 +418,11 @@ class Einvoice extends React.Component {
               </Col>  */}
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
-                <Input
-                  value={this.state.invNo}
-                  onChange={this.handleInvoice}
-                />
+                <Input value={this.state.invNo} onChange={this.handleInvoice} />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input
-                />
+                <Input />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Report Type</div>
@@ -438,7 +441,7 @@ class Einvoice extends React.Component {
                   </Option>
                 </Select>
               </Col>
-              <Col span={2} style={{marginRight:'5px'}}>
+              <Col span={2} style={{ marginRight: "5px" }}>
                 <div className={styles.label} style={{ color: "transparent" }}>
                   dummy
                 </div>
@@ -446,7 +449,6 @@ class Einvoice extends React.Component {
                   icon={<SearchOutlined />}
                   type="primary"
                   onClick={this.handleSearch}
-                  
                 >
                   Search
                 </Button>
@@ -471,6 +473,9 @@ class Einvoice extends React.Component {
                 )}
               </Col>
             </Row>
+            <div>
+              <InvoiceUpload />
+            </div>
             {/* <Row gutter={[20, 16]}>
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
@@ -533,11 +538,9 @@ class Einvoice extends React.Component {
                 )}
                 </Col>
             </Row>    */}
-           
 
             <Row gutter={[20, 16]} />
           </section>
-          
 
           {isActive && (
             <section className={styles.container}>
