@@ -15,11 +15,22 @@ import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
 
+import { Upload, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
 
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+
+  const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    }
+  }
 class Einvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +60,7 @@ class Einvoice extends React.Component {
       FormActivity: 1,
       selectStartDate: new Date(),
       selectEndDate: new Date(),
-      invNo:''
+      invNo: ''
     };
   }
 
@@ -77,16 +88,16 @@ class Einvoice extends React.Component {
   handleSearch = (e) => {
 
 
-    
-   
+
+
 
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
-    if(this.state.invNo){
+    if (this.state.invNo) {
       let options = {
         method: "POST",
-        body: JSON.stringify({ body: { type: "FILTERLISTREPORT",no:this.state.invNo } }),
+        body: JSON.stringify({ body: { type: "FILTERLISTREPORT", no: this.state.invNo } }),
       };
       fetch(printUrl, options)
         .then((res) => res.json())
@@ -104,16 +115,16 @@ class Einvoice extends React.Component {
 
     }
 
-   
-    
+
+
   };
 
-  handleInvoice =(e)=>{
+  handleInvoice = (e) => {
     this.setState({
-      invNo:e.target.value 
+      invNo: e.target.value
     })
 
-    
+
   }
   BindOUInstance = () => {
     // var CompanyCode = document.getElementById("drpCompanyCode").value;
@@ -130,7 +141,7 @@ class Einvoice extends React.Component {
           this.BindFinancialYear();
           this.BindFinanceBook();
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -149,7 +160,7 @@ class Einvoice extends React.Component {
           });
           this.BindFinancialPeriod();
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -170,7 +181,7 @@ class Einvoice extends React.Component {
 
           this.BindFinancialDates(result[0].POFinMonthList);
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -188,7 +199,7 @@ class Einvoice extends React.Component {
             FinBookList: result[0].POFinBookList,
           });
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -251,6 +262,20 @@ class Einvoice extends React.Component {
     });
   };
 
+  
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+  
+  };
+
   render() {
     const { logout, user } = this.props;
     const {
@@ -268,8 +293,10 @@ class Einvoice extends React.Component {
     return (
       <>
         <MainLayout logout={logout} user={user}>
+        
           <section className={styles.container}>
-            <Row gutter={[20, 16]}>
+         
+            <Row gutter={[20, 16]} style={{marginTop:'0px'}}>
               {/* <Col span={4}>
                 <div className={styles.label}>Company</div>
                 <Select
@@ -287,7 +314,7 @@ class Einvoice extends React.Component {
                   })}
                 </Select>
               </Col> */}
-             {/** <Col span={4}>
+              {/** <Col span={4}>
                 <div className={styles.label}>OU</div>
                 <Select
                   style={{ width: "100%" }}
@@ -339,7 +366,7 @@ class Einvoice extends React.Component {
                   })}
                 </Select>
               </Col> */}
-            {/*<Col span={4}>
+              {/*<Col span={4}>
                 <div className={styles.label}>Financial Period</div>
                 <Select
                   style={{ width: "100%" }}
@@ -363,7 +390,7 @@ class Einvoice extends React.Component {
                     );
                   })}
                 </Select>
-              </Col> */}  
+              </Col> */}
               {/* <Col span={4}>
                 <div className={styles.label}>Invoice Type</div>
                 <Select style={{ width: "100%" }}>
@@ -374,7 +401,7 @@ class Einvoice extends React.Component {
 
               {/* Testing Changes  */}
 
-              <Col span={3}>
+              <Col span={3} style={{marginRight:'45px'}}>
                 <div className={styles.label}>Date From</div>
                 <DatePicker
                   dateFormat="dd/MM/yyyy"
@@ -385,7 +412,7 @@ class Einvoice extends React.Component {
                   onKeyDown={(e) => e.preventDefault()}
                 />
               </Col>
-              <Col span={3}>
+              <Col span={3} style={{marginRight:'45px'}}>
                 <div className={styles.label}>Date To</div>
                 <DatePicker
                   id="txtDateTo"
@@ -398,7 +425,7 @@ class Einvoice extends React.Component {
                   onKeyDown={(e) => e.preventDefault()}
                 />
               </Col>
-             {/* <Col span={4}>
+              {/* <Col span={4}>
                 <div className={styles.label}>Customer Code From</div>
                 <Input />
               </Col>
@@ -408,17 +435,17 @@ class Einvoice extends React.Component {
               </Col>  */}
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
-                <Input 
-                value={this.state.invNo}
-                onChange={this.handleInvoice}
+                <Input
+                  value={this.state.invNo}
+                  onChange={this.handleInvoice}
                 />
               </Col>
-             <Col span={4}>
+              <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input 
-                  />
-              </Col>   
-              <Col span={6}>
+                <Input
+                />
+              </Col>
+              <Col span={4}>
                 <div className={styles.label}>Report Type</div>
                 <Select style={{ width: "100%" }}>
                   <Option value="ORIGINAL FOR RECIPIENT">
@@ -435,7 +462,7 @@ class Einvoice extends React.Component {
                   </Option>
                 </Select>
               </Col>
-              <Col span={2}>
+              <Col span={2} style={{marginRight:'5px'}}>
                 <div className={styles.label} style={{ color: "transparent" }}>
                   dummy
                 </div>
@@ -443,6 +470,7 @@ class Einvoice extends React.Component {
                   icon={<SearchOutlined />}
                   type="primary"
                   onClick={this.handleSearch}
+                  
                 >
                   Search
                 </Button>
@@ -465,9 +493,9 @@ class Einvoice extends React.Component {
                     content={() => this.invoiceRef}
                   />
                 )}
-                </Col>
+              </Col>
             </Row>
-           {/* <Row gutter={[20, 16]}>
+            {/* <Row gutter={[20, 16]}>
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
                 <Input 
@@ -529,9 +557,19 @@ class Einvoice extends React.Component {
                 )}
                 </Col>
             </Row>    */}
+            <Row style={{marginLeft:'66rem',marginTop:'10px'}}>
+          <Col span={6} >
+            <Upload {...props}>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
+
+        </Col>
+
+        </Row>
 
             <Row gutter={[20, 16]} />
           </section>
+          
 
           {isActive && (
             <section className={styles.container}>

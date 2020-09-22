@@ -6,6 +6,22 @@ const activitynameArr = [
   "TAT Adherence/Window Time Adherence",
   "Handling Damage",
   "MHE Availability",
+  "Nil Safety Incidents/Accidents /Breakdown of trucks",
+  "FIFO/Customer Rejection/Held up stock Clearance",
+  "Ontime MIS report to Customer on time - Daily/Monthly",
+  "Transit Damages/ODCs",
+  "Part Shortage for day",
+  "GRN Error/Pending",
+  "Putaway Pendency >48 Hrs",
+  "PIV Completed",
+  "Line stoppage due to MHE",
+  "Preventive Maintenance (PM - W/O)",
+  "All MHE to have daily check list",
+  "Breakdown status of MHE",
+  "Service to Billing Adherence & payment follow ups",
+  "Closure of debit threat",
+  "Vehicle Utilisation-Consolidation Inbound/Outbound",
+  "Training And awareness program Plan and Status review",
 ];
 const getSummary = (array, filters) => {
   let newData = [];
@@ -25,7 +41,7 @@ const getSummary = (array, filters) => {
       item.targetvalues === null
         ? item.targetnorms !== null
           ? item.targetnorms
-          : parseInt(item.targetvalues)
+          : 0
         : parseInt(item.targetvalues);
     let tempActual = item.actual === null ? 0 : parseInt(item.actual);
     if (activitynameArr.includes(item.activityname)) {

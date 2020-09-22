@@ -46,7 +46,7 @@ function DwmUsageReport() {
   });
   //Data filter hook
   useEffect(() => {
-    // console.log(data);
+    console.log(data);
     // console.log(isLoading);
     // console.log(error);
     if (!isLoading) {

@@ -1,62 +1,51 @@
-.container {        //previous css, enhance css is below
-    padding: 20px;
-    border-bottom: 1px solid #E5E5E5;
-    padding-bottom: 50px;
-    margin-bottom: 30px;
-    //  background:red; //sample will delete later
-  }
-  
-  .mob_container{
+.container {
+  //previous css, enhance css is below
+  padding: 20px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 50px;
+  margin-bottom: 30px;
+  //  background:red; //sample will delete later
+}
+
+.mob_container {
+  display: none;
+}
+
+.title {
+  font-size: 16px;
+  color: black;
+  margin-bottom: 10px;
+  line-height: 14px;
+}
+.title_preference {
+  font-size: 14px;
+  line-height: 14px;
+  cursor: pointer;
+  color: #00a5e6;
+}
+.d_flex {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px;
+  height: 100%;
+}
+
+.dots {
+  height: 10px;
+  width: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
     display: none;
   }
-  
-  .title {
-    font-size: 16px;
-    color: black;
-    margin-bottom: 10px;
-    line-height: 14px;
-  }
-  .title_preference {
-    font-size: 14px;
-    line-height: 14px;
-    cursor: pointer;
-    color: #00a5e6;
-  }
-  .d_flex {
+
+  .mob_container {
     display: flex;
-    justify-content: space-between;
-    padding: 5px 5px;
-    height: 100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 15px;
+    margin: auto;
+    align-items: center;
   }
-  
-  
-  
-  
-  @media only screen and (max-width: 600px) {
-      .container{
-        display:none;
-  }
-  
-      .mob_container{
-        display: flex;
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
-        padding-top: 15px;
-        margin:auto;
-        align-items: center
-        
-      
-  
-  
-       
-      }
-  
-  
-      
-    
-    
-    
-    }
-  
-  
-  
+}
