@@ -1,8 +1,9 @@
 
 .Invoicetable{
+  padding:10px 0px;
 .table {
-    width: 100%;
-    margin-bottom: 2px;
+    max-width: 100%;
+    margin-bottom: 10px;
     color: black;
     background-color:white; // Reset for nesting within parents with `background-color`.
 
@@ -10,7 +11,7 @@
   
     th,
     td {
-      padding: 7px;
+      padding: 5px;
       vertical-align: top;
       border-top: 1px solid black;
     }
@@ -112,6 +113,7 @@
   
   // stylelint-disable-next-line no-duplicate-selectors
   .table {
+
     .thead-dark {
       th {
         color: black;
@@ -161,6 +163,9 @@
 
 .amt_words{
    text-transform: capitalize;
+   font-size: 14px;
+   
+   
   
 }
 
@@ -169,19 +174,18 @@
 
 @media only print {
   .Invoicetable{
+
     .table {
-        width: 100%;
-        font-size: 12px;
+        max-width: 100%;
+        font-size: 8px;
         margin-bottom: 7px;
         color: black;
         background-color:white; // Reset for nesting within parents with `background-color`.
-    
         
       
         th,
         td {
           padding: 4px 2px;
-
           vertical-align: top;
           border-top: 1px solid black;
         }
@@ -340,24 +344,24 @@
   // Generate series of `.table-responsive-*` classes for configuring the screen
   // size of where your table will overflow.
   
-//   .table-responsive {
-//     @each $breakpoint in map-keys($grid-breakpoints) {
-//       $next: breakpoint-next($breakpoint, $grid-breakpoints);
-//       $infix: breakpoint-infix($next, $grid-breakpoints);
+  // .table-responsive {
+  //   @each $breakpoint in map-keys($grid-breakpoints) {
+  //     $next: breakpoint-next($breakpoint, $grid-breakpoints);
+  //     $infix: breakpoint-infix($next, $grid-breakpoints);
   
-//       &#{$infix} {
-//         @include media-breakpoint-down($breakpoint) {
-//           display: block;
-//           width: 100%;
-//           overflow-x: auto;
-//           -webkit-overflow-scrolling: touch;
+  //     &#{$infix} {
+  //       @include media-breakpoint-down($breakpoint) {
+  //         display: block;
+  //         width: 100%;
+  //         overflow-x: auto;
+  //         -webkit-overflow-scrolling: touch;
   
-//           // Prevent double border on horizontal scroll due to use of `display: block;`
-//           > .table-bordered {
-//             border: 0;
-//           }
-//         }
-//       }
-//     }
-//   }
+  //         // Prevent double border on horizontal scroll due to use of `display: block;`
+  //         > .table-bordered {
+  //           border: 0;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   

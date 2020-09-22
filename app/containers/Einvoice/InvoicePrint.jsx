@@ -7,6 +7,7 @@ import Col from "antd/lib/col";
 import EinvoiceTable from "../../components/EInvoiceTable";
 import items from "./items.json";
 import ReactToPrint from "react-to-print";
+import { size } from "lodash";
 
 const QRCODE =
   '{"SellerGstin":"37AACCT1412E1ZU","BuyerGstin":"37AABCM9425F1ZF","DocNo":"AP3PLCLI20000003","DocTyp":"INV","DocDt":"17/04/2020","TotInvVal":257012.54,"ItemCnt":2,"MainHsnCode":"9968","Irn":"e6157c135030019a84752600269ee987b4ab1091766ca379caa191d6048b469e","IrnDt":"2020-09-12 16:56:00"}';
@@ -51,53 +52,36 @@ class InvoicePrint extends React.Component {
             <div className={styles.companyAddr}>
               PAN : {details.sellergsting.slice(2, 12)}
             </div>
-            <div className={styles.companyAddr}>UIN: U63011TN2004PLC054655</div>
+            <div className={styles.companyAddr}>UIN:</div>
           </div>
-          <div className={styles.companyDetails}>
-            <div
-              style={{
-                fontSize: "16px",
-                fontWeight: "bolder",
-                marginBottom: "5px",
-                textTransform: "uppercase",
-                color: "black",
-              }}
-            >
-              Dispatch Details
-            </div>
-            
-            <div className={styles.companyName}>{details.sellerlglnm}</div>
-            <div className={styles.companyName}><i>{'(Formerly known as TVS Logistics Services Limited)'}</i></div>
-            {/* <div className={styles.companyName}>
-            {details.sellerlglnm}
-            </div> */}
-          {/*    <div className={styles.companyAddr}>{details.selleraddress1}</div>
-            <div className={styles.companyAddr}>{details.selleraddress2}</div>
-            <div className={styles.companyAddr}>{details.sellerlocation + ":  " + details.sellerpincode}</div>
-            {/** <div className={styles.companyAddr}>{details.sellerpincode}</div>  */}
-            <div className={styles.companyAddr}>
-            </div>
-            
-          </div>
+          
 
           {/* dispatch details */}
 
-          {InvoiceDetailsList[0].itemisservc === "N" ? (
-            <div className={styles.companyDetails}>
+
+        {/**   {InvoiceDetailsList[0].itemisservc === "N" ? ( */}
+          {InvoiceDetailsList[0] ? (
+            <div className={styles.companyDetails} style={{marginRight:'100px'}}>
               <div
                 style={{
-                  fontSize: "16px",
+                  fontSize: "14px",
                   fontWeight: "bolder",
                   marginBottom: "5px",
                   textTransform: "uppercase",
+                  color:'black'
                 }}
               >
                 Dispatch Details
               </div>
               <div className={styles.companyName}>
-                {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm}
+              <div className={styles.companyName}>{details.sellerlglnm}</div>
+
+              <div className={styles.companyName}><i>{'(Formerly known as TVS Logistics Services Limited)'}</i></div>
+
+                
               </div>
-              {/* <div className={styles.companyName}>{details.dispnm}</div> */}
+              {/*  {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm}
+              <div className={styles.companyName}>{details.dispnm}</div> */}
               <div className={styles.companyAddr}>
                 {details.dispaddress1 !== "NA"
                   ? details.dispaddress1
@@ -108,30 +92,29 @@ class InvoicePrint extends React.Component {
                   ? details.dispaddress2
                   : details.selleraddress2}
               </div>
-              <div className={styles.companyAddr}>{details.displocation}</div>
-              <div className={styles.companyAddr}>{details.disppincode}</div>
+              <div className={styles.companyAddr}>{details.displocation + ":" + details.disppincode}</div>
               <div className={styles.companyAddr}>
-                State Code : {details.dispstcd}
+                State Code : {details.dispstcd} - {details.shipstcd===37?"Andhra pradesh":"Tamilnadu"}
               </div>
-              <div className={styles.companyAddr}>GSTIN : </div>
-              <div className={styles.companyAddr}>PAN :</div>
-              <div className={styles.companyAddr}>UIN :</div>
+              <div className={styles.companyAddr}>GSTIN :{details.shipgstin} </div>
             </div>
           ) : (
-            ""
+            "data not coming properly from api"
           )}
+
+
 
           <div className={styles.qrcode}>
             <div>
-              <QRCode value={details.qrcode} />
+              <QRCode value={details.qrcode} style={{marginRight:'60px'}}/>
             </div>
             <div>Version : {details.version}</div>
             <div>
-              <div style={{ width: "100px" }}>
+              <div style={{ width: "100px",fontSize:"12px" }}>
                 IRN : {details.irn.slice(0, 24)}
               </div>
-              <div> {details.irn.slice(24, 48)}</div>
-              <div> {details.irn.slice(48)}</div>
+              <div style={{ width: "100px",fontSize:"12px" }}> {details.irn.slice(24, 48)}</div>
+              <div style={{ width: "100px",fontSize:"12px" }}> {details.irn.slice(48)}</div>
             </div>
           </div>
         </section>
@@ -144,7 +127,7 @@ class InvoicePrint extends React.Component {
         >
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
             }}
           >
             Supply Type : {details.suptyp}
@@ -152,7 +135,7 @@ class InvoicePrint extends React.Component {
           <div
             style={{
               transform: "translateX(100px)",
-              fontSize: "14px",
+              fontSize: "12px",
               fontWeight: 600,
             }}
           >
@@ -161,7 +144,7 @@ class InvoicePrint extends React.Component {
           <div
             style={{
               justifySelf: "center",
-              fontSize: "14px",
+              fontSize: "12px",
             }}
           >
             Document Period: {details.refinvstdt} - {details.refinvenddt}
@@ -169,7 +152,7 @@ class InvoicePrint extends React.Component {
         </div>
         <div
           style={{
-            fontSize: "14px",
+            fontSize: "12px",
           }}
         >
           Place of Supply : {details.shipstcd} - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
@@ -201,7 +184,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>Bill To Customer</div>
                 <div
                   className={styles.subheading1}
-                  style={{ fontSize: "14px", fontWeight: "bold" }}
+                  style={{ fontSize: "12px", fontWeight: "bold" }}
                 >
                   {details.buyerlglnm}
                 </div>
@@ -233,7 +216,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>Ship To Customer</div>
                 <div
                   className={styles.subheading1}
-                  style={{ fontSize: "14px", fontWeight: "bold" }}
+                  style={{ fontSize: "12px", fontWeight: "bold" }}
                 >
                   {details.shiplglnm}
                 </div>
@@ -248,7 +231,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading1}>
                   State Code : {details.shipstcd}  - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
                 </div>
-                <div className={styles.subheading}>
+                <div className={styles.subheading1}>
                   GSTIN : {details.shipgstin}
                 </div>
               </div>
@@ -257,7 +240,7 @@ class InvoicePrint extends React.Component {
 
           <Row gutter={[10, 15]}>
             <Col span={12}>
-              <div className={styles.subcontainer} style={{paddingBottom:'38px'}}>
+              <div className={styles.subcontainer1}  >
                 {/* <div style={{ display: "flex", justifyContent: "center" }}> */}
                 <table style={{ margin : "10px 0px"}} id={styles.subtable1}>
                   <tr>
@@ -306,7 +289,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>
                   GSTIN : {data.PLACEOFDEL_GSTIN}
                 </div> */}
-                <table style={{ margin: "0px 0px" }} id={styles.subtable1}>
+                <table  id={styles.subtable1} className={styles.subcontainer2}>
                   <tr>
                     <td className={styles.subtabletd}>WCC No :</td>
                     <td key={Math.random()} className={styles.subtabletd}>

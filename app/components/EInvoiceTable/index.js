@@ -35,18 +35,17 @@ class EinvoiceTable extends React.Component {
       Total =
         Total + Number(i.itemassamt) + Number(i.itemsgstamt) + Number(i.itemigstamt) + Number(i.itemcgstamt);
        
-        
         return null;
     }
     );
     this.setState(
       {
-        grossTotal: TempGross.toFixed(2),
-        taxableTotal: TempTaxable.toFixed(2),
+        grossTotal: TempGross,
+        taxableTotal: TempTaxable,
         usgstTotal: TempUSGST,
         cgstTotal: TempCGST,
         igstTotal: TempIGST,
-        itemTotal: Total.toFixed(2),
+        itemTotal: Total,
       },
       () => {
         console.log(this.state, "state");
@@ -69,7 +68,7 @@ class EinvoiceTable extends React.Component {
       <div className='Invoicetable'>
         <table
           className="table table-bordered"
-          style={{ width: "100%", fontSize: "14px",margin:'auto' }}
+          style={{ width: "100%", fontSize: "14px",margin:'auto',pageBreakInside:'auto' }}
         >
           <tr>
             <th
@@ -218,7 +217,7 @@ class EinvoiceTable extends React.Component {
               key={Math.random()}
               className="text-left"
               style={{ width: "2%" }}
-            >{""} </td> 
+            >{i.itemunit} </td> 
 
               <td
                 key={Math.random()}
@@ -276,11 +275,11 @@ class EinvoiceTable extends React.Component {
                 </td> */}
               <td
                 key={Math.random()}
-                className='text-right'
-                style={{ width: "10%" }}
+                
+                style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={Number(i.itemdiscount).toFixed()}
+                  value={Number(i.itemdiscount).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) => <div>{value}</div>}
@@ -288,12 +287,12 @@ class EinvoiceTable extends React.Component {
               </td>
               <td
               key={Math.random()}
-              className="text-left"
+              
               style={{ width: "2%" }}
-            >{""} </td>
+            >{" "} </td>
               <td
                 key={Math.random()}
-                className='text-right'
+                
                 style={{ width: "10%" }}
               >
                 <CurrencyFormat
@@ -307,18 +306,18 @@ class EinvoiceTable extends React.Component {
               {/* cgst rate and amount */}
               <td
                 key={Math.random()}
-                className="text-right"
+                
                 style={{ width: "5%" }}
               >
-                {i.itemcgstrt===0 ? (Number(i.itemcgstrt +'%')):("")}
+                {i.itemcgstrt==0 ? (' '):(i.itemcgstrt + '%')}
               </td>
               <td
                 key={Math.random()}
-                className="text-right"
+                
                 style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={Number(i.itemcgstamt)} 
+                  value={Number(i.itemcgstamt).toFixed(2)} 
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) =>value!=0?(<div>{value}</div>):""}
@@ -327,18 +326,18 @@ class EinvoiceTable extends React.Component {
               {/* sgst/ugst rate and amount */}
               <td
                 key={Math.random()}
-                className="text-right"
+                
                 style={{ width: "5%" }}
               >
-              {i.itemsgstrt===0 ? (Number(i.itemsgstrt +'%')):("")}
+              {i.itemsgstrt==0 ? (' '):(i.itemsgstrt + '%')}
               </td>
               <td
                 key={Math.random()}
-                className="text-right"
+                
                 style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={Number(i.itemsgstamt)}
+                  value={Number(i.itemsgstamt).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) =>value!=0?(<div>{value}</div>):""}
@@ -347,18 +346,19 @@ class EinvoiceTable extends React.Component {
               {/* Igst rate and amount */}
               <td
                 key={Math.random()}
-                className="text-right"
-                style={{ width: "10%" }}
+               
+                style={{ width: "5%" }}
+                
               >
-                {i.itemigstrt===0 ? (Number(i.itemigstrt +'%')):("")}
+                {i.itemigstrt == 0 ? ' ' :( i.itemigstrt + '%')}
               </td>
               <td
                 key={Math.random()}
-                className="text-right"
-                style={{ width: "10%" }}
+                
+                style={{ width: "5%" }}
               >
                 <CurrencyFormat
-                  value={Number(i.itemigstamt)}
+                  value={Number(i.itemigstamt).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) =>value!=0?(<div>{value}</div>):""}
@@ -366,12 +366,12 @@ class EinvoiceTable extends React.Component {
               </td>
               <td
                 key={Math.random()}
-                className="text-right"
-                style={{ width: "10%" }}
+                
+                style={{ width: "5%" }}
               >
                 <CurrencyFormat
                   value={(
-                    Number(i.itemassamt) +
+                    Number(i.itemassamt) + 
                     Number(i.itemcgstamt) +
                     Number(i.itemsgstamt) +
                     Number(i.itemigstamt)
@@ -538,7 +538,7 @@ class EinvoiceTable extends React.Component {
             <td className="text-center txt-bld" colSpan="4" />
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
-                value={grossTotal}
+                value={grossTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 renderText={(value) => <div>{value}</div>}
@@ -550,7 +550,7 @@ class EinvoiceTable extends React.Component {
 
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
-                value={taxableTotal}
+                value={taxableTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 renderText={(value) => <div>{value}</div>}
@@ -562,26 +562,26 @@ class EinvoiceTable extends React.Component {
             
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
-                value={cgstTotal}
+                value={cgstTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 
-                renderText={(value) => <div >{value}</div>}
+                renderText={(value) =>value!=0?(<div>{value}</div>):""}
               />
             </td>
             <td className="text-center txt-bld" colSpan="1" />
             <td className="text-center txt-bld" colSpan="1">
               <CurrencyFormat
-                value={usgstTotal}
+                value={usgstTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
-                renderText={(value) => <div>{value}</div>}
+                renderText={(value) =>value!=0?(<div>{value}</div>):""}
               />
             </td>
             <td className="text-center txt-bld"  colSpan="1" />
             <td className="text-center txt-bld"  colSpan="1">
               <CurrencyFormat
-                value={igstTotal}
+                value={igstTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 renderText={(value) =>value!=0?(<div>{value}</div>):""}
@@ -589,7 +589,7 @@ class EinvoiceTable extends React.Component {
             </td>
             <td key={Math.random()} className="text-right">
               <CurrencyFormat
-                value={itemTotal}
+                value={itemTotal.toFixed(2)}
                 displayType={"text"}
                 thousandSeparator={true}
                 renderText={(value) => <div>{value}</div>}
@@ -614,10 +614,11 @@ class EinvoiceTable extends React.Component {
               <div>{item[0].itemisservc}</div>
             </div>
           </div>
+
           <div className={styles.wrapper_1}>
             <div
               className={styles.subwrapper_1}
-              style={{ borderRight: "none" }}
+              
             >
               <div>
                 <h5 className={styles.terms_heading}>Terms and Conditions</h5>
@@ -643,15 +644,18 @@ class EinvoiceTable extends React.Component {
               <h6 className={styles.terms}>
                 5) Payment Due In 30 Days From Invoice Date.
               </h6>
+
+              
             </div>
-            {/* <div className={styles.subwrapper_2}>
-              <h6 className="pad-top-20">Signature:</h6>
+             <div className={styles.signature}>
+              <div>Signature:</div>
 
-              <h6 className="pad-top-20">Name:</h6>
+              <div>Name:</div>
 
-              <h6 className="pad-top-10">Designation:</h6>
-            </div> */}
+              
+            </div> 
           </div>
+
           <div className={styles.wrapper_1}>
             <div className={styles.subwrapper_1}>
               <h6 >
@@ -669,7 +673,7 @@ class EinvoiceTable extends React.Component {
                 value="TVS SUPPLY CHAIN INVOICE"
                 className="img-responsive pad-top-20"
                 // style={{ height: "30px" }}
-                height={25}
+                height={22}
               />
             </div>
           </div>

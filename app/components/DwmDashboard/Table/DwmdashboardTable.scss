@@ -66,6 +66,8 @@
 
 @media only screen and (max-width:600px) {
   .tvsit-dwmdashboard_table {
+    padding: 0 5px 0 5px;
+    margin-top: 25px;
     table { 
        border-spacing: 0;
        table-layout: auto;
@@ -73,7 +75,8 @@
        border-collapse: collapse;
       border-radius: 1em;
       overflow-x: scroll;
-      width: 100%;
+      max-width: 100vw;
+      padding: 0;
 
   
       thead {
