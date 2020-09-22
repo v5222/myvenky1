@@ -43,10 +43,10 @@ function App({
   loggedIn,
 }) {
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  let authenticated = false;
-  if (loggedIn === true || isAuthenticated === true) {
-    authenticated = true;
-  }
+  let authenticated = true;
+  // if (loggedIn === true || isAuthenticated === true) {
+  //   authenticated = true;
+  // }
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
