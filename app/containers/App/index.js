@@ -43,10 +43,10 @@ function App({
   loggedIn,
 }) {
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  let authenticated = true;
-  // if (loggedIn === true || isAuthenticated === true) {
-  //   authenticated = true;
-  // }
+  let authenticated = false;
+  if (loggedIn === true || isAuthenticated === true) {
+    authenticated = true;
+  }
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
@@ -66,6 +66,7 @@ function App({
               {...props}
               login={login}
               logout={logout}
+              user={user}
               isAuthenticated={isAuthenticated}
               // getAccessToken={getAccessToken}
             />
@@ -105,14 +106,13 @@ function App({
         <Route
           exact
           path="/einvoice"
-          render={(props) => (
+          render={(props) =>
             authenticated ? (
               <Einvoice {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )
-            
-          )}
+          }
         />
         <Route
           exact
@@ -130,7 +130,11 @@ function App({
           path="/dwmUsageReportApplication"
           render={(props) =>
             authenticated ? (
-              <DwmUsageReportApplication {...props} logout={logout} user={user} />
+              <DwmUsageReportApplication
+                {...props}
+                logout={logout}
+                user={user}
+              />
             ) : (
               <Redirect to="/" />
             )

@@ -47,7 +47,7 @@ const getLoginsummary = (array, type, key, value, filters) => {
       let tempCap =
         filters.capabilitycode === "All"
           ? true
-          : i.capabilityname == filters.capabilitycode;
+          : i.capabilitycode == filters.capabilitycode;
       let tempOwn =
         filters.owner === "All" ? true : i.username == filters.owner;
       if (
@@ -82,7 +82,7 @@ const getLoginsummary = (array, type, key, value, filters) => {
       let tempCap =
         filters.capabilitycode === "All"
           ? true
-          : i.capabilityname == filters.capabilitycode;
+          : i.capabilitycode == filters.capabilitycode;
       let tempOwn =
         filters.owner === "All" ? true : i.username == filters.owner;
       if (i[key] === value && i.budgetnew > 0) {
@@ -112,7 +112,7 @@ const getActivitySummary = (array, type, key, value, filters) => {
       let tempCap =
         filters.capabilitycode === "All"
           ? true
-          : i.capabilityname == filters.capabilitycode;
+          : i.capabilitycode == filters.capabilitycode;
       let tempOwn =
         filters.owner === "All" ? true : i.username == filters.owner;
 
@@ -137,7 +137,7 @@ const getActivitySummary = (array, type, key, value, filters) => {
       let tempCap =
         filters.capabilitycode === "All"
           ? true
-          : i.capabilityname == filters.capabilitycode;
+          : i.capabilitycode == filters.capabilitycode;
       let tempOwn =
         filters.owner === "All" ? true : i.username == filters.owner;
 
@@ -155,7 +155,7 @@ const getActivitySummary = (array, type, key, value, filters) => {
 };
 
 const getFiltersdata = (array) => {
-  const tempcpname = array.map((i) => i.capabilityname);
+  const tempcpname = array.map((i) => i.capabilitycode);
   const customer = array.map((i) => i.projectname);
   const owner = array.map((i) => i.username);
 

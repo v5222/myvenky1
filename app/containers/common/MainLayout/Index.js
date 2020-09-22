@@ -43,7 +43,8 @@ class MainLayout extends React.Component {
     };
   }
   componentDidUpdate() {
-    console.log(history.location.pathname);
+    // console.log(history.location.pathname);
+    console.log(this.props.user);
     if (this.state.selected !== history.location.pathname) {
       this.setState({ selected: history.location.pathname }, () => {
         console.log(this.state.selected, "selected");
@@ -89,13 +90,14 @@ class MainLayout extends React.Component {
               <MenuDrawer
                 style={{ marginRight: "10px" }}
                 selected={this.state.selected}
+                user={this.props.user}
               />
               <img src={Logo} className="tvsit_main-logo" />
             </div>
 
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className="tvsit_main-layout-avatar">
-             {/*    <QuestionCircleOutlined className="qn_icon" /> 
+                {/*    <QuestionCircleOutlined className="qn_icon" /> 
                 <BellOutlined className="bell_icon" /> */}
 
                 <Dropdown overlay={this.menu} trigger={["click"]}>
