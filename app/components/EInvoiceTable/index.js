@@ -5,7 +5,9 @@ import Barcode from "react-barcode";
 import './einvoicetable2.scss'
 import { thru } from "lodash";
 // import converter from "number-to-words";
-import convertor from 'rupees-to-words';
+// import convertor from 'rupees-to-words';
+import indianCurrencyInWords from 'indian-currency-in-words';
+
 class EinvoiceTable extends React.Component {
   constructor(props) {
     super(props);
@@ -608,7 +610,7 @@ class EinvoiceTable extends React.Component {
             </div>
             <div className={styles.subwrapper_2}>
               <div>
-                <strong className='amt_words'> INR- {convertor(itemTotal)}</strong>
+                <strong className='amt_words'> INR- {indianCurrencyInWords(itemTotal)}</strong>
               </div>
               <div className='charges'>N</div>
               <div className='charges'>{item[0].itemisservc}</div>

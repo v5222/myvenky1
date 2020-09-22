@@ -17,6 +17,8 @@ import ReactToPrint from "react-to-print";
 
 
 
+
+
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
@@ -78,11 +80,6 @@ class Einvoice extends React.Component {
   };
 
   handleSearch = (e) => {
-
-
-
-
-
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
