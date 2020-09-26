@@ -8,6 +8,8 @@ import Select from "antd/lib/select";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import Button from "antd/lib/button";
+import { Spin } from 'antd';
+
 import Input from "antd/lib/input";
 import "react-datepicker/dist/react-datepicker.css";
 import { useReactToPrint } from "react-to-print";
@@ -17,8 +19,6 @@ import ReactToPrint from "react-to-print";
 
 import SearchResult from './SearchResult'
 import NoResult from './NoResult'
-
-import { Spinner } from 'react-bootstrap';
 
 
 
@@ -567,27 +567,10 @@ class Einvoice extends React.Component {
 
 
             {this.state.loading? (
-              <div style={{marginTop:'10rem',marginLeft:'45rem'}}>
- 
-    <Spinner
-      as="span"
-      animation="border"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-    />
-    <span className="sr-only" >Loading Invoice...</span>
-  {' '}
-    <Spinner
-      as="span"
-      animation="grow"
-      size="sm"
-      role="status"
-      aria-hidden="true"
-      
-    / >
-    <span style={{color:'#123F74',fontSize:'20px',fontWeight:'600'}}> Loading Invoice...</span>
-</div>
+             <div style={{width:'100%',display:"flex",flexDirection:'column',alignItems:"center",marginTop:"50px"}}>
+            <Spin  size="large" />
+            <div style={{fontSize:'18px'}}>Loading Invoice</div>
+            </div>   
     )       :
                     (
                       isActive?

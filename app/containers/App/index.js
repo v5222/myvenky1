@@ -26,7 +26,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 // import
 // const checkLogin = ()=>{

@@ -133,7 +133,7 @@ class InvoiceUpload extends React.Component {
         console.log(file);
         let ext = file.name.split(".");
         console.log(ext);
-        const extarr = ["xls"];
+        const extarr = ["xlsx"];
         if (!extarr.includes(ext[1])) {
           message.error(`${file.name} is not a MS Excel file`);
         } else {
