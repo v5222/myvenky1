@@ -58,15 +58,10 @@
 //     align-items: center;
 //     height: 190px;
 
-    
-
-
 //     .wrapper {
 //       width: calc(200% / 4.3);
 //       margin-right: 8px;
 
-     
-      
 //       .title {
 //         font-size: 14px;
 //         line-height: 18px;
@@ -78,7 +73,7 @@
 //       .select {
 //         width: 100%;
 //       }
-      
+
 //     }
 //     .wrapperDate {
 //       width: calc(200% / 4);
@@ -95,8 +90,7 @@
 //       color: red;
 //       display: none;
 //     }
-   
-    
+
 //     .wrapper_clear {
 //       width: calc(20% / 7);
 //       margin-right: 10px;
@@ -113,85 +107,79 @@
 //         .clearfilter {
 //           color: blue;
 //         }
-        
+
 //       }
-      
+
 //     }
 //   }
- 
-  
 
 // }
-    
 
 .container {
-display:flex;
-flex-flow: wrap;
-padding:25px 25px 10px 25px;
-justify-content:space-between;
-align-items:center;
- 
-.wrapper {
-width:calc(90%/4);
-.title {
-font-size:14px;
-line-height:18px;
-/* identical to box height */
-justify-content:space-between;
-color:#123F74;
-margin-bottom: 5px;
-    }
-.select {
-width:100%;
-    }
-  }
-.wrapperDate {
-width:calc(100%/4);
-.title_date {
-font-size:14px;
-line-height:18px;
-/* identical to box height */
-justify-content:space-between;
-color:#123F74;
-margin-bottom: 5px;
+  display: flex;
+  flex-flow: wrap;
+  padding: 25px 25px 10px 25px;
+  justify-content: space-between;
+  align-items: center;
 
+  .wrapper {
+    width: calc(100% / 5);
+    .title {
+      font-size: 14px;
+      line-height: 18px;
+      /* identical to box height */
+      justify-content: space-between;
+      color: #123f74;
+      margin-bottom: 5px;
+    }
+    .select {
+      width: 100%;
     }
   }
-.wrapper_csv {
-  }
-.wrapper_clear {
-width:calc(20%/7);
-margin-right:10px;
-cursor:pointer;
-.clearfilter {
-font-size:12px;
-color:white;
+  .wrapperDate {
+    width: calc(100% / 4);
+    .title_date {
+      font-size: 14px;
+      line-height: 18px;
+      /* identical to box height */
+      justify-content: space-between;
+      color: #123f74;
+      margin-bottom: 5px;
     }
-&:hover {
-.clearfilter {
-color:blue;
+  }
+  .wrapper_csv {
+  }
+  .wrapper_clear {
+    width: calc(20% / 7);
+    margin-right: 10px;
+    cursor: pointer;
+    .clearfilter {
+      font-size: 12px;
+      color: white;
+    }
+    &:hover {
+      .clearfilter {
+        color: blue;
       }
     }
   }
 }
- 
-.csvbtn {
-color:#123F74;
-font-size:15px;
-background:white;
-border:1px solid#d9d9d9;
-padding:5px 10px;
-cursor:pointer;
 
+.csvbtn {
+  color: #123f74;
+  font-size: 15px;
+  background: white;
+  border: 1px solid#d9d9d9;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 .inner1 {
-display:flex;
-justify-content:space-between;
-width:70%;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
 }
 
 @media only screen and (max-width: 600px) {
-
   .container {
     display: flex;
     flex-wrap: row;
@@ -201,13 +189,14 @@ width:70%;
     padding: 20px 20px 10px 20px;
 
     .inner1 {
-      display:flex;
+      display: flex;
       // padding: 0 10px 0 20px;
-      justify-content:space-between;
+      justify-content: space-between;
       flex-flow: wrap;
-      width:200%;
-      }
-    .wrapper, .wrapperDate {
+      width: 200%;
+    }
+    .wrapper,
+    .wrapperDate {
       //  width: calc(100% / 3.3);
       display: flex;
       flex-wrap: wrap;
@@ -216,13 +205,6 @@ width:70%;
       padding: 0 70px 0 20px;
       // width: 100px;
 
-      
-      
-
-    
-
-     
-      
       .title {
         font-size: 14px;
         line-height: 18px;
@@ -234,12 +216,8 @@ width:70%;
       .select {
         width: 100px;
       }
-     
-      
     }
-   
-    
-    
+
     .wrapperDate {
       // width: calc(100% / 4);
 
@@ -256,13 +234,12 @@ width:70%;
       color: red;
       display: none;
     }
-   
-    
+
     .wrapper_clear {
       width: calc(20% / 7);
       margin-right: 10px;
       cursor: pointer;
-      .dummy{
+      .dummy {
         display: none;
       }
       .clearfilter {
@@ -274,14 +251,7 @@ width:70%;
         .clearfilter {
           color: blue;
         }
-        
       }
-      
     }
   }
-  
-  
-
 }
-    
-

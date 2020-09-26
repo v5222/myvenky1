@@ -4,28 +4,30 @@
     border-spacing: 0;
     table-layout: auto;
     width: 100%;
-    border: 1px solid #C1E3FF;
-     margin:0 auto ;
+    border: 1px solid #c1e3ff;
+    margin: 0 auto;
     border-collapse: collapse;
-    overflow:hidden;
-    border-radius:1em;
-       
+    overflow: hidden;
+    border-radius: 1em;
+
     thead {
-      background: #C1E3FF;
-      color: #123F74;
+      background: #c1e3ff;
+      color: #123f74;
       font-size: 14px;
-      font-weight:600;
+      font-weight: 600;
       width: 100%;
       text-align: center;
       border-collapse: separate;
       border-spacing: 0;
       tr > th {
         padding: 12px 5px;
-
-
       }
     }
     tbody {
+      .ListItemEven {
+        background-color: #f8f8f0;
+      }
+      background-color: #ffffff;
       tr {
         font-size: 14px;
         color: #595959;
@@ -33,12 +35,12 @@
         td {
           padding: 12px;
         }
-        &:nth-child(even) {
-          background-color:#FFFFFF;
-        }
-        &:nth-child(odd) {
-          background: #F2F2F2 ;
-        }
+        // &:nth-child(even) {
+        //   background-color:#FFFFFF;
+        // }
+        // &:nth-child(odd) {
+        //   background: #F2F2F2 ;
+        // }
       }
     }
 
@@ -54,30 +56,26 @@
   }
   .fixedList {
     overflow: overlay !important;
-
   }
 
-
-  .fixedSizeList{
+  .fixedSizeList {
     height: 300px;
   }
 }
 
-
-@media only screen and (max-width:600px) {
+@media only screen and (max-width: 600px) {
   .tvsit-dwmdashboard_table {
-    table { 
-       border-spacing: 0;
-       table-layout: auto;
-      border: 1px solid #2D9CDB;
-       border-collapse: collapse;
+    table {
+      border-spacing: 0;
+      table-layout: auto;
+      border: 1px solid #2d9cdb;
+      border-collapse: collapse;
       border-radius: 1em;
       overflow-x: scroll;
       width: 100%;
 
-  
       thead {
-        background: #2D9CDB;
+        background: #2d9cdb;
         color: white;
         font-size: 12px;
         font-weight: 400;
@@ -86,53 +84,41 @@
         border-spacing: 0;
         tr > th {
           padding: 12px 13px;
-          
-  
         }
       }
       tbody {
         tr {
           font-size: 12px;
           color: #595959;
-  
-  
+
           // background-color: #f2f2f2;
           td {
             padding: 12px;
           }
           &:nth-child(even) {
-            background-color:#FFFFFF;
+            background-color: #ffffff;
           }
           &:nth-child(odd) {
-            background: #F2F2F2 ;
+            background: #f2f2f2;
           }
         }
       }
-  
+
       th,
       td {
-       
         width: 100%;
-      
       }
     }
 
-    
-
     .fixedList {
-       overflow: overlay !important;
-
+      overflow: overlay !important;
     }
-    .dummy{
+    .dummy {
       display: none;
     }
-  
+  }
+
+  .tabel_scroll {
+    overflow-x: scroll;
+  }
 }
-
-.tabel_scroll{
-  overflow-x: scroll;
-}
-
-}
-
-

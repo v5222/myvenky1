@@ -22,6 +22,8 @@ import LoginSvg2 from "../../images/SVG/loginSvg2.svg";
 import LoginSvg3 from "../../images/SVG/loginSvg3.svg";
 import logo from "../../images/TVS-SCS-Logo-Tagline-Color.png";
 import UserOutlined from "@ant-design/icons/UserOutlined";
+import ErrorBoundary from "components/ErrorBoundary";
+
 import {
   GET_OTP,
   CHECK_OTP,
@@ -42,7 +44,7 @@ import history from "utils/history";
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
 // import withAuthProvider from "containers/app/AuthProvider";
-
+import { usersList } from "containers/App/DWMusers";
 const key = "loginPage";
 function LoginPage({
   getOtp,
@@ -95,7 +97,7 @@ function LoginPage({
   useEffect(() => {
     console.log(isAuthenticated, "From ADFS");
     if (isAuthenticated === true) {
-      if (user.email === "srinim@tvslsl.com") {
+      if (usersList.includes(user.email)) {
         history.push("/dwmApplication");
       } else {
         history.push("/podDashboard");
@@ -115,112 +117,118 @@ function LoginPage({
   };
 
   return (
-    <main>
-      <div className="tvsit-loginPage_svg">
-        <img src={LoginSVg1} alt="svg" className="tvsit-loginPage_svg-1" />
-        <img src={LoginSvg2} alt="svg" className="tvsit-loginPage_svg-2" />
-        <img src={LoginSvg3} alt="svg" className="tvsit-loginPage_svg-3" />
-      </div>
-      <div className="tvsit-loginPage_content-wrapper">
-        <div className="tvsit-loginPage_content">
-          <img src={logo} alt="logo" className="tvsit-loginPage_content-img" />
-          <div className="tvsit-loginPage_content-title">SIGN IN</div>
-          <Button
-            className="tvsit-loginPage_content-btn"
-            size="large"
-            onClick={login}
-          >
-            Login with ADFS
-          </Button>
-          <div className="tvsit-loginPage_content-title">OR</div>
-          {otpStatus.status === false ? (
-            <>
-              <Input
-                placeholder="Enter your Emplyoee code"
-                size="large"
-                onChange={(e) => handleChange(e)}
-                prefix={<UserOutlined style={{ color: "#00A5E6" }} />}
-              />
-              {!otpStatus.status && (
-                <div style={{ color: "red" }}> {otpStatus.message}</div>
-              )}
-              <Button
-                className="tvsit-loginPage_content-btn"
-                style={{ marginTop: "10px" }}
-                size="large"
-                onClick={handleOTPgen}
-                loading={loading}
-              >
-                Generate OTP
-              </Button>
-            </>
-          ) : (
-            ""
-          )}
-
-          {otpStatus.status === true ? (
-            <>
-              <div className="d-flex justify-between">
+    <ErrorBoundary logout={logout} user={user}>
+      <main>
+        <div className="tvsit-loginPage_svg">
+          <img src={LoginSVg1} alt="svg" className="tvsit-loginPage_svg-1" />
+          <img src={LoginSvg2} alt="svg" className="tvsit-loginPage_svg-2" />
+          <img src={LoginSvg3} alt="svg" className="tvsit-loginPage_svg-3" />
+        </div>
+        <div className="tvsit-loginPage_content-wrapper">
+          <div className="tvsit-loginPage_content">
+            <img
+              src={logo}
+              alt="logo"
+              className="tvsit-loginPage_content-img"
+            />
+            <div className="tvsit-loginPage_content-title">SIGN IN</div>
+            <Button
+              className="tvsit-loginPage_content-btn"
+              size="large"
+              onClick={login}
+            >
+              Login with ADFS
+            </Button>
+            <div className="tvsit-loginPage_content-title">OR</div>
+            {otpStatus.status === false ? (
+              <>
                 <Input
+                  placeholder="Enter your Emplyoee code"
                   size="large"
-                  disabled
-                  defaultValue={ecode}
-                  style={{ marginRight: "10px" }}
+                  onChange={(e) => handleChange(e)}
+                  prefix={<UserOutlined style={{ color: "#00A5E6" }} />}
                 />
-                <Input
-                  size="large"
-                  placeholder="Enter OTP"
-                  style={{ marginRight: "10px" }}
-                  onChange={(e) => handleChangeOtp(e)}
-                />
-
+                {!otpStatus.status && (
+                  <div style={{ color: "red" }}> {otpStatus.message}</div>
+                )}
                 <Button
-                  size="large"
                   className="tvsit-loginPage_content-btn"
-                  onClick={() => {
-                    setLoading(true);
-                    verifyOtp({ ...otpval, ["ecode"]: ecode });
-                  }}
+                  style={{ marginTop: "10px" }}
+                  size="large"
+                  onClick={handleOTPgen}
                   loading={loading}
                 >
-                  Login
+                  Generate OTP
                 </Button>
-              </div>
-              {!otpVal.status && (
-                <div style={{ color: "red" }}>{otpVal.message}</div>
-              )}
-            </>
-          ) : (
-            ""
-          )}
+              </>
+            ) : (
+              ""
+            )}
 
-          {error && (
-            <div style={{ color: "red" }}>Please Enter Emplyoee code</div>
-          )}
+            {otpStatus.status === true ? (
+              <>
+                <div className="d-flex justify-between">
+                  <Input
+                    size="large"
+                    disabled
+                    defaultValue={ecode}
+                    style={{ marginRight: "10px" }}
+                  />
+                  <Input
+                    size="large"
+                    placeholder="Enter OTP"
+                    style={{ marginRight: "10px" }}
+                    onChange={(e) => handleChangeOtp(e)}
+                  />
 
-          {otpStatus.status && (
-            <>
-              {" "}
-              <div
-                className="tvsit-login_feedback"
-                style={{ fontSize: "14px", color: "black" }}
-              >
-                {otpStatus.message}
-              </div>
-              <a
-                className="tvsit-loginPage_resend"
-                onClick={() => getOtp({ ...otpgen, ["ecode"]: ecode })}
-              >
-                Resend OTP
-              </a>
-            </>
-          )}
+                  <Button
+                    size="large"
+                    className="tvsit-loginPage_content-btn"
+                    onClick={() => {
+                      setLoading(true);
+                      verifyOtp({ ...otpval, ["ecode"]: ecode });
+                    }}
+                    loading={loading}
+                  >
+                    Login
+                  </Button>
+                </div>
+                {!otpVal.status && (
+                  <div style={{ color: "red" }}>{otpVal.message}</div>
+                )}
+              </>
+            ) : (
+              ""
+            )}
+
+            {error && (
+              <div style={{ color: "red" }}>Please Enter Emplyoee code</div>
+            )}
+
+            {otpStatus.status && (
+              <>
+                {" "}
+                <div
+                  className="tvsit-login_feedback"
+                  style={{ fontSize: "14px", color: "black" }}
+                >
+                  {otpStatus.message}
+                </div>
+                <a
+                  className="tvsit-loginPage_resend"
+                  onClick={() => getOtp({ ...otpgen, ["ecode"]: ecode })}
+                >
+                  Resend OTP
+                </a>
+              </>
+            )}
+          </div>
+          <div className="tvsit-loginPage_copyrights">
+            &#169; copy rights reserverd 2020
+          </div>
         </div>
-        <div className="tvsit-loginPage_copyrights">
-          &#169; copy rights reserverd 2020
-        </div>
-      </div>
-    </main>
+      </main>
+    </ErrorBoundary>
   );
 }
 

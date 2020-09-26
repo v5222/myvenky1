@@ -19,7 +19,7 @@ class InvoicePrint extends React.Component {
 
     return (
       <div>
-        <div className={styles.reportType}>{'ORIGINAL FOR RECIPIENT'}</div>
+        <div className={styles.reportType}>{"ORIGINAL FOR RECIPIENT"}</div>
         <section className={styles.container}>
           <img src={TvsLogo} className={styles.logo} alt="logo" />
           <div className={styles.companyDetails}>
@@ -35,16 +35,21 @@ class InvoicePrint extends React.Component {
               Seller Details
             </div>
             <div className={styles.companyName}>{details.sellerlglnm}</div>
-            <div className={styles.companyName}><i>{'(Formerly known as TVS Logistics Services Limited)'}</i></div>
+            <div className={styles.companyName}>
+              <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+            </div>
             {/* <div className={styles.companyName}>
             {details.sellerlglnm}
             </div> */}
             <div className={styles.companyAddr}>{details.selleraddress1}</div>
             <div className={styles.companyAddr}>{details.selleraddress2}</div>
-            <div className={styles.companyAddr}>{details.sellerlocation + ":  " + details.sellerpincode}</div>
+            <div className={styles.companyAddr}>
+              {details.sellerlocation + ":  " + details.sellerpincode}
+            </div>
             {/** <div className={styles.companyAddr}>{details.sellerpincode}</div>  */}
             <div className={styles.companyAddr}>
-              State Code : {details.sellerstcd} - {details.shipstcd===37?"Andhra pradesh":"Tamilnadu"}
+              State Code : {details.sellerstcd} -{" "}
+              {details.shipstcd === 37 ? "Andhra pradesh" : "Tamilnadu"}
             </div>
             <div className={styles.companyAddr}>
               GSTIN : {details.sellergsting}
@@ -54,26 +59,22 @@ class InvoicePrint extends React.Component {
             </div>
             <div className={styles.companyAddr}>UIN:</div>
           </div>
-          
 
           {/* dispatch details */}
 
-
-        {/**   {InvoiceDetailsList[0].itemisservc === "N" ? ( */}
+          {/**   {InvoiceDetailsList[0].itemisservc === "N" ? ( */}
           {InvoiceDetailsList[0] ? (
-            <div className={styles.companyDetails} style={{marginRight:'70px'}}>
-              <div
-                
-                className={styles.dispatch}
-              >
-                Dispatch Details
-              </div>
+            <div
+              className={styles.companyDetails}
+              style={{ marginRight: "70px" }}
+            >
+              <div className={styles.dispatch}>Dispatch Details</div>
               <div className={styles.companyName}>
-              <div className={styles.companyName}>{details.sellerlglnm}</div>
+                <div className={styles.companyName}>{details.sellerlglnm}</div>
 
-              <div className={styles.companyName}><i>{'(Formerly known as TVS Logistics Services Limited)'}</i></div>
-
-                
+                <div className={styles.companyName}>
+                  <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+                </div>
               </div>
               {/*  {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm}
               <div className={styles.companyName}>{details.dispnm}</div> */}
@@ -87,29 +88,38 @@ class InvoicePrint extends React.Component {
                   ? details.dispaddress2
                   : details.selleraddress2}
               </div>
-              <div className={styles.companyAddr}>{details.displocation + ":" + details.disppincode}</div>
               <div className={styles.companyAddr}>
-                State Code : {details.dispstcd} - {details.shipstcd===37?"Andhra pradesh":"Tamilnadu"}
+                {details.displocation + ":" + details.disppincode}
               </div>
-              <div className={styles.companyAddr}>GSTIN :{details.shipgstin} </div>
+              <div className={styles.companyAddr}>
+                State Code : {details.dispstcd} -{" "}
+                {details.shipstcd === 37 ? "Andhra pradesh" : "Tamilnadu"}
+              </div>
+              <div className={styles.companyAddr}>
+                GSTIN :{details.shipgstin}{" "}
+              </div>
             </div>
           ) : (
             ""
           )}
 
-
-
           <div className={styles.qrcode}>
             <div>
-              <QRCode value={details.qrcode} style={{marginRight:'60px'}}/>
+              <QRCode value={details.qrcode} style={{ marginRight: "60px" }} />
             </div>
             <div>Version : {details.version}</div>
             <div>
-              <div style={{ width: "100px",fontSize:"12px" }}>
+              <div style={{ width: "100px", fontSize: "12px" }}>
                 IRN : {details.irn.slice(0, 24)}
               </div>
-              <div style={{ width: "100px",fontSize:"12px" }}> {details.irn.slice(24, 48)}</div>
-              <div style={{ width: "100px",fontSize:"12px" }}> {details.irn.slice(48)}</div>
+              <div style={{ width: "100px", fontSize: "12px" }}>
+                {" "}
+                {details.irn.slice(24, 48)}
+              </div>
+              <div style={{ width: "100px", fontSize: "12px" }}>
+                {" "}
+                {details.irn.slice(48)}
+              </div>
             </div>
           </div>
         </section>
@@ -121,32 +131,24 @@ class InvoicePrint extends React.Component {
             justifyContent: "space-between",
           }}
         >
-          <div
-            className={styles.supplytype}
-          >
+          <div className={styles.supplytype}>
             Supply Type : {details.suptyp}
           </div>
-          <div
-            
-            className={styles.invoicetype}
-            
-          >
-            {"TAX INVOICE "+'('+ details.typ +')'}
+          <div className={styles.invoicetype}>
+            {"TAX INVOICE " + "(" + details.typ + ")"}
           </div>
           <div
             style={{
               justifySelf: "center",
             }}
             className={styles.supplytype}
-            
           >
             Document Period: {details.refinvstdt} - {details.refinvenddt}
           </div>
         </div>
-        <div
-        className={styles.supplytype}
-        >
-          Place of Supply : {details.shipstcd} - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
+        <div className={styles.supplytype}>
+          Place of Supply : {details.shipstcd} -{" "}
+          {details.shipstcd === 37 ? "Andhra pradesh" : "Tamilnadu"}
         </div>
         <section>
           <Row gutter={[10, 15]}>
@@ -160,10 +162,12 @@ class InvoicePrint extends React.Component {
             </Col>
             <Col span={12}>
               <div className={styles.invoiceNo1}>
-                Original Document No : <span style={{fontWeight:'600'}}>{details.refinvno}</span>
+                Original Document No :{" "}
+                <span style={{ fontWeight: "600" }}>{details.refinvno}</span>
               </div>
               <div className={styles.invoiceNo1}>
-                Original Document Date : <span style={{fontWeight:'600'}}>{details.refinvdt}</span>
+                Original Document Date :{" "}
+                <span style={{ fontWeight: "600" }}>{details.refinvdt}</span>
               </div>
             </Col>
             {/* <Col span={12} /> */}
@@ -175,7 +179,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>Bill To Customer</div>
                 <div
                   className={styles.subheading1}
-                  style={{fontWeight: "bold" }}
+                  style={{ fontWeight: "bold" }}
                 >
                   {details.buyerlglnm}
                 </div>
@@ -188,14 +192,15 @@ class InvoicePrint extends React.Component {
                   {details.buyeraddress2}
                 </div>
                 <div className={styles.subheading1}>
-                  {details.buyerlocation +": " +details.buyerpincode}
+                  {details.buyerlocation + ": " + details.buyerpincode}
                 </div>
-               {/*  <div className={styles.subheading1}>{details.buyerpincode}</div>  */}
+                {/*  <div className={styles.subheading1}>{details.buyerpincode}</div>  */}
                 {/* <div className={styles.subheading1}></div> */}
 
                 {/* <div className={styles.subheading1}>{data.BILLTOSTATE}</div> */}
                 <div className={styles.subheading1}>
-                  State Code : {details.buyerstcd}  - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
+                  State Code : {details.buyerstcd} -{" "}
+                  {details.shipstcd === 37 ? "Andhra pradesh" : "Tamilnadu"}
                 </div>
                 <div className={styles.subheading1}>
                   GSTIN : {details.buyergstin}
@@ -216,11 +221,14 @@ class InvoicePrint extends React.Component {
                 </div> */}
                 <div className={styles.subheading1}>{details.shipaddress1}</div>
                 <div className={styles.subheading1}>{details.shipaddress2}</div>
-                <div className={styles.subheading1}>{details.shiplocation+": "+details.shippincode}</div>
-               {/*  <div className={styles.subheading1}>{details.shippincode}</div>  */}
+                <div className={styles.subheading1}>
+                  {details.shiplocation + ": " + details.shippincode}
+                </div>
+                {/*  <div className={styles.subheading1}>{details.shippincode}</div>  */}
                 {/* <div className={styles.subheading1}></div> */}
                 <div className={styles.subheading1}>
-                  State Code : {details.shipstcd}  - {details.shipstcd=== 37?"Andhra pradesh":"Tamilnadu"}
+                  State Code : {details.shipstcd} -{" "}
+                  {details.shipstcd === 37 ? "Andhra pradesh" : "Tamilnadu"}
                 </div>
                 <div className={styles.subheading1}>
                   GSTIN : {details.shipgstin}
@@ -231,9 +239,9 @@ class InvoicePrint extends React.Component {
 
           <Row gutter={[10, 15]}>
             <Col span={12}>
-              <div className={styles.subcontainer1}  >
+              <div className={styles.subcontainer1}>
                 {/* <div style={{ display: "flex", justifyContent: "center" }}> */}
-                <table style={{ margin : "10px 0px"}} id={styles.subtable1}>
+                <table style={{ margin: "10px 0px" }} id={styles.subtable1}>
                   <tr>
                     <td className={styles.subtabletd}>
                       Customer Purchase Order:
@@ -280,7 +288,7 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading}>
                   GSTIN : {data.PLACEOFDEL_GSTIN}
                 </div> */}
-                <table  id={styles.subtable1} className={styles.subcontainer2}>
+                <table id={styles.subtable1} className={styles.subcontainer2}>
                   <tr>
                     <td className={styles.subtabletd}>WCC No :</td>
                     <td key={Math.random()} className={styles.subtabletd}>
@@ -294,9 +302,7 @@ class InvoicePrint extends React.Component {
                     </td>
                   </tr>
                   <tr>
-                    <td className={styles.subtabletd}>
-                      Receipt No :
-                    </td>
+                    <td className={styles.subtabletd}>Receipt No :</td>
                     <td key={Math.random()} className={styles.subtabletd}>
                       <strong />
                     </td>
@@ -319,8 +325,9 @@ class InvoicePrint extends React.Component {
           </Row>
         </section>
 
-        <EinvoiceTable item={InvoiceDetailsList} style={{margin:'auto'}}/>
-        <div style={{textAlign:'center', color:'grey'}}>Regd. Office:No. 10, Jawahar Road,Chokkikulam,Madurai, - 625002
+        <EinvoiceTable item={InvoiceDetailsList} style={{ margin: "auto" }} />
+        <div style={{ textAlign: "center", color: "grey" }}>
+          Regd. Office:No. 10, Jawahar Road,Chokkikulam,Madurai, - 625002
         </div>
       </div>
     );

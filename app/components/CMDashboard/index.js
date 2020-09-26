@@ -5,8 +5,13 @@ import Filters from "./Filters";
 import CMdashboardTable from "./Table";
 import styles from "./Cmdashboard.module.scss";
 import { apiURLCourier } from "../../containers/App/services";
-function CMDashboard() {
+import moment from "moment";
 
+const startDate = moment()
+  .startOf("week")
+  .format("YYYY-MM-DD");
+const currentDate = moment().format("YYYY-MM-DD");
+function CMDashboard() {
   const [filtersOn, setFiltersOn] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +22,7 @@ function CMDashboard() {
   });
 
   const fetchData = (values) => {
-    console.log(apiURLCourier, values);
+    // console.log(apiURLCourier, values);
     setLoading(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -30,7 +35,7 @@ function CMDashboard() {
     fetch(apiURLCourier, bodyoption)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const { bodymsg } = data.body;
         const { statuscode } = data.body;
         if (statuscode === 201) {
@@ -65,6 +70,7 @@ function CMDashboard() {
         columnData={filtersOn === false ? cloumns1 : column2}
         dates={dates}
         data={tableData}
+        loading={loading}
       />
     </div>
   );

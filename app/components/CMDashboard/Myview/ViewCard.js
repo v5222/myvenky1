@@ -3,21 +3,22 @@ import styles from "./Viewcard.module.scss";
 import conveyor from "../../../images/SVG/conveyor.svg";
 import delivered from "../../../images/SVG/delivered.svg";
 import transit from "../../../images/SVG/transit.svg";
+import nFormatter from "utils/helpers/numberFormator";
 function ViewCard({ data }) {
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.d_flex}>
           <div className={styles.icon}>
-            <img src={conveyor} className='asdf' alt="total" />
+            <img src={conveyor} className="asdf" alt="total" />
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>
               {data !== undefined && data.totalinvoiceno !== undefined
-                ? data.totalinvoiceno
+                ? nFormatter(data.totalinvoiceno)
                 : 5890}
             </div>
             <div className={styles.value_2}>Total</div>
@@ -31,7 +32,7 @@ function ViewCard({ data }) {
           <div className={styles.value}>
             <div className={styles.value_1}>
               {data !== undefined && data.intransit !== undefined
-                ? data.intransit
+                ? nFormatter(data.intransit)
                 : 1233}
             </div>
             <div className={styles.value_2}>InTransit</div>
@@ -45,7 +46,7 @@ function ViewCard({ data }) {
           <div className={styles.value}>
             <div className={styles.value_1}>
               {data !== undefined && data.delivered !== undefined
-                ? data.delivered
+                ? nFormatter(data.delivered)
                 : 3212}
             </div>
             <div className={styles.value_2}>Delivered</div>

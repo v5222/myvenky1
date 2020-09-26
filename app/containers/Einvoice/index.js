@@ -4,6 +4,7 @@ import styles from "./Einvoice.module.scss";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Select from "antd/lib/select";
+import ErrorBoundary from "components/ErrorBoundary";
 
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
@@ -16,6 +17,7 @@ const { Option } = Select;
 import ReactToPrint from "react-to-print";
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
+
 const { RangePicker } = DatePicker;
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
@@ -261,7 +263,7 @@ class Einvoice extends React.Component {
       dataItems,
     } = this.state;
     return (
-      <>
+      <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
           <section className={styles.container}>
             <Row gutter={[20, 16]}>
@@ -543,7 +545,7 @@ class Einvoice extends React.Component {
             </section>
           )}
         </MainLayout>
-      </>
+      </ErrorBoundary>
     );
   }
 }

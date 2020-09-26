@@ -50,6 +50,7 @@ function DwmUsageReport() {
     // console.log(isLoading);
     // console.log(error);
     if (!isLoading) {
+      console.log(data.usageReportarr);
       setTableData(data.usageReportarr);
       setFiltersData(getFiltersdata(data.usageReportarr));
       setOption({ ...option, dataArr: data.usageReportarr });
@@ -77,7 +78,7 @@ function DwmUsageReport() {
         setOption={setOption}
       />
       <Myview loading={loading} data={summary} />
-      <Table tableData={tableData} column={columnData} />
+      <Table tableData={tableData} column={columnData} loading={loading} />
     </div>
   );
 }

@@ -22,6 +22,8 @@ import PodTable from "components/PodTable";
 import PodData from "components/PodData";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import ErrorBoundary from "components/ErrorBoundary";
+
 import { createStructuredSelector } from "reselect";
 import {
   GET_COMPLETED,
@@ -285,400 +287,410 @@ function PodDashboard({
   );
 
   return (
-    <div>
-      <MainLayout logout={logout} user={user}>
-        {/* {!loggedIn && <Redirect to="/" />} */}
-        {/* <MainLayout> */}
-        <Breadcrumb className="pod_breadcrumb">
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>POD Usage Report</Breadcrumb.Item>
-        </Breadcrumb>
-        <main className="tvsit-pod-container">
-          <h1 className="pod_title">POD Usage Report</h1>
+    <ErrorBoundary logout={logout} user={user}>
+      <div>
+        <MainLayout logout={logout} user={user}>
+          {/* {!loggedIn && <Redirect to="/" />} */}
+          {/* <MainLayout> */}
+          <Breadcrumb className="pod_breadcrumb">
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>POD Usage Report</Breadcrumb.Item>
+          </Breadcrumb>
+          <main className="tvsit-pod-container">
+            <h1 className="pod_title">POD Usage Report</h1>
 
-          <Row gutter={10} className="tvsit_pod-filters-row">
-            <Col
-              className="gutter-row"
-              lg={3}
-              xs={12}
-              style={{ paddingLeft: "0px" }}
-            >
-              <div className="tvsit_pod-filters">
-                <div
-                  className="tvsit_pod-title"
-                  style={{ color: "#004178", fontWeight: 500 }}
-                >
-                  Entity
-                </div>
-
-                <Select
-                  value={divValue}
-                  style={{ width: "100%" }}
-                  onChange={(value) => {
-                    setDivValue(value);
-                    handleChange("divisioncode", value);
-                  }}
-                  name="divisioncode"
-                >
-                  {divisioncode !== undefined
-                    ? divisioncode.map((i, index) => {
-                        return (
-                          <>
-                            <Option key={index} value={i.divisioncode}>
-                              {i.divisioncode}
-                            </Option>
-                          </>
-                        );
-                      })
-                    : ""}
-                  <Option key="All" value="All">
-                    All
-                  </Option>
-                </Select>
-              </div>
-            </Col>
-            <Col className="gutter-row" lg={3} xs={12}>
-              <div className="tvsit_pod-filters">
-                <div
-                  className="tvsit_pod-title"
-                  style={{ color: "#004178", fontWeight: 500 }}
-                >
-                  Trip Type
-                </div>
-                <Select
-                  value={custTValue}
-                  // defaultValue={
-                  //   customertype !== undefined && customertype.length === 1
-                  //     ? customertype[0].customertype
-                  //     : "All"
-                  // }
-                  style={{ width: "100%" }}
-                  onChange={(value) => {
-                    setCustTvalue(value);
-                    handleChange("customertype", value);
-                    if (value === "P2P") {
-                      setDynamicTitle("updated <7days");
-                    } else {
-                      setDynamicTitle("updated <24hrs");
-                    }
-                  }}
-                >
-                  {customertype !== undefined &&
-                    customertype.map((i, index) => {
-                      return (
-                        <>
-                          <Option key={index} value={i.customertype}>
-                            {i.customertype}
-                          </Option>
-                        </>
-                      );
-                    })}
-                  <Option key="All" value="All">
-                    All
-                  </Option>
-                </Select>
-              </div>
-            </Col>
-            <Col className="gutter-row" lg={5} xs={10}>
-              <div className="tvsit_pod-filters">
-                <div
-                  className="tvsit_pod-title"
-                  style={{ color: "#004178", fontWeight: 500 }}
-                >
-                  Customer
-                </div>
-                <Select
-                  value={custValue}
-                  // defaultValue={
-                  //   customer !== undefined && customer.length === 1
-                  //     ? customer[0].customer
-                  //     : "All"
-                  // }
-                  style={{ width: "100%" }}
-                  showSearch
-                  optionFilterProp="children"
-                  filterOption={(input, option) => {
-                    console.log(input, option);
-                    if (option.children !== null) {
-                      return (
-                        option.children
-                          .toLowerCase()
-                          .indexOf(input.toLowerCase()) >= 0
-                      );
-                    }
-                  }}
-                  onChange={(value) => {
-                    setCustValue(value);
-                    handleChange("customer", value);
-                  }}
-                >
-                  {customer !== undefined
-                    ? customer.map((i, index) => {
-                        return (
-                          <>
-                            <Option key={index} value={i.customer}>
-                              {i.customer}
-                            </Option>
-                          </>
-                        );
-                      })
-                    : ""}
-                  <Option key="All" value="All">
-                    All
-                  </Option>
-                </Select>
-              </div>
-            </Col>
-            {filterType === "MTD" ? (
-              <>
-                <Col className="gutter-row" lg={5} xs={12}>
-                  <div className="tvsit_pod-filters">
-                    <div
-                      className="tvsit_pod-title"
-                      style={{ color: "#004178", fontWeight: 500 }}
-                    >
-                      Date Type & Range Picker
-                    </div>
-                    <Select
-                      defaultValue="MTD"
-                      style={{ width: "100%" }}
-                      onChange={(value) => handleChange("filterdate", value)}
-                    >
-                      <Option value="MTD">MTD</Option>
-                      <Option value="YTD">YTD</Option>
-                      <Option value="WTD">WTD</Option>
-                    </Select>
-                    {/* <RangePicker /> */}
+            <Row gutter={10} className="tvsit_pod-filters-row">
+              <Col
+                className="gutter-row"
+                lg={3}
+                xs={12}
+                style={{ paddingLeft: "0px" }}
+              >
+                <div className="tvsit_pod-filters">
+                  <div
+                    className="tvsit_pod-title"
+                    style={{ color: "#004178", fontWeight: 500 }}
+                  >
+                    Entity
                   </div>
-                </Col>
-              </>
-            ) : (
-              <>
-                <Col className="gutter-row" lg={6} xs={12}>
-                  <div className="tvsit_pod-filters">
-                    <div
-                      className="tvsit_pod-title"
-                      style={{ color: "black", fontWeight: 500 }}
-                    >
-                      Date Type & Range Picker
+
+                  <Select
+                    value={divValue}
+                    style={{ width: "100%" }}
+                    onChange={(value) => {
+                      setDivValue(value);
+                      handleChange("divisioncode", value);
+                    }}
+                    name="divisioncode"
+                  >
+                    {divisioncode !== undefined
+                      ? divisioncode.map((i, index) => {
+                          return (
+                            <>
+                              <Option key={index} value={i.divisioncode}>
+                                {i.divisioncode}
+                              </Option>
+                            </>
+                          );
+                        })
+                      : ""}
+                    <Option key="All" value="All">
+                      All
+                    </Option>
+                  </Select>
+                </div>
+              </Col>
+              <Col className="gutter-row" lg={3} xs={12}>
+                <div className="tvsit_pod-filters">
+                  <div
+                    className="tvsit_pod-title"
+                    style={{ color: "#004178", fontWeight: 500 }}
+                  >
+                    Trip Type
+                  </div>
+                  <Select
+                    value={custTValue}
+                    // defaultValue={
+                    //   customertype !== undefined && customertype.length === 1
+                    //     ? customertype[0].customertype
+                    //     : "All"
+                    // }
+                    style={{ width: "100%" }}
+                    onChange={(value) => {
+                      setCustTvalue(value);
+                      handleChange("customertype", value);
+                      if (value === "P2P") {
+                        setDynamicTitle("updated <7days");
+                      } else {
+                        setDynamicTitle("updated <24hrs");
+                      }
+                    }}
+                  >
+                    {customertype !== undefined &&
+                      customertype.map((i, index) => {
+                        return (
+                          <>
+                            <Option key={index} value={i.customertype}>
+                              {i.customertype}
+                            </Option>
+                          </>
+                        );
+                      })}
+                    <Option key="All" value="All">
+                      All
+                    </Option>
+                  </Select>
+                </div>
+              </Col>
+              <Col className="gutter-row" lg={5} xs={10}>
+                <div className="tvsit_pod-filters">
+                  <div
+                    className="tvsit_pod-title"
+                    style={{ color: "#004178", fontWeight: 500 }}
+                  >
+                    Customer
+                  </div>
+                  <Select
+                    value={custValue}
+                    // defaultValue={
+                    //   customer !== undefined && customer.length === 1
+                    //     ? customer[0].customer
+                    //     : "All"
+                    // }
+                    style={{ width: "100%" }}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input, option) => {
+                      console.log(input, option);
+                      if (option.children !== null) {
+                        return (
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        );
+                      }
+                    }}
+                    onChange={(value) => {
+                      setCustValue(value);
+                      handleChange("customer", value);
+                    }}
+                  >
+                    {customer !== undefined
+                      ? customer.map((i, index) => {
+                          return (
+                            <>
+                              <Option key={index} value={i.customer}>
+                                {i.customer}
+                              </Option>
+                            </>
+                          );
+                        })
+                      : ""}
+                    <Option key="All" value="All">
+                      All
+                    </Option>
+                  </Select>
+                </div>
+              </Col>
+              {filterType === "MTD" ? (
+                <>
+                  <Col className="gutter-row" lg={5} xs={12}>
+                    <div className="tvsit_pod-filters">
+                      <div
+                        className="tvsit_pod-title"
+                        style={{ color: "#004178", fontWeight: 500 }}
+                      >
+                        Date Type & Range Picker
+                      </div>
+                      <Select
+                        defaultValue="MTD"
+                        style={{ width: "100%" }}
+                        onChange={(value) => handleChange("filterdate", value)}
+                      >
+                        <Option value="MTD">MTD</Option>
+                        <Option value="YTD">YTD</Option>
+                        <Option value="WTD">WTD</Option>
+                      </Select>
+                      {/* <RangePicker /> */}
                     </div>
-                    <RangePicker
-                      onChange={handleDateRange}
-                      defaultValue={[
-                        moment("2020-08-08", "YYYY-MM-DD"),
-                        moment("2020-08-11", "YYYY-MM-DD"),
-                      ]}
+                  </Col>
+                </>
+              ) : (
+                <>
+                  <Col className="gutter-row" lg={6} xs={12}>
+                    <div className="tvsit_pod-filters">
+                      <div
+                        className="tvsit_pod-title"
+                        style={{ color: "black", fontWeight: 500 }}
+                      >
+                        Date Type & Range Picker
+                      </div>
+                      <RangePicker
+                        onChange={handleDateRange}
+                        defaultValue={[
+                          moment("2020-08-08", "YYYY-MM-DD"),
+                          moment("2020-08-11", "YYYY-MM-DD"),
+                        ]}
+                      />
+                    </div>
+                  </Col>
+                </>
+              )}
+              <Col className="gutter-row" lg={1} xs={2}>
+                <div className="tvsit_pod-filters">
+                  <div
+                    className="tvsit_pod-title"
+                    style={{ color: "transparent" }}
+                  >
+                    Filter
+                  </div>
+                  <Dropdown
+                    overlay={menu}
+                    onVisibleChange={handleVisibleChange}
+                    visible={visible}
+                  >
+                    <CalendarOutlined
+                      style={{
+                        fontSize: "33px",
+                        color: "#ADADAD",
+                        marginLeft: "6px",
+                      }}
+                      onClick={(e) => e.preventDefault()}
                     />
-                  </div>
-                </Col>
-              </>
-            )}
-            <Col className="gutter-row" lg={1} xs={2}>
-              <div className="tvsit_pod-filters">
+                  </Dropdown>
+                </div>
+              </Col>
+              <Col lg={6} xs={12}>
                 <div
                   className="tvsit_pod-title"
                   style={{ color: "transparent" }}
                 >
                   Filter
                 </div>
-                <Dropdown
-                  overlay={menu}
-                  onVisibleChange={handleVisibleChange}
-                  visible={visible}
-                >
-                  <CalendarOutlined
-                    style={{
-                      fontSize: "33px",
-                      color: "#ADADAD",
-                      marginLeft: "6px",
-                    }}
-                    onClick={(e) => e.preventDefault()}
-                  />
-                </Dropdown>
-              </div>
-            </Col>
-            <Col lg={6} xs={12}>
-              <div className="tvsit_pod-title" style={{ color: "transparent" }}>
-                Filter
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: "2px",
-                }}
-              >
-                <div style={{ marginRight: "5px" }}>
-                  <SyncOutlined
-                    style={{
-                      fontSize: "14px",
-                      lineHeight: 0.8,
-                      marginTop: "13px",
-                      color: "#7E7E7E",
-                    }}
-                  />
-                </div>
                 <div
-                  style={{ lineHeight: 1, fontSize: "14px", marginTop: "13px" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "2px",
+                  }}
                 >
-                  <span style={{ color: "#7E7E7E" }}>Last Refresh Date</span> :{" "}
-                  {refreshData}
-                </div>
-              </div>
-            </Col>
-          </Row>
-          {/* filter section ends here */}
-
-          {/* sections start here */}
-
-          <section
-            style={{
-              margin: "22px 0px",
-              padding: "15px 22px",
-              backgroundColor: "#ffff",
-            }}
-          >
-            <Row gutter={16}>
-              <Col className="gutter-row" lg={6} xs={12}>
-                <Spin spinning={loading}>
+                  <div style={{ marginRight: "5px" }}>
+                    <SyncOutlined
+                      style={{
+                        fontSize: "14px",
+                        lineHeight: 0.8,
+                        marginTop: "13px",
+                        color: "#7E7E7E",
+                      }}
+                    />
+                  </div>
                   <div
-                    className={
-                      selected === "iscompleted"
-                        ? "tvsit-charts_selected"
-                        : "tvsit-charts_unselected"
-                    }
-                    onClick={() => toggleSelected("iscompleted")}
+                    style={{
+                      lineHeight: 1,
+                      fontSize: "14px",
+                      marginTop: "13px",
+                    }}
                   >
-                    <div className="tvsit-charts_heading">Completed</div>
-                    {/* <PodCharts
+                    <span style={{ color: "#7E7E7E" }}>Last Refresh Date</span>{" "}
+                    : {refreshData}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+            {/* filter section ends here */}
+
+            {/* sections start here */}
+
+            <section
+              style={{
+                margin: "22px 0px",
+                padding: "15px 22px",
+                backgroundColor: "#ffff",
+              }}
+            >
+              <Row gutter={16}>
+                <Col className="gutter-row" lg={6} xs={12}>
+                  <Spin spinning={loading}>
+                    <div
+                      className={
+                        selected === "iscompleted"
+                          ? "tvsit-charts_selected"
+                          : "tvsit-charts_unselected"
+                      }
+                      onClick={() => toggleSelected("iscompleted")}
+                    >
+                      <div className="tvsit-charts_heading">Completed</div>
+                      {/* <PodCharts
                       title="Completed Trips"
                       total={totaltrips}
                       completed={completedCount}
                     /> */}
-                    <PodData
-                      title1="total"
-                      title2="completed"
-                      title3="completed percentage"
-                      total={totaltrips}
-                      completed={completedCount}
-                      showPercentage={false}
-                    />
-                  </div>
-                </Spin>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={12}>
-                <Spin spinning={loading}>
-                  <div
-                    className={
-                      selected === "ispodverified"
-                        ? "tvsit-charts_selected"
-                        : "tvsit-charts_unselected"
-                    }
-                    onClick={() => toggleSelected("ispodverified")}
-                  >
-                    <div className="tvsit-charts_heading">POD updated</div>
-                    <PodData
-                      title1="completed"
-                      title2="pod updated"
-                      title3="updated percentage"
-                      total={completedCount}
-                      completed={podCount}
-                      showPercentage={true}
-                    />
-                  </div>
-                </Spin>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={12}>
-                <Spin spinning={loading}>
-                  <div
-                    className={
-                      selected === "podverifieddays"
-                        ? "tvsit-charts_selected"
-                        : "tvsit-charts_unselected"
-                    }
-                    onClick={() => toggleSelected("podverifieddays")}
-                  >
-                    <div className="tvsit-charts_heading">
-                      POD {dynamicTitle}
+                      <PodData
+                        title1="total"
+                        title2="completed"
+                        title3="completed percentage"
+                        total={totaltrips}
+                        completed={completedCount}
+                        showPercentage={false}
+                      />
                     </div>
-                    <PodData
-                      title1="completed"
-                      title2={dynamicTitle}
-                      title3="updated percentage"
-                      total={completedCount}
-                      completed={pod24hrsCount}
-                      showPercentage={true}
-                    />
-                  </div>
-                </Spin>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={12}>
-                <Spin spinning={loading}>
-                  <div
-                    className={
-                      selected === "ETA"
-                        ? "tvsit-charts_selected "
-                        : "tvsit-charts_unselected"
-                    }
-                    onClick={() => toggleSelected("ETA")}
-                  >
-                    <div className="tvsit-charts_heading">
-                      Estimated Trip to be Arrived
+                  </Spin>
+                </Col>
+                <Col className="gutter-row" lg={6} xs={12}>
+                  <Spin spinning={loading}>
+                    <div
+                      className={
+                        selected === "ispodverified"
+                          ? "tvsit-charts_selected"
+                          : "tvsit-charts_unselected"
+                      }
+                      onClick={() => toggleSelected("ispodverified")}
+                    >
+                      <div className="tvsit-charts_heading">POD updated</div>
+                      <PodData
+                        title1="completed"
+                        title2="pod updated"
+                        title3="updated percentage"
+                        total={completedCount}
+                        completed={podCount}
+                        showPercentage={true}
+                      />
                     </div>
-                    <div className="tvsit-poddata_eta">
-                      <div className="tvsit-poddata_eta-value">{etaCount}</div>
-                      {/**   <div className="tvsit-poddata_eta-title">
+                  </Spin>
+                </Col>
+                <Col className="gutter-row" lg={6} xs={12}>
+                  <Spin spinning={loading}>
+                    <div
+                      className={
+                        selected === "podverifieddays"
+                          ? "tvsit-charts_selected"
+                          : "tvsit-charts_unselected"
+                      }
+                      onClick={() => toggleSelected("podverifieddays")}
+                    >
+                      <div className="tvsit-charts_heading">
+                        POD {dynamicTitle}
+                      </div>
+                      <PodData
+                        title1="completed"
+                        title2={dynamicTitle}
+                        title3="updated percentage"
+                        total={completedCount}
+                        completed={pod24hrsCount}
+                        showPercentage={true}
+                      />
+                    </div>
+                  </Spin>
+                </Col>
+                <Col className="gutter-row" lg={6} xs={12}>
+                  <Spin spinning={loading}>
+                    <div
+                      className={
+                        selected === "ETA"
+                          ? "tvsit-charts_selected "
+                          : "tvsit-charts_unselected"
+                      }
+                      onClick={() => toggleSelected("ETA")}
+                    >
+                      <div className="tvsit-charts_heading">
+                        Estimated Trip to be Arrived
+                      </div>
+                      <div className="tvsit-poddata_eta">
+                        <div className="tvsit-poddata_eta-value">
+                          {etaCount}
+                        </div>
+                        {/**   <div className="tvsit-poddata_eta-title">
                         Estimated Trips To be Arrived
                       </div>   */}
-                    </div>
-                  </div>
-                </Spin>
-              </Col>
-            </Row>
-
-            {/* table sections starts here */}
-            <Collapse
-              defaultActiveKey={["0"]}
-              style={{ marginTop: "20px" }}
-              onChange={() => setShowCSV((prev) => !prev)}
-            >
-              <Panel
-                header={
-                  selected === "iscompleted"
-                    ? " Details OF COMPLETED TRIPS"
-                    : selected === "ispodverified"
-                    ? "Details OF EPOD UPDATED"
-                    : selected === "podverifieddays"
-                    ? `Details OF ${dynamicTitle}`
-                    : " Details OF ETA"
-                }
-                extra={
-                  <>
-                    {showCSV && (
-                      <div>
-                        <CsvDownload
-                          data={tableData}
-                          filename="data.csv"
-                          className="tvsit-pod_table-download"
-                        >
-                          <FileExcelOutlined /> Export CSV
-                        </CsvDownload>
                       </div>
-                    )}
-                  </>
-                }
-                key="1"
-                className="tvsit-pod_table-title"
+                    </div>
+                  </Spin>
+                </Col>
+              </Row>
+
+              {/* table sections starts here */}
+              <Collapse
+                defaultActiveKey={["0"]}
+                style={{ marginTop: "20px" }}
+                onChange={() => setShowCSV((prev) => !prev)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    margin: "30px 0 10px 0",
-                    alignItems: "flex-end",
-                  }}
+                <Panel
+                  header={
+                    selected === "iscompleted"
+                      ? " Details OF COMPLETED TRIPS"
+                      : selected === "ispodverified"
+                      ? "Details OF EPOD UPDATED"
+                      : selected === "podverifieddays"
+                      ? `Details OF ${dynamicTitle}`
+                      : " Details OF ETA"
+                  }
+                  extra={
+                    <>
+                      {showCSV && (
+                        <div>
+                          <CsvDownload
+                            data={tableData}
+                            filename="data.csv"
+                            className="tvsit-pod_table-download"
+                          >
+                            <FileExcelOutlined /> Export CSV
+                          </CsvDownload>
+                        </div>
+                      )}
+                    </>
+                  }
+                  key="1"
+                  className="tvsit-pod_table-title"
                 >
-                  {/* <div className="tvsit-pod_table-title">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "30px 0 10px 0",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    {/* <div className="tvsit-pod_table-title">
                   Details{" "}
                   {selected === "iscompleted"
                     ? "OF COMPLETED TRIPS"
@@ -688,7 +700,7 @@ function PodDashboard({
                     ? `OF ${dynamicTitle}`
                     : "OF ETA"}
                 </div> */}
-                  {/* <div>
+                    {/* <div>
                   <CsvDownload
                     data={tableData}
                     filename="data.csv"
@@ -697,21 +709,22 @@ function PodDashboard({
                     Export CSV
                   </CsvDownload>
                 </div> */}
-                </div>
-                <div style={{ marginTop: "10px" }}>
-                  <PodTable
-                    data={tableData}
-                    loading={tableLoad}
-                    setLoading={setTableLoad}
-                    selected={selected}
-                  />
-                </div>
-              </Panel>
-            </Collapse>
-          </section>
-        </main>
-      </MainLayout>
-    </div>
+                  </div>
+                  <div style={{ marginTop: "10px" }}>
+                    <PodTable
+                      data={tableData}
+                      loading={tableLoad}
+                      setLoading={setTableLoad}
+                      selected={selected}
+                    />
+                  </div>
+                </Panel>
+              </Collapse>
+            </section>
+          </main>
+        </MainLayout>
+      </div>
+    </ErrorBoundary>
   );
 }
 const mapStateToProps = createStructuredSelector({

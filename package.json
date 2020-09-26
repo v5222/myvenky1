@@ -81,6 +81,7 @@
     "intl": "1.2.5",
     "invariant": "2.2.4",
     "ip": "1.1.5",
+    "jquery": "^3.5.1",
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^0.10.0",
     "minimist": "^1.2.5",

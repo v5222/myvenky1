@@ -51,6 +51,7 @@ function Table({ columns, data }) {
           {...row.getRowProps({
             style,
           })}
+          className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
             return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
@@ -77,7 +78,7 @@ function Table({ columns, data }) {
         <FixedSizeList
           height={300}
           itemCount={rows.length}
-          itemSize={50}
+          // itemSize={}
           width={totalColumnsWidth}
           className={styles.FixedList}
         >

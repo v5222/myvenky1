@@ -66,6 +66,7 @@ function Table({ columns, data, dates }) {
           {...row.getRowProps({
             style,
           })}
+          className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
             if (cell.column.Header === "Actions") {
@@ -88,17 +89,17 @@ function Table({ columns, data, dates }) {
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
-      <thead >
+      <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} >{column.render("Header")}</th>
+              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}  >
-        <div >
+      <tbody {...getTableBodyProps()}>
+        <div>
           <FixedSizeList
             height={height}
             itemCount={rows.length}
