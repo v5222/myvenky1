@@ -14,17 +14,19 @@ import { useReactToPrint } from "react-to-print";
 import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
-<<<<<<< HEAD
+
+import SearchResult from './SearchResult'
+import NoResult from './NoResult'
+
+import { Spinner } from 'react-bootstrap';
 
 
 
 
 
-=======
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 const { RangePicker } = DatePicker;
->>>>>>> 7f4c834e9dbe4c1cc74daea651b36b236781aba2
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
@@ -60,6 +62,8 @@ class Einvoice extends React.Component {
       selectStartDate: new Date(),
       selectEndDate: new Date(),
       invNo: "",
+      search:false,
+      loading:false
     };
   }
 
@@ -88,11 +92,14 @@ class Einvoice extends React.Component {
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
+
+    this.setState({loading:true})
+
     if (this.state.invNo) {
       let options = {
         method: "POST",
         body: JSON.stringify({
-          body: { type: "FILTERLISTREPORT", no: this.state.invNo },
+          body: { type: "INVOICEPRINT", no: this.state.invNo },
         }),
       };
       fetch(printUrl, options)
@@ -106,8 +113,15 @@ class Einvoice extends React.Component {
             SubTotalList: SubTotalList,
             TotalList: TotalList,
             isActive: true,
+            search:true,
+            loading:false
+            
           });
         });
+    }
+    else{
+      console.log("error")
+      this.setState({asdf:true})
     }
   };
 
@@ -116,6 +130,11 @@ class Einvoice extends React.Component {
       invNo: e.target.value,
     });
   };
+  // handleInvoice = (e) => {
+  //   this.setState({
+  //     invNoTo: e.target.value,
+  //   });
+  // };
   BindOUInstance = () => {
     // var CompanyCode = document.getElementById("drpCompanyCode").value;
     fetch(
@@ -268,6 +287,10 @@ class Einvoice extends React.Component {
       isActive,
       dataItems,
     } = this.state;
+
+
+  
+
     return (
       <>
         <MainLayout logout={logout} user={user}>
@@ -422,7 +445,7 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input />
+                <Input  />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Report Type</div>
@@ -542,14 +565,48 @@ class Einvoice extends React.Component {
             <Row gutter={[20, 16]} />
           </section>
 
-          {isActive && (
-            <section className={styles.container}>
+
+            {this.state.loading? (
+              <div style={{marginTop:'10rem',marginLeft:'45rem'}}>
+ 
+    <Spinner
+      as="span"
+      animation="border"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    <span className="sr-only" >Loading Invoice...</span>
+  {' '}
+    <Spinner
+      as="span"
+      animation="grow"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+      
+    / >
+    <span style={{color:'#123F74',fontSize:'20px',fontWeight:'600'}}> Loading Invoice...</span>
+</div>
+    )       :
+                    (
+                      isActive?
+            (<section className={styles.container}>
+              <NoResult >
               <InvoicePrint
                 ref={(el) => (this.invoiceRef = el)}
                 data={dataItems}
               />
-            </section>
-          )}
+              </NoResult>
+            </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
+
+                    ) }
+
+          
+
+          
+
+         
         </MainLayout>
       </>
     );
