@@ -4,6 +4,7 @@ import { FixedSizeList } from "react-window";
 import styles from "./DwmusagereportTable.scss";
 import Spin from "antd/lib/spin";
 import Empty from "antd/lib/empty";
+import moment from "moment";
 // import { apiURLCourier } from "../../containers/App/services";
 // import Empty from "antd/lib/empty";
 
@@ -72,7 +73,25 @@ function Table({ columns, data }) {
           className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
-            return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+            if (cell.column.Header === "Target Value") {
+              let targetValue = cell.row.values.targetvalues;
+              if (targetValue === null) {
+                return <td {...cell.getCellProps()}>0</td>;
+              } else {
+                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+              }
+            } else {
+              if (cell.column.Header === "Report Date") {
+                let date = cell.row.values.date;
+                return (
+                  <td {...cell.getCellProps()}>
+                    {moment(date).format("DD-MM-YYYY")}
+                  </td>
+                );
+              } else {
+                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+              }
+            }
           })}
         </tr>
       );
@@ -97,7 +116,7 @@ function Table({ columns, data }) {
           <FixedSizeList
             height={height}
             itemCount={rows.length}
-            itemSize={50}
+            itemSize={100}
             width={totalColumnsWidth}
             className={styles.FixedList}
           >

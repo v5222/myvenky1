@@ -3,12 +3,14 @@ import styles from "./Dwmusagereport.module.scss";
 import Filters from "./Filters";
 import Myview from "./MyView/Myview";
 import Table from "./Table";
+import moment from "moment";
 import { useQuery, useMutation, useQueryCache } from "react-query";
 import { apiURLDwm, dwmBody } from "containers/App/services";
 import {
   getSummary,
   getFiltersdata,
   getTableData,
+  maxRefresDate,
 } from "../../containers/DwmUsageReportApplication/getData";
 function DwmUsageReport() {
   //API Call
@@ -34,6 +36,7 @@ function DwmUsageReport() {
   const [tableData, setTableData] = useState([]);
   const [filtersData, setFiltersData] = useState({});
   const [summary, setSummary] = useState([]);
+  const [maxDate, setMaxDate] = useState(moment());
   const [option, setOption] = useState({
     dataArr: [],
     type: "DATE_FILTER",
@@ -46,13 +49,14 @@ function DwmUsageReport() {
   });
   //Data filter hook
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
     // console.log(isLoading);
     // console.log(error);
     if (!isLoading) {
       console.log(data.usageReportarr);
       setTableData(data.usageReportarr);
-      setFiltersData(getFiltersdata(data.usageReportarr));
+      // console.log(maxRefresDate(data.usageReportarr), "fro max");
+      setMaxDate(maxRefresDate(data.usageReportarr));
       setOption({ ...option, dataArr: data.usageReportarr });
       // setTableData(tempTableData);
       // setFiltersData(getFiltersdata(data.usageReportarr));
@@ -61,13 +65,22 @@ function DwmUsageReport() {
   useEffect(() => {
     setLoading(isLoading);
   }, [isLoading]);
+
+  function getFilters(array, option, callback) {
+    getFiltersdata(array, option, callback);
+  }
+  const callbackFunction = (result) => {
+    setFiltersData(result);
+    // console.log(result);
+  };
   useEffect(() => {
     if (!isLoading) {
       setSummary(getSummary(option.dataArr, option.filters));
-      console.log(getSummary(option.dataArr, option.filters));
+      // console.log(getSummary(option.dataArr, option.filters));
       setTableData(
         getTableData(option.dataArr, option.type, option.key, option.filters)
       );
+      getFilters(data.usageReportarr, option, callbackFunction);
     }
   }, [option]);
   return (
@@ -76,6 +89,7 @@ function DwmUsageReport() {
         filtersData={filtersData}
         option={option}
         setOption={setOption}
+        maxDate={maxDate}
       />
       <Myview loading={loading} data={summary} />
       <Table tableData={tableData} column={columnData} loading={loading} />

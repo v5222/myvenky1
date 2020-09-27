@@ -12,7 +12,7 @@ const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
-function Filters({ filtersData, option, setOption }) {
+function Filters({ filtersData, option, setOption, maxDate }) {
   const [date, setDate] = useState(true);
   const [visible, setVisible] = useState(false);
   const [dates, setDates] = useState({
@@ -64,6 +64,10 @@ function Filters({ filtersData, option, setOption }) {
     });
     // console.log(key, value);
   };
+
+  useEffect(() => {
+    console.log(filtersData, "from filters");
+  }, [filtersData]);
   return (
     <>
       <div className={styles.container}>
@@ -78,8 +82,8 @@ function Filters({ filtersData, option, setOption }) {
               filtersData.capabilityname.map((i, index) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.capabilitycode} key={i.capabilitycode}>
+                      {i.capabilitycode}
                     </Option>
                   </>
                 );
@@ -101,8 +105,8 @@ function Filters({ filtersData, option, setOption }) {
               filtersData.customer.map((i) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.projectname} key={i.projectname}>
+                      {i.projectname}
                     </Option>
                   </>
                 );
@@ -124,8 +128,8 @@ function Filters({ filtersData, option, setOption }) {
               filtersData.owner.map((i) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.username} key={i.username}>
+                      {i.username}
                     </Option>
                   </>
                 );
@@ -185,7 +189,9 @@ function Filters({ filtersData, option, setOption }) {
         <div className={styles.refresh}>
           <p style={{ fontFamily: "Open sans" }}>
             Last Refresh Date :
-            <span className={styles.refreshdate}>10/09/2020</span>{" "}
+            <span className={styles.refreshdate}>
+              {moment(maxDate).format("DD-MM-YYYY")}
+            </span>{" "}
           </p>
         </div>
       </div>
