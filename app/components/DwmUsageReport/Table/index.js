@@ -2,23 +2,41 @@ import React from "react";
 import { useTable, useBlockLayout } from "react-table";
 import { FixedSizeList } from "react-window";
 import styles from "./DwmusagereportTable.scss";
+import Spin from "antd/lib/spin";
+import Empty from "antd/lib/empty";
 // import { apiURLCourier } from "../../containers/App/services";
 // import Empty from "antd/lib/empty";
 
-function DwmdashboardTable({ tableData, column }) {
+function DwmdashboardTable({ tableData, column, loading }) {
   return (
-    <div className="tvsit-dwmdashboard_table">
-      <div className="tabel_scroll">
-        <Table columns={column} data={tableData} />
+    <Spin spinning={loading}>
+      <div className="tvsit-dwmdashboard_table">
+        <div className="tabel_scroll">
+          <Table columns={column} data={tableData} />
+          {tableData.length < 1 ? (
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "22px",
+                color: "black",
+                margin: "0 auto",
+              }}
+            >
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-    </div>
+    </Spin>
   );
 }
 
 //table
 function Table({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
-
+  let height = data.length < 1 ? 10 : 300;
   const defaultColumn = React.useMemo(
     () => ({
       width: "100%",
@@ -51,6 +69,7 @@ function Table({ columns, data }) {
           {...row.getRowProps({
             style,
           })}
+          className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
             return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
@@ -76,7 +95,7 @@ function Table({ columns, data }) {
       <tbody {...getTableBodyProps()}>
         <div>
           <FixedSizeList
-            height={300}
+            height={height}
             itemCount={rows.length}
             itemSize={50}
             width={totalColumnsWidth}

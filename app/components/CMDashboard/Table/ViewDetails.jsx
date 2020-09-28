@@ -32,11 +32,11 @@ function ViewDetails({ customer, dates }) {
       headers: myHeaders,
       redirect: "follow",
     };
-    console.log(bodyoption);
+    // console.log(bodyoption);
     fetch(apiURLCourier, bodyoption)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const { bodymsg } = data.body;
         const { statuscode } = data.body;
         if (statuscode == 200) {

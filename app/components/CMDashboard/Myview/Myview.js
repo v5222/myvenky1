@@ -34,7 +34,7 @@ function Myview() {
     fetch(apiURLCourier, bodyoption)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "from views");
+        // console.log(data, "from views");
         const { bodymsg } = data.body;
         const { statuscode } = data.body;
         statuscode === 201 ? setData([]) : setData(bodymsg);
@@ -46,7 +46,6 @@ function Myview() {
 
   useEffect(() => {
     fetchData();
-    
   }, []);
 
   return (
@@ -79,20 +78,15 @@ function Myview() {
         </div>
       </div>
 
-     {/* mobile device container */}
+      {/* mobile device container */}
 
       <div className={styles.mob_container}>
-
-      <ViewCard />
-      <ViewCard />
-      <ViewCard />
-      <ViewCard />
-      <ViewCard />
-     
-     
-
+        <ViewCard />
+        <ViewCard />
+        <ViewCard />
+        <ViewCard />
+        <ViewCard />
       </div>
-     
     </>
   );
 }

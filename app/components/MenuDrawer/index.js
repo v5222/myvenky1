@@ -10,6 +10,7 @@ import Logo from "../../images/logo-full.png";
 import Logo2 from "../../images/TVS-SCS-Tagline-Color.png";
 import Courier from "../../images/SVG/couriersidebar.svg";
 import history from "utils/history";
+import { usersList } from "containers/App/DWMusers";
 const MenuDrawer = ({ selected, user }) => {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -57,7 +58,7 @@ const MenuDrawer = ({ selected, user }) => {
           defaultSelectedKeys={["1"]}
           style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          {user.email !== "srinim@tvslsl.com" && (
+          {!usersList.includes(user.email) && (
             <Menu.Item
               key="/podDashboard"
               className={
@@ -72,7 +73,7 @@ const MenuDrawer = ({ selected, user }) => {
             </Menu.Item>
           )}
 
-          {user.email !== "srinim@tvslsl.com" && (
+          {!usersList.includes(user.email) && (
             <Menu.Item
               key="2"
               icon={<LineChartOutlined />}
@@ -97,7 +98,7 @@ const MenuDrawer = ({ selected, user }) => {
                 : "tvsit-main-menu"
             }
           >
-            Dwm Insights
+            DWM summary
           </Menu.Item>
           <Menu.Item
             key="4"
@@ -109,9 +110,9 @@ const MenuDrawer = ({ selected, user }) => {
                 : "tvsit-main-menu"
             }
           >
-            Dwm Usage Report
+            DWM Report Insight
           </Menu.Item>
-          {user.email !== "srinim@tvslsl.com" && (
+          {!usersList.includes(user.email) && (
             <Menu.Item
               key="5"
               icon={<BarChartOutlined />}

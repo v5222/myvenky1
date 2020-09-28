@@ -1,5 +1,9 @@
 body {
+  // font-family: Georgia, serif;
+  @font-face {
   font-family: Georgia, serif;
+  font-display: swap;
+}
 }
 
 .fontLoaded body {

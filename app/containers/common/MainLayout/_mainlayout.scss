@@ -28,33 +28,29 @@
 }
 
 .tvsit_main-layout-avatar {
-  margin-right: 15px;
 }
-.tvsit_main-layout-name{
+.tvsit_main-layout-name {
   position: relative;
-  margin-left: -7px;
+  margin-left: 6px;
   margin-right: 6px;
-  margin-top: -7px;
 }
 // .tvsit_main-layout-dropdown{
 //  position: absolute;
 //  margin-top: -20px;
 // }
 
-.qn_icon{
-  margin-right:35px;
+.qn_icon {
+  margin-right: 35px;
   font-size: 18px;
 }
-.bell_icon{
-  margin-right:35px;
+.bell_icon {
+  margin-right: 35px;
   font-size: 18px;
 }
-.avatar{
-  position: absolute;
-  top:13%;
-  right: 11.42%;
-  border: 1px solid #123F74;
+.avatar {
+  top: 13%;
 
+  border: 1px solid #123f74;
 }
 
 .tvsit_main-logo {
@@ -115,7 +111,7 @@
   // padding: auto 200px !important;
   background: #002776 !important;
   border-radius: 30px !important;
-  width:90% !important;
+  width: 90% !important;
   margin-left: 1px !important;
   margin-top: 15px !important;
   font-size: 14px !important;
@@ -142,16 +138,16 @@
   padding: 0 22px;
   height: 50px;
 }
-.cm_pagination{
+.cm_pagination {
   margin-left: auto;
   margin-right: 10px;
 }
-.footer{
-  text-align:center;
-  background-color: #EEEEEE;
+.footer {
+  text-align: center;
+  background-color: #eeeeee;
   height: 20px;
-  margin-bottom:10px;
-  color: #a5a4a4;;
+  margin-bottom: 10px;
+  color: #a5a4a4;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -174,9 +170,8 @@
   }
   .tvsit_main-layout-avatar {
     margin-right: 0px;
-    
   }
-  .tvsit_main-layout-name{
+  .tvsit_main-layout-name {
     position: relative;
     margin-left: 10px;
     margin-right: 2px;
@@ -187,20 +182,19 @@
   //  position: absolute;
   //  margin-top: -20px;
   // }
-  
-  .qn_icon{
-    margin-right:20px;
+
+  .qn_icon {
+    margin-right: 20px;
     font-size: 15px;
   }
-  .bell_icon{
-    margin-right:20px;
+  .bell_icon {
+    margin-right: 20px;
     font-size: 15px;
   }
-  .avatar{
+  .avatar {
     margin-bottom: 10px;
-  
   }
-  
+
   .tvsit_main-logo {
     height: 47px;
     width: 45px;
@@ -249,8 +243,6 @@
   //   font-size: 12px;
   //   font-weight: 500;
   // }
-
-
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

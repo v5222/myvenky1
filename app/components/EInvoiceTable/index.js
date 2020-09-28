@@ -219,7 +219,7 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "20%" }}
               >
                 {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  } */}
-                {i.itemprddesc == null ? i.remarks : (i.itemprddesc + ".  " + i.remarks)}
+                {i.itemprddesc == null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}
               </td>
               <td
                 key={Math.random()}

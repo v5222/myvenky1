@@ -8,9 +8,15 @@ const { RangePicker } = DatePicker;
 import styles from "./Filters.module.scss";
 import { apiURLCourier } from "../../../containers/App/services";
 import CsvDownload from "react-json-to-csv";
-
+import Dropdown from "antd/lib/dropdown";
+import Menu from "antd/lib/menu";
+import CalendarOutlined from "@ant-design/icons/CalendarOutlined";
 const { Option } = Select;
 
+const currentDate = moment().format("YYYY-MM-DD");
+const startDate = moment()
+  .subtract(7, "d")
+  .format("YYYY-MM-DD");
 function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
   // const [filtersData, setFiltersData] = useState([]);
 
@@ -18,16 +24,105 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
   const [location, setLocation] = useState("All");
   const [locationData, setLocationData] = useState([]);
   const [custData, setCustData] = useState([]);
+  const [date, setDate] = useState(true);
+  const [visible, setVisible] = useState(false);
+
   const [data, setData] = useState({
     ecode: "KARSHA01",
     type: "FILTER-1",
     customer: "All",
     location: "All",
     status: "All",
-    filterdate: "NA",
-    sdate: "2020-06-02",
-    edate: "2020-08-31",
+    filterdate: "DATE",
+    sdate: startDate,
+    edate: currentDate,
   });
+
+  const handleVisibleChange = (flag) => {
+    setVisible(flag);
+  };
+  const handleDateChange = (key, value) => {
+    console.log(key, value);
+    switch (value) {
+      case "mtd": {
+        setData({
+          ...data,
+          ["filterdate"]: "DATE",
+
+          ["sdate"]: moment()
+            .startOf("month")
+            .format("YYYY-MM-DD"),
+          ["edate"]: moment()
+            .endOf("month")
+            .format("YYYY-MM-DD"),
+        });
+        break;
+      }
+      case "wtd": {
+        console.log("wtd");
+        setData({
+          ...data,
+          ["filterdate"]: "DATE",
+
+          ["sdate"]: moment()
+            .startOf("week")
+            .format("YYYY-MM-DD"),
+          ["edate"]: moment().format("YYYY-MM-DD"),
+        });
+        break;
+      }
+      case "ytd": {
+        console.log("ytd");
+        setData({
+          ...data,
+          ["filterdate"]: "DATE",
+
+          ["sdate"]: moment()
+            .startOf("year")
+            .format("YYYY-MM-DD"),
+          ["edate"]: moment()
+            .endOf("year")
+            .format("YYYY-MM-DD"),
+        });
+        break;
+      }
+    }
+  };
+
+  const handleMenuClick = (e) => {
+    if (e.key == 2) {
+      setData({
+        ...data,
+        ["filterdate"]: "DATE",
+
+        ["sdate"]: moment()
+          .startOf("month")
+          .format("YYYY-MM-DD"),
+        ["edate"]: moment()
+          .endOf("month")
+          .format("YYYY-MM-DD"),
+      });
+      setDate(false);
+      setVisible(false);
+    } else {
+      setDate(true);
+      setVisible(false);
+      setData({
+        ...data,
+        ["filterdate"]: "DATE",
+
+        ["sdate"]: startDate,
+        ["edate"]: currentDate,
+      });
+    }
+  };
+  //Menu Component for Date Filters
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="1">Date Picker</Menu.Item>
+      <Menu.Item key="2">Date Type</Menu.Item>
+    </Menu>
+  );
   const fetchFilters = () => {
     let filterOption = { ...data, ["type"]: "FILTER-3" };
     var myHeaders = new Headers();
@@ -38,11 +133,11 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
       redirect: "follow",
       body: JSON.stringify({ body: filterOption }),
     };
-    console.log(filterOption);
+    // console.log(filterOption);
     fetch(apiURLCourier, bodyoption)
       .then((res) => res.json())
       .then((value) => {
-        console.log(value, "from filters");
+        // console.log(value, "from filters");
         let tempCust = value.body.bodymsg.customer;
         let tempLocation = value.body.bodymsg.location;
         if (tempCust !== undefined) {
@@ -79,8 +174,8 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
       ...data,
       ["filterdate"]: "DATE",
       // ["type"]: "FILTER-2",
-      ["sdate"]: moment(dates[0]).format(),
-      ["edate"]: moment(dates[1]).format(),
+      ["sdate"]: moment(dates[0]).format("YYYY-MM-DD"),
+      ["edate"]: moment(dates[1]).format("YYYY-MM-DD"),
     });
     // console.log(dates, "from date range");
   };
@@ -89,9 +184,9 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
     fetchFilters();
     fetchData(data);
   }, [data]);
-  // useEffect(()=>{
-
-  // },[])
+  useEffect(() => {
+    console.log(startDate, currentDate);
+  }, []);
 
   return (
     <>
@@ -129,7 +224,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
                     );
                   })
                 : ""}
-              <Option key="All" value="All" >
+              <Option key="All" value="All">
                 All
               </Option>
               {/* <Option value="lucy">Bosch</Option>
@@ -187,11 +282,65 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
             </Select>
           </div>
 
-          <div className={styles.wrapperDate}>
-            <div className={styles.title_date}>Date</div>
-            <RangePicker bordered={true} onChange={handleDateRange} />
+          {!date && (
+            <div className={styles.wrapper}>
+              <div className={styles.title_date}>Date Type</div>
+              <Select
+                onChange={(value) => handleDateChange("key", value)}
+                className={styles.select}
+                defaultValue="MTD"
+              >
+                <Option selected value="wtd">
+                  WTD
+                </Option>
+
+                <Option value="mtd">MTD</Option>
+                <Option value="ytd">YTD</Option>
+              </Select>
+            </div>
+          )}
+
+          {date && (
+            <div className={styles.wrapperDate}>
+              <div className={styles.title_date}>Date</div>
+              <RangePicker
+                bordered={true}
+                onChange={handleDateRange}
+                allowClear={false}
+                defaultValue={[
+                  moment(startDate, "YYYY-MM-DD"),
+                  moment(currentDate, "YYYY-MM-DD"),
+                ]}
+              />
+            </div>
+          )}
+          <div>
+            <div
+              className={styles.title_date}
+              style={{
+                color: "transparent",
+                fontSize: "14px",
+              }}
+            >
+              Date Type
+            </div>
+            <Dropdown
+              overlay={menu}
+              onVisibleChange={handleVisibleChange}
+              visible={visible}
+            >
+              <CalendarOutlined
+                style={{
+                  fontSize: "33px",
+                  color: "#ADADAD",
+                  marginLeft: "6px",
+                }}
+                onClick={(e) => e.preventDefault()}
+              />
+            </Dropdown>
           </div>
         </div>
+
         <div className={styles.wrapper_csv}>
           <div
             style={{
@@ -209,7 +358,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
             filename="data.csv"
             className={styles.csvbtn}
           >
-            <span className='wrapper'>
+            <span className="wrapper">
               <DownloadOutlined />
             </span>
             Download Report

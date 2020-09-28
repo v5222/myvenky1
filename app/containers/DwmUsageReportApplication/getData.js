@@ -22,6 +22,9 @@ const activitynameArr = [
   "Closure of debit threat",
   "Vehicle Utilisation-Consolidation Inbound/Outbound",
   "Training And awareness program Plan and Status review",
+  "FIFO/Customer Rejection/Held up stock Clearance",
+  "PPE Adherence",
+  "Transit time adherence (MR-Window time / LH - Transit time)",
 ];
 const getSummary = (array, filters) => {
   let newData = [];
@@ -47,18 +50,30 @@ const getSummary = (array, filters) => {
     if (activitynameArr.includes(item.activityname)) {
       if (!prev.includes(item.activityname)) {
         if (tempCust && tempCap && tempOwn) {
-          if (filters.owner !== "All") {
-            newData.push({
-              activityname: item.activityname,
-              total: tempTotal,
-              actual: tempActual,
-              comments: item.comments,
-            });
+          if (
+            moment(item.date).format("DD-MM-YYYY") ===
+            moment().format("DD-MM-YYYY")
+          ) {
+            if (filters.owner !== "All") {
+              newData.push({
+                activityname: item.activityname,
+                total: tempTotal,
+                actual: tempActual,
+                comments: item.comments,
+              });
+            } else {
+              newData.push({
+                activityname: item.activityname,
+                total: tempTotal,
+                actual: tempActual,
+                comments: "NA",
+              });
+            }
           } else {
             newData.push({
               activityname: item.activityname,
-              total: tempTotal,
-              actual: tempActual,
+              total: 0,
+              actual: 0,
               comments: "NA",
             });
           }
@@ -76,13 +91,18 @@ const getSummary = (array, filters) => {
         newData = newData.filter((i) => {
           if (i.activityname === item.activityname) {
             if (tempCust && tempCap && tempOwn) {
-              if (filters.owner !== "All") {
-                i.total = parseInt(i.total) + tempTotal;
-                i.actual = parseInt(i.actual) + tempActual;
-                i.comments = item.comments;
-              } else {
-                i.total = parseInt(i.total) + tempTotal;
-                i.actual = parseInt(i.actual) + tempActual;
+              if (
+                moment(item.date).format("DD-MM-YYYY") ===
+                moment().format("DD-MM-YYYY")
+              ) {
+                if (filters.owner !== "All") {
+                  i.total = parseInt(i.total) + tempTotal;
+                  i.actual = parseInt(i.actual) + tempActual;
+                  i.comments = item.comments;
+                } else {
+                  i.total = parseInt(i.total) + tempTotal;
+                  i.actual = parseInt(i.actual) + tempActual;
+                }
               }
             }
           }
