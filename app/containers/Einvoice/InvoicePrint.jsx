@@ -65,8 +65,9 @@ class InvoicePrint extends React.Component {
 
           {/* dispatch details */}
 
-          {/**   {InvoiceDetailsList[0].itemisservc === "N" ? ( */}
-          {InvoiceDetailsList[0] ? (
+        
+          {/**    {InvoiceDetailsList[0] ? ( */}
+            {InvoiceDetailsList[0].itemisservc === "N" ? ( 
             <div
               className={styles.companyDetails}
               style={{ marginRight: "70px" }}
