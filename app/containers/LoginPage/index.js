@@ -100,7 +100,7 @@ function LoginPage({
       if (usersList.includes(user.email)) {
         history.push("/dwmApplication");
       } else {
-        history.push("/podDashboard");
+        history.push("/dwmApplication");
       }
     }
   }, [isAuthenticated]);

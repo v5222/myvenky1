@@ -267,7 +267,13 @@ const getTableData = (array, type, key, filters) => {
 
 const maxRefresDate = (array) => {
   console.log(array);
-  let maxdate = _.maxBy(array, (i) => moment(i.date).format("YYYY-MM-DD"));
+  let maxdate = {
+    date: moment().format("YYYY-MM-DD"),
+  };
+  if (array.length > 0) {
+    maxdate = _.maxBy(array, (i) => moment(i.date).format("YYYY-MM-DD"));
+  }
+
   return maxdate.date;
 };
 export { getSummary, getFiltersdata, getTableData, maxRefresDate };

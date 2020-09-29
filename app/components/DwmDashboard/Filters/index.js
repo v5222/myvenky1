@@ -190,12 +190,12 @@ function Filters({ filtersData, option, setOption }) {
             />
           </Dropdown>
         </div>
-        <div className={styles.refresh}>
+        {/* <div className={styles.refresh}>
           <p style={{ fontFamily: "Open sans" }}>
             Last Refresh Date :
             <span className={styles.refreshdate}>10/09/2020</span>{" "}
           </p>
-        </div>
+        </div> */}
       </div>
     </>
   );

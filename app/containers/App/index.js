@@ -7,7 +7,7 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import LoginPage from "containers/LoginPage/Loadable";
@@ -26,6 +26,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
+import { SET_LOGIN } from "./constants";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import
 // const checkLogin = ()=>{
@@ -41,11 +42,37 @@ function App({
   getAccessToken,
   getUserProfile,
   loggedIn,
+  setLogin,
 }) {
+  const [authenticated, setAuthenticated] = useState(false);
+  let timer;
+
+  useEffect(() => {
+    if (loggedIn === true || isAuthenticated === true) {
+      setAuthenticated(true);
+    }
+  }, [loggedIn, isAuthenticated]);
+
+  useEffect(() => {
+    if (authenticated) {
+      timer = setTimeout(() => {
+        // setAuthenticated(false);
+        // setLogin(false);
+        window.location.reload();
+      }, 15 * 60 * 1000);
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    return () => clearTimeout(timer);
+  }, []);
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  let authenticated = true;
+
   // if (loggedIn === true || isAuthenticated === true) {
-  //   authenticated = true;
+  //   setAuthenticated(true);
+  //   timer = setTimeout(() => {
+  //     setAuthenticated(false);
+  //   }, 5000);
   // }
   if (!isLatestVersion) {
     emptyCacheStorage();
@@ -91,6 +118,7 @@ function App({
             )
           }
         />
+        {/* <Redirect from="/" to="/poDashboard" /> */}
         <Route exact path="/test" component={TestPage} />
         <Route
           exact
@@ -149,5 +177,18 @@ function App({
 const mapStateToProps = createStructuredSelector({
   loggedIn: makeSelectLogin(),
 });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLogin: (value) => {
+      dispatch({
+        type: SET_LOGIN,
+        loggedIn: value,
+      });
+    },
+  };
+};
 
-export default connect(mapStateToProps)(withAuthProvider(App));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withAuthProvider(App));

@@ -151,7 +151,12 @@ const getActivitySummary = (array, type, key, value, filters) => {
   }
   let totalpercent = "100%";
   let actualpercent = Math.round((actual / total) * 100) + "%";
-  return { total, actual, totalpercent, actualpercent };
+  return {
+    total,
+    actual,
+    totalpercent,
+    actualpercent: actualpercent === "NaN%" ? "0%" : actualpercent,
+  };
 };
 
 const getFiltersdata = (array) => {
