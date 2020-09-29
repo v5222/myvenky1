@@ -28,6 +28,7 @@ import { useClearCache } from "react-clear-cache";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 import { SET_LOGIN } from "./constants";
 // import "bootstrap/dist/css/bootstrap.min.css";
+
 // import
 // const checkLogin = ()=>{
 
@@ -67,7 +68,6 @@ function App({
     return () => clearTimeout(timer);
   }, []);
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-
   // if (loggedIn === true || isAuthenticated === true) {
   //   setAuthenticated(true);
   //   timer = setTimeout(() => {

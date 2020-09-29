@@ -9,12 +9,22 @@ import ErrorBoundary from "components/ErrorBoundary";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import Button from "antd/lib/button";
+import { Spin } from 'antd';
+
 import Input from "antd/lib/input";
 import "react-datepicker/dist/react-datepicker.css";
 import { useReactToPrint } from "react-to-print";
 import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
+
+import SearchResult from './SearchResult'
+import NoResult from './NoResult'
+
+
+
+
+
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 
@@ -54,6 +64,8 @@ class Einvoice extends React.Component {
       selectStartDate: new Date(),
       selectEndDate: new Date(),
       invNo: "",
+      search:false,
+      loading:false
     };
   }
 
@@ -82,11 +94,14 @@ class Einvoice extends React.Component {
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
+
+    this.setState({loading:true})
+
     if (this.state.invNo) {
       let options = {
         method: "POST",
         body: JSON.stringify({
-          body: { type: "FILTERLISTREPORT", no: this.state.invNo },
+          body: { type: "INVOICEPRINT", no: this.state.invNo },
         }),
       };
       fetch(printUrl, options)
@@ -100,8 +115,15 @@ class Einvoice extends React.Component {
             SubTotalList: SubTotalList,
             TotalList: TotalList,
             isActive: true,
+            search:true,
+            loading:false
+            
           });
         });
+    }
+    else{
+      console.log("error")
+      this.setState({asdf:true})
     }
   };
 
@@ -110,6 +132,11 @@ class Einvoice extends React.Component {
       invNo: e.target.value,
     });
   };
+  // handleInvoice = (e) => {
+  //   this.setState({
+  //     invNoTo: e.target.value,
+  //   });
+  // };
   BindOUInstance = () => {
     // var CompanyCode = document.getElementById("drpCompanyCode").value;
     fetch(
@@ -262,6 +289,10 @@ class Einvoice extends React.Component {
       isActive,
       dataItems,
     } = this.state;
+
+
+  
+
     return (
       <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
@@ -416,7 +447,7 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input />
+                <Input  />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Report Type</div>
@@ -536,14 +567,31 @@ class Einvoice extends React.Component {
             <Row gutter={[20, 16]} />
           </section>
 
-          {isActive && (
-            <section className={styles.container}>
+
+            {this.state.loading? (
+             <div style={{width:'100%',display:"flex",flexDirection:'column',alignItems:"center",marginTop:"50px"}}>
+            <Spin  size="large" />
+            <div style={{fontSize:'18px'}}>Loading Invoice</div>
+            </div>   
+    )       :
+                    (
+                      isActive?
+            (<section className={styles.container}>
+              <NoResult >
               <InvoicePrint
                 ref={(el) => (this.invoiceRef = el)}
                 data={dataItems}
               />
-            </section>
-          )}
+              </NoResult>
+            </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
+
+                    ) }
+
+          
+
+          
+
+         
         </MainLayout>
       </ErrorBoundary>
     );
