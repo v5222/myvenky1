@@ -79,8 +79,8 @@ class InvoicePrint extends React.Component {
                   <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
                 </div>
               </div>
-              {/*  {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm}
-              <div className={styles.companyName}>{details.dispnm}</div> */}
+              {/** {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm} */}  
+              <div className={styles.companyName}>{details.dispnm}</div>
               <div className={styles.companyAddr}>
                 {details.dispaddress1 !== "NA"
                   ? details.dispaddress1
@@ -91,6 +91,11 @@ class InvoicePrint extends React.Component {
                   ? details.dispaddress2
                   : details.selleraddress2}
               </div>
+              <div className={styles.companyAddr}>
+              {details.displocation + ":  " + details.disppincode}
+            </div>
+
+
               <div className={styles.companyAddr}>
                 State Code : {details.dispstcd} - {details.dispdtlstname}
               </div>
@@ -185,10 +190,6 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading1}>
                   {details.buyerlocation + ": " + details.buyerpincode}
                 </div>
-                {/*  <div className={styles.subheading1}>{details.buyerpincode}</div>  */}
-                {/* <div className={styles.subheading1}></div> */}
-
-                {/* <div className={styles.subheading1}>{data.BILLTOSTATE}</div> */}
                 <div className={styles.subheading1}>
                   State Code : {details.buyerstcd} - {details.buyerdtlstname}  
                 </div>

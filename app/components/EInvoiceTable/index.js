@@ -89,7 +89,7 @@ class EinvoiceTable extends React.Component {
           <tr>
             <th
               
-              style={{ width: "3%" }}
+              style={{ width: "3%",textAlign:'center' }}
               rowSpan="2"
             >
               S.no
@@ -99,7 +99,7 @@ class EinvoiceTable extends React.Component {
               </td> */}
             <th
               
-              style={{ width: "20%" }}
+              style={{ width: "20%",textAlign:'center' }}
               rowSpan="2"
             >
               Description of goods/services
@@ -107,7 +107,7 @@ class EinvoiceTable extends React.Component {
 
             <th
               
-              style={{ width: "5%" }}
+              style={{ width: "5%",textAlign:'center'  }}
               rowSpan="2"
             >
               UOM
@@ -115,28 +115,28 @@ class EinvoiceTable extends React.Component {
 
             <th
               
-              style={{ width: "5%" }}
+              style={{ width: "5%",textAlign:'center'  }}
               rowSpan="2"
             >
               HSN/SAC Code
             </th>
             <th
               
-              style={{ width: "5%" }}
+              style={{ width: "5%",textAlign:'center'  }}
               rowSpan="2"
             >
               Qty{" "}
             </th>
             <th
               
-              style={{ width: "4%" }}
+              style={{ width: "4%",textAlign:'center'  }}
               rowSpan="2"
             >
               Rate
             </th>
             <th
               
-              style={{ width: "6%" }}
+              style={{ width: "6%",textAlign:'center'  }}
               rowSpan="2"
             >
               Gross Amount
@@ -144,35 +144,35 @@ class EinvoiceTable extends React.Component {
 
             <th
               
-              style={{ width: "5%" }}
+              style={{ width: "5%",textAlign:'center'  }}
               rowSpan="2"
             >
               Disc.
             </th>
             <th
               
-              style={{ width: "4%" }}
+              style={{ width: "4%",textAlign:'center'  }}
               rowSpan="2"
             >
               Taxable Value
             </th>
             <th
               
-              style={{ width: "5%" }}
+              style={{ width: "5%",textAlign:'center'  }}
               colSpan="2"
             >
               CGST
             </th>
             <th
               
-              style={{ width: "10%" }}
+              style={{ width: "10%",textAlign:'center'  }}
               colSpan="2"
             >
               SGST / UTGST
             </th>
             <th
               
-              style={{ width: "10%" }}
+              style={{ width: "10%",textAlign:'center' }}
               colSpan="2"
             >
               IGST
@@ -182,7 +182,7 @@ class EinvoiceTable extends React.Component {
             </th> */}
             <th
               
-              style={{ width: "10%" }}
+              style={{ width: "10%",textAlign:'center'  }}
               rowSpan="2"
             >
               Item Total Amount
@@ -196,19 +196,19 @@ class EinvoiceTable extends React.Component {
             <td />
             <td />
             <td /> */}
-            <td>Rate</td>
-            <td>Amt</td>
-            <td>Rate</td>
-            <td>Amt</td>
-            <td>Rate</td>
-            <td>Amt</td>
+            <td style={{textAlign:'center'}}>Rate</td>
+            <td style={{textAlign:'center'}}>Amt</td>
+            <td style={{textAlign:'center'}}>Rate</td>
+            <td style={{textAlign:'center'}}>Amt</td>
+            <td style={{textAlign:'center'}}>Rate</td>
+            <td style={{textAlign:'center'}}>Amt</td>
           </tr>
           {item.map((i, indexes) => (
             <tr key={Math.random()}>
               <td
                 key={Math.random()}
                 
-                style={{ width: "3%" }}
+                style={{ width: "3%",textAlign:'center' }}
               >
                 {indexes + 1}
               </td>
@@ -216,7 +216,7 @@ class EinvoiceTable extends React.Component {
               <td
                 key={Math.random()}
                 
-                style={{ width: "20%" }}
+                style={{ width: "20%",textAlign:'left' }}
               >
                 {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  } */}
                 {i.itemprddesc == null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}
@@ -502,7 +502,7 @@ class EinvoiceTable extends React.Component {
       itemTotal */}
 
           <tr>
-            <td  colSpan="2">
+            <td  colSpan="2" style={{textAlign:'left'}}>
               TOTAL :
             </td>
             <td  colSpan="4" />
@@ -581,10 +581,10 @@ class EinvoiceTable extends React.Component {
               <table >
                 <tr style={{ borderBottom: '1px solid black' }}>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }}>
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }}>
                     Total Amount Before Tax:
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                   <CurrencyFormat
                 value={taxableTotal.toFixed(2)}
                 displayType={"text"}
@@ -595,10 +595,10 @@ class EinvoiceTable extends React.Component {
                 </tr>
                 <tr style={{ borderBottom: '1px solid black' }}>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }}>
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }}>
                     Add: CGST:
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                   <CurrencyFormat
                   value={cgstTotal.toFixed(2)}
                   displayType={"text"}
@@ -609,10 +609,10 @@ class EinvoiceTable extends React.Component {
                 </tr>
                 <tr style={{ borderBottom: '1px solid black' }}>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }}>
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }}>
                     Add: SGST/UTGST:
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                   <CurrencyFormat
                   value={usgstTotal.toFixed(2)}
                   displayType={"text"}
@@ -623,28 +623,28 @@ class EinvoiceTable extends React.Component {
                 </tr>
                 <tr style={{ borderBottom: '1px solid black' }}>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }}>
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }}>
                     Add: IGST:
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                     {igstTotal.toFixed(2)}
                   </td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid black' }}>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }} >
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }} >
                     Other Taxes(TCS):
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                     0
           </td>
                 </tr>
                 <tr>
 
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black' }}>
+                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black',textAlign:'left' }}>
                     Total Invoice Amount:
           </td>
-                  <td colSpan="2" style={{ width: '250px' }}>
+                  <td colSpan="2" style={{ width: '250px',textAlign:'right' }}>
                   <CurrencyFormat
                   value={itemTotal.toFixed(2)}
                   displayType={"text"}
