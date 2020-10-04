@@ -1,23 +1,7 @@
 import React from "react";
 import { UserAgentApplication } from "msal";
 import { getUserDetails } from "./GraphService";
-import { config } from "./config";
-
-// export interface AuthComponentProps {
-//   error: any;
-//   isAuthenticated: boolean;
-//   user: any;
-//   login: Function;
-//   logout: Function;
-//   getAccessToken: Function;
-//   setError: Function;
-// }
-
-// interface AuthProviderState {
-//   error: any;
-//   isAuthenticated: boolean;
-//   user: any;
-// }
+import { Testconfig } from "./config";
 
 export default function withAuthProvider(WrappedComponent) {
   return class extends React.Component {
@@ -34,8 +18,8 @@ export default function withAuthProvider(WrappedComponent) {
       // Initialize the MSAL application object
       this.userAgentApplication = new UserAgentApplication({
         auth: {
-          clientId: config.appId,
-          redirectUri: config.redirectUri,
+          clientId: Testconfig.appId,
+          redirectUri: Testconfig.redirectUri,
         },
         cache: {
           cacheLocation: "sessionStorage",
@@ -78,7 +62,7 @@ export default function withAuthProvider(WrappedComponent) {
       try {
         // Login via popup
         await this.userAgentApplication.loginPopup({
-          scopes: config.scopes,
+          scopes: Testconfig.scopes,
           prompt: "select_account",
         });
         // After login, get the user's profile
@@ -126,7 +110,7 @@ export default function withAuthProvider(WrappedComponent) {
 
     async getUserProfile() {
       try {
-        var accessToken = await this.getAccessToken(config.scopes);
+        var accessToken = await this.getAccessToken(Testconfig.scopes);
 
         if (accessToken) {
           // TEMPORARY: Display the token in the error flash

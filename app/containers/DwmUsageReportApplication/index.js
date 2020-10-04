@@ -26,7 +26,7 @@ function DwmUsageReportApplication({ logout, user }) {
             <Breadcrumb.Item>DWM Report Insight</Breadcrumb.Item>
           </Breadcrumb>
 
-          <h1 className="dwm_title">DWM Report Insightt</h1>
+          <h1 className="dwm_title">DWM Report Insight</h1>
 
           <Menu
             onClick={handleClick}

@@ -45,13 +45,13 @@ function App({
   loggedIn,
   setLogin,
 }) {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
   let timer;
 
   useEffect(() => {
-    if (loggedIn === true || isAuthenticated === true) {
-      setAuthenticated(true);
-    }
+    // if (loggedIn === true || isAuthenticated === true) {
+    //   setAuthenticated(true);
+    // }
   }, [loggedIn, isAuthenticated]);
 
   useEffect(() => {
@@ -60,6 +60,7 @@ function App({
         // setAuthenticated(false);
         // setLogin(false);
         window.location.reload();
+        sessionStorage.clear();
       }, 15 * 60 * 1000);
     }
   }, [authenticated]);
@@ -77,10 +78,11 @@ function App({
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
+  //  emptyCacheStorage();
   const queryCache = new QueryCache();
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
-      <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">
+      <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="My Applications">
         <meta name="description" content="TVS Logistics React Applications" />
       </Helmet>
 

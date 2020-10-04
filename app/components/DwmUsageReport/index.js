@@ -49,13 +49,13 @@ function DwmUsageReport() {
   });
   //Data filter hook
   useEffect(() => {
-    // console.log(data);
+    console.log(data);
     // console.log(isLoading);
     // console.log(error);
     if (!isLoading) {
-      console.log(data.usageReportarr);
+      // console.log(data.usageReportarr);
       setTableData(data.usageReportarr);
-      console.log(maxRefresDate(data.usageReportarr), "fro max");
+      // console.log(maxRefresDate(data.usageReportarr), "fro max");
       setMaxDate(maxRefresDate(data.usageReportarr));
       setOption({ ...option, dataArr: data.usageReportarr });
       // setTableData(tempTableData);

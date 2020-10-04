@@ -9,7 +9,7 @@ import ErrorBoundary from "components/ErrorBoundary";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import Button from "antd/lib/button";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 import Input from "antd/lib/input";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,12 +18,8 @@ import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
 
-import SearchResult from './SearchResult'
-import NoResult from './NoResult'
-
-
-
-
+import SearchResult from "./SearchResult";
+import NoResult from "./NoResult";
 
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
@@ -32,8 +28,11 @@ const { RangePicker } = DatePicker;
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
-  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+  " https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
 
+//https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing
+
+// https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing
 class Einvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -64,8 +63,8 @@ class Einvoice extends React.Component {
       selectStartDate: new Date(),
       selectEndDate: new Date(),
       invNo: "",
-      search:false,
-      loading:false
+      search: false,
+      loading: false,
     };
   }
 
@@ -95,7 +94,7 @@ class Einvoice extends React.Component {
     var SubTotalList = [];
     var TotalList = [];
 
-    this.setState({loading:true})
+    this.setState({ loading: true });
 
     if (this.state.invNo) {
       let options = {
@@ -115,15 +114,13 @@ class Einvoice extends React.Component {
             SubTotalList: SubTotalList,
             TotalList: TotalList,
             isActive: true,
-            search:true,
-            loading:false
-            
+            search: true,
+            loading: false,
           });
         });
-    }
-    else{
-      console.log("error")
-      this.setState({asdf:true})
+    } else {
+      console.log("error");
+      this.setState({ asdf: true });
     }
   };
 
@@ -290,9 +287,6 @@ class Einvoice extends React.Component {
       dataItems,
     } = this.state;
 
-
-  
-
     return (
       <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
@@ -447,7 +441,7 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input  />
+                <Input />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Report Type</div>
@@ -567,31 +561,33 @@ class Einvoice extends React.Component {
             <Row gutter={[20, 16]} />
           </section>
 
-
-            {this.state.loading? (
-             <div style={{width:'100%',display:"flex",flexDirection:'column',alignItems:"center",marginTop:"50px"}}>
-            <Spin  size="large" />
-            <div style={{fontSize:'18px'}}>Loading Invoice</div>
-            </div>   
-    )       :
-                    (
-                      isActive?
-            (<section className={styles.container}>
-              <NoResult >
-              <InvoicePrint
-                ref={(el) => (this.invoiceRef = el)}
-                data={dataItems}
-              />
+          {this.state.loading ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "50px",
+              }}
+            >
+              <Spin size="large" />
+              <div style={{ fontSize: "18px" }}>Loading Invoice</div>
+            </div>
+          ) : isActive ? (
+            <section className={styles.container}>
+              <NoResult>
+                <InvoicePrint
+                  ref={(el) => (this.invoiceRef = el)}
+                  data={dataItems}
+                />
               </NoResult>
-            </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
-
-                    ) }
-
-          
-
-          
-
-         
+            </section>
+          ) : this.state.search == false ? (
+            <SearchResult />
+          ) : (
+            <NoResult />
+          )}
         </MainLayout>
       </ErrorBoundary>
     );
