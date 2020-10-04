@@ -23,7 +23,7 @@ function Myview({ loading, data }) {
                 loading={loading}
               />
               <ViewCard
-                title={"KAM Perfomance"}
+                title={"KAM Performance"}
                 total={data.activitySummary.totalpercent}
                 actual={data.activitySummary.actualpercent}
                 loading={loading}
@@ -36,11 +36,24 @@ function Myview({ loading, data }) {
       {/* mobile device container */}
 
       <div className={styles.mob_container}>
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
+      <ViewCard
+      title={"Login Summary"}
+      total={data.loginSummary.total}
+      actual={data.loginSummary.actual}
+      loading={loading}
+    />
+    <ViewCard
+      title={"Activity Summary"}
+      total={data.activitySummary.total}
+      actual={data.activitySummary.actual}
+      loading={loading}
+    />
+    <ViewCard
+      title={"KAM Performance"}
+      total={data.activitySummary.totalpercent}
+      actual={data.activitySummary.actualpercent}
+      loading={loading}
+    />
       </div>
     </>
   );

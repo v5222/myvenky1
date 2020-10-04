@@ -72,7 +72,7 @@ export function* OtpValidation(action) {
           loggedIn: true,
         });
         // localStorage.setItem("loggedIn", true);
-        history.push("/podDashboard");
+        history.push("/dwmApplication");
       }
     }
     yield put({

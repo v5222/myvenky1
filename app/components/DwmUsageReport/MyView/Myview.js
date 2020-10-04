@@ -97,11 +97,21 @@ function Myview({ data, loading }) {
       {/* mobile device container */}
 
       <div className={styles.mob_container}>
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
-        <ViewCard />
+      {loading === true
+        ? arr.map((i) => {
+            return <ViewCard title="" total={0} actual={0} key={i} />;
+          })
+        : data.slice(0, 6).map((i, index) => {
+            return (
+              <ViewCard
+                title={i.activityname}
+                total={i.total}
+                actual={i.actual}
+                comments={i.comments}
+                key={index}
+              />
+            );
+          })}
       </div>
     </>
   );

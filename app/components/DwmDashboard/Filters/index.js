@@ -146,7 +146,7 @@ function Filters({ filtersData, option, setOption }) {
 
         {!date ? (
           <div className={styles.wrapper}>
-            <div className={styles.title}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:'#123f74'}}>Date Type & Range Picker </div>
             <Select
               onChange={(value) => handleDateChange("key", value)}
               className={styles.select}
@@ -163,7 +163,7 @@ function Filters({ filtersData, option, setOption }) {
           </div>
         ) : (
           <div className={styles.wrapperDate}>
-            <div className={styles.title}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:'#123f74'}}>Date Type & Range Picker </div>
             <RangePicker
               allowClear={false}
               onChange={handleDateRange}
@@ -182,7 +182,7 @@ function Filters({ filtersData, option, setOption }) {
           >
             <CalendarOutlined
               style={{
-                fontSize: "33px",
+                fontSize: "32px",
                 color: "#ADADAD",
                 marginLeft: "6px",
               }}
@@ -190,12 +190,12 @@ function Filters({ filtersData, option, setOption }) {
             />
           </Dropdown>
         </div>
-        <div className={styles.refresh}>
+        {/* <div className={styles.refresh}>
           <p style={{ fontFamily: "Open sans" }}>
             Last Refresh Date :
             <span className={styles.refreshdate}>10/09/2020</span>{" "}
           </p>
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -3,7 +3,6 @@
     border-bottom: 1px solid #E5E5E5;
     padding-bottom: 50px;
     margin-bottom: 30px;
-    //  background:red; //sample will delete later
   }
   
   .mob_container{
@@ -41,9 +40,12 @@
         display: flex;
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
-        padding-top: 15px;
-        margin:auto;
+        padding-top:15px;
+        // margin:auto;
         align-items: center;
+
+        padding: 10px 0 20px 0 ;
+        border-bottom: 1px solid #E5E5E5;
         
       
   

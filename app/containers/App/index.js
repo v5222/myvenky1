@@ -7,7 +7,7 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import LoginPage from "containers/LoginPage/Loadable";
@@ -26,6 +26,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
+import { SET_LOGIN } from "./constants";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 // import
@@ -42,20 +43,46 @@ function App({
   getAccessToken,
   getUserProfile,
   loggedIn,
+  setLogin,
 }) {
+  const [authenticated, setAuthenticated] = useState(true);
+  let timer;
+
+  useEffect(() => {
+    // if (loggedIn === true || isAuthenticated === true) {
+    //   setAuthenticated(true);
+    // }
+  }, [loggedIn, isAuthenticated]);
+
+  useEffect(() => {
+    if (authenticated) {
+      timer = setTimeout(() => {
+        // setAuthenticated(false);
+        // setLogin(false);
+        window.location.reload();
+        sessionStorage.clear();
+      }, 15 * 60 * 1000);
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    return () => clearTimeout(timer);
+  }, []);
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  
-  let authenticated = true;
   // if (loggedIn === true || isAuthenticated === true) {
-  //   authenticated = true;
+  //   setAuthenticated(true);
+  //   timer = setTimeout(() => {
+  //     setAuthenticated(false);
+  //   }, 5000);
   // }
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
+  //  emptyCacheStorage();
   const queryCache = new QueryCache();
   return (
     <ReactQueryCacheProvider queryCache={queryCache}>
-      <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="EPOD Dashboard">
+      <Helmet titleTemplate="%s - TVS Logistics" defaultTitle="My Applications">
         <meta name="description" content="TVS Logistics React Applications" />
       </Helmet>
 
@@ -93,6 +120,7 @@ function App({
             )
           }
         />
+        {/* <Redirect from="/" to="/poDashboard" /> */}
         <Route exact path="/test" component={TestPage} />
         <Route
           exact
@@ -151,5 +179,18 @@ function App({
 const mapStateToProps = createStructuredSelector({
   loggedIn: makeSelectLogin(),
 });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLogin: (value) => {
+      dispatch({
+        type: SET_LOGIN,
+        loggedIn: value,
+      });
+    },
+  };
+};
 
-export default connect(mapStateToProps)(withAuthProvider(App));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withAuthProvider(App));

@@ -78,9 +78,10 @@ function Table({ columns, data }) {
         <FixedSizeList
           height={300}
           itemCount={rows.length}
-          // itemSize={}
+          itemSize={100}
           width={totalColumnsWidth}
           className={styles.FixedList}
+          
         >
           {RenderRow}
         </FixedSizeList>

@@ -142,7 +142,7 @@ function Filters({ filtersData, option, setOption, maxDate }) {
 
         {!date ? (
           <div className={styles.wrapper}>
-            <div className={styles.title}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:"#123f74"}}>Date Type & Range Picker </div>
             <Select
               onChange={(value) => handleDateChange("key", value)}
               className={styles.select}
@@ -159,7 +159,7 @@ function Filters({ filtersData, option, setOption, maxDate }) {
           </div>
         ) : (
           <div className={styles.wrapperDate}>
-            <div className={styles.title}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:"#123f74"}}>Date Type & Range Picker </div>
             <RangePicker
               allowClear={false}
               onChange={handleDateRange}
