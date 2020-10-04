@@ -44,9 +44,11 @@
 
     .mob_container{
       display: flex;
+      height: 100%;
+      width: 100%;
       overflow: scroll;
       -webkit-overflow-scrolling: touch;
-      padding-top: 15px;
+      padding-top: 25px;
       margin: auto  auto;
       align-items: center;
       
@@ -55,7 +57,13 @@
 
      
     }
-
+    .title {
+      font-size: 26px;
+      color: black;
+      margin-bottom: 10px;
+      line-height: 14px;
+    }
+    
 
     
   

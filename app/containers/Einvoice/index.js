@@ -8,6 +8,7 @@ import ErrorBoundary from "components/ErrorBoundary";
 
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
+import FileExcelOutlined from "@ant-design/icons/FileExcelOutlined";
 import Button from "antd/lib/button";
 import { Spin } from 'antd';
 
@@ -20,6 +21,8 @@ import ReactToPrint from "react-to-print";
 
 import SearchResult from './SearchResult'
 import NoResult from './NoResult'
+
+
 
 
 
@@ -123,7 +126,7 @@ class Einvoice extends React.Component {
     }
     else{
       console.log("error")
-      this.setState({asdf:true})
+      
     }
   };
 
@@ -275,6 +278,9 @@ class Einvoice extends React.Component {
   handleDateRange = (dates) => {
     console.log(dates);
   };
+
+ 
+
   render() {
     const { logout, user } = this.props;
     const {
@@ -478,7 +484,7 @@ class Einvoice extends React.Component {
                   Search
                 </Button>
               </Col>
-              <Col span={2}>
+              <Col span={1}>
                 <div className={styles.label} style={{ color: "transparent " }}>
                   dummy
                 </div>
@@ -497,73 +503,19 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
+              
+              
             </Row>
             <div>
-              <InvoiceUpload />
-            </div>
-            {/* <Row gutter={[20, 16]}>
-              <Col span={4}>
-                <div className={styles.label}>Invoice No From</div>
-                <Input 
-                value={this.state.invNo}
-                onChange={this.handleInvoice}
-                />
-              </Col>
-             <Col span={4}>
-                <div className={styles.label}>Invoice No To</div>
-                <Input 
-                  />
-              </Col>   
-              <Col span={8}>
-                <div className={styles.label}>Report Type</div>
-                <Select style={{ width: "100%" }}>
-                  <Option value="ORIGINAL FOR RECIPIENT">
-                    ORIGINAL FOR RECIPIENT
-                  </Option>
-                  <Option value="DUPLICATE FOR TRANSPORTER">
-                    DUPLICATE FOR TRANSPORTER
-                  </Option>
-                  <Option value="DUPLICATE FOR SUPPLIER">
-                    DUPLICATE FOR SUPPLIER
-                  </Option>
-                  <Option value="TRIPLICATE FOR SUPPLIER">
-                    TRIPLICATE FOR SUPPLIER
-                  </Option>
-                </Select>
-              </Col>
-              <Col span={2}>
-                <div className={styles.label} style={{ color: "transparent" }}>
-                  dummy
-                </div>
-                <Button
-                  icon={<SearchOutlined />}
-                  type="primary"
-                  onClick={this.handleSearch}
-                >
-                  Search
-                </Button>
-              </Col>
-              <Col span={2}>
-                <div className={styles.label} style={{ color: "transparent " }}>
-                  dummy
-                </div>
-                {/* <Button icon={<PrinterOutlined />} onClick={handlePrint}> ///this lines is already commented
-                  Print
-                </Button> //// closing will come here
-                {isActive && (
-                  <ReactToPrint
-                    bodyClass={styles.reactPrintContent}
-                    trigger={() => {
-                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-                      // to the root node of the returned component as it will be overwritten.
-                      return <Button icon={<PrinterOutlined />}>Print</Button>;
-                    }}
-                    content={() => this.invoiceRef}
-                  />
-                )}
-                </Col>
-            </Row>    */}
-
+              <InvoiceUpload /> 
+            </div> 
+            <Button
+              icon={<FileExcelOutlined />}
+              type="primary"
+              onClick={()=>{console.log('file')}}
+            >
+              File Template
+            </Button>             
             <Row gutter={[20, 16]} />
           </section>
 
@@ -573,7 +525,8 @@ class Einvoice extends React.Component {
             <Spin  size="large" />
             <div style={{fontSize:'18px'}}>Loading Invoice</div>
             </div>   
-    )       :
+    )       
+          :
                     (
                       isActive?
             (<section className={styles.container}>
@@ -585,13 +538,8 @@ class Einvoice extends React.Component {
               </NoResult>
             </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
 
-                    ) }
+                    ) } 
 
-          
-
-          
-
-         
         </MainLayout>
       </ErrorBoundary>
     );

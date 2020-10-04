@@ -17,7 +17,6 @@ class InvoicePrint extends React.Component {
     const { InvoiceDetailsList } = this.props.data;
     const details = InvoiceHeaderList[0];
 
-    const { item } = this.props;
 
     
     
@@ -131,7 +130,7 @@ class InvoicePrint extends React.Component {
             Supply Type : {details.suptyp}
           </div>
           <div className={styles.invoicetype}>
-            {"TAX INVOICE " + "(" + details.typ + ")"}
+            {details.typ === "CRN" ? ( "CREDIT NOTE " + "(" + details.typ + ")" ) : details.typ ==="INV" ?  ( "TAX INVOICE " + "(" + details.typ + ")" ) :( "DEBIT NOTE " + "(" + details.typ + ")" )   }
           </div>
           <div
             style={{
@@ -145,7 +144,8 @@ class InvoicePrint extends React.Component {
         <div
         className={styles.supplytype}
         >
-          Place of Supply : {details.shipstcd} - {details.shipdtlstname} 
+          Place of Supply :{details.buyerstcd} - {details.buyerdtlstname} 
+            
         </div>
         <section>
           <Row gutter={[3, 12]}>
@@ -160,11 +160,11 @@ class InvoicePrint extends React.Component {
             <Col span={12}>
               <div className={styles.invoiceNo1}>
                 Original Document No :{" "}
-                <span style={{ fontWeight: "600" }}>{details.refinvno}</span>
+                <span style={{ fontWeight: "600" }}>{(details.typ === "CRN" && "DBN") ?details.refinvno : " "}</span>
               </div>
               <div className={styles.invoiceNo1}>
                 Original Document Date :{" "}
-                <span style={{ fontWeight: "600" }}>{details.refinvdt}</span>
+                <span style={{ fontWeight: "600" }}>{(details.typ === "CRN" && "DBN") ? details.refinvdt : "  "}</span>
               </div>
             </Col>
             {/* <Col span={12} /> */}
@@ -313,7 +313,7 @@ class InvoicePrint extends React.Component {
           </Row>
         </section>
 
-        <EinvoiceTable item={InvoiceDetailsList} style={{margin:'auto'}}/>
+        <EinvoiceTable item={InvoiceDetailsList} details={details} style={{margin:'auto'}}/>
         <div style={{textAlign:'center', color:'grey'}}>
         {InvoiceHeaderList[0].regdofficeaddress}
         </div>

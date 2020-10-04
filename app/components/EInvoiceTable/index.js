@@ -71,6 +71,14 @@ class EinvoiceTable extends React.Component {
 
   render() {
     const { item } = this.props;
+    const { details } = this.props;
+
+    const{suptyp} =this.props.details
+
+
+
+   
+
     const {
       grossTotal,
       taxableTotal,
@@ -218,8 +226,9 @@ class EinvoiceTable extends React.Component {
                 
                 style={{ width: "20%",textAlign:'left' }}
               >
-                {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  } */}
-                {i.itemprddesc == null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}
+                {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  }    
+                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}     */}
+                {i.itemprddesc !== null ? i.itemprddesc : " "}
               </td>
               <td
                 key={Math.random()}
@@ -573,7 +582,14 @@ class EinvoiceTable extends React.Component {
 
               <div>
                 <div className='amt_words'> <strong>Amount Chargeable(in words):  INR- </strong> {indianCurrencyInWords(itemTotal)}</div>
-              </div>
+                <div style={{margin:'15px 0 0px 15px',fontWeight:'600',fontSize:'11px'}}>{suptyp === "SEZWOP" ?
+                ("\"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS UNDER BOND OR LETTER OF UNDERTAKING WITHOUT PAYMENT OF INTEGRATED TAX\"")
+                :
+                suptyp ==="SEZWP" ? "\"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS ON PAYMENT OF INTEGRATED TAX\""
+                : " "
+               }
+                </div>
+                </div>
 
             </div>
             <div className={styles.subwrapper_1} style={{ marginLeft: 'auto' }}>
