@@ -17,6 +17,7 @@ import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
+import Transportation from "containers/Transportation/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -165,6 +166,17 @@ function App({
                 logout={logout}
                 user={user}
               />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+         <Route
+          exact
+          path="/transportation"
+          render={(props) =>
+            authenticated ? (
+              <Transportation {...props} logout={logout} user={user}/>
             ) : (
               <Redirect to="/" />
             )

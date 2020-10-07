@@ -22,8 +22,6 @@ import ReactToPrint from "react-to-print";
 import SearchResult from "./SearchResult";
 import NoResult from "./NoResult";
 
-
-
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 
@@ -31,7 +29,7 @@ const { RangePicker } = DatePicker;
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 const printUrl =
-  " https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+  "https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing";
 
 //https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing
 
@@ -121,10 +119,8 @@ class Einvoice extends React.Component {
             loading: false,
           });
         });
-    }
-    else{
-      console.log("error")
-      
+    } else {
+      console.log("error");
     }
   };
 
@@ -276,8 +272,6 @@ class Einvoice extends React.Component {
   handleDateRange = (dates) => {
     console.log(dates);
   };
-
- 
 
   render() {
     const { logout, user } = this.props;
@@ -498,43 +492,49 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
-              
-              
             </Row>
             <div>
-              <InvoiceUpload /> 
-            </div> 
+              <InvoiceUpload />
+            </div>
             <Button
               icon={<FileExcelOutlined />}
               type="primary"
-              onClick={()=>{console.log('file')}}
+              onClick={() => {
+                console.log("file");
+              }}
             >
               File Template
-            </Button>             
+            </Button>
             <Row gutter={[20, 16]} />
           </section>
 
-
-            {this.state.loading? (
-             <div style={{width:'100%',display:"flex",flexDirection:'column',alignItems:"center",marginTop:"50px"}}>
-            <Spin  size="large" />
-            <div style={{fontSize:'18px'}}>Loading Invoice</div>
-            </div>   
-    )       
-          :
-                    (
-                      isActive?
-            (<section className={styles.container}>
-              <NoResult >
-              <InvoicePrint
-                ref={(el) => (this.invoiceRef = el)}
-                data={dataItems}
-              />
+          {this.state.loading ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "50px",
+              }}
+            >
+              <Spin size="large" />
+              <div style={{ fontSize: "18px" }}>Loading Invoice</div>
+            </div>
+          ) : isActive ? (
+            <section className={styles.container}>
+              <NoResult>
+                <InvoicePrint
+                  ref={(el) => (this.invoiceRef = el)}
+                  data={dataItems}
+                />
               </NoResult>
-            </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
-
-                    ) } 
-
+            </section>
+          ) : this.state.search == false ? (
+            <SearchResult />
+          ) : (
+            <NoResult />
+          )}
         </MainLayout>
       </ErrorBoundary>
     );
