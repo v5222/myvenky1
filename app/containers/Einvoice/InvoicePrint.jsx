@@ -258,7 +258,7 @@ class InvoicePrint extends React.Component {
                   <tr>
                     <td className={styles.subtabletd}>Whether Reverse charge applicable (Y/N) : </td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>N</strong>
+                      <strong style={{fontWeight:'normal'}}>{details.regrev}</strong>
                     </td>
                   </tr>
                   <tr>

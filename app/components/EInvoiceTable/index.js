@@ -17,6 +17,7 @@ class EinvoiceTable extends React.Component {
       cgstTotal: 0,
       igstTotal: 0,
       itemTotal: 0,
+      uniqueItem:[]
     };
   }
 
@@ -59,8 +60,13 @@ class EinvoiceTable extends React.Component {
     );
   };
 
+  mergeDuplicate = (item)=>{
+    
+  }
+
   componentDidMount() {
     this.calculate(this.props.item);
+    this.mergeDuplicate(this.props.item)
   }
   componentDidUpdate(prevProps) {
     if (this.props.item !== prevProps.item) {
@@ -68,6 +74,9 @@ class EinvoiceTable extends React.Component {
       this.calculate(this.props.item);
     }
   }
+  
+
+
 
   render() {
     const { item } = this.props;
@@ -227,8 +236,11 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "20%",textAlign:'left' }}
               >
                 {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  }    
-                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}     */}
-                {i.itemprddesc !== null ? i.itemprddesc : " "}
+                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}     
+                {i.itemprddesc !== null ? i.itemprddesc : " "} */}
+                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + ".   " +i.remarks)}
+
+
               </td>
               <td
                 key={Math.random()}

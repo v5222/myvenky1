@@ -22,6 +22,9 @@ import ReactToPrint from "react-to-print";
 import SearchResult from "./SearchResult";
 import NoResult from "./NoResult";
 
+import {Link} from 'react-router-dom'
+import {apiURLEinvoice}  from 'containers/App/services.js'
+
 
 
 import InvoiceUpload from "components/Einvoiceupload";
@@ -30,12 +33,11 @@ import DatePicker from "antd/lib/date-picker";
 const { RangePicker } = DatePicker;
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
-const printUrl =
-  " https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
 
-//https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing
+  const printUrl = apiURLEinvoice
+  
 
-// https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing
+
 class Einvoice extends React.Component {
   constructor(props) {
     super(props);
@@ -66,6 +68,7 @@ class Einvoice extends React.Component {
       selectStartDate: new Date(),
       selectEndDate: new Date(),
       invNo: "",
+      // invNoTo:" ",
       search: false,
       loading: false,
     };
@@ -99,11 +102,21 @@ class Einvoice extends React.Component {
 
     this.setState({ loading: true });
 
+    // if (this.state.invNoFrom && this.state.invNoTo) {
     if (this.state.invNo) {
       let options = {
         method: "POST",
         body: JSON.stringify({
-          body: { type: "INVOICEPRINT", no: this.state.invNo },
+          body: { 
+              type: "INVOICEPRINT", 
+              no: this.state.invNo
+             },
+            // type: "INVOICEPRINT1",
+            // invoicenofrom:this.state.invNoFrom,
+            // invoicenoto:this.state.invNoTo,
+            // invoicenofromdate:"21/09/2020",
+            // invoicenotodate:"21/09/2020"
+          
         }),
       };
       fetch(printUrl, options)
@@ -130,10 +143,11 @@ class Einvoice extends React.Component {
 
   handleInvoice = (e) => {
     this.setState({
-      invNo: e.target.value,
+    invNo: e.target.value,
+      
     });
   };
-  // handleInvoice = (e) => {
+  // handleInvoiceTo = (e) => {
   //   this.setState({
   //     invNoTo: e.target.value,
   //   });
@@ -299,107 +313,7 @@ class Einvoice extends React.Component {
         <MainLayout logout={logout} user={user}>
           <section className={styles.container}>
             <Row gutter={[20, 16]}>
-              {/* <Col span={4}>
-                <div className={styles.label}>Company</div>
-                <Select
-                  style={{ width: "100%" }}
-                  onChange={this.BindOUInstance}
-                >
-                  {CompanyList.map((item, index) => {
-                    return (
-                      <>
-                        <Option key={item.CompanyCode} value={item.CompanyCode}>
-                          {item.CompanyCode}
-                        </Option>
-                      </>
-                    );
-                  })}
-                </Select>
-              </Col> */}
-              {/** <Col span={4}>
-                <div className={styles.label}>OU</div>
-                <Select
-                  style={{ width: "100%" }}
-                  onChange={this.BindFinancialYear}
-                >
-                  {OUInstanceList.map((item, index) => {
-                    return (
-                      <>
-                        <Option
-                          key={item.OUInstanceName}
-                          value={item.OUInstanceName}
-                        >
-                          {item.OUInstanceName}
-                        </Option>
-                      </>
-                    );
-                  })}
-                </Select>
-              </Col>  */}
-              {/* <Col span={4}>
-                <div className={styles.label}>Finance Book</div>
-                <Select style={{ width: "100%" }}>
-                  {FinBookList.map((item, index) => {
-                    return (
-                      <>
-                        <Option key={item.FB_ID} value={item.FB_ID}>
-                          {item.FB_ID}
-                        </Option>
-                      </>
-                    );
-                  })}
-                </Select>
-              </Col> */}
-              {/* <Col span={4}>
-                <div className={styles.label}>Financial Year</div>
-                <Select
-                  style={{ width: "100%" }}
-                  onChange={this.BindFinancialPeriod}
-                  id="drpFinYear"
-                >
-                  {FinancialYearList.map((item, index) => {
-                    return (
-                      <>
-                        <Option key={item.FinYearCode} value={item.FinYearCode}>
-                          {item.FinYearCode}
-                        </Option>
-                      </>
-                    );
-                  })}
-                </Select>
-              </Col> */}
-              {/*<Col span={4}>
-                <div className={styles.label}>Financial Period</div>
-                <Select
-                  style={{ width: "100%" }}
-                  id="drpFinPeriod"
-                  onChange={(value) => this.BindFinancialSelectedDates(value)}
-                >
-                  {FinMonthList.map((item, index) => {
-                    return (
-                      <>
-                        <Option
-                          key={item.FinMonthSTDateFormat.toString()}
-                          value={
-                            item.FinMonthSTDateFormat.toString() +
-                            ":" +
-                            item.FinMonthETDateFormat.toString()
-                          }
-                        >
-                          {item.FinDescription}
-                        </Option>
-                      </>
-                    );
-                  })}
-                </Select>
-              </Col> */}
-              {/* <Col span={4}>
-                <div className={styles.label}>Invoice Type</div>
-                <Select style={{ width: "100%" }}>
-                  <Option value="Contract Based">Contract Based</Option>
-                  <Option value="Direct">Direct</Option>
-                </Select>
-              </Col> */}
+             
 
               {/* Testing Changes  */}
               <Col span={6}>
@@ -410,38 +324,7 @@ class Einvoice extends React.Component {
                   style={{ width: "100%" }}
                 />
               </Col>
-              {/* <Col span={3} style={{ marginRight: "45px" }}>
-                <div className={styles.label}>Date From</div>
-                <DatePicker
-                  dateFormat="dd/MM/yyyy"
-                  selected={this.state.selectStartDate}
-                  onChange={this.handleChange}
-                  minDate={this.state.startDate}
-                  maxDate={this.state.endDate}
-                  onKeyDown={(e) => e.preventDefault()}
-                />
-              </Col>
-              <Col span={3} style={{ marginRight: "45px" }}>
-                <div className={styles.label}>Date To</div>
-                <DatePicker
-                  id="txtDateTo"
-                  className="form-control"
-                  dateFormat="dd/MM/yyyy"
-                  selected={this.state.selectEndDate}
-                  onChange={this.handleChanges}
-                  minDate={this.state.startDate}
-                  maxDate={this.state.endDate}
-                  onKeyDown={(e) => e.preventDefault()}
-                />
-              </Col> */}
-              {/* <Col span={4}>
-                <div className={styles.label}>Customer Code From</div>
-                <Input />
-              </Col>
-              <Col span={4}>
-                <div className={styles.label}>Customer Code To</div>
-                <Input />
-              </Col>  */}
+             
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
                 <Input value={this.state.invNo} onChange={this.handleInvoice} />
@@ -450,7 +333,7 @@ class Einvoice extends React.Component {
                 <div className={styles.label}>Invoice No To</div>
                 <Input />
               </Col>
-              <Col span={4}>
+              <Col span={3}>
                 <div className={styles.label}>Report Type</div>
                 <Select style={{ width: "100%" }}>
                   <Option value="ORIGINAL FOR RECIPIENT">
@@ -483,9 +366,7 @@ class Einvoice extends React.Component {
                 <div className={styles.label} style={{ color: "transparent " }}>
                   dummy
                 </div>
-                {/* <Button icon={<PrinterOutlined />} onClick={handlePrint}>
-                  Print
-                </Button> */}
+               
                 {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
@@ -498,19 +379,26 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
+              <Col span={1} style={{marginLeft:'40px'}}>
+              <div className={styles.label} style={{ color: "transparent" }}>
+              dummy
+            </div>
+            <Button
+              icon={<FileExcelOutlined />}
+              type="primary"
+             
+            >
+            <Link to="../../images/FileTemplate.xlsx" target="_blank" download  style={{color:'white'}}> File Template</Link>
+            </Button>    
+            
+            </Col>  
               
               
             </Row>
             <div>
               <InvoiceUpload /> 
             </div> 
-            <Button
-              icon={<FileExcelOutlined />}
-              type="primary"
-              onClick={()=>{console.log('file')}}
-            >
-              File Template
-            </Button>             
+                  
             <Row gutter={[20, 16]} />
           </section>
 

@@ -16,6 +16,7 @@ import PodDashboard from "containers/PodDashboard/Loadable";
 import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
+import TransportationBillingContainer from "containers/TransportationBillingContainer"; 
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
@@ -49,9 +50,9 @@ function App({
   let timer;
 
   useEffect(() => {
-    // if (loggedIn === true || isAuthenticated === true) {
-    //   setAuthenticated(true);
-    // }
+    if (loggedIn === true || isAuthenticated === true) {
+      setAuthenticated(true);
+    }
   }, [loggedIn, isAuthenticated]);
 
   useEffect(() => {
@@ -69,12 +70,7 @@ function App({
     return () => clearTimeout(timer);
   }, []);
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  // if (loggedIn === true || isAuthenticated === true) {
-  //   setAuthenticated(true);
-  //   timer = setTimeout(() => {
-  //     setAuthenticated(false);
-  //   }, 5000);
-  // }
+  
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
@@ -161,6 +157,21 @@ function App({
           render={(props) =>
             authenticated ? (
               <DwmUsageReportApplication
+                {...props}
+                logout={logout}
+                user={user}
+              />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/transportationbilling"
+          render={(props) =>
+            authenticated ? (
+              <TransportationBillingContainer
                 {...props}
                 logout={logout}
                 user={user}
