@@ -16,8 +16,8 @@ import PodDashboard from "containers/PodDashboard/Loadable";
 import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
-import TransportationBillingContainer from "containers/TransportationBillingContainer"; 
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
+import Transportation from "containers/Transportation/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -166,16 +166,12 @@ function App({
             )
           }
         />
-        <Route
+         <Route
           exact
-          path="/transportationbilling"
+          path="/transportation"
           render={(props) =>
             authenticated ? (
-              <TransportationBillingContainer
-                {...props}
-                logout={logout}
-                user={user}
-              />
+              <Transportation {...props} logout={logout} user={user}/>
             ) : (
               <Redirect to="/" />
             )

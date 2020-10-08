@@ -134,10 +134,8 @@ class Einvoice extends React.Component {
             loading: false,
           });
         });
-    }
-    else{
-      console.log("error")
-      
+    } else {
+      console.log("error");
     }
   };
 
@@ -291,8 +289,6 @@ class Einvoice extends React.Component {
     console.log(dates);
   };
 
- 
-
   render() {
     const { logout, user } = this.props;
     const {
@@ -402,27 +398,33 @@ class Einvoice extends React.Component {
             <Row gutter={[20, 16]} />
           </section>
 
-
-            {this.state.loading? (
-             <div style={{width:'100%',display:"flex",flexDirection:'column',alignItems:"center",marginTop:"50px"}}>
-            <Spin  size="large" />
-            <div style={{fontSize:'18px'}}>Loading Invoice</div>
-            </div>   
-    )       
-          :
-                    (
-                      isActive?
-            (<section className={styles.container}>
-              <NoResult >
-              <InvoicePrint
-                ref={(el) => (this.invoiceRef = el)}
-                data={dataItems}
-              />
+          {this.state.loading ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "50px",
+              }}
+            >
+              <Spin size="large" />
+              <div style={{ fontSize: "18px" }}>Loading Invoice</div>
+            </div>
+          ) : isActive ? (
+            <section className={styles.container}>
+              <NoResult>
+                <InvoicePrint
+                  ref={(el) => (this.invoiceRef = el)}
+                  data={dataItems}
+                />
               </NoResult>
-            </section>) : this.state.search == false ? <SearchResult /> :<NoResult /> 
-
-                    ) } 
-
+            </section>
+          ) : this.state.search == false ? (
+            <SearchResult />
+          ) : (
+            <NoResult />
+          )}
         </MainLayout>
       </ErrorBoundary>
     );
