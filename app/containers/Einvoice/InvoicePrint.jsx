@@ -195,8 +195,12 @@ class InvoicePrint extends React.Component {
                   State Code : {details.buyerstcd} - {details.buyerdtlstname}  
                 </div>
                 <div className={styles.subheading1}>
-                  GSTIN : {details.buyergstin}
+                  GSTIN : {details.buyergstin }
                 </div>
+                <div className={styles.subheading1}>
+                  PAN : {details.buyergstin.slice(2,12) }
+                </div>
+                
               </div>
             </Col>
             <Col span={12}>

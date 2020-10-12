@@ -3,8 +3,10 @@ import styles from "./EinvoiceTable.module.scss";
 import CurrencyFormat from "react-currency-format";
 import Barcode from "react-barcode";
 import "./einvoicetable2.scss";
-import { thru } from "lodash";
+// import { thru } from "lodash";
 import indianCurrencyInWords from 'indian-currency-in-words';
+import _ from "lodash"
+
 
 
 class EinvoiceTable extends React.Component {
@@ -17,7 +19,7 @@ class EinvoiceTable extends React.Component {
       cgstTotal: 0,
       igstTotal: 0,
       itemTotal: 0,
-      uniqueItem:[]
+      uniqueItems:[]
     };
   }
 
@@ -60,18 +62,61 @@ class EinvoiceTable extends React.Component {
     );
   };
 
-  mergeDuplicate = (item)=>{
+  // _.find(itemcode, { itemcode:i.itemcode,unitprice:i.unitprice})
+
+  mergeDuplicate = (item)=> {
+let tempArr = [];
+let newArr = [];
+
+item.map((i) => {
+if (_.find(tempArr, { itemcode:i.itemcode,itemunitprice:i.itemunitprice}) == undefined || null || false) {
+newArr.push(i);
+tempArr.push({ itemcode:i.itemcode,itemunitprice:i.itemunitprice});
+
+} else {
+newArr = newArr.map((j) => {
+if (
+j.itemcode === i.itemcode &&
+j.itemunitprice == i.itemunitprice
+) {
+return {
+...j,
+itemqty: Number(j.itemqty) + Number(i.itemqty),
+itemassamt: Number(j.itemassamt) + Number(i.itemassamt),
+itemigstamt: Number(j.itemigstamt) + Number(i.itemigstamt),
+itemcgstamt: Number(j.itemcgstamt) + Number(i.itemcgstamt),
+itemsgstamt: Number(j.itemsgstamt) + Number(i.itemsgstamt),
+
+};
+} 
+else {
+return j ;
+}
+});
+}
+});
+ this.setState({uniqueItems:newArr})
+// return newArr;
+}
+
+
     
-  }
+  
 
   componentDidMount() {
-    this.calculate(this.props.item);
-    this.mergeDuplicate(this.props.item)
+    // this.calculate(this.props.item);
+   this.mergeDuplicate(this.props.item)
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps,prevState) {
     if (this.props.item !== prevProps.item) {
       // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-      this.calculate(this.props.item);
+      // this.calculate(this.props.item);
+      this.mergeDuplicate(this.props.item)
+
+    }
+    if(this.state.uniqueItems !== prevState.uniqueItems){
+      this.calculate(this.state.uniqueItems);
+
     }
   }
   
@@ -79,8 +124,10 @@ class EinvoiceTable extends React.Component {
 
 
   render() {
-    const { item } = this.props;
-    const { details } = this.props;
+    // const { item } = this.props;
+    // const { details } = this.props;
+
+    //  const {uniqueItems} = this.state 
 
     const{suptyp} =this.props.details
 
@@ -95,8 +142,8 @@ class EinvoiceTable extends React.Component {
       cgstTotal,
       igstTotal,
       itemTotal,
+      uniqueItems,
     } = this.state;
-    console.log(item, "item");
     return (
       <div className="Invoicetable">
         <table
@@ -220,7 +267,7 @@ class EinvoiceTable extends React.Component {
             <td style={{textAlign:'center'}}>Rate</td>
             <td style={{textAlign:'center'}}>Amt</td>
           </tr>
-          {item.map((i, indexes) => (
+          {uniqueItems.map((i, indexes) => (
             <tr key={Math.random()}>
               <td
                 key={Math.random()}
@@ -238,7 +285,7 @@ class EinvoiceTable extends React.Component {
                 {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  }    
                 {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}     
                 {i.itemprddesc !== null ? i.itemprddesc : " "} */}
-                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + ".   " +i.remarks)}
+                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc :(i.itemprddesc + ".   " +i.remarks)}
 
 
               </td>

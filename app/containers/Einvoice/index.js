@@ -384,7 +384,7 @@ class Einvoice extends React.Component {
               type="primary"
              
             >
-            <Link to="../../images/FileTemplate.xlsx" target="_blank" download  style={{color:'white'}}> File Template</Link>
+            <Link to="../../images/FileTemplate" target="_blank" download  style={{color:'white'}}> File Template</Link>
             </Button>    
             
             </Col>  
