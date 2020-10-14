@@ -22,8 +22,8 @@ import ReactToPrint from "react-to-print";
 import SearchResult from "./SearchResult";
 import NoResult from "./NoResult";
 
-import {Link} from 'react-router-dom'
-import {apiURLEinvoice}  from 'containers/App/services.js'
+import { Link } from 'react-router-dom'
+import { apiURLEinvoice } from 'containers/App/services.js'
 
 
 
@@ -34,8 +34,8 @@ const { RangePicker } = DatePicker;
 const urls =
   "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/";
 
-  const printUrl = apiURLEinvoice
-  
+const printUrl = apiURLEinvoice
+
 
 
 class Einvoice extends React.Component {
@@ -74,6 +74,7 @@ class Einvoice extends React.Component {
     };
   }
 
+
   componentDidMount() {
     fetch(urls + "1")
       .then((res) => res.json())
@@ -107,16 +108,16 @@ class Einvoice extends React.Component {
       let options = {
         method: "POST",
         body: JSON.stringify({
-          body: { 
-              type: "INVOICEPRINT", 
-              no: this.state.invNo
-             },
-            // type: "INVOICEPRINT1",
-            // invoicenofrom:this.state.invNoFrom,
-            // invoicenoto:this.state.invNoTo,
-            // invoicenofromdate:"21/09/2020",
-            // invoicenotodate:"21/09/2020"
-          
+          body: {
+            type: "INVOICEPRINT",
+            no: this.state.invNo
+          },
+          // type: "INVOICEPRINT1",
+          // invoicenofrom:this.state.invNoFrom,
+          // invoicenoto:this.state.invNoTo,
+          // invoicenofromdate:"21/09/2020",
+          // invoicenotodate:"21/09/2020"
+
         }),
       };
       fetch(printUrl, options)
@@ -141,8 +142,8 @@ class Einvoice extends React.Component {
 
   handleInvoice = (e) => {
     this.setState({
-    invNo: e.target.value,
-      
+      invNo: e.target.value,
+
     });
   };
   // handleInvoiceTo = (e) => {
@@ -165,7 +166,7 @@ class Einvoice extends React.Component {
           this.BindFinancialYear();
           this.BindFinanceBook();
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -184,7 +185,7 @@ class Einvoice extends React.Component {
           });
           this.BindFinancialPeriod();
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -205,7 +206,7 @@ class Einvoice extends React.Component {
 
           this.BindFinancialDates(result[0].POFinMonthList);
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -223,7 +224,7 @@ class Einvoice extends React.Component {
             FinBookList: result[0].POFinBookList,
           });
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -309,7 +310,7 @@ class Einvoice extends React.Component {
         <MainLayout logout={logout} user={user}>
           <section className={styles.container}>
             <Row gutter={[20, 16]}>
-             
+
 
               {/* Testing Changes  */}
               <Col span={6}>
@@ -320,7 +321,7 @@ class Einvoice extends React.Component {
                   style={{ width: "100%" }}
                 />
               </Col>
-             
+
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
                 <Input value={this.state.invNo} onChange={this.handleInvoice} />
@@ -362,7 +363,7 @@ class Einvoice extends React.Component {
                 <div className={styles.label} style={{ color: "transparent " }}>
                   dummy
                 </div>
-               
+
                 {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
@@ -375,26 +376,26 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
-              <Col span={1} style={{marginLeft:'40px'}}>
-              <div className={styles.label} style={{ color: "transparent" }}>
-              dummy
+              <Col span={1} style={{ marginLeft: '40px' }}>
+                <div className={styles.label} style={{ color: "transparent" }}>
+                  dummy
             </div>
-            <Button
-              icon={<FileExcelOutlined />}
-              type="primary"
-             
-            >
-            <Link to="../../images/FileTemplate" target="_blank" download  style={{color:'white'}}> File Template</Link>
-            </Button>    
-            
-            </Col>  
-              
-              
+                <Button
+                  icon={<FileExcelOutlined />}
+                  type="primary"
+
+                >
+                  <Link to="../../images/FileTemp.xlsx" target="_blank" download style={{ color: 'white' }}> File Template</Link>
+                </Button>
+
+              </Col>
+
+
             </Row>
             <div>
-              <InvoiceUpload /> 
-            </div> 
-                  
+              <InvoiceUpload />
+            </div>
+
             <Row gutter={[20, 16]} />
           </section>
 
@@ -423,8 +424,8 @@ class Einvoice extends React.Component {
           ) : this.state.search == false ? (
             <SearchResult />
           ) : (
-            <NoResult />
-          )}
+                  <NoResult />
+                )}
         </MainLayout>
       </ErrorBoundary>
     );

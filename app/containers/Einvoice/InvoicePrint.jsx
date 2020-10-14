@@ -10,16 +10,20 @@ import ReactToPrint from "react-to-print";
 import { size } from "lodash";
 
 const QRCODE =
-  '{"SellerGstin":"37AACCT1412E1ZU","BuyerGstin":"37AABCM9425F1ZF","DocNo":"AP3PLCLI20000003","DocTyp":"INV","DocDt":"17/04/2020","TotInvVal":257012.54,"ItemCnt":2,"MainHsnCode":"9968","Irn":"e6157c135030019a84752600269ee987b4ab1091766ca379caa191d6048b469e","IrnDt":"2020-09-12 16:56:00"}';
+
+  "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ0NDQwNUM3ODFFNDgyNTA3MkIzNENBNEY4QkRDNjA2Qzg2QjU3MjAiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJSRVFGeDRIa2dsQnlzMHlrLUwzR0JzaHJWeUEifQ.eyJkYXRhIjoie1wiU2VsbGVyR3N0aW5cIjpcIjMzQUFDQ1QxNDEyRTFaMlwiLFwiQnV5ZXJHc3RpblwiOlwiMzNBQUJDSDEzNzZFMVowXCIsXCJEb2NOb1wiOlwiVE5UTENNSTIwMDAyNzFcIixcIkRvY1R5cFwiOlwiSU5WXCIsXCJEb2NEdFwiOlwiMDcvMTAvMjAyMFwiLFwiVG90SW52VmFsXCI6NTM3NTE1Ljk2LFwiSXRlbUNudFwiOjEsXCJNYWluSHNuQ29kZVwiOlwiOTk2NzI5XCIsXCJJcm5cIjpcImRlNmVkNTBlMzA4NGMyOWM3NjM0MTFhYWY2NmY4OTBmOTAwYWU0NjI1ZmViNDZmMzhmZGVmZWI1ODZhNjBiZWFcIixcIklybkR0XCI6XCIyMDIwLTEwLTA3IDEyOjIyOjAwXCJ9IiwiaXNzIjoiTklDIn0.MWs9xXOEdyb3C8VcsPSRX-Jjoom-10wP5x2PACBUV8NZWdMGDDDtDfWLvZRpvbgemJgOwmXDfuDF4YKLQqZosl6-Xf7VICS7a5Wvc3pbAUIgVnKMPmvEgjwdq5gERxYta-aWndqsNBOl7Y39E6sOoce7sk2doHkUwa1PIh0CY0p9G2i7uRoWNwimwgnwQDwjnk0McUJzfIEdXRhgBPGCyfpZnDywNfu7OgKdd9IQxykiohjbZ8dD8MqBqYZBi5sHDsvkDfbN-lfyydRN1lEThRamLvYaK9JvSkL-w2ScwEXkduHnrw4EH7GgaW5KIJm1bg2mYb45uZrAvWxF-z1tNQ"
+
 class InvoicePrint extends React.Component {
+
+
   render() {
     const { InvoiceHeaderList } = this.props.data;
     const { InvoiceDetailsList } = this.props.data;
     const details = InvoiceHeaderList[0];
 
 
-    
-    
+
+
     return (
       <div>
         <div className={styles.reportType}>{"ORIGINAL FOR RECIPIENT"}</div>
@@ -64,9 +68,9 @@ class InvoicePrint extends React.Component {
 
           {/* dispatch details */}
 
-        
+
           {/**    {InvoiceDetailsList[0] ? ( */}
-            {InvoiceDetailsList[0].itemisservc === "N" ? ( 
+          {InvoiceDetailsList[0].itemisservc === "N" ? (
             <div
               className={styles.companyDetails}
               style={{ marginRight: "70px" }}
@@ -79,7 +83,7 @@ class InvoicePrint extends React.Component {
                   <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
                 </div>
               </div>
-              {/** {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm} */}  
+              {/** {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm} */}
               <div className={styles.companyName}>{details.dispnm}</div>
               <div className={styles.companyAddr}>
                 {details.dispaddress1 !== "NA"
@@ -92,8 +96,8 @@ class InvoicePrint extends React.Component {
                   : details.selleraddress2}
               </div>
               <div className={styles.companyAddr}>
-              {details.displocation + ":  " + details.disppincode}
-            </div>
+                {details.displocation + ":  " + details.disppincode}
+              </div>
 
 
               <div className={styles.companyAddr}>
@@ -101,20 +105,20 @@ class InvoicePrint extends React.Component {
               </div>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
 
           <div className={styles.qrcode}>
             <div>
-              <QRCode value={details.qrcode} style={{ marginRight: "60px" }} />
+              <QRCode value={details.qrcode} level='H' renderAs='svg' style={{ marginRight: "60px" }} />
             </div>
             <div className={styles.qr_details}>Version : {details.version}</div>
             <div>
               <div className={styles.qr_details}>
                 IRN : {details.irn === null ? " " : details.irn.slice(0, 24)}
               </div>
-              <div className={styles.qr_details}> {details.irn=== null ? " " : details.irn.slice(24, 48)}</div>
-              <div className={styles.qr_details}> {details.irn=== null ? " " : details.irn.slice(48)}</div>
+              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(24, 48)}</div>
+              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(48)}</div>
             </div>
           </div>
         </section>
@@ -130,7 +134,7 @@ class InvoicePrint extends React.Component {
             Supply Type : {details.suptyp}
           </div>
           <div className={styles.invoicetype}>
-            {details.typ === "CRN" ? ( "CREDIT NOTE " + "(" + details.typ + ")" ) : details.typ ==="INV" ?  ( "TAX INVOICE " + "(" + details.typ + ")" ) :( "DEBIT NOTE " + "(" + details.typ + ")" )   }
+            {details.typ === "CRN" ? ("CREDIT NOTE " + "(" + details.typ + ")") : details.typ === "INV" ? ("TAX INVOICE " + "(" + details.typ + ")") : ("DEBIT NOTE " + "(" + details.typ + ")")}
           </div>
           <div
             style={{
@@ -142,10 +146,10 @@ class InvoicePrint extends React.Component {
           </div>
         </div>
         <div
-        className={styles.supplytype}
+          className={styles.supplytype}
         >
-          Place of Supply :{details.buyerstcd} - {details.buyerdtlstname} 
-            
+          Place of Supply :{details.buyerstcd} - {details.buyerdtlstname}
+
         </div>
         <section>
           <Row gutter={[3, 12]}>
@@ -160,7 +164,7 @@ class InvoicePrint extends React.Component {
             <Col span={12}>
               <div className={styles.invoiceNo1}>
                 Original Document No :{" "}
-                <span style={{ fontWeight: "600" }}>{(details.typ === "CRN" && "DBN") ?details.refinvno : " "}</span>
+                <span style={{ fontWeight: "600" }}>{(details.typ === "CRN" && "DBN") ? details.refinvno : " "}</span>
               </div>
               <div className={styles.invoiceNo1}>
                 Original Document Date :{" "}
@@ -192,15 +196,15 @@ class InvoicePrint extends React.Component {
                   {details.buyerlocation + ": " + details.buyerpincode}
                 </div>
                 <div className={styles.subheading1}>
-                  State Code : {details.buyerstcd} - {details.buyerdtlstname}  
+                  State Code : {details.buyerstcd} - {details.buyerdtlstname}
                 </div>
                 <div className={styles.subheading1}>
-                  GSTIN : {details.buyergstin }
+                  GSTIN : {details.buyergstin}
                 </div>
                 <div className={styles.subheading1}>
-                  PAN : {details.buyergstin.slice(2,12) }
+                  PAN : {details.buyergstin.slice(2, 12)}
                 </div>
-                
+
               </div>
             </Col>
             <Col span={12}>
@@ -223,7 +227,7 @@ class InvoicePrint extends React.Component {
                 {/*  <div className={styles.subheading1}>{details.shippincode}</div>  */}
                 {/* <div className={styles.subheading1}></div> */}
                 <div className={styles.subheading1}>
-                  State Code : {details.shipstcd}  - {details.shipdtlstname} 
+                  State Code : {details.shipstcd}  - {details.shipdtlstname}
                 </div>
                 <div className={styles.subheading1}>
                   GSTIN : {details.shipgstin}
@@ -236,13 +240,13 @@ class InvoicePrint extends React.Component {
             <Col span={12}>
               <div className={styles.subcontainer1}>
                 {/* <div style={{ display: "flex", justifyContent: "center" }}> */}
-                <table  id={styles.subtable1}>
+                <table id={styles.subtable1}>
                   <tr>
                     <td className={styles.subtabletd}>
                       Customer Purchase Order:
                     </td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>{details.customerpo}</strong>
+                      <strong style={{ fontWeight: 'normal' }}>{details.customerpo}</strong>
                     </td>
                   </tr>
                   <tr>
@@ -250,25 +254,25 @@ class InvoicePrint extends React.Component {
                       Customer Purchase Orderdate:
                     </td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>{details.customerpodate}</strong>
+                      <strong style={{ fontWeight: 'normal' }}>{details.customerpodate}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className={styles.subtabletd}>Vendor Code:</td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>{details.vendorcode}</strong>
+                      <strong style={{ fontWeight: 'normal' }}>{details.vendorcode}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className={styles.subtabletd}>Whether Reverse charge applicable (Y/N) : </td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>{details.regrev}</strong>
+                      <strong style={{ fontWeight: 'normal' }}>{details.regrev}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className={styles.subtabletd}>Supply of Service (Y/N) :</td>
                     <td key={Math.random()} className={styles.subtabletd}>
-                      <strong style={{fontWeight:'normal'}}>{InvoiceDetailsList[0].itemisservc}</strong>
+                      <strong style={{ fontWeight: 'normal' }}>{InvoiceDetailsList[0].itemisservc}</strong>
                     </td>
                   </tr>
                 </table>
@@ -317,11 +321,11 @@ class InvoicePrint extends React.Component {
           </Row>
         </section>
 
-        <EinvoiceTable item={InvoiceDetailsList} details={details} style={{margin:'auto'}}/>
-        <div style={{textAlign:'center', color:'grey'}}>
-        {InvoiceHeaderList[0].regdofficeaddress}
+        <EinvoiceTable item={InvoiceDetailsList} details={details} style={{ margin: 'auto' }} />
+        <div style={{ textAlign: 'center', color: 'grey' }}>
+          {InvoiceHeaderList[0].regdofficeaddress}
         </div>
-        
+
       </div>
     );
   }

@@ -3,10 +3,12 @@ const apiURL =
 const apiURLCourier =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/courierportal";
 const apiURLDwm =
-"https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/dwm";
+  "https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/dwm";
 
 const apiURLEinvoice =
-"https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+  // "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+  "https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing";
+
 
 //Einvoice url
 //https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing
@@ -17,6 +19,7 @@ const apiURLEinvoice =
 //https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm
 //dwm prod URL
 // "https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/dwm";
+
 const dwmBody = {
   body: {
     type: "DWMDB",
@@ -24,4 +27,4 @@ const dwmBody = {
   },
 };
 
-export { apiURL, apiURLCourier, apiURLDwm,apiURLEinvoice, dwmBody };
+export { apiURL, apiURLCourier, apiURLDwm, apiURLEinvoice, dwmBody };
