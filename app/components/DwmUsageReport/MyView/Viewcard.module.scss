@@ -91,16 +91,16 @@
 @media only screen and (max-width: 600px) {
   .container {
     background-color: white;
-    // padding: 14px 40px 10px 9px;
+    padding: 20px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     background-color: #c1e3ff;
     height: 266.26px;
-    margin: 0 15px 0 5px;
+    margin: 0 15px 20px 5px;
     width: 200%;
     // width: calc(95% / 3);
     .title {
-      font-size: 12px;
+      font-size: 11px;
       font-family: Open Sans;
       font-style: normal;
       font-weight: 600;
@@ -109,35 +109,68 @@
       margin: 7px 0px 7px 11px;
       padding-left: 20px;
     }
+    .card_title {
+      display: inline-block;
+      color: #123f74;
+      font-size: 11px;
+      font-weight: bold;
+      text-align: center;
+  
+      line-height: 14px;
+      // margin-left: 15px;
+      height: 20%;
+    }
+    .reason {
+      color: #004178;
+       margin: 0 auto;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22px;
+    }
+    .comment {
+      color: #595959;
+      opacity: 0.83;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      text-align: center;
+    }
+    .graph {
+      height: 35px;
+      width: 105px;
+      margin: 10px auto;
+      // margin-top: 10px;
+      // margin-left: 40px;
+    }
 
     .content {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
 
-      .icon {
-        margin-right: 3px;
-      }
-      img {
-        height: 25px;
-        width: 36px;
+      // .icon {
+      //   margin-right: 3px;
+      // }
+      // img {
+      //   height: 25px;
+      //   width: 36px;
 
-        .asdf {
-          padding-top: 10px;
-        }
-      }
+      //   .asdf {
+      //     padding-top: 10px;
+      //   }
+      // }
 
       .value {
         &_1 {
           font-weight: 500;
           font-style: normal;
-          font-size: 15px;
+          font-size: 14px;
           line-height: 12px;
           color: #008dc5;
           font-family: Open Sans;
-          padding-top: 8px;
+          padding-top: 2px;
         }
         &_2 {
-          font-size: 9px;
+          font-size: 18px;
           line-height: 15px;
           color: #123f74;
           padding-top: 4px;

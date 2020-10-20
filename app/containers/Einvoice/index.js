@@ -71,6 +71,7 @@ class Einvoice extends React.Component {
       // invNoTo:" ",
       search: false,
       loading: false,
+      selectValue: ''
     };
   }
 
@@ -138,6 +139,7 @@ class Einvoice extends React.Component {
     } else {
       console.log("error");
     }
+
   };
 
   handleInvoice = (e) => {
@@ -290,6 +292,17 @@ class Einvoice extends React.Component {
     console.log(dates);
   };
 
+  handleSelect = (value) => {
+    console.log(`selected ${value}`);
+    this.setState({
+      selectValue: value
+    })
+
+
+  }
+
+
+
   render() {
     const { logout, user } = this.props;
     const {
@@ -313,7 +326,7 @@ class Einvoice extends React.Component {
 
 
               {/* Testing Changes  */}
-              <Col span={6}>
+              <Col span={5}>
                 <div className={styles.label}>Dates</div>
                 <RangePicker
                   allowClear={false}
@@ -330,9 +343,11 @@ class Einvoice extends React.Component {
                 <div className={styles.label}>Invoice No To</div>
                 <Input />
               </Col>
-              <Col span={3}>
+              <Col span={5}>
                 <div className={styles.label}>Report Type</div>
-                <Select style={{ width: "100%" }}>
+                <Select
+                  onChange={this.handleSelect}
+                  style={{ width: "100%" }}>
                   <Option value="ORIGINAL FOR RECIPIENT">
                     ORIGINAL FOR RECIPIENT
                   </Option>
@@ -349,7 +364,7 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={2} style={{ marginRight: "5px" }}>
                 <div className={styles.label} style={{ color: "transparent" }}>
-                  dummy
+                  Search
                 </div>
                 <Button
                   icon={<SearchOutlined />}
@@ -361,7 +376,7 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={1}>
                 <div className={styles.label} style={{ color: "transparent " }}>
-                  dummy
+                  Print
                 </div>
 
                 {isActive && (
@@ -376,9 +391,9 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
-              <Col span={1} style={{ marginLeft: '40px' }}>
+              <Col span={1} style={{ marginLeft: '33px' }}>
                 <div className={styles.label} style={{ color: "transparent" }}>
-                  dummy
+                  FileTemplate
             </div>
                 <Button
                   icon={<FileExcelOutlined />}
@@ -418,6 +433,7 @@ class Einvoice extends React.Component {
                 <InvoicePrint
                   ref={(el) => (this.invoiceRef = el)}
                   data={dataItems}
+                  selectValue={this.state.selectValue}
                 />
               </NoResult>
             </section>

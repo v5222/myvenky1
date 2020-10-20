@@ -1,10 +1,10 @@
 .tvsit-dwmdashboard_table {
-  // padding: 10px 25px;
+  padding: 10px 25px;
   table {
     border-spacing: 0;
     table-layout: auto;
     width: 100%;
-    border: 1px solid red;
+    border: 1px solid #c1e3ff;
     margin: 0 auto;
     border-collapse: collapse;
     overflow: hidden;
@@ -66,6 +66,7 @@
 
 @media only screen and (max-width: 600px) {
   .tvsit-dwmdashboard_table {
+    padding: 0;
     table {
       border-spacing: 0;
       table-layout: auto;
@@ -76,9 +77,9 @@
       width: 100%;
 
       thead {
-        background: #2d9cdb;
-        color: white;
-        font-size: 12px;
+        background: #c1e3ff;
+        color: #123f74;
+        font-size: 9px;
         font-weight: 400;
         text-align: left;
         border-collapse: separate;
@@ -89,7 +90,7 @@
       }
       tbody {
         tr {
-          font-size: 12px;
+          font-size: 9px;
           color: #595959;
 
           // background-color: #f2f2f2;
