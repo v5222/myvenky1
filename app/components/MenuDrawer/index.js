@@ -124,7 +124,7 @@ const MenuDrawer = ({ selected, user }) => {
               }
             >
               Einvoice Print
-            </Menu.Item>
+            </Menu.Item> 
           )}
           <Menu.Item
             key="5"
