@@ -58,7 +58,7 @@ const MenuDrawer = ({ selected, user }) => {
           defaultSelectedKeys={["1"]}
           style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          {/* {!usersList.includes(user.email) && (
+          {!usersList.includes(user.email) && (
             <Menu.Item
               key="/podDashboard"
               className={
@@ -71,9 +71,9 @@ const MenuDrawer = ({ selected, user }) => {
             >
               POD Dashboard
             </Menu.Item>
-          )} */}
+          )}
 
-          {/* {!usersList.includes(user.email) && (
+          {!usersList.includes(user.email) && (
             <Menu.Item
               key="2"
               icon={<LineChartOutlined />}
@@ -86,7 +86,9 @@ const MenuDrawer = ({ selected, user }) => {
             >
               Courier Management
             </Menu.Item>
-          )} */}
+          )}
+
+
 
           <Menu.Item
             key="3"

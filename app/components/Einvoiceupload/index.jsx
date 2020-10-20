@@ -2,6 +2,7 @@ import React from "react";
 import { Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import $ from "jquery";
+import {apiURLEinvoice} from 'containers/App/services.js'
 
 class InvoiceUpload extends React.Component {
   state = {
@@ -41,7 +42,7 @@ class InvoiceUpload extends React.Component {
     };
     // You can use any AJAX library you like
     fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing",
+      apiURLEinvoice,
       options
     )
       .then((res) => res.json())
@@ -62,7 +63,7 @@ class InvoiceUpload extends React.Component {
           success: function(response) {
             console.log();
             fetch(
-              "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing",
+              apiURLEinvoice,
               {
                 method: "POST",
                 body: JSON.stringify({

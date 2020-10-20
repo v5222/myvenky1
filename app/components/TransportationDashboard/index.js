@@ -2,57 +2,96 @@ import React, { useState } from "react";
 import styles from "./transportation.module.scss";
 import Filters from "./Filters";
 import Table from "../TransportationDashboard/Table";
-import { Data } from './data'
+import { data } from './data'
+import { Tabs } from 'antd';
 
+const { TabPane } = Tabs;
 function TransportationDashboard() {
 
-  const [tableData, setTableData] = useState(Data);
+  const [tableData, setTableData] = useState(data);
   
-  const updateMyData = (rowIndex, columnId, value) => {
-    setTableData(old =>
-      old.map((row, index) => {
-        if (index === rowIndex) {
-          console.log('row',row);
-          return {
-            ...old[rowIndex],
-            [columnId]: value,
-          }
-        }
-        return row
-      })
-    )
-  }
+  
 
   return (
     <div className={styles.container}>
-      <Filters/>
-      <Table tableData={tableData} column={columnData} updateMyData={updateMyData}/>
+      <Filters data={data} setTableData={setTableData}/>
+      <div style={{margin:"0px 25px"}}>
+      <Tabs defaultActiveKey="1" >
+    <TabPane tab="Ready for billing" key="1">
+    <Table tableData={tableData} column={columnData1} />
+    </TabPane>
+    <TabPane tab="Not eligible for billing" key="2">
+    <Table tableData={tableData} column={columnData2} />
+    </TabPane>
+    
+  </Tabs>
+  </div>
+     
     </div>
   );
 }
 
 export default TransportationDashboard;
 
-const columnData = [
+const columnData2 = [
   {
-    Header: "Over ride value",
-    accessor: "CUSTOMER_NAME",
+    Header: "Customer Code",
+    accessor: "customer_code",
   },
   {
-    Header: "Invoice rule amount",
-    accessor: "Rule_Amount",
+    Header: "Cost Center",
+    accessor: "cost_center",
   },
   {
-    Header: "Ref Doc No",
-    accessor: "Ref_Doc",
+    Header: "Bill To Id",
+    accessor: "bill_toid",
   },
 
   {
-    Header: "Location",
-    accessor: "location",
+    Header: "Ref Doc",
+    accessor: "ref_doc",
   },
   {
-    Header: "Service Item",
-    accessor: "ITEM_CODE",
+    Header: "Invoice Amount",
+    accessor: "invoice_amt",
+  },
+  {
+    Header: "Route Code",
+    accessor: "route_code",
+  },
+  ,
+  {
+    Header: "Reason",
+    accessor: "reason",
   }
+];
+
+
+const columnData1 = [
+  {
+    Header: "Customer Code",
+    accessor: "customer_code",
+  },
+  {
+    Header: "Cost Center",
+    accessor: "cost_center",
+  },
+  {
+    Header: "Bill To Id",
+    accessor: "bill_toid",
+  },
+
+  {
+    Header: "Ref Doc",
+    accessor: "ref_doc",
+  },
+  {
+    Header: "Invoice Amount",
+    accessor: "invoice_amt",
+  },
+  {
+    Header: "Route Code",
+    accessor: "route_code",
+  },
+  
 ];

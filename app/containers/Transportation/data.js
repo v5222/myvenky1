@@ -10,7 +10,7 @@ route_code:"PADBUD",
 reason:"Trip not completed"
     },
     {
-        customer_code:"ERCEXPUNTG",
+        customer_code:"ERCEXPUNTGF",
 cost_center:"ERCTPT3245",
 bill_toid:"ERC76",
 ref_doc:"AEIBK2025339",
@@ -20,8 +20,8 @@ route_code:"MAHLOK9",
 reason:"Trip in progress"
     },
     {
-        customer_code:"ERCEXPUNTG",
-cost_center:"ERCTPT3245",
+        customer_code:"ERCEXPUNTGS",
+cost_center:"ERCTPT3247",
 bill_toid:"ERC76",
 ref_doc:"AEIBK2025050",
 invoice_amt:45020,
@@ -30,7 +30,7 @@ route_code:"MAHGUN6",
 reason:"Not interfaced from iloads - Master data incorrect"
     },
     {
-        customer_code:"CILEXPUN20",
+        customer_code:"CILEXPUN201",
 cost_center:"CILTPT2862",
 bill_toid:"BLR08",
 ref_doc:"VCV00001684/082021",
@@ -40,8 +40,8 @@ route_code:"ANNPUZ6",
 reason:"DQC not closed"
     },
     {
-        customer_code:"CILEXPUN20",
-cost_center:"CILTPT2862",
+        customer_code:"CILEXPUN202",
+cost_center:"CILTPT2362",
 bill_toid:"BLR08",
 ref_doc:"VCV00005230/082021",
 invoice_amt:45010,
@@ -51,5 +51,3 @@ reason:"Not interfaced from iloads - Integration issue"
     }
 ]
  
-
-export {data}

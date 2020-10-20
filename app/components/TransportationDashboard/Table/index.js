@@ -2,56 +2,48 @@ import React from "react";
 import { useTable, useBlockLayout } from "react-table";
 import { FixedSizeList } from "react-window";
 import styles from "./TransportationDashboardTable.scss";
+import Spin from "antd/lib/spin";
+import Empty from "antd/lib/empty";
+
 // import { apiURLCourier } from "../../containers/App/services";
 // import Empty from "antd/lib/empty";
 
-function TransportationDashboardTable({ tableData, column, updateMyData }) {
+function TransportationDashboard({ tableData, column, loading=false }) {
   return (
-    <div className="tvsit-dwmdashboard_table">
-      <div className="tabel_scroll">
-        <Table columns={column} data={tableData} updateMyData={updateMyData} />
+    <Spin spinning={loading}>
+      <div className="tvsit-dwmdashboard_table">
+        <div className="tabel_scroll">
+          <Table columns={column} data={tableData} />
+          {tableData.length < 1 ? (
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "22px",
+                color: "black",
+                margin: "0 auto",
+              }}
+            >
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-    </div>
+    </Spin>
   );
 }
 
-const EditableCell = ({
-  value: initialValue,
-  row: { index },
-  column: { id },
-  updateMyData, // This is a custom function that we supplied to our table instance
-}) => {
-  // We need to keep and update the state of the cell normally
-  const [value, setValue] = React.useState(initialValue)
-
-  const onChange = e => {
-    setValue(e.target.value)
-  }
-
-  // We'll only update the external data when the input is blurred
-  const onBlur = () => {
-    updateMyData(index, id, value)
-  }
-
-  // If the initialValue is changed external, sync it up with our state
-  React.useEffect(() => {
-    setValue(initialValue)
-  }, [initialValue])
-
-  return (
-    <>{id === 'CUSTOMER_NAME' ? <input value={value} onChange={onChange} onBlur={onBlur} /> : `${value ? value : ''}`}</>
-
-  )
-}
-
 //table
-function Table({ columns, data ,updateMyData}) {
+function Table({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
-
-  const defaultColumn = {
-    width: "100%",
-    Cell: EditableCell
-  }
+  let height = data.length < 1 ? 10 : 300;
+  const defaultColumn = React.useMemo(
+    () => ({
+      width: "100%",
+    }),
+    []
+  );
 
   const {
     getTableProps,
@@ -65,12 +57,9 @@ function Table({ columns, data ,updateMyData}) {
       columns,
       data,
       defaultColumn,
-      updateMyData
     },
     useBlockLayout
   );
-
-
 
   const RenderRow = React.useCallback(
     ({ index, style }) => {
@@ -84,7 +73,7 @@ function Table({ columns, data ,updateMyData}) {
           className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
-            return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+          return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
           })}
         </tr>
       );
@@ -105,17 +94,17 @@ function Table({ columns, data ,updateMyData}) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        <FixedSizeList
-          height={300}
-          itemCount={rows.length}
-          itemSize={100}
-          width={totalColumnsWidth}
-          className={styles.FixedList}
-
-        >
-          {RenderRow}
-        </FixedSizeList>
-
+        <div>
+          <FixedSizeList
+            height={height}
+            itemCount={rows.length}
+            itemSize={70}
+            width={totalColumnsWidth}
+            className={styles.FixedList}
+          >
+            {RenderRow}
+          </FixedSizeList>
+        </div>
         {/* {rows.map((row, i) => {
     prepareRow(row)
     return (
@@ -133,4 +122,4 @@ function Table({ columns, data ,updateMyData}) {
   );
 }
 
-export default TransportationDashboardTable;
+export default TransportationDashboard;

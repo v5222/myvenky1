@@ -50,9 +50,9 @@ function App({
   let timer;
 
   useEffect(() => {
-    // if (loggedIn === true || isAuthenticated === true) {
-    //   setAuthenticated(true);
-    // }
+    if (loggedIn === true || isAuthenticated === true) {
+      setAuthenticated(true);
+    }
   }, [loggedIn, isAuthenticated]);
 
   useEffect(() => {
@@ -70,12 +70,7 @@ function App({
     return () => clearTimeout(timer);
   }, []);
   const { isLatestVersion, emptyCacheStorage } = useClearCache();
-  // if (loggedIn === true || isAuthenticated === true) {
-  //   setAuthenticated(true);
-  //   timer = setTimeout(() => {
-  //     setAuthenticated(false);
-  //   }, 5000);
-  // }
+
   if (!isLatestVersion) {
     emptyCacheStorage();
   }
@@ -98,7 +93,7 @@ function App({
               logout={logout}
               user={user}
               isAuthenticated={isAuthenticated}
-              // getAccessToken={getAccessToken}
+            // getAccessToken={getAccessToken}
             />
           )}
         />
@@ -117,8 +112,8 @@ function App({
                 getUserProfile={getUserProfile}
               />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         {/* <Redirect from="/" to="/poDashboard" /> */}
@@ -130,8 +125,8 @@ function App({
             authenticated ? (
               <CourierManagement {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -141,8 +136,8 @@ function App({
             authenticated ? (
               <Einvoice {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -152,8 +147,8 @@ function App({
             authenticated ? (
               <DwmApplication {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -167,19 +162,19 @@ function App({
                 user={user}
               />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
-         <Route
+        <Route
           exact
           path="/transportation"
           render={(props) =>
             authenticated ? (
-              <Transportation {...props} logout={logout} user={user}/>
+              <Transportation {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route component={NotFoundPage} />

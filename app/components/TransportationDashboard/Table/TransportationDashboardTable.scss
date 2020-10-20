@@ -1,5 +1,5 @@
 .tvsit-dwmdashboard_table {
-  padding: 10px 25px;
+  padding: 10px 0px;
   table {
     border-spacing: 0;
     table-layout: auto;
@@ -48,8 +48,6 @@
     td {
       width: 100%;
       text-align: center;
-
-      
 
       &:last-child {
         border-right: 0;
