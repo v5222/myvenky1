@@ -13,7 +13,7 @@ import styles from "./Filters.module.scss";
 const { Option } = Select;
 
 function Filters({ filtersData, option, setOption }) {
-  const [date, setDate] = useState(true);
+  const [date, setDate] = useState(false);
   const [visible, setVisible] = useState(false);
   const [dates, setDates] = useState({
     startDate: moment().startOf("month"),
@@ -156,7 +156,7 @@ console.log(filtersData,"from filters")
             <Select
               onChange={(value) => handleDateChange("key", value)}
               className={styles.select}
-              defaultValue="MTD"
+              defaultValue="Today"
             >
               <Option value="FTD">Today</Option>
               <Option value="WTD">

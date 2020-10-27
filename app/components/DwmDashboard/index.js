@@ -41,7 +41,7 @@ function DwmDashboard() {
         
         type: "SUMMARY",
         ecode: "9999",
-        filterdate: "MTD",
+        filterdate: "FTD",
         sdate: "2020-08-11",
         edate: "2020-08-11",
         customer: "All",
