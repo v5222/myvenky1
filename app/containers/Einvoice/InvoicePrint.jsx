@@ -9,11 +9,14 @@ import items from "./items.json";
 import ReactToPrint from "react-to-print";
 import { size } from "lodash";
 
-const QRCODE =
 
-  "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ0NDQwNUM3ODFFNDgyNTA3MkIzNENBNEY4QkRDNjA2Qzg2QjU3MjAiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJSRVFGeDRIa2dsQnlzMHlrLUwzR0JzaHJWeUEifQ.eyJkYXRhIjoie1wiU2VsbGVyR3N0aW5cIjpcIjMzQUFDQ1QxNDEyRTFaMlwiLFwiQnV5ZXJHc3RpblwiOlwiMzNBQUJDSDEzNzZFMVowXCIsXCJEb2NOb1wiOlwiVE5UTENNSTIwMDAyNzFcIixcIkRvY1R5cFwiOlwiSU5WXCIsXCJEb2NEdFwiOlwiMDcvMTAvMjAyMFwiLFwiVG90SW52VmFsXCI6NTM3NTE1Ljk2LFwiSXRlbUNudFwiOjEsXCJNYWluSHNuQ29kZVwiOlwiOTk2NzI5XCIsXCJJcm5cIjpcImRlNmVkNTBlMzA4NGMyOWM3NjM0MTFhYWY2NmY4OTBmOTAwYWU0NjI1ZmViNDZmMzhmZGVmZWI1ODZhNjBiZWFcIixcIklybkR0XCI6XCIyMDIwLTEwLTA3IDEyOjIyOjAwXCJ9IiwiaXNzIjoiTklDIn0.MWs9xXOEdyb3C8VcsPSRX-Jjoom-10wP5x2PACBUV8NZWdMGDDDtDfWLvZRpvbgemJgOwmXDfuDF4YKLQqZosl6-Xf7VICS7a5Wvc3pbAUIgVnKMPmvEgjwdq5gERxYta-aWndqsNBOl7Y39E6sOoce7sk2doHkUwa1PIh0CY0p9G2i7uRoWNwimwgnwQDwjnk0McUJzfIEdXRhgBPGCyfpZnDywNfu7OgKdd9IQxykiohjbZ8dD8MqBqYZBi5sHDsvkDfbN-lfyydRN1lEThRamLvYaK9JvSkL-w2ScwEXkduHnrw4EH7GgaW5KIJm1bg2mYb45uZrAvWxF-z1tNQ"
+
+// const QRCODE =
+
+// "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ0NDQwNUM3ODFFNDgyNTA3MkIzNENBNEY4QkRDNjA2Qzg2QjU3MjAiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJSRVFGeDRIa2dsQnlzMHlrLUwzR0JzaHJWeUEifQ.eyJkYXRhIjoie1wiU2VsbGVyR3N0aW5cIjpcIjMzQUFDQ1QxNDEyRTFaMlwiLFwiQnV5ZXJHc3RpblwiOlwiMzNBQUJDSDEzNzZFMVowXCIsXCJEb2NOb1wiOlwiVE5UTENNSTIwMDAyNzFcIixcIkRvY1R5cFwiOlwiSU5WXCIsXCJEb2NEdFwiOlwiMDcvMTAvMjAyMFwiLFwiVG90SW52VmFsXCI6NTM3NTE1Ljk2LFwiSXRlbUNudFwiOjEsXCJNYWluSHNuQ29kZVwiOlwiOTk2NzI5XCIsXCJJcm5cIjpcImRlNmVkNTBlMzA4NGMyOWM3NjM0MTFhYWY2NmY4OTBmOTAwYWU0NjI1ZmViNDZmMzhmZGVmZWI1ODZhNjBiZWFcIixcIklybkR0XCI6XCIyMDIwLTEwLTA3IDEyOjIyOjAwXCJ9IiwiaXNzIjoiTklDIn0.MWs9xXOEdyb3C8VcsPSRX-Jjoom-10wP5x2PACBUV8NZWdMGDDDtDfWLvZRpvbgemJgOwmXDfuDF4YKLQqZosl6-Xf7VICS7a5Wvc3pbAUIgVnKMPmvEgjwdq5gERxYta-aWndqsNBOl7Y39E6sOoce7sk2doHkUwa1PIh0CY0p9G2i7uRoWNwimwgnwQDwjnk0McUJzfIEdXRhgBPGCyfpZnDywNfu7OgKdd9IQxykiohjbZ8dD8MqBqYZBi5sHDsvkDfbN-lfyydRN1lEThRamLvYaK9JvSkL-w2ScwEXkduHnrw4EH7GgaW5KIJm1bg2mYb45uZrAvWxF-z1tNQ"
 
 class InvoicePrint extends React.Component {
+
 
 
   render() {
@@ -21,12 +24,14 @@ class InvoicePrint extends React.Component {
     const { InvoiceDetailsList } = this.props.data;
     const details = InvoiceHeaderList[0];
 
+    const { selectValue } = this.props
+
 
 
 
     return (
       <div>
-        <div className={styles.reportType}>{"ORIGINAL FOR RECIPIENT"}</div>
+        <div className={styles.reportType}>{selectValue}</div>
         <section className={styles.container}>
           <img src={TvsLogo} className={styles.logo} alt="logo" />
           <div className={styles.companyDetails}>
@@ -110,15 +115,17 @@ class InvoicePrint extends React.Component {
 
           <div className={styles.qrcode}>
             <div>
-              <QRCode value={details.qrcode} level='H' renderAs='svg' style={{ marginRight: "60px" }} />
+              {/** */} <QRCode value={details.qrcode} level='Q' renderAs='svg' />
+
             </div>
             <div className={styles.qr_details}>Version : {details.version}</div>
             <div>
-              <div className={styles.qr_details}>
-                IRN : {details.irn === null ? " " : details.irn.slice(0, 24)}
-              </div>
-              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(24, 48)}</div>
-              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(48)}</div>
+              <div className={styles.qr_details}> IRN:{details.irn === null ? " " : details.irn.slice(0, 28)} </div>
+              <div className={styles.qr_details}>{details.irn === null ? " " : details.irn.slice(28, 48)} </div>
+
+
+              {/** <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(39, 48)}</div>
+              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(48)}</div>  */}
             </div>
           </div>
         </section>

@@ -33,7 +33,7 @@ class EinvoiceTable extends React.Component {
     let Total = 0;
 
     item.map((i) => {
-      TempGross = TempGross + Number(i.itemqty) * Number(i.itemunitprice);
+      TempGross = TempGross + Number(i.itemtotamt);
       TempTaxable = TempTaxable + Number(i.itemassamt);
       TempUSGST = TempUSGST + Number(i.itemsgstamt);
       TempCGST = TempCGST + Number(i.itemcgstamt);
@@ -86,6 +86,7 @@ class EinvoiceTable extends React.Component {
               itemigstamt: Number(j.itemigstamt) + Number(i.itemigstamt),
               itemcgstamt: Number(j.itemcgstamt) + Number(i.itemcgstamt),
               itemsgstamt: Number(j.itemsgstamt) + Number(i.itemsgstamt),
+              itemtotamt: Number(j.itemtotamt) + Number(i.itemtotamt),
 
             };
           }
@@ -130,10 +131,6 @@ class EinvoiceTable extends React.Component {
     //  const {uniqueItems} = this.state 
 
     const { suptyp } = this.props.details
-
-
-
-
 
     const {
       grossTotal,
@@ -309,7 +306,7 @@ class EinvoiceTable extends React.Component {
 
                 style={{ width: "5%" }}
               >
-                {i.itemqty}
+                {Number(i.itemqty).toFixed(3)}
               </td>
               <td
                 key={Math.random()}
@@ -317,7 +314,7 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "4%" }}
               >
                 <CurrencyFormat
-                  value={Number(i.itemunitprice).toFixed(2)}
+                  value={Number(i.itemunitprice).toFixed(3)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) => <div>{value}</div>}
@@ -329,9 +326,10 @@ class EinvoiceTable extends React.Component {
                 style={{ width: "6%" }}
               >
                 <CurrencyFormat
-                  value={(
-                    Number(i.itemqty).toFixed(2) * Number(i.itemunitprice)
-                  ).toFixed(2)}
+                  // value={(
+                  // Number(i.itemqty).toFixed(3) * Number(i.itemunitprice)
+                  // ).toFixed(3)}
+                  value={Number(i.itemtotamt).toFixed(2)}
                   displayType={"text"}
                   thousandSeparator={true}
                   renderText={(value) => <div>{value}</div>}
@@ -371,7 +369,7 @@ class EinvoiceTable extends React.Component {
 
               {/* cgst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemcgstrt == 0 ? " " : i.itemcgstrt + "%"}
+                {i.itemcgstrt == 0 ? " " : Number(i.itemcgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -383,7 +381,7 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* sgst/ugst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemsgstrt == 0 ? " " : i.itemsgstrt + "%"}
+                {i.itemsgstrt == 0 ? " " : Number(i.itemsgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -395,7 +393,7 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* Igst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemigstrt == 0 ? " " : i.itemigstrt + "%"}
+                {i.itemigstrt == 0 ? " " : Number(i.itemigstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat

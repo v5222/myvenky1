@@ -58,7 +58,7 @@ const MenuDrawer = ({ selected, user }) => {
           defaultSelectedKeys={["1"]}
           style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          {!usersList.includes(user.email) && (
+          {/**  {!usersList.includes(user.email) && (
             <Menu.Item
               key="/podDashboard"
               className={
@@ -87,7 +87,7 @@ const MenuDrawer = ({ selected, user }) => {
               Courier Management
             </Menu.Item>
           )}
-
+        */}
 
 
           <Menu.Item
@@ -126,8 +126,9 @@ const MenuDrawer = ({ selected, user }) => {
               }
             >
               Einvoice Print
-            </Menu.Item> 
+            </Menu.Item>
           )}
+          {/**
           <Menu.Item
             key="5"
             icon={<BarChartOutlined />}
@@ -140,6 +141,7 @@ const MenuDrawer = ({ selected, user }) => {
           >
             Transportation
           </Menu.Item>
+           */}
         </Menu>
       </Drawer>
     </>

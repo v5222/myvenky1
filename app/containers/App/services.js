@@ -6,7 +6,6 @@ const apiURLDwm =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
 
 const apiURLEinvoice =
-  // "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
   "https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing";
 
 
