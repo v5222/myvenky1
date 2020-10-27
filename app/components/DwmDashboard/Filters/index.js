@@ -22,6 +22,9 @@ function Filters({ filtersData, option, setOption }) {
   const handleVisibleChange = (flag) => {
     setVisible(flag);
   };
+  useEffect(()=>{
+console.log(filtersData,"from filters")
+  },[filtersData])
   const handleMenuClick = (e) => {
     if (e.key == 2) {
       setDate(false);
@@ -34,8 +37,9 @@ function Filters({ filtersData, option, setOption }) {
   const handleDateRange = (dates) => {
     setOption({
       ...option,
-      type: "DATE_PICKER",
-      key: { from: dates[0], to: dates[1] },
+      filterdate: "DATE",
+      sdate: dates[0],
+        edate: dates[1],
     });
     console.log(dates, "From dates");
   };
@@ -49,26 +53,16 @@ function Filters({ filtersData, option, setOption }) {
   const handleDateChange = (key, value) => {
     setOption({
       ...option,
-      type: "DATE_FILTER",
-      [key]: value,
-      value:
-        value == "mtd"
-          ? "1.C-MTD"
-          : value == "ftd"
-          ? "1.C-FTD"
-          : value == "ytdc"
-          ? "1.C-YTD"
-          : "1.C-WTD",
+      filterdate:value,
+     
     });
     console.log(key, value);
   };
   const handleChange = (key, value) => {
     setOption({
       ...option,
-      filters: {
-        ...option.filters,
-        [key]: value,
-      },
+      [key]: value,
+  
     });
     // console.log(key, value);
   };
@@ -78,16 +72,20 @@ function Filters({ filtersData, option, setOption }) {
         <div className={styles.wrapper}>
           <div className={styles.title}>Capability</div>
           <Select
+           showSearch
             defaultValue="All"
             onChange={(value) => handleChange("capabilitycode", value)}
             className={styles.select}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
           >
             {filtersData.capabilityname !== undefined &&
               filtersData.capabilityname.map((i, index) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.capabilitycode} key={i.capabilitycode}>
+                      {i.capabilitycode}
                     </Option>
                   </>
                 );
@@ -102,15 +100,19 @@ function Filters({ filtersData, option, setOption }) {
           <div className={styles.title}>Customer</div>
           <Select
             defaultValue="All"
+            showSearch
             onChange={(value) => handleChange("customer", value)}
             className={styles.select}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
           >
             {filtersData.customer !== undefined &&
               filtersData.customer.map((i) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.projectname} key={i.projectname}>
+                      {i.projectname}
                     </Option>
                   </>
                 );
@@ -124,16 +126,20 @@ function Filters({ filtersData, option, setOption }) {
         <div className={styles.wrapper}>
           <div className={styles.title}>Owner</div>
           <Select
+          showSearch
             defaultValue="All"
             onChange={(value) => handleChange("owner", value)}
             className={styles.select}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
           >
             {filtersData.owner !== undefined &&
               filtersData.owner.map((i) => {
                 return (
                   <>
-                    <Option value={i} key={i}>
-                      {i}
+                    <Option value={i.username} key={i.username}>
+                      {i.username}
                     </Option>
                   </>
                 );
@@ -152,13 +158,13 @@ function Filters({ filtersData, option, setOption }) {
               className={styles.select}
               defaultValue="MTD"
             >
-              <Option value="ftd">Today</Option>
-              <Option selected value="wtd">
+              <Option value="FTD">Today</Option>
+              <Option value="WTD">
                 WTD
               </Option>
 
-              <Option value="mtd">MTD</Option>
-              <Option value="ytdc">YTD</Option>
+              <Option value="MTD">MTD</Option>
+              <Option value="YTD">YTD</Option>
             </Select>
           </div>
         ) : (

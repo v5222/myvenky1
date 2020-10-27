@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import { apiURLDwm } from "containers/App/services.js";
 const getTableData = (array) => {
   let newData = [];
   let prev = [];
@@ -159,18 +159,86 @@ const getActivitySummary = (array, type, key, value, filters) => {
   };
 };
 
-const getFiltersdata = (array) => {
-  const tempcpname = array.map((i) => i.capabilitycode);
-  const customer = array.map((i) => i.projectname);
-  const owner = array.map((i) => i.username);
+// const getFiltersdata = (array) => {
+//   const tempcpname = array.map((i) => i.capabilitycode);
+//   const customer = array.map((i) => i.projectname);
+//   const owner = array.map((i) => i.username);
 
-  const capabilityname = new Set(tempcpname);
+//   const capabilityname = new Set(tempcpname);
 
-  return {
-    capabilityname: [...capabilityname],
-    customer: [...new Set(customer)],
-    owner: [...new Set(owner)],
+//   return {
+//     capabilityname: [...capabilityname],
+//     customer: [...new Set(customer)],
+//     owner: [...new Set(owner)],
+//   };
+// };
+const getFiltersdata = async ( value, callback) => {
+  console.log(value);
+  let sdate;
+  let edate;
+  // let capabilityname = [];
+  // let customer = [];
+  // let owner = [];
+  switch (value.filterdate) {
+    case "mtd":
+      sdate = moment()
+        .startOf("month")
+        .format("YYYY-MM-DD");
+      edate = moment()
+        .endOf("month")
+        .format("YYYY-MM-DD");
+      break;
+    case "wtd":
+      sdate = moment()
+        .startOf("week")
+        .format("YYYY-MM-DD");
+      edate = moment()
+        .endOf("week")
+        .format("YYYY-MM-DD");
+      break;
+    case "ytdc":
+      sdate = moment()
+        .startOf("year")
+        .format("YYYY-MM-DD");
+      edate = moment()
+        .endOf("year")
+        .format("YYYY-MM-DD");
+      break;
+    case "ftd":
+      sdate = moment().format("YYYY-MM-DD");
+      edate = moment().format("YYYY-MM-DD");
+      break;
+    default:
+      sdate = moment(value.sdate).format("YYYY-MM-DD");
+      edate = moment(value.edate).format("YYYY-MM-DD");
+      break;
+  }
+  let options = {
+    method: "POST",
+    body: JSON.stringify({
+      body: {
+        type: "FILTERS",
+        sdate: sdate,
+        edate: edate,
+        customer: value.customer,
+        capabilitycode: value.capabilitycode,
+        owner: value.owner,
+      },
+    }),
   };
+  fetch(apiURLDwm, options)
+    .then((res) => res.json())
+    .then((data) => {
+      const { capability, ownername, customername } = data.body.bodymsg;
+      console.log(data);
+      callback({
+        capabilityname: capability !== undefined ? capability : [],
+        owner: ownername !== undefined ? ownername : [],
+        customer: customername !== undefined ? customername : [],
+      });
+      
+    });
+  
 };
 
 export { getTableData, getLoginsummary, getActivitySummary, getFiltersdata };
