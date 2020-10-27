@@ -65,9 +65,9 @@ function Filters({ filtersData, option, setOption, maxDate }) {
     // console.log(key, value);
   };
 
-  useEffect(() => {
-    console.log(filtersData, "from filters");
-  }, [filtersData]);
+  // useEffect(() => {
+  //   console.log(filtersData, "from filters");
+  // }, [filtersData]);
   return (
     <>
       <div className={styles.container}>

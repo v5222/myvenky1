@@ -184,8 +184,7 @@ const getFiltersdata = async (array, value, callback) => {
       // return {
       //   capabilityname: capability !== undefined ? capability : [],
       //   owner: ownername !== undefined ? ownername : [],
-      //   customer: cusomername !== undefined ? cusomername : [],
-      // };
+      //
     });
   // const tempcpname = array.map((i) => {
   //   return i.capabilitycode;
