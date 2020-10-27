@@ -1,7 +1,7 @@
 import React from "react";
 import { UserAgentApplication } from "msal";
 import { getUserDetails } from "./GraphService";
-import { Prodconfig } from "./config";
+import { Testconfig } from "./config";
 
 export default function withAuthProvider(WrappedComponent) {
   return class extends React.Component {
@@ -18,8 +18,8 @@ export default function withAuthProvider(WrappedComponent) {
       // Initialize the MSAL application object
       this.userAgentApplication = new UserAgentApplication({
         auth: {
-          clientId: Prodconfig.appId,
-          redirectUri: Prodconfig.redirectUri,
+          clientId: Testconfig.appId,
+          redirectUri: Testconfig.redirectUri,
         },
         cache: {
           cacheLocation: "sessionStorage",
@@ -62,7 +62,7 @@ export default function withAuthProvider(WrappedComponent) {
       try {
         // Login via popup
         await this.userAgentApplication.loginPopup({
-          scopes: Prodconfig.scopes,
+          scopes: Testconfig.scopes,
           prompt: "select_account",
         });
         // After login, get the user's profile
@@ -110,7 +110,7 @@ export default function withAuthProvider(WrappedComponent) {
 
     async getUserProfile() {
       try {
-        var accessToken = await this.getAccessToken(Prodconfig.scopes);
+        var accessToken = await this.getAccessToken(Testconfig.scopes);
 
         if (accessToken) {
           // TEMPORARY: Display the token in the error flash
