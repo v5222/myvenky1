@@ -13,7 +13,7 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 function Filters({ filtersData, option, setOption, maxDate }) {
-  const [date, setDate] = useState(true);
+  const [date, setDate] = useState(false);
   const [visible, setVisible] = useState(false);
   const [dates, setDates] = useState({
     startDate: moment().startOf("month"),
@@ -22,6 +22,7 @@ function Filters({ filtersData, option, setOption, maxDate }) {
   const handleVisibleChange = (flag) => {
     setVisible(flag);
   };
+  console.log(moment("2020-10-27T00:00:00.000Z").format("YYYY-MM-DD"),"fromdate")
   const handleMenuClick = (e) => {
     if (e.key == 2) {
       setDate(false);
@@ -34,10 +35,12 @@ function Filters({ filtersData, option, setOption, maxDate }) {
   const handleDateRange = (dates) => {
     setOption({
       ...option,
-      type: "DATE_PICKER",
-      key: { from: dates[0], to: dates[1] },
+      filterdate: "DATE",
+      sdate: moment(dates[0]).format("YYYY-MM-DD"),
+        edate:moment(dates[1]).format("YYYY-MM-DD"),
     });
-    console.log(dates, "From dates");
+    console.log(moment(dates[0]).format("YYYY-MM-DD"), "From dates");
+    
   };
   //Menu Component for Date Filters
   const menu = (
@@ -49,20 +52,20 @@ function Filters({ filtersData, option, setOption, maxDate }) {
   const handleDateChange = (key, value) => {
     setOption({
       ...option,
-      type: "DATE_FILTER",
-      [key]: value,
+      filterdate:value,
+     
     });
     console.log(key, value);
   };
+
+  
   const handleChange = (key, value) => {
     setOption({
       ...option,
-      filters: {
-        ...option.filters,
-        [key]: value,
-      },
+      [key]: value.length !== 0? value.join(","):"-1",
+      
     });
-    // console.log(key, value);
+     console.log(key, value);
   };
 
   // useEffect(() => {
@@ -74,69 +77,72 @@ function Filters({ filtersData, option, setOption, maxDate }) {
         <div className={styles.wrapper}>
           <div className={styles.title}>Capability</div>
           <Select
-            defaultValue="All"
+           mode="multiple"
+           allowClear
+            placeholder="Select Capability Code"
             onChange={(value) => handleChange("capabilitycode", value)}
             className={styles.select}
+            optionFilterProp="key"
           >
             {filtersData.capabilityname !== undefined &&
               filtersData.capabilityname.map((i, index) => {
                 return (
                   <>
-                    <Option value={i.capabilitycode} key={i.capabilitycode}>
+                    <Option value={i.capabilitykey} key={i.capabilitycode}>
                       {i.capabilitycode}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+           
           </Select>
         </div>
 
         <div className={styles.wrapper}>
           <div className={styles.title}>Customer</div>
           <Select
-            defaultValue="All"
+            mode="multiple"
+            allowClear
+             placeholder="Select Customer"
             onChange={(value) => handleChange("customer", value)}
             className={styles.select}
+            optionFilterProp="key"
           >
             {filtersData.customer !== undefined &&
               filtersData.customer.map((i) => {
                 return (
                   <>
-                    <Option value={i.projectname} key={i.projectname}>
+                    <Option value={i.projectkey} key={i.projectname}>
                       {i.projectname}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+            
           </Select>
         </div>
 
         <div className={styles.wrapper}>
           <div className={styles.title}>Owner</div>
           <Select
-            defaultValue="All"
+           mode="multiple"
+           allowClear
+            placeholder="Select Owner"
             onChange={(value) => handleChange("owner", value)}
             className={styles.select}
+            optionFilterProp="key"
           >
             {filtersData.owner !== undefined &&
               filtersData.owner.map((i) => {
                 return (
                   <>
-                    <Option value={i.username} key={i.username}>
+                    <Option value={i.userkey} key={i.username}>
                       {i.username}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+            
           </Select>
         </div>
 
@@ -146,15 +152,15 @@ function Filters({ filtersData, option, setOption, maxDate }) {
             <Select
               onChange={(value) => handleDateChange("key", value)}
               className={styles.select}
-              defaultValue="MTD"
+              defaultValue="Today"
             >
-              <Option value="ftd">Today</Option>
-              <Option selected value="wtd">
+              <Option value="FTD">Today</Option>
+              <Option value="WTD">
                 WTD
               </Option>
 
-              <Option value="mtd">MTD</Option>
-              <Option value="ytdc">YTD</Option>
+              <Option value="MTD">MTD</Option>
+              <Option value="YTD">YTD</Option>
             </Select>
           </div>
         ) : (

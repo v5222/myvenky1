@@ -44,9 +44,9 @@ function DwmDashboard() {
         filterdate: "FTD",
         sdate: "2020-08-11",
         edate: "2020-08-11",
-        customer: "All",
-        capabilitycode: "All",
-        owner: "All"
+        customer: "-1",
+        capabilitycode: "-1",
+        owner: "-1"
       
      })
      function getFilters(array, option, callback) {
@@ -86,7 +86,6 @@ setTableData(data)
   })
   .catch(err=>{
     setLoading(false)
-    alert(err)
   })
  
   getFilters( options, callbackFunction);

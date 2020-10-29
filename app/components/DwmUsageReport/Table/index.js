@@ -73,26 +73,19 @@ function Table({ columns, data }) {
           className={index % 2 ? "ListItemOdd" : "ListItemEven"}
         >
           {row.cells.map((cell) => {
-            if (cell.column.Header === "Target Value") {
-              let targetValue = cell.row.values.targetvalues;
-              if (targetValue === null) {
-                return <td {...cell.getCellProps()}>0</td>;
-              } else {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              }
-            } else {
+            
               if (cell.column.Header === "Report Date") {
-                let date = cell.row.values.date;
+                let date = cell.row.values.reportdate;
                 return (
                   <td {...cell.getCellProps()}>
-                    {moment(date).format("DD-MM-YYYY")}
+                    {moment(date).format("YYYY-MM-DD")}
                   </td>
                 );
               } else {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               }
             }
-          })}
+          )}
         </tr>
       );
     },

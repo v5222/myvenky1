@@ -38,8 +38,8 @@ console.log(filtersData,"from filters")
     setOption({
       ...option,
       filterdate: "DATE",
-      sdate: dates[0],
-        edate: dates[1],
+      sdate: moment(dates[0]).format("YYYY-MM-DD"),
+        edate:moment(dates[1]).format("YYYY-MM-DD"),
     });
     console.log(dates, "From dates");
   };
@@ -61,98 +61,90 @@ console.log(filtersData,"from filters")
   const handleChange = (key, value) => {
     setOption({
       ...option,
-      [key]: value,
-  
+      [key]: value.length !== 0? value.join(","):"-1",
+      
     });
     // console.log(key, value);
   };
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.wrapper}>
+      <div className={styles.wrapper}>
           <div className={styles.title}>Capability</div>
           <Select
-           showSearch
-            defaultValue="All"
+           mode="multiple"
+           allowClear
+            placeholder="Select Capability Code"
             onChange={(value) => handleChange("capabilitycode", value)}
             className={styles.select}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            optionFilterProp="key"
           >
             {filtersData.capabilityname !== undefined &&
               filtersData.capabilityname.map((i, index) => {
                 return (
                   <>
-                    <Option value={i.capabilitycode} key={i.capabilitycode}>
+                    <Option value={i.capabilitykey} key={i.capabilitycode}>
                       {i.capabilitycode}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+           
           </Select>
         </div>
 
         <div className={styles.wrapper}>
           <div className={styles.title}>Customer</div>
           <Select
-            defaultValue="All"
-            showSearch
+            mode="multiple"
+            allowClear
+             placeholder="Select Customer"
             onChange={(value) => handleChange("customer", value)}
             className={styles.select}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            optionFilterProp="key"
           >
             {filtersData.customer !== undefined &&
               filtersData.customer.map((i) => {
                 return (
                   <>
-                    <Option value={i.projectname} key={i.projectname}>
+                    <Option value={i.projectkey} key={i.projectname}>
                       {i.projectname}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+            
           </Select>
         </div>
 
         <div className={styles.wrapper}>
           <div className={styles.title}>Owner</div>
           <Select
-          showSearch
-            defaultValue="All"
+           mode="multiple"
+           allowClear
+            placeholder="Select Owner"
             onChange={(value) => handleChange("owner", value)}
             className={styles.select}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            optionFilterProp="key"
           >
             {filtersData.owner !== undefined &&
               filtersData.owner.map((i) => {
                 return (
                   <>
-                    <Option value={i.username} key={i.username}>
+                    <Option value={i.userkey} key={i.username}>
                       {i.username}
                     </Option>
                   </>
                 );
               })}
-            <Option value="All" key="All">
-              All
-            </Option>
+            
           </Select>
         </div>
 
+
         {!date ? (
           <div className={styles.wrapper}>
-            <div className={styles.title} style={{color:'#123f74'}}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:"#123f74"}}>Date Type & Range Picker </div>
             <Select
               onChange={(value) => handleDateChange("key", value)}
               className={styles.select}
@@ -169,7 +161,7 @@ console.log(filtersData,"from filters")
           </div>
         ) : (
           <div className={styles.wrapperDate}>
-            <div className={styles.title} style={{color:'#123f74'}}>Date Type & Range Picker </div>
+            <div className={styles.title} style={{color:"#123f74"}}>Date Type & Range Picker </div>
             <RangePicker
               allowClear={false}
               onChange={handleDateRange}
@@ -188,7 +180,7 @@ console.log(filtersData,"from filters")
           >
             <CalendarOutlined
               style={{
-                fontSize: "32px",
+                fontSize: "33px",
                 color: "#ADADAD",
                 marginLeft: "6px",
               }}
@@ -199,7 +191,9 @@ console.log(filtersData,"from filters")
         {/* <div className={styles.refresh}>
           <p style={{ fontFamily: "Open sans" }}>
             Last Refresh Date :
-            <span className={styles.refreshdate}>10/09/2020</span>{" "}
+            <span className={styles.refreshdate}>
+              {moment(maxDate).format("DD-MM-YYYY")}
+            </span>{" "}
           </p>
         </div> */}
       </div>

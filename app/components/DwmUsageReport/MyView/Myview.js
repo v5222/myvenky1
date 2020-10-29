@@ -15,17 +15,17 @@ function Myview({ data, loading }) {
           <Carousel afterChange={onChange} dots={styles.dots}>
             <div>
               <div className={styles.d_flex}>
-                {loading === true
+                {loading === true || data.length === 0
                   ? arr.map((i) => {
                       return <ViewCard title="" total={0} actual={0} key={i} />;
                     })
                   : data.slice(0, 6).map((i, index) => {
                       return (
                         <ViewCard
-                          title={i.activityname}
-                          total={i.total}
-                          actual={i.actual}
-                          comments={i.comments}
+                          title={i.activity}
+                          total={i.total === null ? 0 : i.total}
+                          actual={i.actual === null ? 0 : i.actual}
+                          comments={i.comments !== undefined ?i.comments : "NA"}
                           key={index}
                         />
                       );
@@ -35,17 +35,17 @@ function Myview({ data, loading }) {
 
             <div>
               <div className={styles.d_flex}>
-                {loading === true
+                {loading === true || data.length === 0
                   ? arr.slice(0, 6).map((i) => {
                       return <ViewCard title="" total={0} actual={0} key={i} />;
                     })
                   : data.slice(6, 12).map((i, index) => {
                       return (
                         <ViewCard
-                          title={i.activityname}
-                          total={i.total}
-                          actual={i.actual}
-                          comments={i.comments}
+                        title={i.activity}
+                        total={i.total === null ? 0 : i.total}
+                        actual={i.actual === null ? 0 : i.actual}
+                        comments={i.comments !== undefined ?i.comments : "NA"}
                           key={index}
                         />
                       );
@@ -54,17 +54,17 @@ function Myview({ data, loading }) {
             </div>
             <div>
               <div className={styles.d_flex}>
-                {loading === true
+                {loading === true || data.length === 0
                   ? arr.slice(0, 6).map((i) => {
                       return <ViewCard title="" total={0} actual={0} key={i} />;
                     })
                   : data.slice(12, 18).map((i, index) => {
                       return (
                         <ViewCard
-                          title={i.activityname}
-                          total={i.total}
-                          actual={i.actual}
-                          comments={i.comments}
+                        title={i.activity}
+                        total={i.total === null ? 0 : i.total}
+                        actual={i.actual === null ? 0 : i.actual}
+                        comments={i.comments !== undefined ?i.comments : "NA"}
                           key={index}
                         />
                       );
@@ -73,17 +73,17 @@ function Myview({ data, loading }) {
             </div>
             <div>
               <div className={styles.d_flex}>
-                {loading === true
+                {loading === true || data.length === 0
                   ? arr.slice(0, 6).map((i) => {
                       return <ViewCard title="" total={0} actual={0} key={i} />;
                     })
                   : data.slice(18, data.length).map((i, index) => {
                       return (
                         <ViewCard
-                          title={i.activityname}
-                          total={i.total}
-                          actual={i.actual}
-                          comments={i.comments}
+                        title={i.activity}
+                        total={i.total === null ? 0 : i.total}
+                        actual={i.actual === null ? 0 : i.actual}
+                        comments={i.comments !== undefined ?i.comments : "NA"}
                           key={index}
                         />
                       );
@@ -97,17 +97,17 @@ function Myview({ data, loading }) {
       {/* mobile device container */}
 
       <div className={styles.mob_container}>
-      {loading === true
+      {loading === true || data.length === 0
         ? arr.map((i) => {
             return <ViewCard title="" total={0} actual={0} key={i} />;
           })
-        : data.slice(0, 6).map((i, index) => {
+        : data.map((i, index) => {
             return (
               <ViewCard
-                title={i.activityname}
-                total={i.total}
-                actual={i.actual}
-                comments={i.comments}
+              title={i.activity}
+              total={i.total === null ? 0 : i.total}
+              actual={i.actual === null ? 0 : i.actual}
+              comments={i.comments !== undefined ?i.comments : "NA"}
                 key={index}
               />
             );

@@ -117,15 +117,15 @@ const getSummary = (array, filters) => {
   return newData;
 };
 
-const getFiltersdata = async (array, value, callback) => {
+const getFiltersdata = async ( value, callback) => {
   console.log(value);
   let sdate;
   let edate;
   // let capabilityname = [];
   // let customer = [];
   // let owner = [];
-  switch (value.key) {
-    case "mtd":
+  switch (value.filterdate) {
+    case "MTD":
       sdate = moment()
         .startOf("month")
         .format("YYYY-MM-DD");
@@ -133,7 +133,7 @@ const getFiltersdata = async (array, value, callback) => {
         .endOf("month")
         .format("YYYY-MM-DD");
       break;
-    case "wtd":
+    case "WTD":
       sdate = moment()
         .startOf("week")
         .format("YYYY-MM-DD");
@@ -141,7 +141,7 @@ const getFiltersdata = async (array, value, callback) => {
         .endOf("week")
         .format("YYYY-MM-DD");
       break;
-    case "ytdc":
+    case "YTD":
       sdate = moment()
         .startOf("year")
         .format("YYYY-MM-DD");
@@ -149,13 +149,13 @@ const getFiltersdata = async (array, value, callback) => {
         .endOf("year")
         .format("YYYY-MM-DD");
       break;
-    case "ftd":
+    case "FTD":
       sdate = moment().format("YYYY-MM-DD");
       edate = moment().format("YYYY-MM-DD");
       break;
     default:
-      sdate = moment(value.key.startDate).format("YYYY-MM-DD");
-      edate = moment(value.key.endDate).format("YYYY-MM-DD");
+      sdate = moment(value.sdate).format("YYYY-MM-DD");
+      edate = moment(value.edate).format("YYYY-MM-DD");
       break;
   }
   let options = {
@@ -163,43 +163,30 @@ const getFiltersdata = async (array, value, callback) => {
     body: JSON.stringify({
       body: {
         type: "FILTERS",
-        sdate: sdate,
-        edate: edate,
-        customer: value.filters.customer,
-        capabilitycode: value.filters.capabilitycode,
-        owner: value.filters.owner,
+        sdate:value.sdate,
+        edate:value.edate,
+        filterdate:value.filterdate,
+        customer: value.customer,
+        capabilitycode: value.capabilitycode,
+        owner: value.owner,
       },
     }),
   };
   fetch(apiURLDwm, options)
     .then((res) => res.json())
     .then((data) => {
-      const { capability, ownername, cusomername } = data.body.bodymsg;
-      console.log(capability, ownername, cusomername);
+      const { capability, ownername, customername } = data.body.bodymsg;
+      console.log(data);
       callback({
         capabilityname: capability !== undefined ? capability : [],
         owner: ownername !== undefined ? ownername : [],
-        customer: cusomername !== undefined ? cusomername : [],
+        customer: customername !== undefined ? customername : [],
       });
-      // return {
-      //   capabilityname: capability !== undefined ? capability : [],
-      //   owner: ownername !== undefined ? ownername : [],
-      //
+      
     });
-  // const tempcpname = array.map((i) => {
-  //   return i.capabilitycode;
-  // });
-  // const customer = array.map((i) => {
-  //   return i.projectname;
-  // });
-  // const owner = array.map((i) => {
-  //   return i.username;
-  // });
-
-  // const capabilityname = new Set(tempcpname);
-
-  // return data;
+  
 };
+
 
 const getTableData = (array, type, key, filters) => {
   let newArr = [];
@@ -270,7 +257,7 @@ const maxRefresDate = (array) => {
     date: moment().format("YYYY-MM-DD"),
   };
   if (array.length > 0) {
-    maxdate = _.maxBy(array, (i) => moment(i.date).format("YYYY-MM-DD"));
+    maxdate = _.maxBy(array, (i) => moment(i.reportdate).format("YYYY-MM-DD"));
   }
 
   return maxdate.date;

@@ -180,7 +180,7 @@ const getFiltersdata = async ( value, callback) => {
   // let customer = [];
   // let owner = [];
   switch (value.filterdate) {
-    case "mtd":
+    case "MTD":
       sdate = moment()
         .startOf("month")
         .format("YYYY-MM-DD");
@@ -188,7 +188,7 @@ const getFiltersdata = async ( value, callback) => {
         .endOf("month")
         .format("YYYY-MM-DD");
       break;
-    case "wtd":
+    case "WTD":
       sdate = moment()
         .startOf("week")
         .format("YYYY-MM-DD");
@@ -196,7 +196,7 @@ const getFiltersdata = async ( value, callback) => {
         .endOf("week")
         .format("YYYY-MM-DD");
       break;
-    case "ytdc":
+    case "YTD":
       sdate = moment()
         .startOf("year")
         .format("YYYY-MM-DD");
@@ -204,7 +204,7 @@ const getFiltersdata = async ( value, callback) => {
         .endOf("year")
         .format("YYYY-MM-DD");
       break;
-    case "ftd":
+    case "FTD":
       sdate = moment().format("YYYY-MM-DD");
       edate = moment().format("YYYY-MM-DD");
       break;
@@ -218,8 +218,9 @@ const getFiltersdata = async ( value, callback) => {
     body: JSON.stringify({
       body: {
         type: "FILTERS",
-        sdate: sdate,
-        edate: edate,
+        sdate:value.sdate,
+        edate:value.edate,
+        filterdate:value.filterdate,
         customer: value.customer,
         capabilitycode: value.capabilitycode,
         owner: value.owner,

@@ -12,20 +12,20 @@ function Myview({ loading, data }) {
             <div className={styles.d_flex}>
               <ViewCard
                 title={"Login Summary"}
-                total={data.loginSummary.total}
-                actual={data.loginSummary.actual}
+                total={data.loginSummary.total === null ? 0 : data.loginSummary.total}
+                actual={data.loginSummary.actual === null ? 0 : data.loginSummary.actual}
                 loading={loading}
               />
               <ViewCard
                 title={"Activity Summary"}
-                total={data.activitySummary.total}
-                actual={data.activitySummary.actual}
+                total={data.activitySummary.total === null ? 0 :data.activitySummary.total}
+                actual={data.activitySummary.actual === null ? 0 :data.activitySummary.actual}
                 loading={loading}
               />
               <ViewCard
                 title={"KAM Performance"}
-                total={data.activitySummary.totalpercent}
-                actual={data.activitySummary.actualpercent}
+                total={data.activitySummary.totalpercent  === null ? 0 : data.activitySummary.totalpercent}
+                actual={data.activitySummary.actualpercent  === null ? 0 : data.activitySummary.actualpercent}
                 loading={loading}
               />
             </div>
