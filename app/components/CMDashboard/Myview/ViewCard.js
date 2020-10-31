@@ -4,7 +4,7 @@ import conveyor from "../../../images/SVG/conveyor.svg";
 import delivered from "../../../images/SVG/delivered.svg";
 import transit from "../../../images/SVG/transit.svg";
 import nFormatter from "utils/helpers/numberFormator";
-function ViewCard({ data }) {
+function ViewCard({ totalinvoice,delivered,intransit,origin }) {
   // useEffect(() => {
   //   console.log(data);
   // }, [data]);
@@ -17,9 +17,9 @@ function ViewCard({ data }) {
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>
-              {data !== undefined && data.totalinvoiceno !== undefined
-                ? nFormatter(data.totalinvoiceno)
-                : 5890}
+              {totalinvoice 
+                ? nFormatter(totalinvoice)
+                : 0}
             </div>
             <div className={styles.value_2}>Total</div>
           </div>
@@ -31,9 +31,9 @@ function ViewCard({ data }) {
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>
-              {data !== undefined && data.intransit !== undefined
-                ? nFormatter(data.intransit)
-                : 1233}
+              {intransit 
+                ? nFormatter(intransit)
+                : 0}
             </div>
             <div className={styles.value_2}>InTransit</div>
           </div>
@@ -45,18 +45,18 @@ function ViewCard({ data }) {
           </div>
           <div className={styles.value}>
             <div className={styles.value_1}>
-              {data !== undefined && data.delivered !== undefined
-                ? nFormatter(data.delivered)
-                : 3212}
+              {delivered
+                ? nFormatter(delivered)
+                : 0}
             </div>
             <div className={styles.value_2}>Delivered</div>
           </div>
         </div>
       </div>
       <div className={styles.title}>
-        {data !== undefined && data.consignor !== undefined
-          ? data.consignor
-          : 1233}
+        {origin
+          ? origin
+          : ""}
       </div>
     </div>
   );

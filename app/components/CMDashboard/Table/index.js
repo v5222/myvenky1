@@ -103,7 +103,7 @@ function Table({ columns, data, dates }) {
           <FixedSizeList
             height={height}
             itemCount={rows.length}
-            itemSize={50}
+            itemSize={70}
             width={totalColumnsWidth}
             className={styles.FixedList}
           >

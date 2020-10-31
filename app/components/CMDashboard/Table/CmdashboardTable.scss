@@ -54,9 +54,6 @@
       &:last-child {
         border-right: 0;
       }
-      &:first-child {
-        width: 200%;
-      }
     }
   }
   .fixedList {
@@ -77,98 +74,98 @@
 }
 
 @media only screen and (max-width: 600px) {
-//   .tvsit-cmdashboard_table {
-//     max-width: 100vw;
-//     overflow: scroll;
-//     // padding-left:10px ;
-//     .ant-table-cell {
-//       font-size: 12px !important;
-//     }
-//     .tvsit_cmdashboard-viewDetails {
-//       font-size: 8px;
-//       padding: 0px 5px 0 5px;
-//       color: #2d9cdb;
-//       border: 1px solid #2d9cdb;
-//       text-align: center;
-//     }
-//   }
-// }
-.tvsit-cmdashboard_table {
-  max-width: 100vw;
-  overflow: scroll;
-  table {
-    border-spacing: 0;
-    table-layout: auto;
-    width: 100%;
-    border: 1px solid #2d9cdb;
-    margin: 0 auto;
-    border-collapse: collapse;
-    border-radius: 1em;
-    overflow: hidden;
-
-    thead {
-      background: #c1e3ff;
-      color: #004178;
-      font-size: 11px;
-      font-weight: 500;
-      width: 100%;
-      text-align: left;
-      border-collapse: separate;
+  //   .tvsit-cmdashboard_table {
+  //     max-width: 100vw;
+  //     overflow: scroll;
+  //     // padding-left:10px ;
+  //     .ant-table-cell {
+  //       font-size: 12px !important;
+  //     }
+  //     .tvsit_cmdashboard-viewDetails {
+  //       font-size: 8px;
+  //       padding: 0px 5px 0 5px;
+  //       color: #2d9cdb;
+  //       border: 1px solid #2d9cdb;
+  //       text-align: center;
+  //     }
+  //   }
+  // }
+  .tvsit-cmdashboard_table {
+    max-width: 100vw;
+    overflow: scroll;
+    table {
       border-spacing: 0;
-      tr > th {
-        padding: auto auto;
-      }
-    }
-    tbody {
-      .ListItemEven {
-        background-color: #f8f8f0;
-      }
-      tr {
-        font-size: 12px;
-        color: #595959;
-        width: 100%;
-        background: #f2f2f2;
-        // background-color: #f2f2f2;
-        td {
-          padding: 10px 10px 10px 10px;
-          line-height: 2;
-        }
-
-        // &:nth-child(even) {
-        //   background-color: #ffffff;
-        // }
-        // &:nth-child(odd) {
-        //   background: #f2f2f2;
-
-        // }
-      }
-    }
-
-    th,
-    td {
+      table-layout: auto;
       width: 100%;
-      &:last-child {
-        border-right: 0;
+      border: 1px solid #2d9cdb;
+      margin: 0 auto;
+      border-collapse: collapse;
+      border-radius: 1em;
+      overflow: hidden;
+
+      thead {
+        background: #c1e3ff;
+        color: #004178;
+        font-size: 11px;
+        font-weight: 500;
+        width: 100%;
+        text-align: left;
+        border-collapse: separate;
+        border-spacing: 0;
+        tr > th {
+          padding: auto auto;
+        }
       }
-      &:first-child {
-        width: 200%;
+      tbody {
+        .ListItemEven {
+          background-color: #f8f8f0;
+        }
+        tr {
+          font-size: 12px;
+          color: #595959;
+          width: 100%;
+          background: #f2f2f2;
+          // background-color: #f2f2f2;
+          td {
+            padding: 10px 10px 10px 10px;
+            line-height: 2;
+          }
+
+          // &:nth-child(even) {
+          //   background-color: #ffffff;
+          // }
+          // &:nth-child(odd) {
+          //   background: #f2f2f2;
+
+          // }
+        }
+      }
+
+      th,
+      td {
+        width: 100%;
+        &:last-child {
+          border-right: 0;
+        }
+        &:first-child {
+          width: 200%;
+        }
       }
     }
-  }
-  .fixedList {
-    overflow: overlay !important;
+    .fixedList {
+      overflow: overlay !important;
+    }
+
+    .fixedSizeList {
+      height: 400px;
+    }
   }
 
-  .fixedSizeList {
-    height: 400px;
+  .tvsit_cmdashboard-viewDetails {
+    font-size: 8px;
+    padding: 0px 5px 0 5px;
+    color: #2d9cdb;
+    border: 1px solid #2d9cdb;
+    text-align: center;
   }
-}
-
-.tvsit_cmdashboard-viewDetails {
-        font-size: 8px;
-        padding: 0px 5px 0 5px;
-        color: #2d9cdb;
-        border: 1px solid #2d9cdb;
-        text-align: center;
-      }
 }

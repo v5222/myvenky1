@@ -6,12 +6,12 @@ import CMdashboardTable from "./Table";
 import styles from "./Cmdashboard.module.scss";
 import { apiURLCourier } from "../../containers/App/services";
 import moment from "moment";
-
+import {connect} from "react-redux"
 const startDate = moment()
   .startOf("week")
   .format("YYYY-MM-DD");
 const currentDate = moment().format("YYYY-MM-DD");
-function CMDashboard() {
+function CMDashboard({userRole,otpLogIn}) {
   const [filtersOn, setFiltersOn] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,9 @@ function CMDashboard() {
     sdate: "2020-06-02",
     edate: "2020-08-31",
   });
-
+useEffect(()=>{
+console.log(userRole)
+},[userRole])
   const fetchData = (values) => {
     // console.log(apiURLCourier, values);
     setLoading(true);
@@ -59,12 +61,15 @@ function CMDashboard() {
 
   return (
     <div className={styles.container}>
-      <Myview />
+      <Myview  usertype = {userRole.length >0 ? userRole[0].usertype : null}
+        otpLogIn={otpLogIn}/>
       <Filters
         fetchData={fetchData}
         filtersOn={filtersOn}
         setFiltersOn={setFiltersOn}
         tableData={tableData}
+        usertype = {userRole.length >0 ? userRole[0].usertype : null}
+        otpLogIn={otpLogIn}
       />
       <CMdashboardTable
         columnData={filtersOn === false ? cloumns1 : column2}
@@ -75,13 +80,18 @@ function CMDashboard() {
     </div>
   );
 }
-
-export default CMDashboard;
+const mapStateToProps =(state,ownProps)=>{
+ return {
+  userRole:state.global.userRole,
+  otpLogIn:state.global.otpLogIn
+ }
+}
+export default connect(mapStateToProps,null)(CMDashboard);
 
 const cloumns1 = [
   {
     Header: "Customer",
-    accessor: "consignor",
+    accessor: "origin",
   },
   {
     Header: "Location",
@@ -89,16 +99,16 @@ const cloumns1 = [
   },
   {
     Header: "Total Invoices",
-    accessor: "totalinvoiceno",
+    accessor: "invoicecount",
   },
 
   {
     Header: "Delivered",
-    accessor: "delivered",
+    accessor: "deliveredcount",
   },
   {
     Header: "Not Delivered",
-    accessor: "undelivered",
+    accessor: "undeliveredcount",
   },
   {
     Header: "Intransit",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Drawer from "antd/lib/drawer";
 import Button from "antd/lib/button";
 import Menu from "antd/lib/menu";
@@ -11,7 +11,12 @@ import Logo2 from "../../images/TVS-SCS-Tagline-Color.png";
 import Courier from "../../images/SVG/couriersidebar.svg";
 import history from "utils/history";
 import { usersList } from "containers/App/DWMusers";
-const MenuDrawer = ({ selected, user }) => {
+import {connect} from "react-redux";
+const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
+
+  useEffect(() => {
+    console.log(otpLogIn,userRole)
+  }, [otpLogIn])
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -58,7 +63,7 @@ const MenuDrawer = ({ selected, user }) => {
           defaultSelectedKeys={["1"]}
           style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          {!usersList.includes(user.email) && (
+          {!usersList.includes(user.email) && userRole &&(
             <Menu.Item
               key="/podDashboard"
               className={
@@ -89,7 +94,7 @@ const MenuDrawer = ({ selected, user }) => {
           )}
 
 
-
+      {!usersList.includes(user.email) && userRole && (
           <Menu.Item
             key="3"
             icon={<BarChartOutlined />}
@@ -102,6 +107,8 @@ const MenuDrawer = ({ selected, user }) => {
           >
             DWM summary
           </Menu.Item>
+)}
+          {!usersList.includes(user.email) && userRole && (
           <Menu.Item
             key="4"
             icon={<BarChartOutlined />}
@@ -114,7 +121,8 @@ const MenuDrawer = ({ selected, user }) => {
           >
             DWM Report Insight
           </Menu.Item>
-          {!usersList.includes(user.email) && (
+          )}
+          {!usersList.includes(user.email) && userRole && (
             <Menu.Item
               key="5"
               icon={<BarChartOutlined />}
@@ -128,7 +136,7 @@ const MenuDrawer = ({ selected, user }) => {
               Einvoice Print
             </Menu.Item>
           )}
-
+{!usersList.includes(user.email) && userRole && (
           <Menu.Item
             key="5"
             icon={<BarChartOutlined />}
@@ -141,11 +149,16 @@ const MenuDrawer = ({ selected, user }) => {
           >
             Transportation
           </Menu.Item>
+)}
 
         </Menu>
       </Drawer>
     </>
   );
 };
+const mapStateToProps=(state,ownProps)=>({
+  userRole:state.global.userRole.length > 0  ? state.global.userRole[0].usertype === "TVSUSER" ? true:false:true ,
+  otpLogIn:state.global.otpLogIn
+})
 
-export default MenuDrawer;
+export default connect(mapStateToProps,null)(MenuDrawer);

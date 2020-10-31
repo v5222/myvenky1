@@ -32,10 +32,16 @@ const makeSelectOTPval = () =>
     selectLoginPage,
     loginState => loginState.otpVal
   );
+  const makeSelectOTPLog = () =>
+  createSelector(
+    selectLoginPage,
+    loginState => loginState.otpLogIn
+  ); 
 export {
   makeSelectloggedIn,
   makeSelectUserData,
   makeSelectloading,
   makeSelectOTPstatus,
-  makeSelectOTPval
+  makeSelectOTPval,
+  makeSelectOTPLog
 };
