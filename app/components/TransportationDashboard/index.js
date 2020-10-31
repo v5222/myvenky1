@@ -34,7 +34,9 @@ class TransportationDashboard extends React.Component {
       billToId: [],
       selectDatefrom: null,
       selectDateto: null,
-      loading: false
+      loading: false,
+      tabclick: null,
+      billType: ""
     }
 
   }
@@ -70,7 +72,7 @@ class TransportationDashboard extends React.Component {
     else if (value === "ERCEXPUNTG") {
       const a = [
         { cost_center: "ERCTPT3245" },
-        { cost_center: "ERCTPT3314" }
+        // { cost_center: "ERCTPT3314" }
       ]
       const b = [
 
@@ -122,6 +124,91 @@ class TransportationDashboard extends React.Component {
 
 
     }
+    else if (value === "FILEXCHE19") {
+      const a = [
+        { cost_center: "FILTPT2029" },
+        { cost_center: "FILTPT2829" }
+      ]
+
+      const b = [
+        { bill_toid: "HOOG03" },
+        { bill_toid: "KALA07" },
+        { bill_toid: "KHAL02" },
+        { bill_toid: "KURU10" },
+        { bill_toid: "MARA01" },
+        { bill_toid: "MMNA21" },
+        { bill_toid: "NEMI01" },
+        { bill_toid: "NEWD01" },
+        { bill_toid: "PUZH12" },
+        { bill_toid: "SANA14" },
+        { bill_toid: "WBCECL" }
+
+      ]
+      this.setState({
+        costCenter: a,
+        billToId: b
+      })
+
+
+    }
+
+    else if (value === "TELGCCHE03") {
+      const a = [
+        { cost_center: "TELTPT2850" },
+        { cost_center: "TELTPT2296" },
+        { cost_center: "TELTPT2295" }
+      ]
+
+      const b = [
+        { bill_toid: "ANUM02" },
+        { bill_toid: "JAMS24" },
+        { bill_toid: "KOLK28" },
+        { bill_toid: "KURU07" },
+        { bill_toid: "MANEB7" },
+        { bill_toid: "NAND05" },
+        { bill_toid: "NEWD03" },
+        { bill_toid: "PANJ01" },
+        { bill_toid: "PAYA01" },
+        { bill_toid: "PITH12" },
+        { bill_toid: "POON11" },
+        { bill_toid: "PULI15" },
+        { bill_toid: "PULL01" },
+        { bill_toid: "RUDR03" },
+        { bill_toid: "SING22" },
+        { bill_toid: "VADO03" },
+        { bill_toid: "VITH04" }
+
+      ]
+      this.setState({
+        costCenter: a,
+        billToId: b
+      })
+
+    }
+
+    else if (value === "VLEEXMADHC") {
+      const a = [
+        { cost_center: "VLETPT3169" }
+      ]
+
+      const b = [
+        { bill_toid: "GJCECL" },
+        { bill_toid: "JODH02" },
+        { bill_toid: "NAVA06" },
+        { bill_toid: "NAVI01" },
+        { bill_toid: "SACH04" },
+        { bill_toid: "SANA23" },
+        { bill_toid: "VALL11" }
+
+
+      ]
+      this.setState({
+        costCenter: a,
+        billToId: b
+      })
+
+
+    }
     else {
       const a = [{
         cost_center: "",
@@ -157,12 +244,24 @@ class TransportationDashboard extends React.Component {
     let billToId = document.getElementById("hdnbilltoid").value;
     let fromDate = document.getElementById("hdnfromdate").value
     let toDate = document.getElementById("hdntodate").value
+    let billType
 
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
+    if (document.getElementById("hdncostcenter").value === "ERCEXPUNTG" || "KOVTPT3225") {
+      billType = "VBR"
+    }
+    else if (document.getElementById("hdncostcenter").value === "FILTPT2029" || "FILTPT2829" || "VLETPT3169") {
+      billType = "VCV & VBR"
+    }
+    else if (document.getElementById("hdncostcenter").value === "TELTPT2850" || "TELTPT2295" || "VLETPT3169") {
+      billType = "VCV"
+    }
+
+    console.log(billType)
+
     let bodyoption = {
       method: "POST",
       body: JSON.stringify({
+
 
         body:
         {
@@ -177,17 +276,14 @@ class TransportationDashboard extends React.Component {
           refdocdatefrom: this.state.selectDatefrom,
           // refdocdateto: "2020-10-21",
           refdocdateto: this.state.selectDateto,
-          refdoctype: "VBR",
-          invoicecategory: "Transportation"
+          refdoctype: billType,
+          invoicecategory: "Transportation",
+          eligibletype: "0"
         }
       }
-
-
-
       ),
-
-
     };
+
     fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoiceprocess", bodyoption)
 
       .then((res) => res.json())
@@ -208,11 +304,12 @@ class TransportationDashboard extends React.Component {
         }
 
         console.log(this.state)
-      }),
-      (error) => {
+      })
+      .catch((error) => {
         console.log("error", error)
 
       }
+      )
 
   }
 
@@ -232,6 +329,17 @@ class TransportationDashboard extends React.Component {
     })
 
   }
+
+
+  tabChange = (key) => {
+    console.log(key)
+
+    this.setState({
+      tabclick: key
+    })
+
+  }
+
 
 
 
@@ -261,12 +369,29 @@ class TransportationDashboard extends React.Component {
                   KONE ELEVATOR INDIA PRIVATE LIMITED
 
                 </Option>
+                {/**
                 <Option
                   title="customer_code"
                   value="OTIEXHOSJM" key="3">
                   Otis Elevator Company (India) Ltd
 
                 </Option>
+                 */}
+                <Option
+                  title="customer_code"
+                  value="FILEXCHE19" key="4">
+                  Ford India Limited
+                </Option>
+                <Option
+                  title="customer_code"
+                  value="TELGCCHE03" key="5">
+                  Turbo Energy Pvt Ltd
+                 </Option>
+                <Option
+                  title="customer_code"
+                  value="VLEEXMADHC" key="6">
+                  Valeo India Private Ltd
+                 </Option>
 
                 {/*<Option key="All" value="All">All</Option> */}
               </Select>
@@ -358,8 +483,8 @@ class TransportationDashboard extends React.Component {
           <div >
             <div>
               <div style={{ margin: "0px 25px" }}>
-                <Tabs defaultActiveKey="1" >
-                  <TabPane tab="Ready for billing" key="1">
+                <Tabs defaultActiveKey="1" onChange={this.tabChange}>
+                  <TabPane tab="Eligible for billing" key="1" >
                     <div className="tvsit-dwmdashboard_table">
                       <div className="tabel_scroll">
                         {
@@ -380,18 +505,59 @@ class TransportationDashboard extends React.Component {
                               < table style={{ border: "1px solid #c1e3ff" }}>
                                 <thead>
                                   <tr>
-                                    <th style={{ width: "15%" }}>Customer Code
-                      </th>
-                                    <th style={{ width: "15%" }}>Cost Center
-                  </th>
-                                    <th style={{ width: "15%" }}>Bill To Id
-                  </th>
-                                    <th style={{ width: "15%" }}>Ref Doc
-                  </th>
-                                    <th style={{ width: "15%" }}>Invoice Amount
-                  </th>
-                                    <th style={{ width: "15%" }}>Route Code
-                  </th>
+                                    <th style={{ width: "15%" }}>Customer Code </th>
+                                    <th style={{ width: "15%" }}>Cost Center </th>
+                                    <th style={{ width: "15%" }}>Bill To Id </th>
+                                    <th style={{ width: "15%" }}>Ref Doc  </th>
+                                    <th style={{ width: "15%" }}>Invoice Amount </th>
+                                    <th style={{ width: "15%" }}>Route Code </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {this.state.customerList.map((i, index) => (
+                                    <tr>
+                                      <td style={{ width: "15%" }}>{i.SHIP_TO_CUST}</td>
+                                      <td style={{ width: "15%" }}>{i.COST_CENTER}</td>
+                                      <td style={{ width: "15%" }}>{i.SHIP_TO_ID}</td>
+                                      <td style={{ width: "15%" }}>{i.TVS_VCV_SCN_NO}</td>
+                                      <td style={{ width: "15%" }}>{i.invoiceamount}</td>
+                                      <td style={{ width: "15%" }}></td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            )
+                        }
+                      </div>
+                    </div>
+                  </TabPane>
+                  <TabPane tab="Not eligible for billing" key="2">
+                    <div className="tvsit-dwmdashboard_table">
+                      <div className="tabel_scroll">
+                        {
+                          this.state.loading ? (
+                            <div
+                              style={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                marginTop: "50px",
+                              }}
+                            >
+                              <Spin size="large" />
+                              <div style={{ fontSize: "18px" }}>Loading Table</div>
+                            </div>
+                          ) : (
+                              < table style={{ border: "1px solid #c1e3ff" }}>
+                                <thead>
+                                  <tr>
+                                    <th style={{ width: "15%" }}>Customer Code </th>
+                                    <th style={{ width: "15%" }}>Cost Center </th>
+                                    <th style={{ width: "15%" }}>Bill To Id </th>
+                                    <th style={{ width: "15%" }}>Ref Doc </th>
+                                    <th style={{ width: "15%" }}>Invoice Amount </th>
+                                    <th style={{ width: "15%" }}>Route Code </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -414,8 +580,6 @@ class TransportationDashboard extends React.Component {
 
                       </div>
                     </div>
-                  </TabPane>
-                  <TabPane tab="Not eligible for billing" key="2">
                   </TabPane>
 
                 </Tabs>

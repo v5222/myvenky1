@@ -115,19 +115,16 @@ class InvoicePrint extends React.Component {
 
           <div className={styles.qrcode}>
             <div>
-              {/** */} <QRCode value={details.qrcode} level='Q' renderAs='svg' />
-
+              {details.qrcode === null ? " " : <QRCode value={details.qrcode} level='Q' renderAs='svg' />}
             </div>
-            <div className={styles.qr_details}>Version : {details.version}</div>
+            <div className={styles.qr_details}>Version : {details.version === null ? " " : details.version}</div>
             <div>
               <div className={styles.qr_details}> IRN:{details.irn === null ? " " : details.irn.slice(0, 28)} </div>
               <div className={styles.qr_details}>{details.irn === null ? " " : details.irn.slice(28, 48)} </div>
-
-
-              {/** <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(39, 48)}</div>
-              <div className={styles.qr_details}> {details.irn === null ? " " : details.irn.slice(48)}</div>  */}
             </div>
           </div>
+
+
         </section>
 
         <div

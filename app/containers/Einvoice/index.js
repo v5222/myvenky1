@@ -29,6 +29,8 @@ import { apiURLEinvoice } from 'containers/App/services.js'
 
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
+import { format } from 'date-fns'
+
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -51,7 +53,7 @@ class Einvoice extends React.Component {
       isLoader: false,
       isSuccess: false,
       isError: false,
-      dataItems: {},
+      dataItems: null,
       ItemsLength: 1,
       CompanyList: [],
       OUInstanceList: [],
@@ -67,35 +69,37 @@ class Einvoice extends React.Component {
       FormActivity: 1,
       selectStartDate: new Date(),
       selectEndDate: new Date(),
-      invNo: "",
-      // invNoTo:" ",
+      invoicenofrom: "",
+      invoicenoto: "",
       search: false,
       loading: false,
-      selectValue: ''
+      selectValue: '',
+      selectDatefrom: "",
+      selectDateto: ""
     };
   }
 
 
-  componentDidMount() {
-    fetch(urls + "1")
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({
-          CompanyList: data[0].POCompanyList,
-        });
-      });
-  }
-  handleChange = (date) => {
-    this.setState({
-      selectStartDate: date,
-    });
-  };
+  // componentDidMount() {
+  //   fetch(urls + "1")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       this.setState({
+  //         CompanyList: data[0].POCompanyList,
+  //       });
+  //     });
+  // }
+  // handleChange = (date) => {
+  //   this.setState({
+  //     selectStartDate: date,
+  //   });
+  // };
 
-  handleChanges = (date) => {
-    this.setState({
-      selectEndDate: date,
-    });
-  };
+  // handleChanges = (date) => {
+  //   this.setState({
+  //     selectEndDate: date,
+  //   });
+  // };
 
   handleSearch = (e) => {
     var ItemsLength = 0;
@@ -103,28 +107,45 @@ class Einvoice extends React.Component {
     var TotalList = [];
 
     this.setState({ loading: true });
+    console.log("invoice from", this.state.invoicenofrom)
+    console.log("invoice to", this.state.invoicenoto)
+    console.log("date from", this.state.selectDatefrom)
+    console.log("date to", this.state.selectDateto)
 
-    // if (this.state.invNoFrom && this.state.invNoTo) {
-    if (this.state.invNo) {
+    if (
+      this.state.invoicenofrom ||
+      this.state.invoicenofrom && this.state.invoicenoto ||
+      this.state.selectDatefrom && this.state.selectDateto ||
+      this.state.selectDatefrom && this.state.selectDateto && this.state.invoicenofrom && this.state.invoicenoto
+    ) {
       let options = {
         method: "POST",
         body: JSON.stringify({
           body: {
-            type: "INVOICEPRINT",
-            no: this.state.invNo
+            // type: "INVOICEPRINT1",
+            // invoicenofrom: this.state.invoicenofrom,
+            // invoicenoto: this.state.invoicenoto ? this.state.invoicenoto : this.state.invoicenofrom,
+            // invoicenofromdate: this.state.selectDatefrom,
+            // // invoicenofromdate: "01/09/2020",
+            // invoicenotodate: this.state.selectDateto
+            // // invoicenotodate: "03/09/2020",
+            type: "INVOICEPRINT1",
+
+            invoicenofrom: "KATLCCLI2000164",
+
+            invoicenoto: "KATLCCLI2000165",
+
+            invoicenofromdate: "19/10/2020",
+
+            invoicenotodate: "19/10/2020"
           },
-          // type: "INVOICEPRINT1",
-          // invoicenofrom:this.state.invNoFrom,
-          // invoicenoto:this.state.invNoTo,
-          // invoicenofromdate:"21/09/2020",
-          // invoicenotodate:"21/09/2020"
 
         }),
       };
+
       fetch(printUrl, options)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data, "from Search");
           this.setState({
             isSuccess: true,
             isError: false,
@@ -140,157 +161,174 @@ class Einvoice extends React.Component {
       console.log("error");
     }
 
+
+
   };
 
-  handleInvoice = (e) => {
+  handleInvoiceFrom = (e) => {
     this.setState({
-      invNo: e.target.value,
+      invoicenofrom: e.target.value,
 
     });
   };
-  // handleInvoiceTo = (e) => {
+  handleInvoiceTo = (e) => {
+    this.setState({
+      invoicenoto: e.target.value,
+    });
+  };
+  handleDateRange = (value) => {
+
+    const concat = value + ""
+    const split = concat.split(",")
+    // console.log(split[0])
+    // console.log(split[1])
+    console.log(format(new Date(split[0]), 'dd/MM/yyyy'))
+    console.log(format(new Date(split[1]), 'dd/MM/yyyy'))
+
+    this.setState({
+      selectDatefrom: format(new Date(split[0]), 'dd/MM/yyyy'),
+      selectDateto: format(new Date(split[1]), 'dd/MM/yyyy')
+    })
+
+  }
+  // BindOUInstance = () => {
+  //   // var CompanyCode = document.getElementById("drpCompanyCode").value;
+  //   fetch(
+  //     "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/2"
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         this.setState({
+  //           OUInstanceList: result[0].POOUInstanceList,
+  //         });
+
+  //         this.BindFinancialYear();
+  //         this.BindFinanceBook();
+  //       },
+  //       (error) => { }
+  //     );
+  // };
+
+  // BindFinancialYear = () => {
+  //   // var CompanyCode = document.getElementById("drpCompanyCode").value;
+  //   // var Ousplit = document.getElementById("drpOU").value;
+  //   // var Ous = Ousplit.split("|")[0];
+  //   fetch(
+  //     "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/3"
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         this.setState({
+  //           FinancialYearList: result[0].POFinYearList,
+  //         });
+  //         this.BindFinancialPeriod();
+  //       },
+  //       (error) => { }
+  //     );
+  // };
+
+  // BindFinancialPeriod = () => {
+  //   // var CompanyCode = document.getElementById("drpCompanyCode").value;
+  //   // var FinYearCode = document.getElementById("drpFinYear").value;
+  //   // var Ousplit = document.getElementById("drpOU").value;
+  //   // var Ous = Ousplit.split("|")[0];
+  //   fetch(
+  //     "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/4"
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         this.setState({
+  //           FinMonthList: result[0].POFinMonthList,
+  //         });
+
+  //         this.BindFinancialDates(result[0].POFinMonthList);
+  //       },
+  //       (error) => { }
+  //     );
+  // };
+
+  // BindFinanceBook = () => {
+  //   // var companyCode = document.getElementById("drpCompanyCode").value;
+  //   // var Ousplit = document.getElementById("drpOU").value;
+  //   // var Ous = Ousplit.split("|")[0];
+  //   fetch(
+  //     "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/5"
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         this.setState({
+  //           FinBookList: result[0].POFinBookList,
+  //         });
+  //       },
+  //       (error) => { }
+  //     );
+  // };
+
+  // BindFinancialDates = (result) => {
+  //   var stDate = result[0].FinMonthSTDateFormat;
+  //   var etDate = result[0].FinMonthETDateFormat;
+  //   var startDate = new Date(
+  //     stDate.split("-")[2],
+  //     Number(stDate.split("-")[1]) - 1,
+  //     stDate.split("-")[0]
+  //   );
+  //   var endDate = new Date(
+  //     etDate.split("-")[2],
+  //     Number(etDate.split("-")[1]) - 1,
+  //     etDate.split("-")[0]
+  //   );
   //   this.setState({
-  //     invNoTo: e.target.value,
+  //     startDate: startDate,
+  //     endDate: endDate,
+  //     selectStartDate: startDate,
+  //     selectEndDate: endDate,
   //   });
   // };
-  BindOUInstance = () => {
-    // var CompanyCode = document.getElementById("drpCompanyCode").value;
-    fetch(
-      "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/2"
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            OUInstanceList: result[0].POOUInstanceList,
-          });
 
-          this.BindFinancialYear();
-          this.BindFinanceBook();
-        },
-        (error) => { }
-      );
-  };
+  // BindFinancialSelectedDates = (value) => {
+  //   var EL = document.getElementById("drpFinPeriod").value;
+  //   console.log(EL);
+  //   var stDate = value.split(":")[0];
+  //   var etDate = value.split(":")[1];
+  //   var startDate = new Date(
+  //     stDate.split("-")[2],
+  //     Number(stDate.split("-")[1]) - 1,
+  //     stDate.split("-")[0]
+  //   );
+  //   var endDate = new Date(
+  //     etDate.split("-")[2],
+  //     Number(etDate.split("-")[1]) - 1,
+  //     etDate.split("-")[0]
+  //   );
+  //   this.setState({
+  //     startDate: startDate,
+  //     endDate: endDate,
+  //     selectStartDate: startDate,
+  //     selectEndDate: endDate,
+  //   });
+  // };
 
-  BindFinancialYear = () => {
-    // var CompanyCode = document.getElementById("drpCompanyCode").value;
-    // var Ousplit = document.getElementById("drpOU").value;
-    // var Ous = Ousplit.split("|")[0];
-    fetch(
-      "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/3"
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            FinancialYearList: result[0].POFinYearList,
-          });
-          this.BindFinancialPeriod();
-        },
-        (error) => { }
-      );
-  };
+  // divHideShow = () => {
+  //   this.setState({
+  //     isActive: true,
+  //     isPrint: true,
+  //     isPdf: false,
+  //     isLoader: true,
+  //   });
+  // };
 
-  BindFinancialPeriod = () => {
-    // var CompanyCode = document.getElementById("drpCompanyCode").value;
-    // var FinYearCode = document.getElementById("drpFinYear").value;
-    // var Ousplit = document.getElementById("drpOU").value;
-    // var Ous = Ousplit.split("|")[0];
-    fetch(
-      "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/4"
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            FinMonthList: result[0].POFinMonthList,
-          });
-
-          this.BindFinancialDates(result[0].POFinMonthList);
-        },
-        (error) => { }
-      );
-  };
-
-  BindFinanceBook = () => {
-    // var companyCode = document.getElementById("drpCompanyCode").value;
-    // var Ousplit = document.getElementById("drpOU").value;
-    // var Ous = Ousplit.split("|")[0];
-    fetch(
-      "https://api.tvslsl.in/CustomerApi/api/loginbased/BindLoginDetails/2/tvsuser/TVSLSL/FCY1920/5"
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            FinBookList: result[0].POFinBookList,
-          });
-        },
-        (error) => { }
-      );
-  };
-
-  BindFinancialDates = (result) => {
-    var stDate = result[0].FinMonthSTDateFormat;
-    var etDate = result[0].FinMonthETDateFormat;
-    var startDate = new Date(
-      stDate.split("-")[2],
-      Number(stDate.split("-")[1]) - 1,
-      stDate.split("-")[0]
-    );
-    var endDate = new Date(
-      etDate.split("-")[2],
-      Number(etDate.split("-")[1]) - 1,
-      etDate.split("-")[0]
-    );
-    this.setState({
-      startDate: startDate,
-      endDate: endDate,
-      selectStartDate: startDate,
-      selectEndDate: endDate,
-    });
-  };
-
-  BindFinancialSelectedDates = (value) => {
-    var EL = document.getElementById("drpFinPeriod").value;
-    console.log(EL);
-    var stDate = value.split(":")[0];
-    var etDate = value.split(":")[1];
-    var startDate = new Date(
-      stDate.split("-")[2],
-      Number(stDate.split("-")[1]) - 1,
-      stDate.split("-")[0]
-    );
-    var endDate = new Date(
-      etDate.split("-")[2],
-      Number(etDate.split("-")[1]) - 1,
-      etDate.split("-")[0]
-    );
-    this.setState({
-      startDate: startDate,
-      endDate: endDate,
-      selectStartDate: startDate,
-      selectEndDate: endDate,
-    });
-  };
-
-  divHideShow = () => {
-    this.setState({
-      isActive: true,
-      isPrint: true,
-      isPdf: false,
-      isLoader: true,
-    });
-  };
-
-  divLoading = () => {
-    this.setState({
-      isLoader: false,
-    });
-  };
-  handleDateRange = (dates) => {
-    console.log(dates);
-  };
+  // divLoading = () => {
+  //   this.setState({
+  //     isLoader: false,
+  //   });
+  // };
+  // handleDateRange = (dates) => {
+  //   console.log(dates);
+  // };
 
   handleSelect = (value) => {
     console.log(`selected ${value}`);
@@ -329,19 +367,21 @@ class Einvoice extends React.Component {
               <Col span={5}>
                 <div className={styles.label}>Dates</div>
                 <RangePicker
-                  allowClear={false}
+                  allowClear={true}
                   onChange={this.handleDateRange}
                   style={{ width: "100%" }}
+                  bordered={true}
+                  format="DD-MM-YYYY"
                 />
               </Col>
 
               <Col span={4}>
                 <div className={styles.label}>Invoice No From</div>
-                <Input value={this.state.invNo} onChange={this.handleInvoice} />
+                <Input onChange={this.handleInvoiceFrom} value={this.state.invoicenofrom} />
               </Col>
               <Col span={4}>
                 <div className={styles.label}>Invoice No To</div>
-                <Input />
+                <Input onChange={this.handleInvoiceTo} value={this.state.invoicenoto} />
               </Col>
               <Col span={5}>
                 <div className={styles.label}>Report Type</div>
@@ -413,7 +453,8 @@ class Einvoice extends React.Component {
 
             <Row gutter={[20, 16]} />
           </section>
-
+          {console.log(this.state)
+          }
           {this.state.loading ? (
             <div
               style={{
@@ -429,16 +470,25 @@ class Einvoice extends React.Component {
             </div>
           ) : isActive ? (
             <section className={styles.container}>
-              <NoResult>
-                <InvoicePrint
-                  ref={(el) => (this.invoiceRef = el)}
-                  data={dataItems}
-                  selectValue={this.state.selectValue}
-                />
-              </NoResult>
+              {
+                this.state.dataItems.map((dataItems, i) => {
+                  return (
+                    <NoResult >
+                      <InvoicePrint
+                        ref={(el) => (this.invoiceRef = el)}
+                        data={dataItems}
+                        key={i}
+                        selectValue={this.state.selectValue}
+                      />
+                    </NoResult>
+                  )
+                })
+              }
             </section>
           ) : this.state.search == false ? (
-            <SearchResult />
+            <div>
+              <SearchResult />
+            </div>
           ) : (
                   <NoResult />
                 )}
@@ -449,3 +499,4 @@ class Einvoice extends React.Component {
 }
 
 export default Einvoice;
+

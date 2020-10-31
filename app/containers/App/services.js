@@ -4,9 +4,9 @@ const apiURLCourier =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/courierportal";
 const apiURLDwm =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
-
 const apiURLEinvoice =
-  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing"
+  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
+
 
 const apiURLTransportation =
   "https://testapi.tvslsl.in/CloudInterface/API/CLI"
