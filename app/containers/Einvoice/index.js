@@ -122,22 +122,11 @@ class Einvoice extends React.Component {
         method: "POST",
         body: JSON.stringify({
           body: {
-            // type: "INVOICEPRINT1",
-            // invoicenofrom: this.state.invoicenofrom,
-            // invoicenoto: this.state.invoicenoto ? this.state.invoicenoto : this.state.invoicenofrom,
-            // invoicenofromdate: this.state.selectDatefrom,
-            // // invoicenofromdate: "01/09/2020",
-            // invoicenotodate: this.state.selectDateto
-            // // invoicenotodate: "03/09/2020",
             type: "INVOICEPRINT1",
-
-            invoicenofrom: "KATLCCLI2000164",
-
-            invoicenoto: "KATLCCLI2000165",
-
-            invoicenofromdate: "19/10/2020",
-
-            invoicenotodate: "19/10/2020"
+            invoicenofrom: this.state.invoicenofrom ? this.state.invoicenofrom : this.state.invoicenoto,
+            invoicenoto: this.state.invoicenoto,
+            invoicenofromdate: this.state.selectDatefrom,
+            invoicenotodate: this.state.selectDateto
           },
 
         }),

@@ -16,6 +16,7 @@ import {
   makeSelectloading,
   makeSelectOTPstatus,
   makeSelectOTPval,
+  makeSelectOTPLog
 } from "./selector";
 import LoginSVg1 from "../../images/SVG/loginSvg1.svg";
 import LoginSvg2 from "../../images/SVG/loginSvg2.svg";
@@ -61,6 +62,7 @@ function LoginPage({
   login,
   logout,
   user,
+  otpLogin,
   ...props
 }) {
   useInjectReducer({ key, reducer });
@@ -237,6 +239,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectloading(),
   otpStatus: makeSelectOTPstatus(),
   otpVal: makeSelectOTPval(),
+  otpLogin : makeSelectOTPLog()
 });
 
 export function mapDispatchToProps(dispatch) {

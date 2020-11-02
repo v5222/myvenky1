@@ -104,6 +104,7 @@
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
     "react-json-to-csv": "^1.0.4",
+    "react-loadingg": "^1.7.2",
     "react-qr-scanner": "0.0.10",
     "react-query": "^2.21.0",
     "react-redux": "7.0.2",
@@ -111,14 +112,16 @@
     "react-score-indicator": "^2.2.1",
     "react-table": "^7.5.0",
     "react-to-print": "^2.10.0",
+    "react-webcam-barcode-scanner": "0.0.2-rc2",
     "react-window": "^1.8.5",
-    "reactstrap": "^8.5.1",
+    "reactstrap": "^8.6.0",
     "redux": "4.0.1",
     "redux-saga": "1.0.2",
     "reselect": "4.0.0",
     "rupees-to-words": "^1.0.4",
     "sanitize.css": "8.0.0",
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "sweetalert2": "^10.8.1"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

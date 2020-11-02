@@ -9,14 +9,14 @@ import {
 } from "./constants";
 import { SET_LOGIN } from "containers/App/constants";
 import history from "utils/history";
-import { apiURL } from "../../containers/App/services";
+import { apiURLCourier } from "../../containers/App/services";
 import request from "utils/request";
 import { call, put, takeLatest } from "redux-saga/effects";
 
 export function* OtpValidation(action) {
   const { values } = action.payload;
 
-  const requestURL = apiURL;
+  const requestURL = apiURLCourier;
   const options = {
     method: "POST",
     body: JSON.stringify({
@@ -70,9 +70,15 @@ export function* OtpValidation(action) {
         yield put({
           type: SET_LOGIN,
           loggedIn: true,
+          userRole:data.body.bodymsg,
+          otpLogIn:true
         });
-        // localStorage.setItem("loggedIn", true);
-        history.push("/dwmApplication");
+       if(data.body.bodymsg[0].usertype !== "TVSUSER"){
+        history.push("/courierManagement");
+       } else{
+        history.push("/podDashboard");
+       }
+        
       }
     }
     yield put({

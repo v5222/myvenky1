@@ -326,7 +326,7 @@ class InvoicePrint extends React.Component {
         </section>
 
         <EinvoiceTable item={InvoiceDetailsList} details={details} style={{ margin: 'auto' }} />
-        <div style={{ textAlign: 'center', color: 'grey' }}>
+        <div style={{ textAlign: 'center', color: 'grey',marginBottom:'50px' }}>
           {InvoiceHeaderList[0].regdofficeaddress}
         </div>
 

@@ -18,6 +18,8 @@ import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
 import Transportation from "containers/Transportation/Loadable";
+import BarcodeAutomate from "containers/ClAttendance/BarcodeAutomate/Loadable";
+import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
 import GlobalStyle from "../../global-styles";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -176,6 +178,16 @@ function App({
                 <Redirect to="/" />
               )
           }
+        />
+        <Route
+          exact
+          path="/clbarcodeautomate"
+          component={BarcodeAutomate}
+        />
+        <Route
+          exact
+          path="/clbarcodeprint"
+          component={BarcodePrint}
         />
         <Route component={NotFoundPage} />
       </Switch>

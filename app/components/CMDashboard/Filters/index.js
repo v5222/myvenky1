@@ -17,10 +17,10 @@ const currentDate = moment().format("YYYY-MM-DD");
 const startDate = moment()
   .subtract(7, "d")
   .format("YYYY-MM-DD");
-function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
+function Filters({ fetchData, setFiltersOn, filtersOn, tableData, usertype,otpLogIn }) {
   // const [filtersData, setFiltersData] = useState([]);
 
-  const [custValue, setCustValue] = useState("All");
+  const [custValue, setCustValue] = useState(otpLogIn && usertype !== "TVSUSER" ? usertype :"All");
   const [location, setLocation] = useState("All");
   const [locationData, setLocationData] = useState([]);
   const [custData, setCustData] = useState([]);
@@ -182,10 +182,15 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
 
   useEffect(() => {
     fetchFilters();
+
     fetchData(data);
   }, [data]);
   useEffect(() => {
     console.log(startDate, currentDate);
+    if(otpLogIn && usertype !== "TVSUSER"){
+      setData({...data, ["type"]: "FILTER-2",["customer"]:usertype})
+      setFiltersOn(true);
+    }
   }, []);
 
   return (
@@ -200,6 +205,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData }) {
                 setCustValue(value);
                 handleChange("customer", value);
               }}
+              disabled={usertype !== "TVSUSER" ? true :false}
               className={styles.select}
               showSearch
               optionFilterProp="children"
