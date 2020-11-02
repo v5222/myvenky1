@@ -205,7 +205,7 @@ function Filters({ fetchData, setFiltersOn, filtersOn, tableData, usertype,otpLo
                 setCustValue(value);
                 handleChange("customer", value);
               }}
-              disabled={usertype !== "TVSUSER" ? true :false}
+              disabled={usertype ?usertype !== "TVSUSER"  ? true :false:false}
               className={styles.select}
               showSearch
               optionFilterProp="children"
