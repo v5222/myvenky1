@@ -1,6 +1,6 @@
 export const Testconfig = {
   appId: "003658e9-acd7-4b96-b2f6-4498c128517b",
-  redirectUri: "https://appdemo.tvslsl.in/",
+  redirectUri: "http://localhost:3000",
   scopes: ["user.read"],
 };
 
