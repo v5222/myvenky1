@@ -21,6 +21,8 @@ import Transportation from "containers/Transportation/Loadable";
 import BarcodeAutomate from "containers/ClAttendance/BarcodeAutomate/Loadable";
 import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
 import GlobalStyle from "../../global-styles";
+import VehicleTrackingSystem from "containers/VehicleTrackingSystem/Loadable";
+import VehicleTrackingSystemDetails from "../VehicleTrackingSystemDetails/Loadable";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
 import { connect } from "react-redux";
@@ -188,6 +190,28 @@ function App({
           exact
           path="/clbarcodeprint"
           component={BarcodePrint}
+        />
+        <Route
+          exact
+          path="/vehicletrackingsystem"
+          render={(props) =>
+            authenticated ? (
+              <VehicleTrackingSystem {...props} logout={logout} user={user} />
+            ) : (
+                <Redirect to="/" />
+              )
+          }
+        />
+        <Route
+          exact
+          path="/vehicletrackingsystemdetails"
+          render={(props) =>
+            authenticated ? (
+              <VehicleTrackingSystemDetails {...props} logout={logout} user={user} />
+            ) : (
+                <Redirect to="/" />
+              )
+          }
         />
         <Route component={NotFoundPage} />
       </Switch>
