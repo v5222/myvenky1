@@ -1,17 +1,21 @@
 import { createSelector } from "reselect";
 import { initialState } from "./reducer";
 
-const selectRouter = state => state.router;
-const selectGlobal = state => state.global || initialState;
+const selectRouter = (state) => state.router;
+const selectGlobal = (state) => state.global || initialState;
 const makeSelectLocation = () =>
   createSelector(
     selectRouter,
-    routerState => routerState.location
+    (routerState) => routerState.location
   );
 const makeSelectLogin = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.loggedIn
+    (globalState) => globalState.loggedIn
   );
-
-export { makeSelectLocation, makeSelectLogin };
+const makeSelectEmail = () =>
+  createSelector(
+    selectGlobal,
+    (globalState) => globalState.userEmail
+  );
+export { makeSelectLocation, makeSelectLogin, makeSelectEmail };

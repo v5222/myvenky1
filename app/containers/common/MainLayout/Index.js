@@ -110,7 +110,9 @@ class MainLayout extends React.Component {
                 </Dropdown>
               </div>
               <Text className="tvsit_main-layout-name">
-                {this.props.user.displayName}
+                {this.props.user.displayName !== undefined || null
+                  ? this.props.user.displayName
+                  : this.props.userEmail}
               </Text>
             </div>
           </Header>
@@ -125,6 +127,11 @@ class MainLayout extends React.Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userEmail: state.global.userEmail,
+  };
+};
 const mapDispatchtoProps = (dispatch) => {
   return {
     // logout: () => {
@@ -133,6 +140,6 @@ const mapDispatchtoProps = (dispatch) => {
   };
 };
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchtoProps
 )(MainLayout);
