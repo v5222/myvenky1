@@ -125,7 +125,18 @@ class EinvoiceTable extends React.Component {
 
 
   render() {
-    // const { item } = this.props;
+    const { item } = this.props;
+    console.log(item)
+
+    const tcs = item.reduce((tot, arr)=>{
+      
+      return arr.valothchrg;
+    },0);
+    const totalCharges = item.reduce((tot, arr)=>{
+      
+      return arr.valtotinvval;
+    },0);
+    console.log(tcs)
     // const { details } = this.props;
 
     //  const {uniqueItems} = this.state 
@@ -708,9 +719,12 @@ class EinvoiceTable extends React.Component {
                   <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }} >
                     Other Taxes(TCS):
           </td>
+                  
                   <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
-                    0
+                   {tcs}
           </td>
+
+
                 </tr>
                 <tr>
 
@@ -719,7 +733,8 @@ class EinvoiceTable extends React.Component {
           </td>
                   <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
                     <CurrencyFormat
-                      value={itemTotal.toFixed(2)}
+                      // value={itemTotal.toFixed(2)}
+                      value={totalCharges}
                       displayType={"text"}
                       thousandSeparator={true}
                       renderText={(value) => <div>{value}</div>}

@@ -123,10 +123,20 @@ class Einvoice extends React.Component {
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
-            invoicenofrom: this.state.invoicenofrom ? this.state.invoicenofrom : this.state.invoicenoto,
+            invoicenofrom: this.state.invoicenofrom,
             invoicenoto: this.state.invoicenoto,
             invoicenofromdate: this.state.selectDatefrom,
+
             invoicenotodate: this.state.selectDateto
+            // type: "INVOICEPRINT1",
+
+            // invoicenofrom:"TNCD20000154",
+        
+            // invoicenoto:"TNCD20000154",
+        
+            // invoicenofromdate:"01/11/2020",
+        
+            // invoicenotodate:"03/11/2020"
           },
 
         }),

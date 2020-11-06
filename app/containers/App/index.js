@@ -17,6 +17,7 @@ import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
+import TransportationMaster from "containers/TransportationMaster/Loadable";
 import Transportation from "containers/Transportation/Loadable";
 import BarcodeAutomate from "containers/ClAttendance/BarcodeAutomate/Loadable";
 import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
@@ -163,6 +164,17 @@ function App({
                 logout={logout}
                 user={user}
               />
+            ) : (
+                <Redirect to="/" />
+              )
+          }
+        />
+        <Route
+          exact
+          path="/transportationmaster"
+          render={(props) =>
+            authenticated ? (
+              <TransportationMaster {...props} logout={logout} user={user} />
             ) : (
                 <Redirect to="/" />
               )

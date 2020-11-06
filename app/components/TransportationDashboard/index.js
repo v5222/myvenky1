@@ -11,6 +11,7 @@ import Filterstyles from "../TransportationDashboard/Filters/FIlters.module.scss
 import Select from "antd/lib/select";
 import { Button, Tooltip } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { SaveOutlined } from '@ant-design/icons';
 const { Option } = Select;
 import { DatePicker, Space } from 'antd';
 const { RangePicker } = DatePicker;
@@ -21,8 +22,29 @@ const startDate = moment()
     .format("YYYY-MM-DD");
 
 import { format } from 'date-fns'
+import { Input } from 'antd';
+import {CUSTOMERCODE} from "../TransportationMasterDashboard/body"
 
 
+const additionalChargeOutput = [{
+    customercode: "ERCEXPUNTG",
+    costcenter: "ERCTPT3245",
+    billtoid: "billtoid",
+    routecode: "routecode",
+    billingtype: "Transportation",
+    refdoc:"refdoc",
+    freightrevenue:"freightrevenue"
+    },{
+    customercode: "ERCEXPUNTG",
+    costcenter: "ERCTPT3245",
+    billtoid: "billtoid",
+    routecode: "routecode",
+    billingtype: "Transportation",
+    refdoc:"refdoc",
+    freightrevenue:"freightrevenue"
+
+    
+    }]
 
 class TransportationDashboard extends React.Component {
     constructor(props) {
@@ -38,260 +60,168 @@ class TransportationDashboard extends React.Component {
             loading: false,
             tabclick: null,
             billType: "",
-            // bodyOption: {
-            //   type: "S2B",
-            //   ctxt_ouinstance: "2",
-            //   ctxt_user: "027266",
-            //   billtocustomercode: "",
-            //   customercostcenter: "",
-            //   customerbilltoid: "",
-            //   invoicegenerationtype: "One VCV - One Invoice",
-            //   refdocdatefrom: this.state.selectDatefrom,
-            //   refdocdateto: this.state.selectDateto,
-            //   refdoctype: "",
-            //   invoicecategory: "Transportation",
-            //   eligibletype: ""
-            // }
+            customerCode:[],
+            billingCodeList:[],
+            costCenterList:[],
+            tCustomerCode:"",
+            routecodeList:[],
+            tCostCenter:"",
+            tBillingId:"",
+            tRouteCode:"",
+            billTypeList:[],
+            additionalChargeOutputList:[],
+            isSave:false,
+            analysiscodeList:[],
+            analysiscode:"",
+            owntaxregion:"",
+            owntaxregionList:[],
+            shiptoid:"",
+            loading:"",
+            toll:"",
+            halting:"",
+            doubleDriver:"",
+            multiPoint:"",
+            oda:"",
+            spin:false,
+
+            
         }
+
+    }
+
+    componentDidMount(){
+        let customercode = {
+            method: "POST",
+            body: JSON.stringify(CUSTOMERCODE),
+        };
+
+        fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling", customercode)
+        .then((res)=>res.json())
+        .then((data)=>{
+                console.log("datacustomer", data )
+                this.setState({
+                    customerCode:data.body.bodymsg.customercode
+                })
+               
+        })
+        console.log(this.state.customerCode)
 
     }
 
 
 
-    handleChange = (value) => {
+    // handleChange = (value) => {
 
-        document.getElementById("hdncustomercode").value = value;
-        // let c = document.getElementById("hdncustomercode").value;
-        // console.log(c)
+    //     document.getElementById("hdncustomercode").value = value;
+    //     // let c = document.getElementById("hdncustomercode").value;
+    //     // console.log(c)
 
-        if (value === "KOVEXTNUD4") {
-            const a = [{
-                cost_center: "KOVTPT3225"
 
-            }]
-            const b = [
-                { bill_toid: "AYAN36" },
+    // }
 
-                { bill_toid: "ORAG38" },
-                { bill_toid: "PILL10" },
-                { bill_toid: "SALI10" },
-                { bill_toid: "TNCECL" },
-                { bill_toid: "VADA29" },
+    handleCustomerChange = (value)=>{
+        let customercodeoption = {
+            method: "POST",
+            body: JSON.stringify({
+                body: {
+                    type: "BILLINGDDLCOSTCENTER",
+                    email: "Muneeshkumar.a@tvslsl.com",
+                    customercode:value
+                  
+                }
+              }),
+        };
 
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-        }
+        fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling", customercodeoption)
+        .then((res)=>res.json())
+        .then((data)=>{
+                console.log("datacustomer", data )
+                this.setState({
+                    costCenterList:data.body.bodymsg.costcenter,
+                    billingCodeList:data.body.bodymsg.billtoid,
+                    billTypeList:data.body.bodymsg.billtype,
+                    analysiscodeList:data.body.bodymsg.analysiscode,
+                    owntaxregionList:data.body.bodymsg.owntaxregion,
+                    tCustomerCode:value
+                })
+               
+        })
 
-        else if (value === "OTIEXHOSJM") {
 
-            const a = [
-              { cost_center: "OTIAWH3149" },
-              { cost_center: "OTITPT3229" },
-              { cost_center: "OTITPT3302" },
-              { cost_center: "OTIAWH3128" },
-              { cost_center: "OTITPT3156" }
-      
-            ]
-      
-            const b = [
-              { bill_toid: "BHAN04" },
-              { bill_toid: "BORI01" },
-              { bill_toid: "GURGD9" },
-              { bill_toid: "JAIP38" },
-              { bill_toid: "JHCECL" },
-              { bill_toid: "JIGA10" },
-              { bill_toid: "KIAD12" },
-              { bill_toid: "KOLK82" },
-              { bill_toid: "LAKI01" },
-              { bill_toid: "LUCK27" },
-              { bill_toid: "LUDH37" },
-              { bill_toid: "NAGO02" },
-              { bill_toid: "PITA01" },
-              { bill_toid: "RANC20" },
-              { bill_toid: "SHAN12" },
-              { bill_toid: "SOMA13" }
-            ]
-            this.setState({
-              costCenter: a,
-              billToId: b
-            })
-      
-      
-          }
+    }
+    handleCostCenterChange = (value)=>{
+
+
+
+        let costcenteroption = {
+            method: "POST",
+            body: JSON.stringify({
+                body: {
+                type: "BILLINGDDLROUTECODE",
+                email: "Muneeshkumar.a@tvslsl.com",
+                costcenter:value
+                }
+                }),
+        };
+
+        fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling", costcenteroption)
+        .then((res)=>res.json())
+        .then((data)=>{
+                console.log("costcenter", data )
+                this.setState({
+                    routecodeList:data.body.bodymsg.routecode,
+                    tCostCenter:value
+                    
+                })
+               
+        })
+
+
+    }
+
+    handleBillIdChange = (value)=>{
+        this.setState({
+            tBillingId:value
+        })
+
+    }
+    handleRouteCodeChange = (value)=>{
+        this.setState({
+            tRouteCode:value
+        })
+
+    }
+    handleBillingTypeChange = (value)=>{
+        this.setState({
+            billType:value
+        })
+
+    }
+    handleAnalysisCodeChange = (value)=>{
+        this.setState({
+            analysiscode:value
+        })
+
+    }
+    handleOwnTaxRegion = (value)=>{
+        this.setState({
+            owntaxregion:value
+        })
+
+    }
+    handleShipToId = (value)=>{
+        this.setState({
+            shiptoid:value
+        })
+
+    }
+
+
+
     
 
-
-        else if (value === "ERCEXPUNTG") {
-            const a = [
-                { cost_center: "ERCTPT3245" },
-                // { cost_center: "ERCTPT3314" }
-            ]
-            const b = [
-
-                { bill_toid: "GURU04" },
-                { bill_toid: "MAHA41" },
-                { bill_toid: "MUMBA3" },
-                { bill_toid: "VIMA04" },
-
-
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-        }
-        else if (value === "OTIEXHOSJM") {
-
-            const a = [
-                { cost_center: "OTIAWH3149" },
-                { cost_center: "OTITPT3229" },
-                { cost_center: "OTITPT3302" },
-                { cost_center: "OTIAWH3128" },
-                { cost_center: "OTITPT3156" }
-
-            ]
-
-            const b = [
-                { bill_toid: "BHAN04" },
-                { bill_toid: "BORI01" },
-                { bill_toid: "GURGD9" },
-                { bill_toid: "JAIP38" },
-                { bill_toid: "JHCECL" },
-                { bill_toid: "JIGA10" },
-                { bill_toid: "KIAD12" },
-                { bill_toid: "KOLK82" },
-                { bill_toid: "LAKI01" },
-                { bill_toid: "LUCK27" },
-                { bill_toid: "LUDH37" },
-                { bill_toid: "NAGO02" },
-                { bill_toid: "PITA01" },
-                { bill_toid: "RANC20" },
-                { bill_toid: "SHAN12" },
-                { bill_toid: "SOMA13" }
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-
-
-        }
-        else if (value === "FILEXCHE19") {
-            const a = [
-                { cost_center: "FILTPT2029" },
-                { cost_center: "FILTPT2829" }
-            ]
-
-            const b = [
-                { bill_toid: "HOOG03" },
-                { bill_toid: "KALA07" },
-                { bill_toid: "KHAL02" },
-                { bill_toid: "KURU10" },
-                { bill_toid: "MARA01" },
-                { bill_toid: "MMNA21" },
-                { bill_toid: "NEMI01" },
-                { bill_toid: "NEWD01" },
-                { bill_toid: "PUZH12" },
-                { bill_toid: "SANA14" },
-                { bill_toid: "WBCECL" }
-
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-
-
-        }
-
-        else if (value === "TELGCCHE03") {
-            const a = [
-                { cost_center: "TELTPT2850" },
-                { cost_center: "TELTPT2296" },
-                { cost_center: "TELTPT2295" }
-            ]
-
-            const b = [
-                { bill_toid: "ANUM02" },
-                { bill_toid: "JAMS24" },
-                { bill_toid: "KOLK28" },
-                { bill_toid: "KURU07" },
-                { bill_toid: "MANEB7" },
-                { bill_toid: "NAND05" },
-                { bill_toid: "NEWD03" },
-                { bill_toid: "PANJ01" },
-                { bill_toid: "PAYA01" },
-                { bill_toid: "PITH12" },
-                { bill_toid: "POON11" },
-                { bill_toid: "PULI15" },
-                { bill_toid: "PULL01" },
-                { bill_toid: "RUDR03" },
-                { bill_toid: "SING22" },
-                { bill_toid: "VADO03" },
-                { bill_toid: "VITH04" }
-
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-
-        }
-
-        else if (value === "VLEEXMADHC") {
-            const a = [
-                { cost_center: "VLETPT3169" }
-            ]
-
-            const b = [
-                { bill_toid: "GJCECL" },
-                { bill_toid: "JODH02" },
-                { bill_toid: "NAVA06" },
-                { bill_toid: "NAVI01" },
-                { bill_toid: "SACH04" },
-                { bill_toid: "SANA23" },
-                { bill_toid: "VALL11" }
-
-
-            ]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-
-
-        }
-        else {
-            const a = [{
-                cost_center: "",
-            }]
-            const b = [{
-                bill_toid: ""
-            }]
-            this.setState({
-                costCenter: a,
-                billToId: b
-            })
-        }
-
-    }
-
-
-    costCenterChange = (value) => {
-        document.getElementById("hdncostcenter").value = value;
-
-
-    }
-
-    billIdChange = (value) => {
-        document.getElementById("hdnbilltoid").value = value;
-
-    }
-
     handleFetch = (tab, value, bodyOption) => {
+        
 
         let bodyoption = {
             method: "POST",
@@ -302,94 +232,77 @@ class TransportationDashboard extends React.Component {
         };
         console.log(value)
 
-         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing", bodyoption)
-            // fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoiceprocess", bodyoption)
+        //  fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing", bodyoption)
+        //  fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoiceprocess", bodyoption)
+         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling", bodyoption)
 
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
-                if (data.Response.length > 0) {
+                
+                    if(data.body.statuscode === 200){
+
                     if (tab === 1) {
                         this.setState({
-                            customerList1: data.Response,
-                            loading: false
+                            additionalChargeOutputList:data.body.bodymsg.additionalcharges,
+                            customerList1: data.body.bodymsg.eligible,
+                            loading: false,
+                            isSave:true,
+                            spin:false
+                            
                         })
                     }
-                    if (tab === 2) {
+                    else if (tab === 2) {
                         this.setState({
-                            customerList2: data.Response,
-                            loading: false
+                            additionalChargeOutputList:data.body.bodymsg.additionalcharges,
+                            customerList2: data.body.bodymsg.noteligible,
+                            loading: false,
+                            isSave:true,
+                            spin:false
+                        })}
+                    }else{
+                        this.setState({
+                            additionalChargeOutputList:[],
+                            customerList2: [],
+                            customerList1: [],
+                            loading: true,
+                            isSave:false,
+                            spin:false
+
                         })
+                        alert("No data for Selected Filters")
                     }
-                }
-                else {
-                    this.setState({
-                        customerList1: [],
-                        customerList2: [],
-                        loading: false
-                    })
-                }
-
-
-                console.log(this.state)
+                  
             })
-            .catch((error) => {
-                console.log("error", error)
-
-            }
-            )
-
-
     }
 
     handleSearch = () => {
 
-        this.setState({ loading: true })
-        let customerCode = document.getElementById("hdncustomercode").value;
-        let costCenter = document.getElementById("hdncostcenter").value;
-        let billToId = document.getElementById("hdnbilltoid").value;
-        let fromDate = document.getElementById("hdnfromdate").value
-        let toDate = document.getElementById("hdntodate").value
+        this.setState({ loading: true,spin:true })
        
-        let billType;
-
-        if (costCenter === "ERCEXPUNTG" | "KOVTPT3225"  ) {
-            billType = "VBR";
-        } 
-         else if (costCenter === "FILTPT2029" | "FILTPT2829" | "VLETPT3169"){
-            billType = "VCV & VBR";
-        }
-         else if (costCenter === "TELTPT2850" | "TELTPT2295" | "VLETPT3169"){
-            billType = "VCV";
-        }
-        else{
-            billType ="VBR"
-        }
-
-        console.log(costCenter)
-        console.log(typeof costCenter)
-        console.log(billType)
-
-
-
         let bodyOption = {
             type: "S2B",
-            ctxt_ouinstance: "2",
-            ctxt_user: "027266",
-            billtocustomercode: customerCode,
-            customercostcenter: costCenter,
-            customerbilltoid: billToId,
-            invoicegenerationtype: "One VCV - One Invoice",
-            refdocdatefrom: this.state.selectDatefrom,
-            refdocdateto: this.state.selectDateto,
-            refdoctype: billType,
-            invoicecategory: "Transportation",
-            eligibletype: " "
+            email:"Muneeshkumar.a@tvslsl.com",
+            search:{
+                customercode: this.state.tCustomerCode,
+                costcenter:this.state.tCostCenter,
+                routecode:this.state.tRouteCode,
+                billingtype:this.state.billType,
+                analysiscode:this.state.analysiscode,
+                billtoid:this.state.tBillingId,
+                shiptoid:this.state.shiptoid,
+                owntaxregion:this.state.owntaxregion,
+                fromdate:this.state.selectDatefrom,
+                todate:this.state.selectDateto
+
+            },
         }
+        console.log("bodyoption",bodyOption)
+        
 
 
-        this.handleFetch(1, "1", bodyOption)
-        this.handleFetch(2, "0", bodyOption)
+         this.handleFetch(1, "1", bodyOption)
+         this.handleFetch(2, "0", bodyOption)
 
     }
 
@@ -434,44 +347,22 @@ class TransportationDashboard extends React.Component {
                             <div className={Filterstyles.title}>Customer code</div>
                             <Select
                                 className={Filterstyles.select}
-                                onChange={this.handleChange}
+                                onChange={this.handleCustomerChange}
                                 defaultValue="Select"
+                                // value={this.state.tCustomerCode}
                             >
 
-                                <Option
-                                    title="customer_code"
-                                    value="ERCEXPUNTG" key="1">
-                                    ERICSSON INDIA PRIVATE LIMITED
-                </Option>
-                                <Option
-                                    title="customer_code"
-                                    value="KOVEXTNUD4" key="2">
-                                    KONE ELEVATOR INDIA PRIVATE LIMITED
+                               
+                 {this.state.customerCode.map((i, index)=>{
+                    return(
+                        <>
+                        <Option title="customer_name" value={i} key={index}>
+                            {i}
+                        </Option>
 
-                </Option>
-                            
-                <Option
-                  title="customer_code"
-                  value="OTIEXHOSJM" key="3">
-                  Otis Elevator Company (India) Ltd
-
-                </Option>
-                 
-                                <Option
-                                    title="customer_code"
-                                    value="FILEXCHE19" key="4">
-                                    Ford India Limited
-                </Option>
-                                <Option
-                                    title="customer_code"
-                                    value="TELGCCHE03" key="5">
-                                    Turbo Energy Pvt Ltd
-                 </Option>
-                                <Option
-                                    title="customer_code"
-                                    value="VLEEXMADHC" key="6">
-                                    Valeo India Private Ltd
-                 </Option>
+                        </>
+                    )
+                })}
 
                                 {/*<Option key="All" value="All">All</Option> */}
                             </Select>
@@ -481,14 +372,14 @@ class TransportationDashboard extends React.Component {
                             <div className={Filterstyles.title}>Cost center</div>
                             <Select
                                 className={Filterstyles.select}
-                                onChange={this.costCenterChange}
+                                onChange={this.handleCostCenterChange}
                                 defaultValue="Select"
                             >
-                                {this.state.costCenter.map((i, index) => {
+                                {this.state.costCenterList.map((i, index) => {
                                     return (
                                         <>
-                                            <Option title="cost_center" value={i.cost_center} key={index}>
-                                                {i.cost_center}
+                                            <Option title="cost_center" value={i} key={index}>
+                                                {i}
                                             </Option>
                                         </>
                                     )
@@ -496,35 +387,46 @@ class TransportationDashboard extends React.Component {
                             </Select>
                         </div>
 
+                        
                         <div className={Filterstyles.wrapper}>
-                            <div className={Filterstyles.title}>Bill to ID</div>
+                            <div className={Filterstyles.title}>Route Code</div>
                             <Select
-                                className={Filterstyles.select}
-                                onChange={this.billIdChange}
                                 defaultValue="Select"
-                            >
-                                {this.state.billToId.map((i, index) => {
-                                    return (
-                                        <>
-                                            <Option
-                                                title="bill_toid"
-                                                value={i.bill_toid} key={index}>
-                                                {i.bill_toid}
-                                            </Option>
-                                        </>
-                                    )
-                                })}
+                                onChange={this.handleRouteCodeChange}
+                                className={Filterstyles.select}
+                            >   
+                                
+                            {this.state.routecodeList.map((i, index) => {
+                                return (
+                                    <>
+                                        <Option
+                                            title="route_code"
+                                            value={i} key={index}>
+                                            {i}
+                                        </Option>
+                                    </>
+                                )
+                            })}
                             </Select>
                         </div>
                         <div className={Filterstyles.wrapper}>
                             <div className={Filterstyles.title}>Billing type</div>
                             <Select
-                                defaultValue="Transportation"
+                                defaultValue="Select"
+                                onChange={this.handleBillingTypeChange}
                                 className={Filterstyles.select}
                             >
-                                <Option value={'Transportation'} key={"Transportation"}>
-                                    Transportation
-              </Option>
+                            {this.state.billTypeList.map((i, index) => {
+                                return (
+                                    <>
+                                        <Option
+                                            title="bill_type"
+                                            value={i} key={index}>
+                                            {i}
+                                        </Option>
+                                    </>
+                                )
+                            })}
                             </Select>
                         </div>
                         <div className={Filterstyles.wrapper}>
@@ -538,75 +440,248 @@ class TransportationDashboard extends React.Component {
                             />
                         </div>
 
-                        <div className={Filterstyles.wrapper}>
-                            <div className={Filterstyles.title} style={{ color: "transparent" }}>Billing type</div>
-                            <Button type="primary" icon={<SearchOutlined />}
-                                onClick={this.handleSearch}
+                       
+
+                    </div>
+                    <div className={Filterstyles.container}>
+                    <div className={Filterstyles.wrapper}>
+                            <div className={Filterstyles.title}>Own tax region</div>
+                            <Select
+                                className={Filterstyles.select}
+                                onChange={this.handleOwnTaxRegion}
+                                defaultValue="Select"
                             >
-                                Search
-          </Button>
+                            {this.state.owntaxregionList.map((i, index) => {
+                                return (
+                                    <>
+                                        <Option
+                                            title="own_tax"
+                                            value={i} key={index}>
+                                            {i}
+                                        </Option>
+                                    </>
+                                )
+                            })}
+                            
+                            
+                                
+                            </Select>
                         </div>
-
-                        <div>
-
-                            <input type="hidden" id="hdncustomercode" />
-                            <input type="hidden" id="hdncostcenter" />
-                            <input type="hidden" id="hdnbilltoid" />
-                            <input type="hidden" id="hdnfromdate" />
-                            <input type="hidden" id="hdntodate" />
-
+                    <div className={Filterstyles.wrapper}>
+                            <div className={Filterstyles.title}>Bill to ID</div>
+                            <Select
+                                className={Filterstyles.select}
+                                onChange={this.handleBillIdChange}
+                                defaultValue="Select"
+                            >
+                                {this.state.billingCodeList.map((i, index) => {
+                                    return (
+                                        <>
+                                            <Option
+                                                title="bill_toid"
+                                                value={i} key={index}>
+                                                {i}
+                                            </Option>
+                                        </>
+                                    )
+                                })}
+                            </Select>
                         </div>
-
-
-
+                    
+                    <div className={Filterstyles.wrapper}>
+                            <div className={Filterstyles.title}>Ship to ID</div>
+                            <Select
+                                className={Filterstyles.select}
+                                onChange={this.handleShipToId}
+                                defaultValue="Select"
+                            >
+                            {this.state.billingCodeList.map((i, index) => {
+                                return (
+                                    <>
+                                        <Option
+                                            title="bill_toid"
+                                            value={i} key={index}>
+                                            {i}
+                                        </Option>
+                                    </>
+                                )
+                            })}
+                                
+                            </Select>
+                        </div>
+                    <div className={Filterstyles.wrapper}>
+                            <div className={Filterstyles.title}>Analysis Code</div>
+                            <Select
+                                className={Filterstyles.select}
+                                onChange={this.handleAnalysisCodeChange}
+                                defaultValue="Select"
+                            >
+                            {this.state.analysiscodeList.map((i, index) => {
+                                return (
+                                    <>
+                                        <Option
+                                            title="analysis_code"
+                                            value={i} key={index}>
+                                            {i}
+                                        </Option>
+                                    </>
+                                )
+                            })}
+                                
+                            </Select>
+                        </div>
+                        <div className={Filterstyles.wrapper}>
+                        <div className={Filterstyles.title} style={{ color: "transparent" }}>Billing type</div>
+                        <Button type="primary" icon={<SearchOutlined />}
+                            onClick={this.handleSearch}
+                        >
+                            Search
+                        </Button>
+                    </div>
+                    
+                    
                     </div>
                     <div >
                         <div>
                             <div style={{ margin: "0px 25px" }}>
-                                <Tabs defaultActiveKey="1" onChange={this.tabChange}>
+                                <Tabs defaultActiveKey="0" onChange={this.tabChange}>
+                                <TabPane tab="Additional Charges" key="0">
+                                <div className="tvsit-dwmdashboard_table">
+                                <div className="tabel_scroll">
+                                {
+                                    
+                                            < table style={{ border: "1px solid #c1e3ff" }}>
+                                                <thead>
+                                                    <tr>
+                                                        <th style={{ width: "6%", fontSize:"10px"}}>Customer Code</th>
+                                                        <th style={{ width:"6%", fontSize:"10px" }}> Cost center</th>
+                                                        <th style={{ width:"6%", fontSize:"10px" }}>Bill to Id</th>
+                                                        <th style={{ width:"6%", fontSize:"10px" }}>Route Code</th>
+                                                        <th style={{ width:"6%", fontSize:"10px" }}> Ref Doc </th>
+                                                        <th style={{ width:"6%", fontSize:"10px" }}>Freight Revenue(₹) </th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}> Loading / Unloading</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Toll charges</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Halting</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Double Driver</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Multi point delivery</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>ODA / Docket charges</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Other charges</th>
+                                                        <th style={{ width:"8%", fontSize:"10px" }}>Total Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                            {
+                                                                this.state.spin ? <div style={{marginLeft:"310%",marginTop:"50%"}} > <Spin size="large"  /> </div> :
+
+                                                            this.state.additionalChargeOutputList.map((i,index)=>{
+                                                            return(
+                                                                                                                
+                                                        <tr>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.customercode}</td>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.costcenter}</td>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.billtoid}</td>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.routecode}</td>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.refdocno}</td>
+                                                            <td style={{ width:"6%", fontSize:"10px" }}>{i.freightrevenue}</td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="Loading/Unloading" value={i.loadingunloading} />
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="Toll Charges" type="number" value={i.tollcharges}/>
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px"  }}>
+                                                            <Input placeholder="Halting" type="number" value={i.halting} />
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="Double driver"  type="number" value={i.doubledriver}/>
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="Multi point delivery"  type="number" value={i.multipointdelivery}/>
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="ODA / Docket charges" type="number" value={i.odadocketcharges} />
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px" }}>
+                                                            <Input placeholder="Other Charges" type="number" value={i.othercharges}/>
+                                                            </td>
+                                                            <td style={{ width:"8%", fontSize:"10px"}}>
+                                                            0.00
+                                                            </td>
+                                                        </tr>
+                                                            )
+                                                    })}
+                                                </tbody>
+                                                { this.state.isSave ? 
+                                                (<tfoot>
+                                                <tr>
+                                                <td colSpan={13}></td>
+                                                <td>
+                                                <Button type="primary" icon={<SaveOutlined />} style={{marginTop:'10px'}}>
+                                                    Save
+                                                </Button>
+                                                </td>
+                                                </tr>
+                                                </tfoot>) : null
+                                                }
+                                            </table>
+                                        
+                                }
+                                
+                                
+                                </div>
+                                </div>
+
+
+
+                                </TabPane>
                                     <TabPane tab="Ready for billing" key="1" >
                                         <div className="tvsit-dwmdashboard_table">
                                             <div className="tabel_scroll">
                                                 {
-                                                    this.state.loading ? (
-                                                        <div
-                                                            style={{
-                                                                width: "100%",
-                                                                display: "flex",
-                                                                flexDirection: "column",
-                                                                alignItems: "center",
-                                                                marginTop: "50px",
-                                                            }}
-                                                        >
-                                                            <Spin size="large" />
-                                                            <div style={{ fontSize: "18px" }}>Loading Table</div>
-                                                        </div>
-                                                    ) : (
-                                                            < table style={{ border: "1px solid #c1e3ff" }}>
+                                                           < table style={{ border: "1px solid #c1e3ff" }}>
                                                                 <thead>
+
                                                                     <tr>
                                                                         <th style={{ width: "15%" }}>Customer Code </th>
                                                                         <th style={{ width: "15%" }}>Cost Center </th>
                                                                         <th style={{ width: "15%" }}>Bill To Id </th>
+                                                                        <th style={{ width: "15%" }}>Route Code </th>
                                                                         <th style={{ width: "15%" }}>Ref Doc  </th>
                                                                         <th style={{ width: "15%" }}>Invoice Amount(₹) </th>
-                                                                        <th style={{ width: "15%" }}>Route Code </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {this.state.customerList1.map((i, index) => (
+                                                                    {this.state.spin ? <div style={{marginLeft:"310%",marginTop:"50%"}} > <Spin size="large"  /> </div> :
+                                                                    this.state.customerList1.map((i, index) => (            
                                                                         <tr>
-                                                                            <td style={{ width: "15%" }}>{i.SHIP_TO_CUST}</td>
-                                                                            <td style={{ width: "15%" }}>{i.COST_CENTER}</td>
-                                                                            <td style={{ width: "15%" }}>{i.SHIP_TO_ID}</td>
-                                                                            <td style={{ width: "15%" }}>{i.TVS_VCV_SCN_NO}</td>
+                                                                            <td style={{ width: "15%" }}>{i.customercode}</td>
+                                                                            <td style={{ width: "15%" }}>{i.costcenter}</td>
+                                                                            <td style={{ width: "15%" }}>{i.billtoid}</td>
+                                                                            <td style={{ width: "15%" }}>{i.routecode}</td>
+                                                                            <td style={{ width: "15%" }}>{i.refdocno}</td>
                                                                             <td style={{ width: "15%" }}>{i.invoiceamount}</td>
-                                                                            <td style={{ width: "15%" }}></td>
                                                                         </tr>
-                                                                    ))}
+                                                                    ))
+                                                                    
+                                                                }
                                                                 </tbody>
+
+                                                        { this.state.isSave ? 
+                                                                            (<tfoot>
+                                                                                 <tr>
+                                                                                    <td colSpan={13}></td>
+                                                                                    <td>
+                                                                             <Button type="primary" icon={<SaveOutlined />} style={{marginTop:'10px'}}>
+                                                                                 Processing Invoice
+                                                                            </Button>
+                                                                            </td>
+                                                                            </tr>
+                                                                            </tfoot> ) : null
+                                                        }
+                                                                
                                                             </table>
-                                                        )
+                                                        
                                                 }
                                             </div>
                                         </div>
@@ -615,45 +690,35 @@ class TransportationDashboard extends React.Component {
                                         <div className="tvsit-dwmdashboard_table">
                                             <div className="tabel_scroll">
                                                 {
-                                                    this.state.loading ? (
-                                                        <div
-                                                            style={{
-                                                                width: "100%",
-                                                                display: "flex",
-                                                                flexDirection: "column",
-                                                                alignItems: "center",
-                                                                marginTop: "50px",
-                                                            }}
-                                                        >
-                                                            <Spin size="large" />
-                                                            <div style={{ fontSize: "18px" }}>Loading Table</div>
-                                                        </div>
-                                                    ) : (
+                                                    
                                                             < table style={{ border: "1px solid #c1e3ff" }}>
                                                                 <thead>
                                                                     <tr>
                                                                         <th style={{ width: "15%" }}>Customer Code </th>
                                                                         <th style={{ width: "15%" }}>Cost Center </th>
                                                                         <th style={{ width: "15%" }}>Bill To Id </th>
+                                                                        <th style={{ width: "15%" }}>Route Code </th>
+
                                                                         <th style={{ width: "15%" }}>Ref Doc </th>
                                                                         <th style={{ width: "15%" }}>Invoice Amount(₹) </th>
-                                                                        <th style={{ width: "15%" }}>Route Code </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {this.state.customerList2.map((i, index) => (
+                                                               { this.state.spin ? <div style={{marginLeft:"310%",marginTop:"50%"}} > <Spin size="large"  /> </div> :
+                                                                    this.state.customerList2.map((i, index) => (
                                                                         <tr>
-                                                                            <td style={{ width: "15%" }}>{i.SHIP_TO_CUST}</td>
-                                                                            <td style={{ width: "15%" }}>{i.COST_CENTER}</td>
-                                                                            <td style={{ width: "15%" }}>{i.SHIP_TO_ID}</td>
-                                                                            <td style={{ width: "15%" }}>{i.TVS_VCV_SCN_NO}</td>
+                                                                            <td style={{ width: "15%" }}>{i.customercode}</td>
+                                                                            <td style={{ width: "15%" }}>{i.costcenter}</td>
+                                                                            <td style={{ width: "15%" }}>{i.billtoid}</td>
+                                                                            <td style={{ width: "15%" }}>{i.routecode}</td>
+                                                                            <td style={{ width: "15%" }}>{i.refdocno}</td>
                                                                             <td style={{ width: "15%" }}>{i.invoiceamount}</td>
-                                                                            <td style={{ width: "15%" }}></td>
                                                                         </tr>
-                                                                    ))}
+                                                                    ))
+                                                               }
                                                                 </tbody>
                                                             </table>
-                                                        )
+                                                        
                                                 }
 
 

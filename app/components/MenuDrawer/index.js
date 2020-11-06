@@ -136,7 +136,21 @@ const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
               Einvoice Print
             </Menu.Item>
           )}
-{!usersList.includes(user.email) && userRole && (
+        {!usersList.includes(user.email) && userRole && (
+          <Menu.Item
+            key="5"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/transportationmaster")}
+            className={
+              selected === "/transportationmaster"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            Transportation Master
+          </Menu.Item>
+)}
+        {!usersList.includes(user.email) && userRole && (
           <Menu.Item
             key="5"
             icon={<BarChartOutlined />}
