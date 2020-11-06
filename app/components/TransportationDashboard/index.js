@@ -572,7 +572,7 @@ class TransportationDashboard extends React.Component {
                                                 <tbody>
                                                 
                                                             {
-                                                                this.state.spin ? <div style={{marginLeft:"310%",marginTop:"50%"}} > <Spin size="large"  /> </div> :
+                                                                this.state.spin ? <div style={{marginTop:"50%"}} > <Spin size="large"  /> </div> :
 
                                                             this.state.additionalChargeOutputList.map((i,index)=>{
                                                             return(
@@ -652,7 +652,7 @@ class TransportationDashboard extends React.Component {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {this.state.spin ? <div style={{marginLeft:"310%",marginTop:"50%"}} > <Spin size="large"  /> </div> :
+                                                                    {this.state.spin ? <div style={{marginLeft:"310%",marginTop:"40%"}} > <Spin size="large"  /> </div> :
                                                                     this.state.customerList1.map((i, index) => (            
                                                                         <tr>
                                                                             <td style={{ width: "15%" }}>{i.customercode}</td>
@@ -666,20 +666,22 @@ class TransportationDashboard extends React.Component {
                                                                     
                                                                 }
                                                                 </tbody>
+                                                                    { this.state.isSave ? 
+                                                                    (<tfoot>
+                                                                         <tr>
+                                                                            <td colSpan={5}></td>
+                                                                            <td>
+                                                                     <Button type="primary" icon={<SaveOutlined />} style={{marginTop:'10px'}}>
+                                                                         Processing Invoice
+                                                                    </Button>
+                                                                    </td>
+                                                                    </tr>
+                                                                    </tfoot>)  : null
+                                                                    }
+                                                
+                                                       
 
-                                                        { this.state.isSave ? 
-                                                                            (<tfoot>
-                                                                                 <tr>
-                                                                                    <td colSpan={13}></td>
-                                                                                    <td>
-                                                                             <Button type="primary" icon={<SaveOutlined />} style={{marginTop:'10px'}}>
-                                                                                 Processing Invoice
-                                                                            </Button>
-                                                                            </td>
-                                                                            </tr>
-                                                                            </tfoot> ) : null
-                                                        }
-                                                                
+                                                         
                                                             </table>
                                                         
                                                 }
