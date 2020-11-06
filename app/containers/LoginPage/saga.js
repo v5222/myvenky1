@@ -70,15 +70,15 @@ export function* OtpValidation(action) {
         yield put({
           type: SET_LOGIN,
           loggedIn: true,
-          userRole:data.body.bodymsg,
-          otpLogIn:true
+          userRole: data.body.bodymsg,
+          otpLogIn: true,
+          userEmail: data.body.bodymsg[0].useremailid,
         });
-       if(data.body.bodymsg[0].usertype !== "TVSUSER"){
-        history.push("/courierManagement");
-       } else{
-        history.push("/podDashboard");
-       }
-        
+        if (data.body.bodymsg[0].usertype !== "TVSUSER") {
+          history.push("/courierManagement");
+        } else {
+          history.push("/podDashboard");
+        }
       }
     }
     yield put({
