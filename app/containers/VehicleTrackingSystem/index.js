@@ -28,7 +28,7 @@ function VehicleTrackingSystem({ logout, user }) {
   };
 
   function callback(key) {
-    console.log(key);
+    // console.log(key);
   }
 
   function handleapidata(apidata){
@@ -83,25 +83,27 @@ const custDetilsReqObj = {
    
     axios.post("https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts",  reqOpt)
     .then(res => {
-      // console.log("Response",res.data.body);
       if(res.data.body.statuscode == 200){
         handleapidata(res.data.body.bodymsg)
+      }
+      else{
+        console.log("Err")
       }
     })
 
     axios.post("https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts", custDetilsReqObj)
     .then(res => {
-      // console.log("custDetilsReqObj",res.data.body);
       if(res.data.body.statuscode == 200){
         handleCustDetailsdata(res.data.body.bodymsg)
+      }
+      else{
+        console.log("Err")
       }
     })
   },[])
 
   useEffect(() => {
 
-    console.log("searchValue",searchValue)
-    
     let custVehicleSearchData = {
       "body": {
         "type": "VEHICLENOSEARCH",
@@ -112,9 +114,11 @@ const custDetilsReqObj = {
     }
     axios.post("https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts", custVehicleSearchData)
     .then(res => {
-      console.log("8888777777",res.data.body);
       if(res.data.body.statuscode == 200){
         handleCustDetailsdata(res.data.body.bodymsg)
+      }
+      else{
+        console.log("Err")
       }
     })
   },[searchValue])
@@ -131,9 +135,11 @@ const custDetilsReqObj = {
 
     axios.post("https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts", handleSelectedDatas)
     .then(res => {
-      console.log("handleSelectedDatas",res.data.body);
       if(res.data.body.statuscode == 200){
         handleCustDetailsdata(res.data.body.bodymsg)
+      }
+      else{
+        console.log("Err")
       }
     })
   }
@@ -169,7 +175,6 @@ const custDetilsReqObj = {
                       onChange={handleSelectChange}
                       > 
                       {customerName.length > 0 && customerName.map((val, index) => {
-                        console.log("#",val)
                         return (
                           <>
                             <Option value={val} key={index}>
@@ -189,93 +194,81 @@ const custDetilsReqObj = {
                   onChange={ e => setSearchValue(e.target.value)}
                   placeholder="Enter Vehicle Number">
                   </Input>
-                  <Button 
+                  {/* <Button 
                   style={{marginLeft:"15px"}}
                   type="primary" icon={<SearchOutlined />}
                   >
                     Search
-                  </Button>
+                  </Button> */}
                   <span total={10} defaultCurrent={5}
-                  style={{marginLeft:"50px"}}
+                  style={{marginLeft:"150px"}}
                   >Last Refresh Date</span> : 04/11/2020
                   </div>
-
-
-                  
                   <Tabs style={{marginLeft:"25px"}} defaultActiveKey="1" onChange={callback}>
-
-                  
                     <TabPane tab="Active" key="1">
                         {tabData.length > 0 && tabData.map((arr, ind) => {
                           return(
-                        <div>
-                          <div className="blueactivecontainer" >
+                            
+                            <div className="bluecompletedcontainer">
                             <div className="tvsit-vts-container">
-                             
-                            <div className='d-flex'>
-                                <div style={{marginRight:'30px',fontSize:'11px',color:'grey',lineHeight:"18px"}}>
-                                  <p style={{fontWeight:'700'}}>TDO <span style={{color:'#008DC5'}}>E15TDO0000035</span></p>
-                                  <p style={{fontWeight:'700'}}>ID <span style={{color:'#008DC5'}}>{arr.tripno ? arr.tripno : "--"}</span></p>
+
+                              <div className='d-flex'>
+                                <div className="tdodetails">
+                                  <p className="parastyle">TDO <span style={{color:"#00A5E6"}}>E15TDO0000035</span></p>
+                                  <p className="parastyle">ID <span style={{color:"#00A5E6"}}>{arr.tripno ? arr.tripno : "--"}</span></p>
                                 </div>
-                                <div style={{marginRight:'10px',fontSize:'11px',color:'#123F74',lineHeight:"15px"}}>
-                                  <p>TS7GHSJI45678</p>
-                                  <button style={{backgroundColor:"green", fontWeight:"600", lineHeight:"10px"}}>In Transit</button>
+                                <div className="tdodetails">
+                                  <p className="parastyle">TS7GHSJI45678</p>
+                                  <button className="intransit">In Transit</button>
                                 </div>
-                                <div style={{ alignItems:"center", textAlign:"center", marginRight:'15px', marginLeft:"15px",fontSize:'11px',color:'#123F74',lineHeight:"18px"}}>
-                                  <p>Tracking <br/> active</p>
+                                <div className="trackactive" >
+                                  <p className="parastyle">Tracking <br/> active</p>
                                 </div>
                               </div>
 
 
+
                             <div className="vl"></div>
                             <div className='d-flex'>
-                            <div style={{marginRight:'30px',fontSize:'11px',lineHeight:"18px",fontWeight:'600'}}>
-                          <p style={{color:"#123F74"}}><EnvironmentOutlined style={{color: '#2FCB16'}}/>{arr.originlocation ? arr.originlocation : "--"}</p>
-                          <p style={{color:'#123F74'}}><EnvironmentOutlined style={{color: "#FF0000"}}/>{arr.destinationlocation ? arr.destinationlocation : "--"}</p>
+                            <div>
+                          <p className="location"><EnvironmentOutlined />{arr.originlocation ? arr.originlocation : "--"}</p>
+                          <p className="location"><EnvironmentOutlined />{arr.destinationlocation ? arr.destinationlocation : "--"}</p>
                             </div>
-                            <div style={{marginRight:'30px',fontSize:'11px',lineHeight:"18px",fontWeight:'600'}}>
-                            <p style={{color:'rgba(18, 63, 116, 0.7)'}}> Started Date</p>
-                          <p style={{color:'#123F74'}}>{arr.tripstarttimestamp ? arr.tripstarttimestamp : "--"}</p>
-                            </div>
-                            </div>
-                            <div className="vl"></div>
-                            <div className="'d-flex'">
-                            <div style={{marginRight:'30px',fontSize:'11px',fontWeight:'600'}}>
-                            <p style={{color:'rgba(18, 63, 116, 0.7)'}}>Remaining Distance</p>
-                          <p style={{color:'#123F74'}}>{arr.remainingkm ? arr.remainingkm : "--"}</p>
-                          </div>
-                            
-                            <div style={{marginRight:'30px',fontSize:'11px',fontWeight:'600'}}>
-                            <p style={{color:'rgba(18, 63, 116, 0.7)'}}>Total Distance</p>
-                          <p style={{color:'#123F74'}}>{arr.plannedkm ? arr.plannedkm : "--" }</p>
-                              <p style={{color:"red"}}>More Details <DownOutlined/></p>
+                            <div>
+                            <p className="startdate" style={{color:"rgba(18, 63, 116, 0.7)"}}> Started Date</p>
+                          <p className="startdate">{arr.tripstarttimestamp ? arr.tripstarttimestamp : "--"}</p>
                             </div>
                             </div>
                             <div className="vl"></div>
-                            <div style={{marginLeft:"50px", marginTop:"15px"}}>
+                            <div>
+                            <p className="distance" style={{color:"rgba(18, 63, 116, 0.7)"}}>Remaining Distance</p>
+                          <p className="distance">{arr.remainingkm ? arr.remainingkm : "--"}</p>
+                          
+                            </div>
+                            <div>
+                            <p className="distance" style={{color:"rgba(18, 63, 116, 0.7)"}}>Total Distance</p>
+                            <p className="distance">{arr.plannedkm ? arr.plannedkm : "--" }</p>
+                            <p className="moredetails">More Details <DownOutlined/></p>
+                            </div>
+                            <div className="vl"></div>
+                            <div style={{marginTop:"20px"}}>
                               <img width="45px" height="45px" 
                                 src={require('../../images/map-location.png')} 
+                                
                                 onClick={()=> history.push({
-                                  pathname:"/vehicletrackingsystemdetails",
-                                  state: { message: ind},
+                                  pathname:"/vehicletrackingsystem/"+ arr.tripkey,
+                                  state: { message: arr.tripkey}
                                   })}></img></div>
                             </div>
-                        </div>
-                        </div>
+                            </div>
                           )
                         })}
                     </TabPane>
-
-
-
-
-
-
                     <TabPane tab="Completed" key="2">
                         {dummyArray.length > 0 && dummyArray.map((arr, ind) => {
                           return(
                             <div className="bluecompletedcontainer">
-                      <div className="tvsit-vts-container">
+                          <div className="tvsit-vts-container">
                             <div className='d-flex'>
                             <div style={{marginRight:'30px',fontSize:'11px',color:'grey',lineHeight:"18px"}}>
                             <p style={{fontWeight:'700'}}>TDO <span style={{color:'#008DC5'}}>E15TDO0000035</span></p>
@@ -317,7 +310,7 @@ const custDetilsReqObj = {
                         })}
                     </TabPane>
                   </Tabs>
-                  <ReactPaginate
+                  {/* <ReactPaginate
                   previousLabel={'prev'}
                   nextLabel={'next'}
                   breakLabel={'...'}
@@ -329,7 +322,7 @@ const custDetilsReqObj = {
                   containerClassName={'pagination'}
                   subContainerClassName={'pages pagination'}
                   activeClassName={'active'}
-                  ></ReactPaginate>
+                  ></ReactPaginate> */}
               </div>
         </main>
       </MainLayout>

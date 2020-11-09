@@ -11,6 +11,8 @@ import { DatePicker, Space } from 'antd';
 const { TabPane } = Tabs;
 import { Input } from 'antd';
 import {BILLINGBASIS, INVOICETYPE, REFDOC} from "./body"
+import {connect} from "react-redux";
+
 
 
 
@@ -49,6 +51,7 @@ class TransportationMasterDashboard extends React.Component {
                     body: {
                             type: "DDL",
                             email: "Muneeshkumar.a@tvslsl.com"
+                            
                     }
                   }
             ),
@@ -67,6 +70,7 @@ class TransportationMasterDashboard extends React.Component {
                
         })
         this.handleViewDetails();
+        console.log("email",this.props.userEmail)
 
     }
     salecontractChange = (e)=>{
@@ -82,6 +86,7 @@ class TransportationMasterDashboard extends React.Component {
                     body: {
                       type: "SALECONTRACT",
                       email:"Muneeshkumar.a@tvslsl.com",
+                    
                       salecontract:e.target.value
                     }
                   }
@@ -127,6 +132,7 @@ class TransportationMasterDashboard extends React.Component {
                     body: {
                         type: "SALECONTRACTINSERT",
                         email:"Muneeshkumar.a@tvslsl.com",
+                        
                         output: [
                           {
                             salecontractno:saleContractSave ,
@@ -165,6 +171,7 @@ class TransportationMasterDashboard extends React.Component {
                     body: {
                         type: "SALECONTRACTSELECT",
                         email:"Muneeshkumar.a@tvslsl.com",
+                        
                         
                       }
                   }
@@ -374,5 +381,12 @@ class TransportationMasterDashboard extends React.Component {
         )
     }
 }
+const mapStateToProps=(state,ownProps)=>({
+    // userEmail:state.global.userRole.length > 0  ? state.global.userRole[0].usertype === "TVSUSER" ? true:false:true ,
+    userEmail:state.global.userEmail
+  })
 
-export default TransportationMasterDashboard;
+
+export default connect(mapStateToProps,null)(TransportationMasterDashboard);
+
+// export default TransportationMasterDashboard;

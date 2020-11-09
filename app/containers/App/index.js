@@ -17,18 +17,17 @@ import Einvoice from "containers/Einvoice/Loadable";
 import CourierManagement from "containers/CourierManagement/Loadable";
 import DwmApplication from "containers/DwmApplication/Loadable";
 import DwmUsageReportApplication from "containers/DwmUsageReportApplication/Loadable";
-import TransportationMaster from "containers/TransportationMaster/Loadable";
 import Transportation from "containers/Transportation/Loadable";
+import TransportationMaster from "containers/TransportationMaster/Loadable";
 import BarcodeAutomate from "containers/ClAttendance/BarcodeAutomate/Loadable";
 import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
-import BidManagement from "containers/BidManagement/Loadable";
 import GlobalStyle from "../../global-styles";
 import VehicleTrackingSystem from "containers/VehicleTrackingSystem/Loadable";
 import VehicleTrackingSystemDetails from "../VehicleTrackingSystemDetails/Loadable";
 import TestPage from "../Testing/TestPage";
 import withAuthProvider from "containers/app/AuthProvider";
 import { connect } from "react-redux";
-import { makeSelectLogin, makeSelectEmail } from "./selectors";
+import { makeSelectLogin } from "./selectors";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
@@ -47,7 +46,6 @@ function App({
   isAuthenticated,
   logout,
   user,
-  userEmail,
   getAccessToken,
   getUserProfile,
   loggedIn,
@@ -100,7 +98,7 @@ function App({
               logout={logout}
               user={user}
               isAuthenticated={isAuthenticated}
-              // getAccessToken={getAccessToken}
+            // getAccessToken={getAccessToken}
             />
           )}
         />
@@ -115,13 +113,12 @@ function App({
                 login={login}
                 isAuthenticated={isAuthenticated}
                 user={user}
-                userEmail={userEmail}
                 getAccessToken={getAccessToken}
                 getUserProfile={getUserProfile}
               />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         {/* <Redirect from="/" to="/poDashboard" /> */}
@@ -131,15 +128,10 @@ function App({
           path="/courierManagement"
           render={(props) =>
             authenticated ? (
-              <CourierManagement
-                {...props}
-                userEmail={userEmail}
-                logout={logout}
-                user={user}
-              />
+              <CourierManagement {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -147,15 +139,10 @@ function App({
           path="/einvoice"
           render={(props) =>
             authenticated ? (
-              <Einvoice
-                {...props}
-                userEmail={userEmail}
-                logout={logout}
-                user={user}
-              />
+              <Einvoice {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -163,15 +150,10 @@ function App({
           path="/dwmApplication"
           render={(props) =>
             authenticated ? (
-              <DwmApplication
-                {...props}
-                userEmail={userEmail}
-                logout={logout}
-                user={user}
-              />
+              <DwmApplication {...props} logout={logout} user={user} />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -183,11 +165,21 @@ function App({
                 {...props}
                 logout={logout}
                 user={user}
-                userEmail={userEmail}
               />
             ) : (
-              <Redirect to="/" />
-            )
+                <Redirect to="/" />
+              )
+          }
+        />
+        <Route
+          exact
+          path="/transportation"
+          render={(props) =>
+            authenticated ? (
+              <Transportation {...props} logout={logout} user={user} />
+            ) : (
+                <Redirect to="/" />
+              )
           }
         />
         <Route
@@ -203,34 +195,13 @@ function App({
         />
         <Route
           exact
-          path="/transportation"
-          render={(props) =>
-            authenticated ? (
-              <Transportation
-                {...props}
-                userEmail={userEmail}
-                logout={logout}
-                user={user}
-              />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
+          path="/clbarcodeautomate"
+          component={BarcodeAutomate}
         />
-        <Route exact path="/clbarcodeautomate" component={BarcodeAutomate} />
-        <Route exact path="/clbarcodeprint" component={BarcodePrint} />
-
         <Route
           exact
-          path="/bidmanagement"
-          render={(props) => (
-            <BidManagement
-              {...props}
-              userEmail={userEmail}
-              logout={logout}
-              user={user}
-            />
-          )}
+          path="/clbarcodeprint"
+          component={BarcodePrint}
         />
         <Route
           exact
@@ -245,7 +216,7 @@ function App({
         />
         <Route
           exact
-          path="/vehicletrackingsystemdetails"
+          path="/vehicletrackingsystem/:id"
           render={(props) =>
             authenticated ? (
               <VehicleTrackingSystemDetails {...props} logout={logout} user={user} />
@@ -262,7 +233,6 @@ function App({
 }
 const mapStateToProps = createStructuredSelector({
   loggedIn: makeSelectLogin(),
-  userEmail: makeSelectEmail(),
 });
 const mapDispatchToProps = (dispatch) => {
   return {
