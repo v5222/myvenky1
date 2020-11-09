@@ -295,6 +295,18 @@ class TransportationDashboard extends React.Component {
         body: {
           type: "ADDITIONALCHARGESINSERT",
           email: "Muneeshkumar.a@tvslsl.com",
+          search: {
+            customercode: this.state.tCustomerCode,
+            costcenter: this.state.tCostCenter,
+            routecode: this.state.tRouteCode,
+            billingtype: this.state.billType,
+            analysiscode: this.state.analysiscode,
+            billtoid: this.state.tBillingId,
+            shiptoid: this.state.shiptoid,
+            owntaxregion: this.state.owntaxregion,
+            fromdate: this.state.selectDatefrom,
+            todate: this.state.selectDateto,
+          },
 
           output: [
             {
@@ -322,7 +334,6 @@ class TransportationDashboard extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log("insert", data);
-
         this.setState({
           isSave: true,
         });
@@ -331,8 +342,39 @@ class TransportationDashboard extends React.Component {
 
   handleInput = (e) => {
     this.setState({
-      loadingInput: { ...loadingInput, [e.loading]: e.target.value },
+      loadingInput: { ...loadingInput, [e.name]: e.target.value },
     });
+  };
+
+  processInvoice = (e) => {
+    let processOption = {
+      type: "S2B",
+      email: "Muneeshkumar.a@tvslsl.com",
+      search: {
+        customercode: this.state.tCustomerCode,
+        costcenter: this.state.tCostCenter,
+        routecode: this.state.tRouteCode,
+        billingtype: this.state.billType,
+        analysiscode: this.state.analysiscode,
+        billtoid: this.state.tBillingId,
+        shiptoid: this.state.shiptoid,
+        owntaxregion: this.state.owntaxregion,
+        fromdate: this.state.selectDatefrom,
+        todate: this.state.selectDateto,
+      },
+    };
+
+    fetch(
+      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
+      processOption
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("processInvoice", data);
+        this.setState({
+          isSave: true,
+        });
+      });
   };
 
   render() {
@@ -578,10 +620,54 @@ class TransportationDashboard extends React.Component {
                             </thead>
                             <tbody>
                               {this.state.spin ? (
-                                <div style={{ marginTop: "10%" }}>
-                                  {" "}
-                                  <Spin size="large" />{" "}
-                                </div>
+                                <tr>
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td style={{ width: "6%", fontSize: "10px" }}>
+                                    {" "}
+                                  </td>
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "6%", fontSize: "10px" }}
+                                  />
+                                  <td style={{ width: "8%", fontSize: "10px" }}>
+                                    {" "}
+                                    <Spin size="large" />
+                                  </td>
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                  <td
+                                    style={{ width: "8%", fontSize: "10px" }}
+                                  />
+                                </tr>
                               ) : (
                                 this.state.additionalChargeOutputList.map(
                                   (i, index) => {
@@ -833,6 +919,7 @@ class TransportationDashboard extends React.Component {
                                       type="primary"
                                       icon={<SaveOutlined />}
                                       style={{ marginTop: "10px" }}
+                                      onClick={this.processInvoice}
                                     >
                                       Processing Invoice
                                     </Button>
