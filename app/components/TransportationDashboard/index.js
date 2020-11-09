@@ -644,7 +644,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Loading/Unloading"
                                             type="number"
-                                            name="loading"
+                                            name="loadingunloading"
                                             value={i.loadingunloading}
                                             onChange={this.handleInput}
                                           />
@@ -658,7 +658,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Toll Charges"
                                             type="number"
-                                            name="toll"
+                                            name="tollcharges"
                                             value={i.tollcharges}
                                             onChange={this.handleInput}
                                           />
@@ -686,7 +686,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Double driver"
                                             type="number"
-                                            name="doubleDriver"
+                                            name="doubledriver"
                                             value={i.doubledriver}
                                             onChange={this.handleInput}
                                           />
@@ -700,7 +700,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Multi point delivery"
                                             type="number"
-                                            name="multiPoint"
+                                            name="multipointdelivery"
                                             value={i.multipointdelivery}
                                             onChange={this.handleInput}
                                           />
@@ -714,7 +714,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="ODA / Docket charges"
                                             type="number"
-                                            name="oda"
+                                            name="odadocketcharges"
                                             value={i.odadocketcharges}
                                             onChange={this.handleInput}
                                           />
@@ -728,6 +728,7 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Other Charges"
                                             type="number"
+                                            name="othercharges"
                                             value={i.othercharges}
                                             onChange={this.handleInput}
                                           />
@@ -739,17 +740,7 @@ class TransportationDashboard extends React.Component {
                                           }}
                                         >
                                           <Input
-                                            value={
-                                              // parseInt(i.freightrevenue)+
-                                              // parseInt(i.othercharges)+
-                                              // parseInt(i.loadingunloading)+
-                                              // parseInt(i.tollcharges)+
-                                              // parseInt(i.halting)+
-                                              // parseInt(i.doubledriver)+
-                                              // parseInt(i.multipointdelivery)+
-                                              // parseInt(i.odadocketcharges)
-                                              parseInt(i.freightrevenue)
-                                            }
+                                            value={parseInt(i.freightrevenue)}
                                           />
                                         </td>
                                       </tr>
