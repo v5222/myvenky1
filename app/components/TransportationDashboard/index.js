@@ -331,43 +331,7 @@ class TransportationDashboard extends React.Component {
 
   handleInput = (e) => {
     this.setState({
-      state: { ...state, [e.name]: e.value },
-    });
-  };
-
-  handleLoading = (e) => {
-    this.setState({
-      loading: e.target.value,
-    });
-  };
-  handleTollCharges = (e) => {
-    this.setState({
-      tollCharges: e.target.value,
-    });
-  };
-  handleHalting = (e) => {
-    this.setState({
-      halting: e.target.value,
-    });
-  };
-  handleDoubleDriver = (e) => {
-    this.setState({
-      doubleDriver: e.target.value,
-    });
-  };
-  handleMultiPoint = (e) => {
-    this.setState({
-      multiPoint: e.target.value,
-    });
-  };
-  handleOda = (e) => {
-    this.setState({
-      oda: e.target.value,
-    });
-  };
-  handleOtherCharges = (e) => {
-    this.setState({
-      otherCharges: e.target.value,
+      loadingInput: { ...loadingInput, [e.loading]: e.target.value },
     });
   };
 
@@ -681,7 +645,8 @@ class TransportationDashboard extends React.Component {
                                             placeholder="Loading/Unloading"
                                             type="number"
                                             name="loading"
-                                            onChange={this.handleLoading}
+                                            value={i.loadingunloading}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -695,7 +660,7 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="toll"
                                             value={i.tollcharges}
-                                            onChange={this.handleTollCharges}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -708,7 +673,8 @@ class TransportationDashboard extends React.Component {
                                             placeholder="Halting"
                                             type="number"
                                             name="halting"
-                                            onChange={this.handleHalting}
+                                            value={i.halting}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -721,7 +687,8 @@ class TransportationDashboard extends React.Component {
                                             placeholder="Double driver"
                                             type="number"
                                             name="doubleDriver"
-                                            onChange={this.handleDoubleDriver}
+                                            value={i.doubledriver}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -734,7 +701,8 @@ class TransportationDashboard extends React.Component {
                                             placeholder="Multi point delivery"
                                             type="number"
                                             name="multiPoint"
-                                            onChange={this.handleMultiPoint}
+                                            value={i.multipointdelivery}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -747,7 +715,8 @@ class TransportationDashboard extends React.Component {
                                             placeholder="ODA / Docket charges"
                                             type="number"
                                             name="oda"
-                                            onChange={this.handleOda}
+                                            value={i.odadocketcharges}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -759,7 +728,8 @@ class TransportationDashboard extends React.Component {
                                           <Input
                                             placeholder="Other Charges"
                                             type="number"
-                                            onChange={this.handleOtherCharges}
+                                            value={i.othercharges}
+                                            onChange={this.handleInput}
                                           />
                                         </td>
                                         <td
@@ -778,7 +748,6 @@ class TransportationDashboard extends React.Component {
                                               // parseInt(i.doubledriver)+
                                               // parseInt(i.multipointdelivery)+
                                               // parseInt(i.odadocketcharges)
-                                              this.state.otherCharges +
                                               parseInt(i.freightrevenue)
                                             }
                                           />
