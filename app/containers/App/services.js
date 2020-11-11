@@ -7,11 +7,8 @@ const apiURLDwm =
 const apiURLEinvoice =
   "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/einvoicing";
 
-
 const apiURLTransportation =
-  "https://testapi.tvslsl.in/CloudInterface/API/CLI"
-
-
+  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling";
 
 //Einvoice url
 //https://bgen0op6q9.execute-api.ap-south-1.amazonaws.com/PROD/einvoicing
@@ -30,4 +27,11 @@ const dwmBody = {
   },
 };
 
-export { apiURL, apiURLCourier, apiURLDwm, apiURLEinvoice, dwmBody };
+export {
+  apiURL,
+  apiURLCourier,
+  apiURLDwm,
+  apiURLEinvoice,
+  dwmBody,
+  apiURLTransportation,
+};

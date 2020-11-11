@@ -4,7 +4,7 @@ import "../TransportationMasterDashboard/Table/TransportationDashboardTable.scss
 import { Tabs } from "antd";
 import { Spin } from "antd";
 import Select from "antd/lib/select";
-import { Button, Tooltip } from "antd";
+import { Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 const { Option } = Select;
 import { DatePicker, Space } from "antd";
@@ -41,7 +41,7 @@ class TransportationMasterDashboard extends React.Component {
       body: JSON.stringify({
         body: {
           type: "DDL",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
         },
       }),
     };
@@ -72,7 +72,7 @@ class TransportationMasterDashboard extends React.Component {
       body: JSON.stringify({
         body: {
           type: "SALECONTRACT",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
 
           salecontract: e.target.value,
         },
@@ -97,9 +97,13 @@ class TransportationMasterDashboard extends React.Component {
           this.setState({
             message: data.body.bodymsg,
           });
-          alert(this.state.message);
+          this.info(this.state.message);
         }
       });
+  };
+
+  info = (data) => {
+    message.info(data);
   };
 
   handleSave = () => {
@@ -116,7 +120,7 @@ class TransportationMasterDashboard extends React.Component {
       body: JSON.stringify({
         body: {
           type: "SALECONTRACTINSERT",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
 
           output: [
             {
@@ -158,7 +162,7 @@ class TransportationMasterDashboard extends React.Component {
       body: JSON.stringify({
         body: {
           type: "SALECONTRACTSELECT",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
         },
       }),
     };
@@ -332,7 +336,10 @@ class TransportationMasterDashboard extends React.Component {
                                 </Button>
                                 {this.state.isSave && (
                                   <p
-                                    style={{ marginTop: "5px", color: "blue" }}
+                                    style={{
+                                      marginTop: "3px",
+                                      color: "#123F74",
+                                    }}
                                   >
                                     Saved successfully
                                   </p>

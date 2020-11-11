@@ -1,54 +1,52 @@
 .tvsit-dwm-container {
-    margin: 0 7px 0 7px;
-  }
-  
-  .dashboard_header {
-    padding-top: 50px;
-    border-radius: 15px 15px 0px 0px;
-  }
-  
-  .dwm_title {
-    padding-left: 25px;
-    color: #262626c0;
-    font-size: 20px;
-    line-height: 28px;
-    font-weight: 600;
-    margin-top: 12px;
-  }
-  
-  .breadcrumb {
-    margin: 7px 0 7px 5px;
-  }
-  
-  .site-layout-content {
-    background: #fff;
-  }
-  
-  #components-layout-demo-top .logo {
-    float: left;
-    width: 120px;
-    height: 31px;
-    margin: 16px 24px 16px 0;
-    background: rgba(255, 255, 255, 0.3);
-  }
-  
-  .ant-row-rtl #components-layout-demo-top .logo {
-    margin: 16px 0 16px 24px;
-  }
-  
-  
-  .tvsit-vts-bgcontainer{
+  margin: 0 7px 0 7px;
+}
+
+.dashboard_header {
+  padding-top: 50px;
+  border-radius: 15px 15px 0px 0px;
+}
+
+.dwm_title {
+  padding-left: 25px;
+  color: #262626c0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.breadcrumb {
+  margin: 7px 0 7px 5px;
+}
+
+.site-layout-content {
+  background: #fff;
+}
+
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top .logo {
+  margin: 16px 0 16px 24px;
+}
+
+.tvsit-vts-bgcontainer {
   width: 100%;
   height: 100%;
   margin-top: -15px;
   left: 21px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 0px 0px 15px 15px;
   font-family: "open sans";
+}
 
-  }
-  
-  .bluecontainer{
+.bluecontainer {
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -56,63 +54,56 @@
   height: 111px;
   margin-left: 2.5%;
   top: 137px;
-  background: #DFEEFF;
+  background: #dfeeff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   font-family: "open sans";
+}
 
-  }
-  
-  .mapcontainer{
+.mapcontainer {
   width: 1265px;
   height: 436px;
   margin-left: 2.5%;
   margin-top: 25px;
-  border: 2px solid #70C1E9;
+  border: 2px solid #70c1e9;
   box-sizing: border-box;
   border-radius: 10px;
   font-family: "open sans";
+}
 
-  }
-  
-  .tvsit-vts-container {
-    display: flex;
-    width: 96%;
-    height: 8vw;
-    left: 21px;
-    top: 75px;
-    margin: 10px;
-    border-radius: 20px;
-    font-family: "open sans";
+.tvsit-vts-container {
+  display: flex;
+  width: 96%;
+  height: 8vw;
+  left: 21px;
+  top: 75px;
+  margin: 10px;
+  border-radius: 20px;
+  font-family: "open sans";
+}
 
+p {
+  margin: 10px 0;
+  font-family: "open sans";
+}
+.vl {
+  border-left: 1px solid rgba(18, 63, 116, 0.3);
+  height: 4vw;
+  margin-right: 20px;
+  margin-top: 10px;
+}
 
-   }
-  
-   p {
-    margin: 10px 0;
-    font-family: "open sans";
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+}
 
-   }
-   .vl {
-    border-left: 1px solid rgba(18, 63, 116, 0.3);
-    height: 4vw;
-    margin-right: 20px;
-    margin-top: 10px;
-   }
-  
-   .d-flex {
-    display: flex;
-    justify-content: space-between;
-   }
-    
-   button {
-    background-color: red;
-    color: white;
-    border-radius: 10px;
-    padding: 3px 30px;
-    font-weight: bold;
-    border: none;
-    font-family: "open sans";
-
-   }
-  
+button {
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+  padding: 3px 30px;
+  font-weight: bold;
+  border: none;
+  font-family: "open sans";
+}

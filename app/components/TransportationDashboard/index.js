@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./transportation.module.scss";
 import "../TransportationDashboard/Table/TransportationDashboardTable.scss";
-import Filters from "./Filters";
-import Table from "./Table";
+
 import { data } from "./data";
 import { Tabs } from "antd";
 import { Spin } from "antd";
 import { apiURLTransportation } from "../../containers/App/services";
 import Filterstyles from "../TransportationDashboard/Filters/FIlters.module.scss";
 import Select from "antd/lib/select";
-import { Button, Tooltip } from "antd";
+import { Button, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { SaveOutlined } from "@ant-design/icons";
-import CurrencyFormat from "react-currency-format";
+import { Empty } from "antd";
 const { Option } = Select;
 import { DatePicker, Space } from "antd";
 const { RangePicker } = DatePicker;
@@ -37,7 +36,6 @@ class TransportationDashboard extends React.Component {
       selectDatefrom: null,
       selectDateto: null,
       loading: false,
-      tabclick: null,
       billType: "",
       customerCode: [],
       billingCodeList: [],
@@ -63,6 +61,7 @@ class TransportationDashboard extends React.Component {
       oda: null,
       otherCharges: null,
       spin: false,
+      noData: true,
     };
   }
 
@@ -72,10 +71,7 @@ class TransportationDashboard extends React.Component {
       body: JSON.stringify(CUSTOMERCODE),
     };
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      customercode
-    )
+    fetch(apiURLTransportation, customercode)
       .then((res) => res.json())
       .then((data) => {
         console.log("datacustomer", data);
@@ -86,30 +82,19 @@ class TransportationDashboard extends React.Component {
     console.log(this.state.customerCode);
   }
 
-  // handleChange = (value) => {
-
-  //     document.getElementById("hdncustomercode").value = value;
-  //     // let c = document.getElementById("hdncustomercode").value;
-  //     // console.log(c)
-
-  // }
-
   handleCustomerChange = (value) => {
     let customercodeoption = {
       method: "POST",
       body: JSON.stringify({
         body: {
           type: "BILLINGDDLCOSTCENTER",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
           customercode: value,
         },
       }),
     };
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      customercodeoption
-    )
+    fetch(apiURLTransportation, customercodeoption)
       .then((res) => res.json())
       .then((data) => {
         console.log("datacustomer", data);
@@ -130,15 +115,12 @@ class TransportationDashboard extends React.Component {
         body: {
           type: "BILLINGDDLROUTECODE",
           costcenter: value,
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
         },
       }),
     };
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      costcenteroption
-    )
+    fetch(apiURLTransportation, costcenteroption)
       .then((res) => res.json())
       .then((data) => {
         console.log("costcenter", data);
@@ -184,15 +166,13 @@ class TransportationDashboard extends React.Component {
     let bodyoption = {
       method: "POST",
       body: JSON.stringify({
-        body: { ...bodyOption, ["eligibletype"]: value },
+        // body: { ...bodyOption, ["eligibletype"]: value },
+        body: { ...bodyOption },
       }),
     };
     console.log(value);
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      bodyoption
-    )
+    fetch(apiURLTransportation, bodyoption)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -201,10 +181,12 @@ class TransportationDashboard extends React.Component {
           if (tab === 1) {
             this.setState({
               additionalChargeOutputList: data.body.bodymsg.additionalcharges,
+              customerList2: data.body.bodymsg.noteligible,
               customerList1: data.body.bodymsg.eligible,
               loading: false,
               isSave: true,
               spin: false,
+              noData: false,
             });
           } else if (tab === 2) {
             this.setState({
@@ -213,6 +195,7 @@ class TransportationDashboard extends React.Component {
               loading: false,
               isSave: true,
               spin: false,
+              noData: false,
             });
           }
         } else {
@@ -223,10 +206,15 @@ class TransportationDashboard extends React.Component {
             loading: true,
             isSave: false,
             spin: false,
+            noData: true,
           });
-          alert(data.body.bodymsg);
+          // alert(data.body.bodymsg);
+          this.info(data.body.bodymsg);
         }
       });
+  };
+  info = (data) => {
+    message.info(data);
   };
 
   handleSearch = () => {
@@ -235,7 +223,7 @@ class TransportationDashboard extends React.Component {
     let bodyOption = {
       type: "S2B",
 
-      email: "Muneeshkumar.a@tvslsl.com",
+      email: this.props.userEmail,
       search: {
         customercode: this.state.tCustomerCode,
         costcenter: this.state.tCostCenter,
@@ -252,49 +240,28 @@ class TransportationDashboard extends React.Component {
     console.log("bodyoption", bodyOption);
 
     this.handleFetch(1, "1", bodyOption);
-    this.handleFetch(2, "0", bodyOption);
+    // this.handleFetch(2, "0", bodyOption);
   };
 
   handleDateRange = (value) => {
     const concat = value + "";
     const split = concat.split(",");
-    console.log(format(new Date(split[0]), "yyyy/MM/dd"));
-    console.log(format(new Date(split[1]), "yyyy/MM/dd"));
+    console.log(format(new Date(split[0]), "yyyy-MM-dd"));
+    console.log(format(new Date(split[1]), "yyyy-MM-dd"));
 
     this.setState({
-      selectDatefrom: format(new Date(split[0]), "yyyy/MM/dd"),
-      selectDateto: format(new Date(split[1]), "yyyy/MM/dd"),
-    });
-  };
-
-  tabChange = (key) => {
-    console.log(key);
-
-    this.setState({
-      tabclick: key,
+      selectDatefrom: format(new Date(split[0]), "yyyy-MM-dd"),
+      selectDateto: format(new Date(split[1]), "yyyy-MM-dd"),
     });
   };
 
   handleSave = (val) => {
-    let billingKey = this.state.billKey;
-    let refDocNo = this.state.refDocNo;
-    let freightRevenue = this.state.freightRevenue;
-    let loadingUnloading = this.state.loading;
-    let tollCharges = this.state.tollCharges;
-    let Halting = this.state.halting;
-    let doubleDriver = this.state.doubleDriver;
-    let multiPoint = this.state.multiPoint;
-    let odaDocketCharges = this.state.oda;
-    let otherCharges = this.state.otherCharges;
-    console.log(this.state.otherCharges);
-    console.log(this.state.refDocNo);
-
     let saveoption = {
       method: "POST",
       body: JSON.stringify({
         body: {
           type: "ADDITIONALCHARGESINSERT",
-          email: "Muneeshkumar.a@tvslsl.com",
+          email: this.props.userEmail,
           search: {
             customercode: this.state.tCustomerCode,
             costcenter: this.state.tCostCenter,
@@ -308,71 +275,76 @@ class TransportationDashboard extends React.Component {
             todate: this.state.selectDateto,
           },
 
-          output: [
-            {
-              billingkey: "1",
-              refdocno: "10",
-              freightrevenue: "100",
-              loadingunloading: "10",
-              tollcharges: "10",
-              halting: "10",
-              doubledriver: "10",
-              multipointdelivery: "10",
-              odadocketcharges: "10",
-              othercharges: "10",
-              invoiceamount: "10",
-            },
-          ],
+          output: this.state.additionalChargeOutputList,
         },
       }),
     };
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      saveoption
-    )
+    fetch(apiURLTransportation, saveoption)
       .then((res) => res.json())
       .then((data) => {
         console.log("insert", data);
+        console.log(this.state.additionalChargeOutputList);
         this.setState({
           isSave: true,
+          additionalChargeOutputList: data.body.bodymsg.additionalcharges,
+          customerList1: data.body.bodymsg.eligible,
         });
       });
   };
 
-  handleInput = (e) => {
-    this.setState({
-      loadingInput: { ...loadingInput, [e.name]: e.target.value },
+  handleInput = (e, billingkey) => {
+    console.log(billingkey, "billingkey");
+    let temp = [...this.state.additionalChargeOutputList];
+    temp = temp.map((i) => {
+      if (i.billingkey === billingkey) {
+        console.log(i, "i");
+        console.log(e.target.name);
+        i = { ...i, [e.target.name]: e.target.value };
+
+        return i;
+      } else {
+        return i;
+      }
     });
+    this.setState({
+      additionalChargeOutputList: temp,
+    });
+
+    console.log(additionalChargeOutputList);
   };
 
   processInvoice = (e) => {
     let processOption = {
-      type: "S2B",
-      email: "Muneeshkumar.a@tvslsl.com",
-      search: {
-        customercode: this.state.tCustomerCode,
-        costcenter: this.state.tCostCenter,
-        routecode: this.state.tRouteCode,
-        billingtype: this.state.billType,
-        analysiscode: this.state.analysiscode,
-        billtoid: this.state.tBillingId,
-        shiptoid: this.state.shiptoid,
-        owntaxregion: this.state.owntaxregion,
-        fromdate: this.state.selectDatefrom,
-        todate: this.state.selectDateto,
-      },
+      method: "POST",
+      body: JSON.stringify({
+        body: {
+          type: "INVOICEPROCESS",
+          email: this.props.userEmail,
+          search: {
+            customercode: this.state.tCustomerCode,
+            costcenter: this.state.tCostCenter,
+            routecode: this.state.tRouteCode,
+            billingtype: this.state.billType,
+            analysiscode: this.state.analysiscode,
+            billtoid: this.state.tBillingId,
+            shiptoid: this.state.shiptoid,
+            owntaxregion: this.state.owntaxregion,
+            fromdate: this.state.selectDatefrom,
+            todate: this.state.selectDateto,
+          },
+        },
+      }),
     };
 
-    fetch(
-      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/transportationbilling",
-      processOption
-    )
+    fetch(apiURLTransportation, processOption)
       .then((res) => res.json())
       .then((data) => {
         console.log("processInvoice", data);
         this.setState({
           isSave: true,
+          // customerList1: [],
+          // additionalChargeOutputList: [],
         });
       });
   };
@@ -399,8 +371,6 @@ class TransportationDashboard extends React.Component {
                     </>
                   );
                 })}
-
-                {/*<Option key="All" value="All">All</Option> */}
               </Select>
             </div>
 
@@ -668,6 +638,20 @@ class TransportationDashboard extends React.Component {
                                     style={{ width: "8%", fontSize: "10px" }}
                                   />
                                 </tr>
+                              ) : this.state.noData ? (
+                                <tr>
+                                  <td colSpan={14}>
+                                    <h1
+                                      style={{
+                                        color: "#00000047",
+                                        fontWeight: "100",
+                                        fontSize: "20px",
+                                      }}
+                                    >
+                                      <Empty />
+                                    </h1>
+                                  </td>
+                                </tr>
                               ) : (
                                 this.state.additionalChargeOutputList.map(
                                   (i, index) => {
@@ -732,7 +716,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="loadingunloading"
                                             value={i.loadingunloading}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -746,7 +732,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="tollcharges"
                                             value={i.tollcharges}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -760,7 +748,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="halting"
                                             value={i.halting}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -774,7 +764,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="doubledriver"
                                             value={i.doubledriver}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -788,7 +780,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="multipointdelivery"
                                             value={i.multipointdelivery}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -802,7 +796,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="odadocketcharges"
                                             value={i.odadocketcharges}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -816,7 +812,9 @@ class TransportationDashboard extends React.Component {
                                             type="number"
                                             name="othercharges"
                                             value={i.othercharges}
-                                            onChange={this.handleInput}
+                                            onChange={(e) =>
+                                              this.handleInput(e, i.billingkey)
+                                            }
                                           />
                                         </td>
                                         <td
@@ -825,9 +823,14 @@ class TransportationDashboard extends React.Component {
                                             fontSize: "10px",
                                           }}
                                         >
-                                          <Input
-                                            value={parseInt(i.freightrevenue)}
-                                          />
+                                          {parseInt(i.freightrevenue) +
+                                            parseInt(i.halting) +
+                                            parseInt(i.doubledriver) +
+                                            parseInt(i.multipointdelivery) +
+                                            parseInt(i.othercharges) +
+                                            parseInt(i.tollcharges) +
+                                            parseInt(i.loadingunloading) +
+                                            parseInt(i.odadocketcharges)}
                                         </td>
                                       </tr>
                                     );
@@ -876,15 +879,31 @@ class TransportationDashboard extends React.Component {
                             </thead>
                             <tbody>
                               {this.state.spin ? (
-                                <div
-                                  style={{
-                                    marginLeft: "310%",
-                                    marginTop: "40%",
-                                  }}
-                                >
-                                  {" "}
-                                  <Spin size="large" />{" "}
-                                </div>
+                                <tr>
+                                  <td style={{ width: "15%" }} />
+                                  <td style={{ width: "15%" }} />
+                                  <td style={{ width: "15%" }} />
+                                  <td style={{ width: "15%" }}>
+                                    {" "}
+                                    <Spin size="large" />
+                                  </td>
+                                  <td style={{ width: "15%" }} />
+                                  <td style={{ width: "15%" }} />
+                                </tr>
+                              ) : this.state.noData ? (
+                                <tr>
+                                  <td colSpan={14}>
+                                    <h1
+                                      style={{
+                                        color: "#00000047",
+                                        fontWeight: "100",
+                                        fontSize: "20px",
+                                      }}
+                                    >
+                                      <Empty />
+                                    </h1>
+                                  </td>
+                                </tr>
                               ) : (
                                 this.state.customerList1.map((i, index) => (
                                   <tr>
@@ -961,6 +980,20 @@ class TransportationDashboard extends React.Component {
                                   {" "}
                                   <Spin size="large" />{" "}
                                 </div>
+                              ) : this.state.noData ? (
+                                <tr>
+                                  <td colSpan={14}>
+                                    <h1
+                                      style={{
+                                        color: "#00000047",
+                                        fontWeight: "100",
+                                        fontSize: "20px",
+                                      }}
+                                    >
+                                      <Empty />
+                                    </h1>
+                                  </td>
+                                </tr>
                               ) : (
                                 this.state.customerList2.map((i, index) => (
                                   <tr>

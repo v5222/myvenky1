@@ -98,7 +98,7 @@ function App({
               logout={logout}
               user={user}
               isAuthenticated={isAuthenticated}
-            // getAccessToken={getAccessToken}
+              // getAccessToken={getAccessToken}
             />
           )}
         />
@@ -117,8 +117,8 @@ function App({
                 getUserProfile={getUserProfile}
               />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         {/* <Redirect from="/" to="/poDashboard" /> */}
@@ -130,8 +130,8 @@ function App({
             authenticated ? (
               <CourierManagement {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -141,8 +141,8 @@ function App({
             authenticated ? (
               <Einvoice {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -152,8 +152,8 @@ function App({
             authenticated ? (
               <DwmApplication {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -167,8 +167,8 @@ function App({
                 user={user}
               />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -178,8 +178,8 @@ function App({
             authenticated ? (
               <Transportation {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -189,20 +189,12 @@ function App({
             authenticated ? (
               <TransportationMaster {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
-        <Route
-          exact
-          path="/clbarcodeautomate"
-          component={BarcodeAutomate}
-        />
-        <Route
-          exact
-          path="/clbarcodeprint"
-          component={BarcodePrint}
-        />
+        <Route exact path="/clbarcodeautomate" component={BarcodeAutomate} />
+        <Route exact path="/clbarcodeprint" component={BarcodePrint} />
         <Route
           exact
           path="/vehicletrackingsystem"
@@ -210,8 +202,8 @@ function App({
             authenticated ? (
               <VehicleTrackingSystem {...props} logout={logout} user={user} />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route
@@ -219,10 +211,14 @@ function App({
           path="/vehicletrackingsystem/:id"
           render={(props) =>
             authenticated ? (
-              <VehicleTrackingSystemDetails {...props} logout={logout} user={user} />
+              <VehicleTrackingSystemDetails
+                {...props}
+                logout={logout}
+                user={user}
+              />
             ) : (
-                <Redirect to="/" />
-              )
+              <Redirect to="/" />
+            )
           }
         />
         <Route component={NotFoundPage} />
