@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   TileLayer,
   MapContainer,
   GeoJSON,
   Marker,
-  useMapEvents,
+  useMapEvent,
   Popup,
   CircleMarker,
 } from "react-leaflet";
@@ -20,6 +20,7 @@ import {
   TrackMarkerIcon,
   CarMarkerIcon,
   BlinkIcon,
+  TrackMarkerDestIcon,
 } from "../../components/TrackMarkerIcon/TrackMarkerIcon";
 import { map } from "jquery";
 
@@ -36,7 +37,8 @@ function VehicleTrackingSystemDetails({ logout, user }) {
   const [tripDet, setTripDet] = useState();
   const [geoJsonFlag, setGeoJsonFlag] = useState("False");
   const [currLoc, setCurrLoc] = useState(0);
-
+  const animateRef = useRef(false);
+  const outerBounds = [[50.505, -29.09], [52.505, 29.09]];
   const handleClick = (e) => {
     setCurrent(e.key);
   };
@@ -54,7 +56,7 @@ function VehicleTrackingSystemDetails({ logout, user }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrLoc((currLoc) => currLoc + 1);
-    }, 10000);
+    }, 5000);
 
     setInterval(timer, 3000);
     if (
@@ -69,11 +71,6 @@ function VehicleTrackingSystemDetails({ logout, user }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   var map = L.map("mapcontainer");
-  //   map.setView([routeOne[currLoc][1], routeOne[currLoc][0]],5)
-  // }, [currLoc])
-
   function handleMapDetailsdata(data) {
     console.log("TripKey", data);
     let mapReqObj = {
@@ -84,15 +81,12 @@ function VehicleTrackingSystemDetails({ logout, user }) {
       },
     };
 
-    console.log("ReqObj", mapReqObj);
-
     axios
       .post(
         "https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts",
         mapReqObj
       )
       .then((res) => {
-        console.log("Respo", res.data);
         if (res.data.body.statuscode == 200) {
           setTripDet(res.data.body.bodymsg.tripdetails[0]);
           setRouteOne(res.data.body.bodymsg.route1);
@@ -104,6 +98,68 @@ function VehicleTrackingSystemDetails({ logout, user }) {
           console.log("Err");
         }
       });
+  }
+
+  function LocationMarker() {
+    // const [position, setPosition] = useState(null)
+    // const map = useMapEvents({
+    //   click() {
+    //     map.locate()
+    //   },
+    //   locationfound(e) {
+    //     console.log("e",e)
+    //     map.flyTo(e.latlng, map.getZoom())
+    //   },
+    // })
+
+    // return position === null ? null : (
+    //   <Marker position={position} icon={TrackMarkerIcon}>
+    //     <Popup>You are here</Popup>
+    //   </Marker>
+    // )
+    // const map = useMapEvents({
+    //   click: () => {
+    //     map.locate()
+    //     console.log("@@",L.LatLng)
+    //   },
+    //   locationfound: (location) => {
+    //     console.log('location found:', location)
+    //   },
+
+    // })
+    // const map = useMapEvent('click', () => {
+    //   map.fitBounds(
+    //     [40.712, -74.227],
+    //     [40.774, -74.125]
+    //     )
+    //   // map.setCenter([50.5, 30.5])
+    // })
+
+    return null;
+  }
+
+  function SetViewOnClick({ animateRef }) {
+    const map = useMapEvent("click", (e) => {
+      // console.log("lllll",e.latlng)
+      map.setView([routeOne[currLoc][1], routeOne[currLoc][0]], map.getZoom(), {
+        animate: animateRef || false,
+      });
+    });
+
+    return null;
+  }
+
+  function LocationTracingFunc() {
+    if (currLoc != routeOne[routeOne.length - 1] && currLoc) {
+      return (
+        <Marker
+          position={[routeOne[currLoc][1], routeOne[currLoc][0]]}
+          icon={BlinkIcon}
+        />
+      );
+    } else {
+      return <Marker position={[11.1085, 77.3411]} icon={BlinkIcon} />;
+    }
   }
 
   return (
@@ -128,7 +184,6 @@ function VehicleTrackingSystemDetails({ logout, user }) {
             <div className="bluecontainer">
               <div className="tvsit-vts-container">
                 <div className="d-flex">
-                  {console.log("Data", tripDet)}
                   <div
                     style={{
                       marginRight: "30px",
@@ -273,14 +328,18 @@ function VehicleTrackingSystemDetails({ logout, user }) {
             {geoJsonFlag === "True" ? (
               <MapContainer
                 className="mapcontainer"
-                center={
-                  currLoc
-                    ? [routeOne[currLoc][1], routeOne[currLoc][0]]
-                    : [routeOne[0][1], routeOne[0][0]]
-                }
-                zoom={8}
-                scrollWheelZoom={true}
+                // center={ [routeOne[currLoc][1], routeOne[currLoc][0] ] }
+                // zoom={8}
+                scrollWheelZoom={false}
                 bounceAtZoomLimits={true}
+                bounds={[
+                  [routeOne[currLoc][1], routeOne[currLoc][0]],
+                  [
+                    routeOne[routeOne.length - 1][1],
+                    routeOne[routeOne.length - 1][0],
+                  ],
+                ]}
+                maxZoom={13}
               >
                 <TileLayer
                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -290,28 +349,17 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                   position={[routeOne[0][1], routeOne[0][0]]}
                   icon={TrackMarkerIcon}
                 />
-                {/* {currLoc ? <CircleMarker 
-                    className="circmark"
-                    center={[routeOne[currLoc][1], routeOne[currLoc][0] ]} 
-                    color="blue" 
-                    radius={8}
-                    ></CircleMarker> : ""} */}
+                {/* <LocationMarker/> */}
+                {currLoc ? <SetViewOnClick animateRef={animateRef} /> : ""}
                 <Marker
                   position={[
                     routeOne[routeOne.length - 1][1],
                     routeOne[routeOne.length - 1][0],
                   ]}
-                  icon={TrackMarkerIcon}
+                  icon={TrackMarkerDestIcon}
                 />
-                {currLoc ? (
-                  <Marker
-                    position={[routeOne[currLoc][1], routeOne[currLoc][0]]}
-                    icon={BlinkIcon}
-                  />
-                ) : (
-                  ""
-                )}
-
+                {/* { currLoc ? <Marker position={currLoc ? [routeOne[currLoc][1], routeOne[currLoc][0] ] : [routeOne[0][1], routeOne[0][0] ]} icon={BlinkIcon}></Marker> : ""} */}
+                <LocationTracingFunc />
                 <GeoJSON
                   data={[
                     {
@@ -322,38 +370,11 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                         coordinates: routeOne,
                       },
                     },
-                    //  , {
-                    //    "type": "Feature",
-                    //    "properties": {"route": "Route2"},
-                    //    "geometry": {
-                    //      "type": "LineString",
-                    //      "coordinates": routeTwo
-                    //    }
-                    //  },
-                    //  {
-                    //    "type": "Feature",
-                    //    "properties": {"route": "Route3"},
-                    //    "geometry": {
-                    //      "type": "LineString",
-                    //      "coordinates": routeThree
-                    //    }
-                    //  },
-                    //  {
-                    //   "type": "Feature",
-                    //   "properties": {"route": "Route4"},
-                    //   "geometry": {
-                    //     "type": "LineString",
-                    //     "coordinates": routeFour
-                    //   }
-                    // }
                   ]}
                   style={function(feature) {
                     switch (feature.properties.route) {
                       case "Route1":
                         return { color: "#000000" };
-                      // case 'Route2': return {color: "#cc0000"};
-                      // case 'Route3': return {color: "#0033cc"};
-                      // case 'Route4': return {color: "#000000"};
                     }
                   }}
                 />

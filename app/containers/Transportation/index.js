@@ -7,7 +7,6 @@ import ErrorBoundary from "components/ErrorBoundary";
 
 import { Breadcrumb } from "antd";
 
-
 function TransportationApplication({ logout, user }) {
   const [current, setCurrent] = useState("dashboard");
   const handleClick = (e) => {

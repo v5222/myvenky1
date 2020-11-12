@@ -9,7 +9,6 @@ import ErrorBoundary from "components/ErrorBoundary";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import FileExcelOutlined from "@ant-design/icons/FileExcelOutlined";
-import Button from "antd/lib/button";
 import { Spin } from "antd";
 
 import Input from "antd/lib/input";
@@ -18,6 +17,7 @@ import { useReactToPrint } from "react-to-print";
 import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
+import { message, Button } from "antd";
 
 import SearchResult from "./SearchResult";
 import NoResult from "./NoResult";
@@ -28,6 +28,7 @@ import { apiURLEinvoice } from "containers/App/services.js";
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 import { format } from "date-fns";
+var PrintTemplate = require("react-print");
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -71,6 +72,7 @@ class Einvoice extends React.Component {
       selectValue: "",
       selectDatefrom: "",
       selectDateto: "",
+      popUp: false,
     };
   }
 
@@ -101,20 +103,8 @@ class Einvoice extends React.Component {
     var TotalList = [];
 
     this.setState({ loading: true });
-    console.log("invoice from", this.state.invoicenofrom);
-    console.log("invoice to", this.state.invoicenoto);
-    console.log("date from", this.state.selectDatefrom);
-    console.log("date to", this.state.selectDateto);
 
-    if (
-      this.state.invoicenofrom ||
-      (this.state.invoicenofrom && this.state.invoicenoto) ||
-      (this.state.selectDatefrom && this.state.selectDateto) ||
-      (this.state.selectDatefrom &&
-        this.state.selectDateto &&
-        this.state.invoicenofrom &&
-        this.state.invoicenoto)
-    ) {
+    if (true) {
       let options = {
         method: "POST",
         body: JSON.stringify({
@@ -123,24 +113,17 @@ class Einvoice extends React.Component {
             invoicenofrom: this.state.invoicenofrom,
             invoicenoto: this.state.invoicenoto,
             invoicenofromdate: this.state.selectDatefrom,
-
             invoicenotodate: this.state.selectDateto,
-            // type: "INVOICEPRINT1",
-
-            // invoicenofrom:"TNCD20000154",
-
-            // invoicenoto:"TNCD20000154",
-
-            // invoicenofromdate:"01/11/2020",
-
-            // invoicenotodate:"03/11/2020"
           },
         }),
       };
 
       fetch(printUrl, options)
         .then((res) => res.json())
+
         .then((data) => {
+          console.log(data);
+
           this.setState({
             isSuccess: true,
             isError: false,
@@ -153,8 +136,13 @@ class Einvoice extends React.Component {
           });
         });
     } else {
-      console.log("error");
+      this.popUp();
     }
+  };
+
+  popUp = () => {
+    message.info("Please select data range from and to ");
+    this.setState({ loading: false });
   };
 
   handleInvoiceFrom = (e) => {
@@ -172,12 +160,12 @@ class Einvoice extends React.Component {
     const split = concat.split(",");
     // console.log(split[0])
     // console.log(split[1])
-    console.log(format(new Date(split[0]), "dd/MM/yyyy"));
-    console.log(format(new Date(split[1]), "dd/MM/yyyy"));
+    console.log(format(new Date(split[0]), "yyyy-MM-dd"));
+    console.log(format(new Date(split[1]), "yyyy-MM-dd"));
 
     this.setState({
-      selectDatefrom: format(new Date(split[0]), "dd/MM/yyyy"),
-      selectDateto: format(new Date(split[1]), "dd/MM/yyyy"),
+      selectDatefrom: format(new Date(split[0]), "yyyy-MM-dd"),
+      selectDateto: format(new Date(split[1]), "yyyy-MM-dd"),
     });
   };
   // BindOUInstance = () => {
@@ -409,6 +397,7 @@ class Einvoice extends React.Component {
                 {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
+                    documentTitle="Invoice Copy"
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
                       // to the root node of the returned component as it will be overwritten.
