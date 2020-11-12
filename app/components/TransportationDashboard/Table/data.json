@@ -1,0 +1,171 @@
+{
+  "body": {
+    "statuscode": 200,
+    "bodymsg": {
+      "additionalcharges": [],
+      "eligible": [],
+      "noteligible": [
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAKATA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040921",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAKATA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040922",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIABHAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040923",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIABHAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040924",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIABHAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040925",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAVISA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040926",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIATHOA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040927",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAMOHB",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040929",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040932",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040933",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040934",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIABHAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2040946",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2041257",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2041258",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2041260",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        },
+        {
+          "customercode": "OTIEXHOSJM",
+          "costcenter": "OTITPT3156",
+          "routecode": "KIAJMAA",
+          "billingtype": "Transportation",
+          "billtoid": "KIAD12",
+          "refdocno": "AEIBK2041262",
+          "status": "Intransit",
+          "invoiceamount": "0.00"
+        }
+      ]
+    }
+  }
+}

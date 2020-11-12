@@ -23,6 +23,12 @@ import { connect } from "react-redux";
 import { format } from "date-fns";
 import { Input } from "antd";
 import { CUSTOMERCODE } from "../TransportationMasterDashboard/body";
+import {
+  CloseCircleTwoTone,
+  CheckCircleTwoTone,
+  SyncOutlined,
+} from "@ant-design/icons";
+import _ from "lodash";
 
 class TransportationDashboard extends React.Component {
   constructor(props) {
@@ -62,6 +68,7 @@ class TransportationDashboard extends React.Component {
       otherCharges: null,
       spin: false,
       noData: true,
+      invoiceProcess: false,
     };
   }
 
@@ -218,7 +225,12 @@ class TransportationDashboard extends React.Component {
   };
 
   handleSearch = () => {
-    this.setState({ loading: true, spin: true });
+    this.setState({
+      loading: true,
+      spin: true,
+      invoiceProcess: false,
+      isSave: false,
+    });
 
     let bodyOption = {
       type: "S2B",
@@ -315,12 +327,15 @@ class TransportationDashboard extends React.Component {
   };
 
   processInvoice = (e) => {
+    this.setState({
+      invoiceProcess: true,
+    });
     let processOption = {
       method: "POST",
       body: JSON.stringify({
         body: {
           type: "INVOICEPROCESS",
-          email: this.props.userEmail,
+          email: "dev.support8@tvslsl.in",
           search: {
             customercode: this.state.tCustomerCode,
             costcenter: this.state.tCostCenter,
@@ -340,16 +355,29 @@ class TransportationDashboard extends React.Component {
     fetch(apiURLTransportation, processOption)
       .then((res) => res.json())
       .then((data) => {
-        console.log("processInvoice", data);
+        let newData = [...this.state.customerList1];
+        if (data.body !== undefined) {
+          newData = newData.map((i) => {
+            let index = _.findIndex(data.body.bodymsg, function(o) {
+              return o.billingkey == i.billingkey;
+            });
+            if (index !== -1) {
+              return { ...i, ...data.body.bodymsg[index] };
+            } else {
+              return i;
+            }
+          });
+        }
+        console.log(newData);
         this.setState({
           isSave: true,
-          // customerList1: [],
-          // additionalChargeOutputList: [],
+          customerList1: newData,
         });
       });
   };
 
   render() {
+    const { invoiceProcess } = this.state;
     return (
       <div className={styles.container}>
         <>
@@ -875,6 +903,12 @@ class TransportationDashboard extends React.Component {
                                 <th style={{ width: "15%" }}>
                                   Invoice Amount(₹){" "}
                                 </th>
+                                {invoiceProcess && (
+                                  <>
+                                    <th style={{ width: "15%" }}>Invoice No</th>
+                                    <th style={{ width: "15%" }}>Status</th>
+                                  </>
+                                )}
                               </tr>
                             </thead>
                             <tbody>
@@ -925,6 +959,28 @@ class TransportationDashboard extends React.Component {
                                     <td style={{ width: "15%" }}>
                                       {i.invoiceamount}
                                     </td>
+                                    {invoiceProcess && (
+                                      <>
+                                        <td style={{ width: "15%" }}>
+                                          {i.isinvoicegenerated == undefined ? (
+                                            <SyncOutlined spin />
+                                          ) : i.isinvoicegenerated ? (
+                                            i.invoicenumber
+                                          ) : (
+                                            "Error"
+                                          )}
+                                        </td>
+                                        <td style={{ width: "15%" }}>
+                                          {i.isinvoicegenerated == undefined ? (
+                                            <SyncOutlined spin />
+                                          ) : i.isinvoicegenerated ? (
+                                            <CheckCircleTwoTone twoToneColor="#52c41a" />
+                                          ) : (
+                                            <CloseCircleTwoTone twoToneColor="#bf1000" />
+                                          )}
+                                        </td>
+                                      </>
+                                    )}
                                   </tr>
                                 ))
                               )}
