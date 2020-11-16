@@ -25,6 +25,7 @@ import GlobalStyle from "../../global-styles";
 import VehicleTrackingSystem from "containers/VehicleTrackingSystem/Loadable";
 import VehicleTrackingSystemDetails from "../VehicleTrackingSystemDetails/Loadable";
 import TestPage from "../Testing/TestPage";
+import CWB from "containers/CWB/Loadable";
 import withAuthProvider from "containers/app/AuthProvider";
 import { connect } from "react-redux";
 import { makeSelectLogin } from "./selectors";
@@ -216,6 +217,17 @@ function App({
                 logout={logout}
                 user={user}
               />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/cwb"
+          render={(props) =>
+            authenticated ? (
+              <CWB {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )
