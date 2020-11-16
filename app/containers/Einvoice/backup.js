@@ -28,7 +28,6 @@ import { apiURLEinvoice } from "containers/App/services.js";
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 import { format } from "date-fns";
-var PrintTemplate = require("react-print");
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -104,7 +103,7 @@ class Einvoice extends React.Component {
 
     this.setState({ loading: true });
 
-    if (true) {
+    if (this.state.selectDatefrom && this.state.selectDateto) {
       let options = {
         method: "POST",
         body: JSON.stringify({
@@ -117,7 +116,6 @@ class Einvoice extends React.Component {
           },
         }),
       };
-
       fetch(printUrl, options)
         .then((res) => res.json())
 
@@ -141,7 +139,7 @@ class Einvoice extends React.Component {
   };
 
   popUp = () => {
-    message.info("Please select data range from and to ");
+    message.info("Please select data range");
     this.setState({ loading: false });
   };
 
@@ -158,8 +156,6 @@ class Einvoice extends React.Component {
   handleDateRange = (value) => {
     const concat = value + "";
     const split = concat.split(",");
-    // console.log(split[0])
-    // console.log(split[1])
     console.log(format(new Date(split[0]), "yyyy-MM-dd"));
     console.log(format(new Date(split[1]), "yyyy-MM-dd"));
 
@@ -397,7 +393,7 @@ class Einvoice extends React.Component {
                 {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
-                    documentTitle="Invoice Copy"
+                    documentTitle="Invoice"
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
                       // to the root node of the returned component as it will be overwritten.

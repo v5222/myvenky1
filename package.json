@@ -116,6 +116,7 @@
     "react-router-dom": "^5.2.0",
     "react-score-indicator": "^2.2.1",
     "react-table": "^7.5.0",
+    "react-to-pdf": "0.0.13",
     "react-to-print": "^2.10.0",
     "react-webcam-barcode-scanner": "0.0.2-rc2",
     "react-window": "^1.8.5",

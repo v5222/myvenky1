@@ -110,7 +110,7 @@ class Einvoice extends React.Component {
           body: {
             type: "INVOICEPRINT1",
             invoicenofrom: this.state.invoicenofrom,
-            invoicenoto: this.state.invoicenoto,
+            invoicenoto: this.state.invoicenofrom,
             invoicenofromdate: this.state.selectDatefrom,
             invoicenotodate: this.state.selectDateto,
           },
@@ -122,24 +122,54 @@ class Einvoice extends React.Component {
         .then((data) => {
           console.log(data);
 
-          this.setState({
-            isSuccess: true,
-            isError: false,
-            dataItems: data.body.bodymsg,
-            SubTotalList: SubTotalList,
-            TotalList: TotalList,
-            isActive: true,
-            search: true,
-            loading: false,
-          });
+          if (data.body.bodymsg.length > 0) {
+            this.setState({
+              isSuccess: true,
+              isError: false,
+              dataItems: data.body.bodymsg,
+              SubTotalList: SubTotalList,
+              TotalList: TotalList,
+              isActive: true,
+              search: true,
+              loading: false,
+            });
+          } else {
+            this.noResult();
+          }
         });
     } else {
       this.popUp();
     }
   };
 
+  noResult = () => {
+    message.error(
+      {
+        content: "No Result Found",
+        className: "custom-class",
+        style: {
+          marginTop: "1vh",
+          fontSize: "18px",
+        },
+      },
+      5
+    );
+
+    // );
+    this.setState({ loading: false });
+  };
   popUp = () => {
-    message.info("Please select data range");
+    // message.info("Please select date range",
+    message.info({
+      content: "Please select date range",
+      className: "custom-class",
+      style: {
+        marginTop: "1vh",
+        fontSize: "18px",
+      },
+    });
+
+    // );
     this.setState({ loading: false });
   };
 
@@ -399,7 +429,7 @@ class Einvoice extends React.Component {
                       // to the root node of the returned component as it will be overwritten.
                       return <Button icon={<PrinterOutlined />}>Print</Button>;
                     }}
-                    content={() => this.invoiceRef}
+                    content={() => this.componentRef}
                   />
                 )}
               </Col>
@@ -441,17 +471,21 @@ class Einvoice extends React.Component {
               <div style={{ fontSize: "18px" }}>Loading Invoice</div>
             </div>
           ) : isActive ? (
-            <section className={styles.container}>
+            <section
+              className={styles.container}
+              ref={(el) => (this.componentRef = el)}
+            >
               {this.state.dataItems.map((dataItems, i) => {
                 return (
-                  <NoResult>
-                    <InvoicePrint
-                      ref={(el) => (this.invoiceRef = el)}
-                      data={dataItems}
-                      key={i}
-                      selectValue={this.state.selectValue}
-                    />
-                  </NoResult>
+                  <div>
+                    <NoResult>
+                      <InvoicePrint
+                        data={dataItems}
+                        key={i}
+                        selectValue={this.state.selectValue}
+                      />
+                    </NoResult>
+                  </div>
                 );
               })}
             </section>
