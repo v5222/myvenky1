@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import MainLayout from "../common/MainLayout/index.js";
-
+import { AutoComplete } from "antd";
 import ErrorBoundary from "components/ErrorBoundary";
 import { Card } from "antd";
 import { Breadcrumb } from "antd";
-import { Input } from "antd";
+import { Select } from "antd";
 import { Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import PrintDoc from "./PrintDoc";
@@ -20,22 +20,57 @@ class CWB extends React.Component {
     super(props);
     this.state = {
       isActive: false,
-      dataItems: null,
+      dataItems: [],
+      cwbNo: [],
+      selected: "",
+      isSelected: false,
+      printValue: [],
     };
   }
 
-  handleSearch = () => {
-    this.setState({ isActive: true });
+  handlefetch = () => {
+    let bodyoptions = {
+      method: "POST",
+      body: JSON.stringify({
+        body: {
+          type: "CWBDDLORDERNO",
+          email: "muneesh",
+        },
+      }),
+    };
+    fetch(apiUrl, bodyoptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ cwbNo: data.body.bodymsg });
+      });
   };
-
   componentDidMount() {
+    this.handlefetch();
+  }
+  onChange = (value) => {
+    this.setState({ selected: value });
+  };
+  handleSearch = () => {
+    let body = {
+      body: {
+        type: "CWBPRINT",
+        email: "057725",
+        orderno: this.state.selected,
+      },
+    };
+    let bodyOptions = {
+      method: "POST",
+      body: JSON.stringify(body),
+    };
+
     let configure = {
       method: "post",
       body: JSON.stringify({
         body: {
           type: "CWBPRINT",
           email: "057725",
-          orderno: "",
+          orderno: this.state.selected,
         },
       }),
     };
@@ -44,22 +79,24 @@ class CWB extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log("response data", data);
-
         if (data.body.statuscode === 200) {
           this.setState({
             dataItems: data.body.bodymsg,
           });
-          console.log(this.state.dataItems);
-          console.log(this.state.dataItems[0].barcode);
         } else {
           alert(data.body.bodymsg);
         }
       });
-  }
+    fetch(apiUrl, bodyOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ printValue: data.body.bodymsg, isActive: true });
+      });
+  };
 
   render() {
     const { logout, user } = this.props;
-    const { dataItems } = this.state;
+    const { cwbNo, printValue, isActive, dataItems } = this.state;
 
     return (
       <ErrorBoundary logout={logout} user={user}>
@@ -81,10 +118,21 @@ class CWB extends React.Component {
                   margin: "0 auto",
                 }}
               >
-                <Input
-                  placeholder="Enter Ivoice Number"
-                  style={{ width: "70%", marginRight: "10px" }}
-                />
+                <Select
+                  showSearch
+                  placeholder="Enter CWB Number"
+                  optionFilterProp="children"
+                  onChange={this.onChange}
+                  style={{ width: "100%" }}
+                >
+                  {cwbNo.map((i, index) => {
+                    return (
+                      <Option value={i} key={index}>
+                        {i}
+                      </Option>
+                    );
+                  })}
+                </Select>
                 <Button
                   type="primary"
                   icon={<SearchOutlined />}
@@ -92,17 +140,21 @@ class CWB extends React.Component {
                 >
                   Search
                 </Button>
-                {this.state.isActive && (
+                {isActive && (
                   <ReactToPrint
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
                       // to the root node of the returned component as it will be overwritten.
-                      return <Button icon={<PrinterOutlined />}>Print</Button>;
+                      return (
+                        <Button icon={<PrinterOutlined />}>
+                          Print Invoice
+                        </Button>
+                      );
                     }}
                     content={() => this.invoiceRef}
                   />
                 )}
-                {this.state.isActive && (
+                {isActive && (
                   <ReactToPrint
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
@@ -117,12 +169,15 @@ class CWB extends React.Component {
               </div>
               <div style={{ marginTop: "20px" }} />
             </Card>
-            {this.state.isActive && (
-              <Label ref={(el) => (this.labelRef = el)} data={dataItems} />
-            )}
 
-            {this.state.isActive && (
-              <PrintDoc ref={(el) => (this.invoiceRef = el)} />
+            {isActive && (
+              <PrintDoc
+                ref={(el) => (this.invoiceRef = el)}
+                data={printValue}
+              />
+            )}
+            {isActive && (
+              <Label ref={(el) => (this.labelRef = el)} data={dataItems} />
             )}
           </main>
         </MainLayout>

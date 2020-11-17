@@ -184,7 +184,7 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
                 : "tvsit-main-menu"
             }
           >
-            Vehicle Tracking
+            Consignment Note
           </Menu.Item>
         </Menu>
       </Drawer>

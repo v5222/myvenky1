@@ -98,13 +98,13 @@
       width: 100%;
       margin: 10px 0px;
       .barcode {
-        margin-left: 200px;
+        margin-left: 10px;
       }
       .surface {
         display: flex;
         flex-direction: column;
         float: right;
-        margin-right: 2rem;
+        margin-right: 12rem;
         margin-top: 0.5rem;
         border: 1px solid black;
 
@@ -125,7 +125,7 @@
 
     .wrapper_5 {
       table {
-        width: 80%;
+        width: 100%;
         border: 2px solid black;
         th,
         tr,
@@ -140,7 +140,7 @@
     .wrapper_6 {
       display: flex;
       flex-wrap: nowrap;
-      margin-top: 100px;
+      margin-top: 50px;
       background-color: white;
 
       .routecode {

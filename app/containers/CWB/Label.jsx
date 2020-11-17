@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import styles from "./label.module.scss";
 import ReactBarcode from "react-barcode";
 import Logo from "../../images/logo-full.png";
-
-const apiUrl =
-  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
+import moment from "moment";
 
 export default class Label extends Component {
   constructor(props) {
@@ -44,9 +42,9 @@ export default class Label extends Component {
             <div className={styles.barcode}>
               <ReactBarcode
                 value={details.barcode}
-                height={90}
-                width={1}
-                fontSize={20}
+                height={60}
+                width={2}
+                fontSize={15}
               />
               <div className={styles.surface}>
                 <div className={styles.content}>SUR</div>
@@ -58,29 +56,30 @@ export default class Label extends Component {
               <div className={styles.shipping}>
                 <div className={styles.title}>Ship to : </div>
                 <div className={styles.info}>
-                  <div>Rajesh R, </div>
-                  <div>JINDAL POLY FILMS Ltd , </div>
-                  <div>28th K.M Stone, Nashik -</div>
-                  <div>Igatpuri Road , VIII</div>
-                  <div>Mundegaon,Igatpuri</div>
-                  <div>NASHIK ,MAHARASHTRA:422403</div>
+                  <div>{details.consigneename} </div>
+                  <div>
+                    {details.consigneeaddress + ": " + details.consigneezipcode}
+                  </div>
+                  {/* <div>{details.consigneecity}</div> */}
+                  {/* <div>{details.consigneezipcode}</div> */}
+                  <div>{details.consigneecontactno}</div>
                   <div>INDIA</div>
                 </div>
               </div>
             </div>
           </section>
-          <hr />
-          <section className={styles.wrapper_3}>
+          {/* <hr /> */}
+          {/* <section className={styles.wrapper_3}>
             <div className={styles.title}>
-              <strong> Shipped By:</strong> Amazon Seller Services Pvt Ltd,
-              Return Address:
+              <strong> Shipped By:</strong> TVS Seller Services Pvt Ltd, Return
+              Address:
             </div>
             <div>
               TCI Supply Chain Solutions Near Kahpri Village, MADC Near Kahpri
               Village, MADC Nagpur Maharastra 441108, India{" "}
             </div>
             <div />
-          </section>
+          </section> */}
           <hr />
           <section className={styles.wrapper_4}>
             <div>
@@ -107,7 +106,7 @@ export default class Label extends Component {
                   <td>{details.customername}</td>
                   <td> 27AAAZId456</td>
                   <td>{details.documentno}</td>
-                  <td>{details.documentdate}</td>
+                  <td>{moment(details.documentdate).format("DD-MM-YYYY")}</td>
                   <td>{details.partdescription}</td>
                 </tr>
               </tbody>
@@ -144,7 +143,7 @@ export default class Label extends Component {
               <h1>NAG1</h1>
             </div>
           </section>
-          <h1>Sold on: www.amazon.in</h1>
+          <h1>Sold on: www.tvsscs.in</h1>
         </div>
       </>
     );

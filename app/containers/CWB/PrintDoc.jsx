@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import styles from "./printdoc.module.scss";
 import ReactBarcode from "react-barcode";
 import Logo from "../../images/logo-full.png";
+import moment from "moment";
 export default class PrintDoc extends Component {
   render() {
+    const { data } = this.props;
     return (
       <>
         <div className={styles.container}>
@@ -17,6 +19,7 @@ export default class PrintDoc extends Component {
                 }}
               />
             </div>
+
             <div className={styles.cmpAddr}>
               <div className={styles.cmpName}>TVS Supply Chain Limited</div>
               <div className={styles.tag}>
@@ -26,6 +29,14 @@ export default class PrintDoc extends Component {
                 N0:226, Karunal kudil, Cathderal Road,
               </div>
               <div className={styles.addr2}>Gopalapuram ,Chennai - 600086</div>
+            </div>
+            <div className={styles.barcode}>
+              <ReactBarcode
+                value={data[0].barcode}
+                height={60}
+                width={2}
+                fontSize={15}
+              />
             </div>
           </section>
 
@@ -55,7 +66,7 @@ export default class PrintDoc extends Component {
                       fontWeight: "bolder",
                     }}
                   >
-                    01/04/2020
+                    {moment(data[0].documentdate).format("DD-MM-YYYY")}
                   </div>
                 </div>
                 <div className={styles.cwbstatsus}>
@@ -67,7 +78,7 @@ export default class PrintDoc extends Component {
                       fontWeight: "bolder",
                     }}
                   >
-                    CWB000012/2021/10
+                    {data[0].documentno}
                   </div>
                 </div>
                 <div className={styles.cwbstatsus}>
@@ -88,23 +99,25 @@ export default class PrintDoc extends Component {
             <div className={styles.consignor}>
               <div className={styles.title}>Consginor : </div>
               <div className={styles.info}>
-                <div>JINDAL POLY FILMS Ltd , </div>
-                <div>28th K.M Stone, Nashik -</div>
-                <div>Igatpuri Road , VIII</div>
-                <div>Mundegaon,Igatpuri</div>
-                <div>NASHIK , MAHARASHTRA</div>
-                <div>, 422403 , INDIA</div>
+                <div>{data[0].consignorname}</div>
+                <div>{data[0].consignoraddress} </div>
+                <div>{data[0].consignorcity}</div>
+
+                <div>{data[0].consignorcode}</div>
+                <div>{data[0].consignorzipcode}</div>
+                <div>{data[0].consignorcontactno}</div>
               </div>
             </div>
             <div className={styles.consignee}>
               <div className={styles.title}>Consginee : </div>
               <div className={styles.info}>
-                <div>JINDAL POLY FILMS Ltd , </div>
-                <div>28th K.M Stone, Nashik -</div>
-                <div>Igatpuri Road , VIII</div>
-                <div>Mundegaon,Igatpuri</div>
-                <div>NASHIK , MAHARASHTRA</div>
-                <div>, 422403 , INDIA</div>
+                <div>{data[0].consigneename}</div>
+                <div>{data[0].consigneeaddress} </div>
+                <div>{data[0].consigneecity}</div>
+
+                <div>{data[0].consigneecode}</div>
+                <div>{data[0].consigneezipcode}</div>
+                <div>{data[0].consigneecontactno}</div>
               </div>
             </div>
           </section>
@@ -112,12 +125,12 @@ export default class PrintDoc extends Component {
           <section className={styles.wrapper_3} style={{ borderTop: "none" }}>
             <div className={styles.consignor}>
               <div className={styles.title}>Consignor Code:</div>
-              <div className={styles.info}>PUNNASJIDCCC5</div>
+              <div className={styles.info}>{data[0].consignorcode}</div>
             </div>
 
             <div className={styles.consignee}>
               <div className={styles.title}>Consignee Code :</div>
-              <div className={styles.info}>HOSHYDPUBTPB8</div>
+              <div className={styles.info}>{data[0].consigneecode}</div>
             </div>
           </section>
 
@@ -128,23 +141,26 @@ export default class PrintDoc extends Component {
             <div className={styles.content}>
               <div className={styles.subcont}>
                 <div> Contract No.: </div>
-                <div> JIDNASI2322000AD02</div>
+                <div>{data[0].salecontract}</div>
               </div>
               <div className={styles.subcont}>
-                <div> Dt: </div>
-                <div> JIDNASI2322000AD02</div>
+                <div>
+                  {" "}
+                  Dt: {moment(data[0].documentdate).format("DD-MM-YYYY")}{" "}
+                </div>
+                <div> </div>
               </div>
               <div className={styles.subcont}>
                 <div> Billable Value : </div>
-                <div> JIDNASI2322000AD02</div>
+                <div>{data[0].partvalue}</div>
               </div>
               <div className={styles.subcont}>
                 <div> Origin: </div>
-                <div> NASHIK</div>
+                <div> {data[0].consignorcity}</div>
               </div>
               <div className={styles.subcont}>
                 <div> Destination </div>
-                <div> HYDERABAD</div>
+                <div> {data[0].consigneecity}</div>
               </div>
             </div>
           </section>
@@ -178,14 +194,14 @@ export default class PrintDoc extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>BOPP Film</td>
-                  <td>1.000</td>
-                  <td>166.88</td>
-                  <td>2084573</td>
-                  <td>25/03/2020</td>
-                  <td>25.00</td>
-                  <td>25.00</td>
-                  <td> 1,344,985.00</td>
+                  <td>{data[0].partno}</td>
+                  <td>{data[0].partqty}</td>
+                  <td>{`${data[0].partweight} ${data[0].partweightuom}`}</td>
+                  <td>{data[0].documentno}</td>
+                  <td>{moment(data[0].documentdate).format("DD-MM-YYYY")}</td>
+                  <td>{data[0].partqty}</td>
+                  <td>{data[0].partqty}</td>
+                  <td> {data[0].partvalue}</td>
                   <td>1344985.00 </td>
                   <td>INR</td>
                   <td />
@@ -254,10 +270,6 @@ export default class PrintDoc extends Component {
             cost and expenses resulting from breach of this warranty B) The
             SHIPPER warrants to TVS SCS that the description of goods as noted
             on this Waybill conforms accurately to the actual context of the
-            goods and it does not contravene the provisions of any law and the
-            SHIPPER shall indemnify TVS SCS for all claims, damages and expenses
-            arisins as a result of any incorrect description and TVS SCS there
-            upon have the right to deal with such items as it deems fit
             including the right to abandon carriage of the same immediately upon
             TVS SCS having knowledge that such items infringes these conditions.
             C) It is the SHIPPER's obligation to ensure that all shipments
@@ -356,18 +368,10 @@ export default class PrintDoc extends Component {
             be Governed by the Laws of INDIA and Parties submit to the exclusive
             jurisdiction of the courts in Chennai.
           </p>
-          <div className={styles.barcode}>
-            <ReactBarcode
-              value="CWB000001/2021/000"
-              height={30}
-              width={1}
-              fontSize={10}
-            />
 
-            <div>
-              “This is a system generated CWB from TVS Supply Chain Solutions
-              Limited”.
-            </div>
+          <div>
+            “This is a system generated CWB from TVS Supply Chain Solutions
+            Limited”.
           </div>
         </div>
         <div />
