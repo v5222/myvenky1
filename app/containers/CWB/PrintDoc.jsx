@@ -4,6 +4,7 @@ import ReactBarcode from "react-barcode";
 import Logo from "../../images/logo-full.png";
 export default class PrintDoc extends Component {
   render() {
+    const { data } = this.props;
     return (
       <>
         <div className={styles.container}>
@@ -88,23 +89,25 @@ export default class PrintDoc extends Component {
             <div className={styles.consignor}>
               <div className={styles.title}>Consginor : </div>
               <div className={styles.info}>
-                <div>JINDAL POLY FILMS Ltd , </div>
-                <div>28th K.M Stone, Nashik -</div>
-                <div>Igatpuri Road , VIII</div>
-                <div>Mundegaon,Igatpuri</div>
-                <div>NASHIK , MAHARASHTRA</div>
-                <div>, 422403 , INDIA</div>
+                <div>{data[0].consignorname}</div>
+                <div>{data[0].consignoraddress} </div>
+                <div>{data[0].consignorcity}</div>
+
+                <div>{data[0].consignorcode}</div>
+                <div>{data[0].consignorzipcode}</div>
+                <div>{data[0].consignorcontactno}</div>
               </div>
             </div>
             <div className={styles.consignee}>
               <div className={styles.title}>Consginee : </div>
               <div className={styles.info}>
-                <div>JINDAL POLY FILMS Ltd , </div>
-                <div>28th K.M Stone, Nashik -</div>
-                <div>Igatpuri Road , VIII</div>
-                <div>Mundegaon,Igatpuri</div>
-                <div>NASHIK , MAHARASHTRA</div>
-                <div>, 422403 , INDIA</div>
+                <div>{data[0].consigneename}</div>
+                <div>{data[0].consigneeaddress} </div>
+                <div>{data[0].consigneecity}</div>
+
+                <div>{data[0].consigneecode}</div>
+                <div>{data[0].consigneezipcode}</div>
+                <div>{data[0].consigneecontactno}</div>
               </div>
             </div>
           </section>
@@ -112,12 +115,12 @@ export default class PrintDoc extends Component {
           <section className={styles.wrapper_3} style={{ borderTop: "none" }}>
             <div className={styles.consignor}>
               <div className={styles.title}>Consignor Code:</div>
-              <div className={styles.info}>PUNNASJIDCCC5</div>
+              <div className={styles.info}>{data[0].consignorcode}</div>
             </div>
 
             <div className={styles.consignee}>
               <div className={styles.title}>Consignee Code :</div>
-              <div className={styles.info}>HOSHYDPUBTPB8</div>
+              <div className={styles.info}>{data[0].consigneecode}</div>
             </div>
           </section>
 
@@ -128,15 +131,15 @@ export default class PrintDoc extends Component {
             <div className={styles.content}>
               <div className={styles.subcont}>
                 <div> Contract No.: </div>
-                <div> JIDNASI2322000AD02</div>
+                <div>{data[0].salecontract}</div>
               </div>
               <div className={styles.subcont}>
-                <div> Dt: </div>
-                <div> JIDNASI2322000AD02</div>
+                <div> Dt:{data[0].documentdate} </div>
+                <div> </div>
               </div>
               <div className={styles.subcont}>
                 <div> Billable Value : </div>
-                <div> JIDNASI2322000AD02</div>
+                <div> ""</div>
               </div>
               <div className={styles.subcont}>
                 <div> Origin: </div>
@@ -178,14 +181,14 @@ export default class PrintDoc extends Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>BOPP Film</td>
-                  <td>1.000</td>
-                  <td>166.88</td>
+                  <td>{data[0].partno}</td>
+                  <td>{data[0].partqty}</td>
+                  <td>{`${data[0].partweight} ${data[0].partweightuom}`}</td>
                   <td>2084573</td>
                   <td>25/03/2020</td>
                   <td>25.00</td>
                   <td>25.00</td>
-                  <td> 1,344,985.00</td>
+                  <td> {data[0].partvalue}</td>
                   <td>1344985.00 </td>
                   <td>INR</td>
                   <td />
@@ -358,7 +361,7 @@ export default class PrintDoc extends Component {
           </p>
           <div className={styles.barcode}>
             <ReactBarcode
-              value="CWB000001/2021/000"
+              value={data[0].barcode}
               height={30}
               width={1}
               fontSize={10}
