@@ -1,0 +1,161 @@
+.container {
+  padding: 50px;
+  margin: 10px 200px;
+  background: white;
+  .topLabel {
+    display: flex;
+    .cmpAddr {
+      .cmpName {
+        font-size: 20px;
+        color: black;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .wrapper_2 {
+    width: 100%;
+    margin: 10px 0px;
+    .barcode {
+      margin-left: 200px;
+    }
+    .surface {
+      display: flex;
+      flex-direction: column;
+      float: right;
+      margin-right: 20rem;
+      margin-top: 0.5rem;
+      border: 1px solid black;
+
+      .content {
+        border: 1px solid black;
+        height: 40px;
+        width: 100px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bolder;
+      }
+    }
+
+    .title {
+      font-weight: 600;
+    }
+  }
+
+  .wrapper_5 {
+    table {
+      width: 80%;
+      border: 2px solid black;
+      th,
+      tr,
+      td {
+        border: 2px solid black;
+        text-align: center;
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+  .wrapper_6 {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 100px;
+    background-color: white;
+
+    .routecode {
+      border: 1px solid black;
+      width: 80px;
+      text-align: center;
+      font-size: 22px;
+    }
+    h1 {
+      font-weight: 600;
+    }
+    mark {
+      background-color: black;
+      color: white;
+    }
+  }
+}
+
+@media only print {
+  .container {
+    padding: 50px;
+    margin: 10px 10px;
+    background: white;
+    .topLabel {
+      display: flex;
+      .cmpAddr {
+        .cmpName {
+          font-size: 20px;
+          color: black;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .wrapper_2 {
+      width: 100%;
+      margin: 10px 0px;
+      .barcode {
+        margin-left: 200px;
+      }
+      .surface {
+        display: flex;
+        flex-direction: column;
+        float: right;
+        margin-right: 2rem;
+        margin-top: 0.5rem;
+        border: 1px solid black;
+
+        .content {
+          border: 1px solid black;
+          height: 40px;
+          width: 100px;
+          text-align: center;
+          font-size: 18px;
+          font-weight: bolder;
+        }
+      }
+
+      .title {
+        font-weight: 600;
+      }
+    }
+
+    .wrapper_5 {
+      table {
+        width: 80%;
+        border: 2px solid black;
+        th,
+        tr,
+        td {
+          border: 2px solid black;
+          text-align: center;
+          padding: 5px 10px;
+          font-size: 14px;
+        }
+      }
+    }
+    .wrapper_6 {
+      display: flex;
+      flex-wrap: nowrap;
+      margin-top: 100px;
+      background-color: white;
+
+      .routecode {
+        border: 1px solid black;
+        width: 70px;
+        text-align: center;
+        font-size: 14px;
+      }
+      h1 {
+        font-weight: 600;
+      }
+      mark {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+}

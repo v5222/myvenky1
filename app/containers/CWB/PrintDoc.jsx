@@ -363,12 +363,14 @@ export default class PrintDoc extends Component {
               width={1}
               fontSize={10}
             />
+
             <div>
               “This is a system generated CWB from TVS Supply Chain Solutions
               Limited”.
             </div>
           </div>
         </div>
+        <div />
       </>
     );
   }

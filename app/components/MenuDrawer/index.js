@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Drawer from "antd/lib/drawer";
 import Button from "antd/lib/button";
 import Menu from "antd/lib/menu";
@@ -11,12 +11,11 @@ import Logo2 from "../../images/TVS-SCS-Tagline-Color.png";
 import Courier from "../../images/SVG/couriersidebar.svg";
 import history from "utils/history";
 import { usersList } from "containers/App/DWMusers";
-import {connect} from "react-redux";
-const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
-
+import { connect } from "react-redux";
+const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
   useEffect(() => {
-    console.log(otpLogIn,userRole)
-  }, [otpLogIn])
+    console.log(otpLogIn, userRole);
+  }, [otpLogIn]);
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -63,7 +62,7 @@ const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
           defaultSelectedKeys={["1"]}
           style={{ background: "#ECECEC", marginLeft: "10px" }}
         >
-          {!usersList.includes(user.email) && userRole &&(
+          {!usersList.includes(user.email) && userRole && (
             <Menu.Item
               key="/podDashboard"
               className={
@@ -93,34 +92,33 @@ const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
             </Menu.Item>
           )}
 
-
-      {!usersList.includes(user.email) && userRole && (
-          <Menu.Item
-            key="3"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/dwmApplication")}
-            className={
-              selected === "/dwmApplication"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            DWM summary
-          </Menu.Item>
-)}
           {!usersList.includes(user.email) && userRole && (
-          <Menu.Item
-            key="4"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/dwmUsageReportApplication")}
-            className={
-              selected === "/dwmUsageReportApplication"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            DWM Report Insight
-          </Menu.Item>
+            <Menu.Item
+              key="3"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/dwmApplication")}
+              className={
+                selected === "/dwmApplication"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              DWM summary
+            </Menu.Item>
+          )}
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="4"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/dwmUsageReportApplication")}
+              className={
+                selected === "/dwmUsageReportApplication"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              DWM Report Insight
+            </Menu.Item>
           )}
           {!usersList.includes(user.email) && userRole && (
             <Menu.Item
@@ -136,54 +134,74 @@ const MenuDrawer = ({ selected, user,userRole,otpLogIn }) => {
               Einvoice Print
             </Menu.Item>
           )}
-        {!usersList.includes(user.email) && userRole && (
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="5"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/transportationmaster")}
+              className={
+                selected === "/transportationmaster"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Transportation Master
+            </Menu.Item>
+          )}
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="5"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/transportation")}
+              className={
+                selected === "/transportation"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Transportation
+            </Menu.Item>
+          )}
           <Menu.Item
-            key="5"
+            key="6"
             icon={<BarChartOutlined />}
-            onClick={() => history.push("/transportationmaster")}
+            onClick={() => history.push("/vehicletrackingsystem")}
             className={
-              selected === "/transportationmaster"
+              selected === "/vehicletrackingsystem"
                 ? "tvsit-main-menu-selected"
                 : "tvsit-main-menu"
             }
-          >
-            Transportation Master
-          </Menu.Item>
-)}
-        {!usersList.includes(user.email) && userRole && (
-          <Menu.Item
-            key="5"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/transportation")}
-            className={
-              selected === "/transportation"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Transportation
-          </Menu.Item>
-)}
-        <Menu.Item
-          key="6"
-          icon={<BarChartOutlined />}
-          onClick={()=> history.push("/vehicletrackingsystem")}
-          className={
-            selected === "/vehicletrackingsystem"
-              ? "tvsit-main-menu-selected"
-              : "tvsit-main-menu"
-          }
           >
             Vehicle Tracking System
-          </Menu.Item> 
+          </Menu.Item>
+          <Menu.Item
+            key="7"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/cwb")}
+            className={
+              selected === "/cwb"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            Vehicle Tracking
+          </Menu.Item>
         </Menu>
       </Drawer>
     </>
   );
 };
-const mapStateToProps=(state,ownProps)=>({
-  userRole:state.global.userRole.length > 0  ? state.global.userRole[0].usertype === "TVSUSER" ? true:false:true ,
-  otpLogIn:state.global.otpLogIn
-})
+const mapStateToProps = (state, ownProps) => ({
+  userRole:
+    state.global.userRole.length > 0
+      ? state.global.userRole[0].usertype === "TVSUSER"
+        ? true
+        : false
+      : true,
+  otpLogIn: state.global.otpLogIn,
+});
 
-export default connect(mapStateToProps,null)(MenuDrawer);
+export default connect(
+  mapStateToProps,
+  null
+)(MenuDrawer);

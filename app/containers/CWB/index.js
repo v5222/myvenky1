@@ -8,12 +8,59 @@ import { Input } from "antd";
 import { Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import PrintDoc from "./PrintDoc";
+import Label from "./Label";
 import ReactToPrint from "react-to-print";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 
+const apiUrl =
+  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
+
 class CWB extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActive: false,
+      dataItems: null,
+    };
+  }
+
+  handleSearch = () => {
+    this.setState({ isActive: true });
+  };
+
+  componentDidMount() {
+    let configure = {
+      method: "post",
+      body: JSON.stringify({
+        body: {
+          type: "CWBPRINT",
+          email: "057725",
+          orderno: "",
+        },
+      }),
+    };
+
+    fetch(apiUrl, configure)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("response data", data);
+
+        if (data.body.statuscode === 200) {
+          this.setState({
+            dataItems: data.body.bodymsg,
+          });
+          console.log(this.state.dataItems);
+          console.log(this.state.dataItems[0].barcode);
+        } else {
+          alert(data.body.bodymsg);
+        }
+      });
+  }
+
   render() {
     const { logout, user } = this.props;
+    const { dataItems } = this.state;
+
     return (
       <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
@@ -38,21 +85,45 @@ class CWB extends React.Component {
                   placeholder="Enter Ivoice Number"
                   style={{ width: "70%", marginRight: "10px" }}
                 />
-                <Button type="primary" icon={<SearchOutlined />}>
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  onClick={this.handleSearch}
+                >
                   Search
                 </Button>
-                <ReactToPrint
-                  trigger={() => {
-                    // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-                    // to the root node of the returned component as it will be overwritten.
-                    return <Button icon={<PrinterOutlined />}>Print</Button>;
-                  }}
-                  content={() => this.invoiceRef}
-                />
+                {this.state.isActive && (
+                  <ReactToPrint
+                    trigger={() => {
+                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                      // to the root node of the returned component as it will be overwritten.
+                      return <Button icon={<PrinterOutlined />}>Print</Button>;
+                    }}
+                    content={() => this.invoiceRef}
+                  />
+                )}
+                {this.state.isActive && (
+                  <ReactToPrint
+                    trigger={() => {
+                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                      // to the root node of the returned component as it will be overwritten.
+                      return (
+                        <Button icon={<PrinterOutlined />}>Print Label</Button>
+                      );
+                    }}
+                    content={() => this.labelRef}
+                  />
+                )}
               </div>
               <div style={{ marginTop: "20px" }} />
             </Card>
-            <PrintDoc ref={(el) => (this.invoiceRef = el)} />
+            {this.state.isActive && (
+              <Label ref={(el) => (this.labelRef = el)} data={dataItems} />
+            )}
+
+            {this.state.isActive && (
+              <PrintDoc ref={(el) => (this.invoiceRef = el)} />
+            )}
           </main>
         </MainLayout>
       </ErrorBoundary>

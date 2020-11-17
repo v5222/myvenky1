@@ -141,6 +141,10 @@ class Einvoice extends React.Component {
       this.popUp();
     }
   };
+  //Use this refresh wherever needed
+  // handleRefresh = () => {
+  //   window.location.reload(false);
+  // };
 
   noResult = () => {
     message.error(
