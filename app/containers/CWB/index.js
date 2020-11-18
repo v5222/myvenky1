@@ -8,18 +8,19 @@ import { Select } from "antd";
 import { Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import PrintDoc from "./PrintDoc";
+import Label from "./Label";
 import ReactToPrint from "react-to-print";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
-const URL = "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
+
+const apiUrl =
+  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/dwm";
+
 class CWB extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: [
-        { value: "Burns Bay Road" },
-        { value: "Downing Street" },
-        { value: "Wall Street" },
-      ],
+      isActive: false,
+      dataItems: [],
       cwbNo: [],
       selected: "",
       isSelected: false,
@@ -37,7 +38,7 @@ class CWB extends React.Component {
         },
       }),
     };
-    fetch(URL, bodyoptions)
+    fetch(apiUrl, bodyoptions)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -62,16 +63,41 @@ class CWB extends React.Component {
       method: "POST",
       body: JSON.stringify(body),
     };
-    fetch(URL, bodyOptions)
+
+    let configure = {
+      method: "post",
+      body: JSON.stringify({
+        body: {
+          type: "CWBPRINT",
+          email: "057725",
+          orderno: this.state.selected,
+        },
+      }),
+    };
+
+    fetch(apiUrl, configure)
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ printValue: data.body.bodymsg, isSelected: true });
+        console.log("response data", data);
+        if (data.body.statuscode === 200) {
+          this.setState({
+            dataItems: data.body.bodymsg,
+          });
+        } else {
+          alert(data.body.bodymsg);
+        }
+      });
+    fetch(apiUrl, bodyOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ printValue: data.body.bodymsg, isActive: true });
       });
   };
 
   render() {
     const { logout, user } = this.props;
-    const { cwbNo, printValue, isSelected } = this.state;
+    const { cwbNo, printValue, isActive, dataItems } = this.state;
+
     return (
       <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
@@ -114,22 +140,44 @@ class CWB extends React.Component {
                 >
                   Search
                 </Button>
-                <ReactToPrint
-                  trigger={() => {
-                    // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-                    // to the root node of the returned component as it will be overwritten.
-                    return <Button icon={<PrinterOutlined />}>Print</Button>;
-                  }}
-                  content={() => this.invoiceRef}
-                />
+                {isActive && (
+                  <ReactToPrint
+                    trigger={() => {
+                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                      // to the root node of the returned component as it will be overwritten.
+                      return (
+                        <Button icon={<PrinterOutlined />}>
+                          Print Invoice
+                        </Button>
+                      );
+                    }}
+                    content={() => this.invoiceRef}
+                  />
+                )}
+                {isActive && (
+                  <ReactToPrint
+                    trigger={() => {
+                      // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                      // to the root node of the returned component as it will be overwritten.
+                      return (
+                        <Button icon={<PrinterOutlined />}>Print Label</Button>
+                      );
+                    }}
+                    content={() => this.labelRef}
+                  />
+                )}
               </div>
               <div style={{ marginTop: "20px" }} />
             </Card>
-            {isSelected && (
+
+            {isActive && (
               <PrintDoc
                 ref={(el) => (this.invoiceRef = el)}
                 data={printValue}
               />
+            )}
+            {isActive && (
+              <Label ref={(el) => (this.labelRef = el)} data={dataItems} />
             )}
           </main>
         </MainLayout>

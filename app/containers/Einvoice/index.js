@@ -9,7 +9,6 @@ import ErrorBoundary from "components/ErrorBoundary";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import PrinterOutlined from "@ant-design/icons/PrinterOutlined";
 import FileExcelOutlined from "@ant-design/icons/FileExcelOutlined";
-import Button from "antd/lib/button";
 import { Spin } from "antd";
 
 import Input from "antd/lib/input";
@@ -18,6 +17,7 @@ import { useReactToPrint } from "react-to-print";
 import InvoicePrint from "./InvoicePrint";
 const { Option } = Select;
 import ReactToPrint from "react-to-print";
+import { message, Button } from "antd";
 
 import SearchResult from "./SearchResult";
 import NoResult from "./NoResult";
@@ -71,6 +71,7 @@ class Einvoice extends React.Component {
       selectValue: "",
       selectDatefrom: "",
       selectDateto: "",
+      popUp: false,
     };
   }
 
@@ -101,60 +102,79 @@ class Einvoice extends React.Component {
     var TotalList = [];
 
     this.setState({ loading: true });
-    console.log("invoice from", this.state.invoicenofrom);
-    console.log("invoice to", this.state.invoicenoto);
-    console.log("date from", this.state.selectDatefrom);
-    console.log("date to", this.state.selectDateto);
 
-    if (
-      this.state.invoicenofrom ||
-      (this.state.invoicenofrom && this.state.invoicenoto) ||
-      (this.state.selectDatefrom && this.state.selectDateto) ||
-      (this.state.selectDatefrom &&
-        this.state.selectDateto &&
-        this.state.invoicenofrom &&
-        this.state.invoicenoto)
-    ) {
+    if (this.state.selectDatefrom && this.state.selectDateto) {
       let options = {
         method: "POST",
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
             invoicenofrom: this.state.invoicenofrom,
-            invoicenoto: this.state.invoicenoto,
+            invoicenoto: this.state.invoicenofrom,
             invoicenofromdate: this.state.selectDatefrom,
-
             invoicenotodate: this.state.selectDateto,
-            // type: "INVOICEPRINT1",
-
-            // invoicenofrom:"TNCD20000154",
-
-            // invoicenoto:"TNCD20000154",
-
-            // invoicenofromdate:"01/11/2020",
-
-            // invoicenotodate:"03/11/2020"
           },
         }),
       };
-
       fetch(printUrl, options)
         .then((res) => res.json())
+
         .then((data) => {
-          this.setState({
-            isSuccess: true,
-            isError: false,
-            dataItems: data.body.bodymsg,
-            SubTotalList: SubTotalList,
-            TotalList: TotalList,
-            isActive: true,
-            search: true,
-            loading: false,
-          });
+          console.log(data);
+
+          if (data.body.bodymsg.length > 0) {
+            this.setState({
+              isSuccess: true,
+              isError: false,
+              dataItems: data.body.bodymsg,
+              SubTotalList: SubTotalList,
+              TotalList: TotalList,
+              isActive: true,
+              search: true,
+              loading: false,
+            });
+          } else {
+            this.noResult();
+          }
         });
     } else {
-      console.log("error");
+      this.popUp();
     }
+  };
+  //Use this refresh wherever needed
+  // handleRefresh = () => {
+  //   window.location.reload(false);
+  // };
+
+  noResult = () => {
+    message.error(
+      {
+        content: "No Result Found",
+        className: "custom-class",
+        style: {
+          marginTop: "1vh",
+          fontSize: "18px",
+        },
+      },
+      5
+    );
+
+    // );
+    this.setState({ loading: false });
+  };
+  popUp = () => {
+    // message.info("Please select date range",
+    message.info({
+      content: "Please select date range",
+      className: "custom-class",
+      style: {
+        marginTop: "1vh",
+        fontSize: "18px",
+      },
+    });
+
+    // );
+    this.setState({ loading: false });
   };
 
   handleInvoiceFrom = (e) => {
@@ -170,14 +190,12 @@ class Einvoice extends React.Component {
   handleDateRange = (value) => {
     const concat = value + "";
     const split = concat.split(",");
-    // console.log(split[0])
-    // console.log(split[1])
-    console.log(format(new Date(split[0]), "dd/MM/yyyy"));
-    console.log(format(new Date(split[1]), "dd/MM/yyyy"));
+    console.log(format(new Date(split[0]), "yyyy-MM-dd"));
+    console.log(format(new Date(split[1]), "yyyy-MM-dd"));
 
     this.setState({
-      selectDatefrom: format(new Date(split[0]), "dd/MM/yyyy"),
-      selectDateto: format(new Date(split[1]), "dd/MM/yyyy"),
+      selectDatefrom: format(new Date(split[0]), "yyyy-MM-dd"),
+      selectDateto: format(new Date(split[1]), "yyyy-MM-dd"),
     });
   };
   // BindOUInstance = () => {
@@ -409,12 +427,13 @@ class Einvoice extends React.Component {
                 {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
+                    documentTitle="Invoice"
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
                       // to the root node of the returned component as it will be overwritten.
                       return <Button icon={<PrinterOutlined />}>Print</Button>;
                     }}
-                    content={() => this.invoiceRef}
+                    content={() => this.componentRef}
                   />
                 )}
               </Col>
@@ -456,17 +475,21 @@ class Einvoice extends React.Component {
               <div style={{ fontSize: "18px" }}>Loading Invoice</div>
             </div>
           ) : isActive ? (
-            <section className={styles.container}>
+            <section
+              className={styles.container}
+              ref={(el) => (this.componentRef = el)}
+            >
               {this.state.dataItems.map((dataItems, i) => {
                 return (
-                  <NoResult>
-                    <InvoicePrint
-                      ref={(el) => (this.invoiceRef = el)}
-                      data={dataItems}
-                      key={i}
-                      selectValue={this.state.selectValue}
-                    />
-                  </NoResult>
+                  <div>
+                    <NoResult>
+                      <InvoicePrint
+                        data={dataItems}
+                        key={i}
+                        selectValue={this.state.selectValue}
+                      />
+                    </NoResult>
+                  </div>
                 );
               })}
             </section>

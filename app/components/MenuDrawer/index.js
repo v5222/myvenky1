@@ -175,7 +175,19 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
             Vehicle Tracking System
           </Menu.Item>
           <Menu.Item
-            key="6"
+            key="7"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/cwb")}
+            className={
+              selected === "/cwb"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            Consignment Note
+          </Menu.Item>
+          <Menu.Item
+            key="8"
             icon={<BarChartOutlined />}
             onClick={() => history.push("/trbilling")}
             className={

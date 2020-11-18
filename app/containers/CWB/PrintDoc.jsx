@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./printdoc.module.scss";
 import ReactBarcode from "react-barcode";
 import Logo from "../../images/logo-full.png";
+import moment from "moment";
 export default class PrintDoc extends Component {
   render() {
     const { data } = this.props;
@@ -18,6 +19,7 @@ export default class PrintDoc extends Component {
                 }}
               />
             </div>
+
             <div className={styles.cmpAddr}>
               <div className={styles.cmpName}>TVS Supply Chain Limited</div>
               <div className={styles.tag}>
@@ -27,6 +29,14 @@ export default class PrintDoc extends Component {
                 N0:226, Karunal kudil, Cathderal Road,
               </div>
               <div className={styles.addr2}>Gopalapuram ,Chennai - 600086</div>
+            </div>
+            <div className={styles.barcode}>
+              <ReactBarcode
+                value={data[0].barcode}
+                height={60}
+                width={2}
+                fontSize={15}
+              />
             </div>
           </section>
 
@@ -56,7 +66,7 @@ export default class PrintDoc extends Component {
                       fontWeight: "bolder",
                     }}
                   >
-                    01/04/2020
+                    {moment(data[0].documentdate).format("DD-MM-YYYY")}
                   </div>
                 </div>
                 <div className={styles.cwbstatsus}>
@@ -68,7 +78,7 @@ export default class PrintDoc extends Component {
                       fontWeight: "bolder",
                     }}
                   >
-                    CWB000012/2021/10
+                    {data[0].documentno}
                   </div>
                 </div>
                 <div className={styles.cwbstatsus}>
@@ -134,20 +144,23 @@ export default class PrintDoc extends Component {
                 <div>{data[0].salecontract}</div>
               </div>
               <div className={styles.subcont}>
-                <div> Dt:{data[0].documentdate} </div>
+                <div>
+                  {" "}
+                  Dt: {moment(data[0].documentdate).format("DD-MM-YYYY")}{" "}
+                </div>
                 <div> </div>
               </div>
               <div className={styles.subcont}>
                 <div> Billable Value : </div>
-                <div> ""</div>
+                <div>{data[0].partvalue}</div>
               </div>
               <div className={styles.subcont}>
                 <div> Origin: </div>
-                <div> NASHIK</div>
+                <div> {data[0].consignorcity}</div>
               </div>
               <div className={styles.subcont}>
                 <div> Destination </div>
-                <div> HYDERABAD</div>
+                <div> {data[0].consigneecity}</div>
               </div>
             </div>
           </section>
@@ -184,10 +197,10 @@ export default class PrintDoc extends Component {
                   <td>{data[0].partno}</td>
                   <td>{data[0].partqty}</td>
                   <td>{`${data[0].partweight} ${data[0].partweightuom}`}</td>
-                  <td>2084573</td>
-                  <td>25/03/2020</td>
-                  <td>25.00</td>
-                  <td>25.00</td>
+                  <td>{data[0].documentno}</td>
+                  <td>{moment(data[0].documentdate).format("DD-MM-YYYY")}</td>
+                  <td>{data[0].partqty}</td>
+                  <td>{data[0].partqty}</td>
                   <td> {data[0].partvalue}</td>
                   <td>1344985.00 </td>
                   <td>INR</td>
@@ -257,10 +270,6 @@ export default class PrintDoc extends Component {
             cost and expenses resulting from breach of this warranty B) The
             SHIPPER warrants to TVS SCS that the description of goods as noted
             on this Waybill conforms accurately to the actual context of the
-            goods and it does not contravene the provisions of any law and the
-            SHIPPER shall indemnify TVS SCS for all claims, damages and expenses
-            arisins as a result of any incorrect description and TVS SCS there
-            upon have the right to deal with such items as it deems fit
             including the right to abandon carriage of the same immediately upon
             TVS SCS having knowledge that such items infringes these conditions.
             C) It is the SHIPPER's obligation to ensure that all shipments
@@ -359,19 +368,13 @@ export default class PrintDoc extends Component {
             be Governed by the Laws of INDIA and Parties submit to the exclusive
             jurisdiction of the courts in Chennai.
           </p>
-          <div className={styles.barcode}>
-            <ReactBarcode
-              value={data[0].barcode}
-              height={30}
-              width={1}
-              fontSize={10}
-            />
-            <div>
-              “This is a system generated CWB from TVS Supply Chain Solutions
-              Limited”.
-            </div>
+
+          <div>
+            “This is a system generated CWB from TVS Supply Chain Solutions
+            Limited”.
           </div>
         </div>
+        <div />
       </>
     );
   }
