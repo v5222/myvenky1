@@ -10,14 +10,14 @@ function ViewCard({ title, total, actual, comments }) {
         <div className={styles.content}>
           <div className={styles.d_flex}>
             <div className={styles.value}>
-              <div className={styles.value_1}>Total</div>
-              <div className={styles.value_2}>{total}</div>
+              <div className={styles.value_1}>Target</div>
+              <div className={styles.value_2}>{total}%</div>
             </div>
           </div>
           <div className={styles.d_flex}>
             <div className={styles.value}>
               <div className={styles.value_1}>Actual</div>
-              <div className={styles.value_2}>{actual}</div>
+              <div className={styles.value_2}>{actual}%</div>
             </div>
           </div>
         </div>

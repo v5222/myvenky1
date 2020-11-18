@@ -186,6 +186,18 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
           >
             Consignment Note
           </Menu.Item>
+          <Menu.Item
+            key="8"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/trbilling")}
+            className={
+              selected === "/trbilling"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            Transportation Billing
+          </Menu.Item>
         </Menu>
       </Drawer>
     </>
