@@ -34,6 +34,7 @@ import { createStructuredSelector } from "reselect";
 import { useClearCache } from "react-clear-cache";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 import { SET_LOGIN } from "./constants";
+import TransportationBilling from "../TransportationBilling/Loadable";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 // import
@@ -178,6 +179,17 @@ function App({
           render={(props) =>
             authenticated ? (
               <Transportation {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/trbilling"
+          render={(props) =>
+            authenticated ? (
+              <TransportationBilling {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )
