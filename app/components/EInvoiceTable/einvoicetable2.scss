@@ -1,58 +1,52 @@
-
-.Invoicetable{
-  padding:2px 0 10px 0;
-.table {
-    max-width: 100%;
+.Invoicetable {
+  padding: 2px 0 10px 0;
+  .table {
+    max-width: 80%;
     margin-bottom: 10px;
     color: black;
-    background-color:white; // Reset for nesting within parents with `background-color`.
+    background-color: white; // Reset for nesting within parents with `background-color`.
 
-    
-  
     th,
     td {
       padding: 5px;
       vertical-align: top;
       border-top: 1px solid black;
       text-align: right;
-      
     }
-  
+
     thead th {
       vertical-align: bottom;
       border-bottom: (2 * 1px) solid black;
     }
-  
-     tbody + tbody {
-       border-top: (2 * 1px) solid black;
-     }
+
+    tbody + tbody {
+      border-top: (2 * 1px) solid black;
+    }
   }
-  
-  
+
   //
   // Condensed table w/ half padding
   //
-  
+
   .table-sm {
     th,
     td {
       padding: 10px;
     }
   }
-  
-  
+
   // Border versions
   //
   // Add or remove borders all around the table and between all the columns.
-  
+
   .table-bordered {
     border: 1px solid black;
-  
+
     th,
     td {
       border: 1px solid black;
     }
-  
+
     thead {
       th,
       td {
@@ -60,7 +54,7 @@
       }
     }
   }
-  
+
   .table-borderless {
     th,
     td,
@@ -69,53 +63,208 @@
       border: 0;
     }
   }
-  
+
   // Zebra-striping
   //
   // Default zebra-stripe styles (alternating gray and transparent backgrounds)
-  
-//   .table-striped {
-//     tbody tr:nth-of-type(#{$table-striped-order}) {
-//       background-color: $table-accent-bg;
-//     }
+
+  //   .table-striped {
+  //     tbody tr:nth-of-type(#{$table-striped-order}) {
+  //       background-color: $table-accent-bg;
+  //     }
+}
+
+// Hover effect
+//
+// Placed here since it has to come after the potential zebra striping
+
+.table-hover {
+  tbody tr {
+    &:hover {
+      color: grey;
+      background-color: grey;
+    }
   }
-  
-  
+}
+
+// Table backgrounds
+//
+// Exact selectors below required to override `.table-striped` and prevent
+// inheritance to nested tables.
+
+//   @each $color, $value in $theme-colors {
+//     @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
+//   }
+
+//   @include table-row-variant(active, $table-active-bg);
+
+// Dark styles
+//
+// Same table markup, but inverted color scheme: dark background and light text.
+
+// stylelint-disable-next-line no-duplicate-selectors
+.table {
+  .thead-dark {
+    th {
+      color: black;
+      background-color: white;
+      border-color: black;
+    }
+  }
+
+  .thead-light {
+    th {
+      color: black;
+      background-color: white;
+      border-color: black;
+    }
+  }
+}
+
+.table-dark {
+  color: black;
+  background-color: white;
+
+  th td,
+  thead th {
+    border-color: black;
+  }
+
+  .table-bordered {
+    border: 1px solid black;
+  }
+
+  // &.table-striped {
+  //   tbody tr:nth-of-type(#{$table-striped-order}) {
+  //     background-color: white;
+  //   }
+  // }
+
+  &.table-hover {
+    tbody tr {
+      &:hover {
+        color: black;
+        background-color: grey;
+      }
+    }
+  }
+}
+
+.amt_words {
+  text-transform: capitalize;
+  font-size: 14px;
+  margin: 10px 0 0 10px;
+  padding: auto;
+}
+
+///responsive for print
+
+@media only print {
+  .Invoicetable {
+    .table {
+      max-width: 10%;
+      font-size: 8px;
+      margin-bottom: 7px;
+      color: black;
+      background-color: white; // Reset for nesting within parents with `background-color`.
+
+      th,
+      td {
+        padding: 4px 2px;
+        vertical-align: top;
+        border-top: 1px solid black;
+      }
+
+      thead th {
+        vertical-align: bottom;
+        border-bottom: (2 * 1px) solid black;
+      }
+
+      tbody + tbody {
+        border-top: (2 * 1px) solid black;
+      }
+    }
+
+    //
+    // Condensed table w/ half padding
+    //
+
+    .table-sm {
+      th,
+      td {
+        padding: 4px 2px;
+      }
+    }
+
+    // Border versions
+    //
+    // Add or remove borders all around the table and between all the columns.
+
+    .table-bordered {
+      border: 1px solid black;
+
+      th,
+      td {
+        border: 1px solid black;
+      }
+
+      thead {
+        th,
+        td {
+          border-bottom-width: 2 * 1px;
+        }
+      }
+    }
+
+    .table-borderless {
+      th,
+      td,
+      thead th,
+      tbody + tbody {
+        border: 0;
+      }
+    }
+
+    // Zebra-striping
+    //
+    // Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+    //   .table-striped {
+    //     tbody tr:nth-of-type(#{$table-striped-order}) {
+    //       background-color: $table-accent-bg;
+    //     }
+  }
+
   // Hover effect
   //
   // Placed here since it has to come after the potential zebra striping
-  
+
   .table-hover {
     tbody tr {
-    &:hover {
+      &:hover {
         color: grey;
         background-color: grey;
       }
     }
   }
 
- 
-  
-  
   // Table backgrounds
   //
   // Exact selectors below required to override `.table-striped` and prevent
   // inheritance to nested tables.
-  
-//   @each $color, $value in $theme-colors {
-//     @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
-//   }
-  
-//   @include table-row-variant(active, $table-active-bg);
-  
-  
+
+  //   @each $color, $value in $theme-colors {
+  //     @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
+  //   }
+
+  //   @include table-row-variant(active, $table-active-bg);
+
   // Dark styles
   //
   // Same table markup, but inverted color scheme: dark background and light text.
-  
+
   // stylelint-disable-next-line no-duplicate-selectors
   .table {
-
     .thead-dark {
       th {
         color: black;
@@ -123,7 +272,7 @@
         border-color: black;
       }
     }
-  
+
     .thead-light {
       th {
         color: black;
@@ -132,248 +281,67 @@
       }
     }
   }
-  
+
   .table-dark {
     color: black;
     background-color: white;
-  
-    th
-    td,
+
+    th td,
     thead th {
-      border-color:black;
+      border-color: black;
     }
-  
+
     .table-bordered {
       border: 1px solid black;
     }
-  
+
     // &.table-striped {
     //   tbody tr:nth-of-type(#{$table-striped-order}) {
     //     background-color: white;
     //   }
     // }
-  
+
     &.table-hover {
       tbody tr {
-         &:hover {
+        &:hover {
           color: black;
           background-color: grey;
         }
       }
     }
+  }
+  .amt_words {
+    text-transform: capitalize;
+    font-size: 10px;
+    margin: 5px 0 0 0px;
+  }
+  .charges {
+    font-size: 10px;
+  }
 }
 
-.amt_words{
-   text-transform: capitalize;
-   font-size: 14px;
-   margin: 10px 0 0 10px;
-   padding:auto;
-   
-   }
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
 
+// .table-responsive {
+//   @each $breakpoint in map-keys($grid-breakpoints) {
+//     $next: breakpoint-next($breakpoint, $grid-breakpoints);
+//     $infix: breakpoint-infix($next, $grid-breakpoints);
 
-///responsive for print
+//     &#{$infix} {
+//       @include media-breakpoint-down($breakpoint) {
+//         display: block;
+//         width: 100%;
+//         overflow-x: auto;
+//         -webkit-overflow-scrolling: touch;
 
-@media only print {
-  .Invoicetable{
-
-    .table {
-        max-width: 100%;
-        font-size: 8px;
-        margin-bottom: 7px;
-        color: black;
-        background-color:white; // Reset for nesting within parents with `background-color`.
-        
-      
-        th,
-        td {
-          padding: 4px 2px;
-          vertical-align: top;
-          border-top: 1px solid black;
-        }
-      
-        thead th {
-          vertical-align: bottom;
-          border-bottom: (2 * 1px) solid black;
-        }
-      
-         tbody + tbody {
-           border-top: (2 * 1px) solid black;
-         }
-      }
-      
-      
-      //
-      // Condensed table w/ half padding
-      //
-      
-      .table-sm {
-        th,
-        td {
-          padding: 4px 2px;
-        }
-      }
-      
-      
-      // Border versions
-      //
-      // Add or remove borders all around the table and between all the columns.
-      
-      .table-bordered {
-        border: 1px solid black;
-      
-        th,
-        td {
-          border: 1px solid black;
-        }
-      
-        thead {
-          th,
-          td {
-            border-bottom-width: 2 * 1px;
-          }
-        }
-      }
-      
-      .table-borderless {
-        th,
-        td,
-        thead th,
-        tbody + tbody {
-          border: 0;
-        }
-      }
-      
-      // Zebra-striping
-      //
-      // Default zebra-stripe styles (alternating gray and transparent backgrounds)
-      
-    //   .table-striped {
-    //     tbody tr:nth-of-type(#{$table-striped-order}) {
-    //       background-color: $table-accent-bg;
-    //     }
-      }
-      
-      
-      // Hover effect
-      //
-      // Placed here since it has to come after the potential zebra striping
-      
-      .table-hover {
-        tbody tr {
-        &:hover {
-            color: grey;
-            background-color: grey;
-          }
-        }
-      }
-    
-     
-      
-      
-      // Table backgrounds
-      //
-      // Exact selectors below required to override `.table-striped` and prevent
-      // inheritance to nested tables.
-      
-    //   @each $color, $value in $theme-colors {
-    //     @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
-    //   }
-      
-    //   @include table-row-variant(active, $table-active-bg);
-      
-      
-      // Dark styles
-      //
-      // Same table markup, but inverted color scheme: dark background and light text.
-      
-      // stylelint-disable-next-line no-duplicate-selectors
-      .table {
-        .thead-dark {
-          th {
-            color: black;
-            background-color: white;
-            border-color: black;
-          }
-        }
-      
-        .thead-light {
-          th {
-            color: black;
-            background-color: white;
-            border-color: black;
-          }
-        }
-      }
-      
-      .table-dark {
-        color: black;
-        background-color: white;
-      
-        th
-        td,
-        thead th {
-          border-color:black;
-        }
-      
-        .table-bordered {
-          border: 1px solid black;
-        }
-      
-        // &.table-striped {
-        //   tbody tr:nth-of-type(#{$table-striped-order}) {
-        //     background-color: white;
-        //   }
-        // }
-      
-        &.table-hover {
-          tbody tr {
-             &:hover {
-              color: black;
-              background-color: grey;
-            }
-          }
-        }
-    }
-    .amt_words{
-      text-transform: capitalize;
-      font-size: 10px;
-      margin: 5px 0 0 0px;
-      
-      }
-      .charges{
-        font-size: 10px;
-      }
-    
-  
-}
-
-
-  
-  
-  // Responsive tables
-  //
-  // Generate series of `.table-responsive-*` classes for configuring the screen
-  // size of where your table will overflow.
-  
-  // .table-responsive {
-  //   @each $breakpoint in map-keys($grid-breakpoints) {
-  //     $next: breakpoint-next($breakpoint, $grid-breakpoints);
-  //     $infix: breakpoint-infix($next, $grid-breakpoints);
-  
-  //     &#{$infix} {
-  //       @include media-breakpoint-down($breakpoint) {
-  //         display: block;
-  //         width: 100%;
-  //         overflow-x: auto;
-  //         -webkit-overflow-scrolling: touch;
-  
-  //         // Prevent double border on horizontal scroll due to use of `display: block;`
-  //         > .table-bordered {
-  //           border: 0;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  
+//         // Prevent double border on horizontal scroll due to use of `display: block;`
+//         > .table-bordered {
+//           border: 0;
+//         }
+//       }
+//     }
+//   }
+// }

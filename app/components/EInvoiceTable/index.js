@@ -4,10 +4,8 @@ import CurrencyFormat from "react-currency-format";
 import Barcode from "react-barcode";
 import "./einvoicetable2.scss";
 // import { thru } from "lodash";
-import indianCurrencyInWords from 'indian-currency-in-words';
-import _ from "lodash"
-
-
+import indianCurrencyInWords from "indian-currency-in-words";
+import _ from "lodash";
 
 class EinvoiceTable extends React.Component {
   constructor(props) {
@@ -19,7 +17,7 @@ class EinvoiceTable extends React.Component {
       cgstTotal: 0,
       igstTotal: 0,
       itemTotal: 0,
-      uniqueItems: []
+      uniqueItems: [],
     };
   }
 
@@ -69,16 +67,19 @@ class EinvoiceTable extends React.Component {
     let newArr = [];
 
     item.map((i) => {
-      if (_.find(tempArr, { itemcode: i.itemcode, itemunitprice: i.itemunitprice }) == undefined || null || false) {
+      if (
+        _.find(tempArr, {
+          itemcode: i.itemcode,
+          itemunitprice: i.itemunitprice,
+        }) == undefined ||
+        null ||
+        false
+      ) {
         newArr.push(i);
         tempArr.push({ itemcode: i.itemcode, itemunitprice: i.itemunitprice });
-
       } else {
         newArr = newArr.map((j) => {
-          if (
-            j.itemcode === i.itemcode &&
-            j.itemunitprice == i.itemunitprice
-          ) {
+          if (j.itemcode === i.itemcode && j.itemunitprice == i.itemunitprice) {
             return {
               ...j,
               itemqty: Number(j.itemqty) + Number(i.itemqty),
@@ -87,61 +88,48 @@ class EinvoiceTable extends React.Component {
               itemcgstamt: Number(j.itemcgstamt) + Number(i.itemcgstamt),
               itemsgstamt: Number(j.itemsgstamt) + Number(i.itemsgstamt),
               itemtotamt: Number(j.itemtotamt) + Number(i.itemtotamt),
-
             };
-          }
-          else {
+          } else {
             return j;
           }
         });
       }
     });
-    this.setState({ uniqueItems: newArr })
+    this.setState({ uniqueItems: newArr });
     // return newArr;
-  }
-
-
-
-
+  };
 
   componentDidMount() {
     // this.calculate(this.props.item);
-    this.mergeDuplicate(this.props.item)
+    this.mergeDuplicate(this.props.item);
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.props.item !== prevProps.item) {
       // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
       // this.calculate(this.props.item);
-      this.mergeDuplicate(this.props.item)
-
+      this.mergeDuplicate(this.props.item);
     }
     if (this.state.uniqueItems !== prevState.uniqueItems) {
       this.calculate(this.state.uniqueItems);
-
     }
   }
 
-
-
-
   render() {
     const { item } = this.props;
-    console.log(item)
+    console.log(item);
 
-    const tcs = item.reduce((tot, arr)=>{
-      
+    const tcs = item.reduce((tot, arr) => {
       return arr.valothchrg;
-    },0);
-    const totalCharges = item.reduce((tot, arr)=>{
-      
+    }, 0);
+    const totalCharges = item.reduce((tot, arr) => {
       return arr.valtotinvval;
-    },0);
-    console.log(tcs)
+    }, 0);
+    console.log(tcs);
     // const { details } = this.props;
 
-    //  const {uniqueItems} = this.state 
+    //  const {uniqueItems} = this.state
 
-    const { suptyp } = this.props.details
+    const { suptyp } = this.props.details;
 
     const {
       grossTotal,
@@ -159,104 +147,52 @@ class EinvoiceTable extends React.Component {
           style={{ maxWidth: "100%", margin: "auto", fontSize: "10px" }}
         >
           <tr>
-            <th
-
-              style={{ width: "3%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "3%", textAlign: "center" }} rowSpan="2">
               S.no
             </th>
             {/* <td  style={{ width: "25%" }}>
                 Item Code
               </td> */}
-            <th
-
-              style={{ width: "20%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "20%", textAlign: "center" }} rowSpan="2">
               Description of goods/services
             </th>
 
-            <th
-
-              style={{ width: "5%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "5%", textAlign: "center" }} rowSpan="2">
               UOM
             </th>
 
-            <th
-
-              style={{ width: "5%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "5%", textAlign: "center" }} rowSpan="2">
               HSN/SAC Code
             </th>
-            <th
-
-              style={{ width: "5%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "5%", textAlign: "center" }} rowSpan="2">
               Qty{" "}
             </th>
-            <th
-
-              style={{ width: "4%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "4%", textAlign: "center" }} rowSpan="2">
               Rate
             </th>
-            <th
-
-              style={{ width: "6%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "6%", textAlign: "center" }} rowSpan="2">
               Gross Amount
             </th>
 
-            <th
-
-              style={{ width: "5%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "5%", textAlign: "center" }} rowSpan="2">
               Disc.
             </th>
-            <th
-
-              style={{ width: "4%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "4%", textAlign: "center" }} rowSpan="2">
               Taxable Value
             </th>
-            <th
-
-              style={{ width: "5%", textAlign: 'center' }}
-              colSpan="2"
-            >
+            <th style={{ width: "5%", textAlign: "center" }} colSpan="2">
               CGST
             </th>
-            <th
-
-              style={{ width: "10%", textAlign: 'center' }}
-              colSpan="2"
-            >
+            <th style={{ width: "10%", textAlign: "center" }} colSpan="2">
               SGST / UTGST
             </th>
-            <th
-
-              style={{ width: "10%", textAlign: 'center' }}
-              colSpan="2"
-            >
+            <th style={{ width: "10%", textAlign: "center" }} colSpan="2">
               IGST
             </th>
             {/* <th  style={{ width: "10%" }}>
               SGST / CGST Amount
             </th> */}
-            <th
-
-              style={{ width: "10%", textAlign: 'center' }}
-              rowSpan="2"
-            >
+            <th style={{ width: "10%", textAlign: "center" }} rowSpan="2">
               Item Total Amount
             </th>
           </tr>
@@ -268,62 +204,46 @@ class EinvoiceTable extends React.Component {
             <td />
             <td />
             <td /> */}
-            <td style={{ textAlign: 'center' }}>Rate</td>
-            <td style={{ textAlign: 'center' }}>Amt</td>
-            <td style={{ textAlign: 'center' }}>Rate</td>
-            <td style={{ textAlign: 'center' }}>Amt</td>
-            <td style={{ textAlign: 'center' }}>Rate</td>
-            <td style={{ textAlign: 'center' }}>Amt</td>
+            <td style={{ textAlign: "center" }}>Rate</td>
+            <td style={{ textAlign: "center" }}>Amt</td>
+            <td style={{ textAlign: "center" }}>Rate</td>
+            <td style={{ textAlign: "center" }}>Amt</td>
+            <td style={{ textAlign: "center" }}>Rate</td>
+            <td style={{ textAlign: "center" }}>Amt</td>
           </tr>
           {uniqueItems.map((i, indexes) => (
             <tr key={Math.random()}>
               <td
                 key={Math.random()}
-
-                style={{ width: "3%", textAlign: 'center' }}
+                style={{ width: "3%", textAlign: "center" }}
               >
                 {indexes + 1}
               </td>
 
               <td
                 key={Math.random()}
-
-                style={{ width: "20%", textAlign: 'left' }}
+                style={{ width: "20%", textAlign: "left" }}
               >
                 {/**  {i.itemprddesc==null ? i.remarks : i.itemprddesc  }    
                 {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + "  " +i.remarks)}     
                 {i.itemprddesc !== null ? i.itemprddesc : " "} */}
-                {i.itemprddesc === null ? i.remarks : i.remarks == null ? i.itemprddesc : (i.itemprddesc + ".   " + i.remarks)}
-
-
+                {i.itemprddesc === null
+                  ? i.remarks
+                  : i.remarks == null
+                  ? i.itemprddesc
+                  : i.itemprddesc + ".   " + i.remarks}
               </td>
-              <td
-                key={Math.random()}
-
-                style={{ width: "2%" }}
-              >
+              <td key={Math.random()} style={{ width: "2%" }}>
                 {i.itemunit}{" "}
               </td>
 
-              <td
-                key={Math.random()}
-
-                style={{ width: "5%" }}
-              >
+              <td key={Math.random()} style={{ width: "5%" }}>
                 {i.itemhsncd}
               </td>
-              <td
-                key={Math.random()}
-
-                style={{ width: "5%" }}
-              >
+              <td key={Math.random()} style={{ width: "5%" }}>
                 {Number(i.itemqty).toFixed(3)}
               </td>
-              <td
-                key={Math.random()}
-
-                style={{ width: "4%" }}
-              >
+              <td key={Math.random()} style={{ width: "4%" }}>
                 <CurrencyFormat
                   value={Number(i.itemunitprice).toFixed(3)}
                   displayType={"text"}
@@ -331,11 +251,7 @@ class EinvoiceTable extends React.Component {
                   renderText={(value) => <div>{value}</div>}
                 />
               </td>
-              <td
-                key={Math.random()}
-
-                style={{ width: "6%" }}
-              >
+              <td key={Math.random()} style={{ width: "6%" }}>
                 <CurrencyFormat
                   // value={(
                   // Number(i.itemqty).toFixed(3) * Number(i.itemunitprice)
@@ -380,7 +296,9 @@ class EinvoiceTable extends React.Component {
 
               {/* cgst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemcgstrt == 0 ? " " : Number(i.itemcgstrt).toFixed(2) + "%"}
+                {i.itemcgstrt == 0
+                  ? " "
+                  : Number(i.itemcgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -392,7 +310,9 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* sgst/ugst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemsgstrt == 0 ? " " : Number(i.itemsgstrt).toFixed(2) + "%"}
+                {i.itemsgstrt == 0
+                  ? " "
+                  : Number(i.itemsgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -404,7 +324,9 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* Igst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemigstrt == 0 ? " " : Number(i.itemigstrt).toFixed(2) + "%"}
+                {i.itemigstrt == 0
+                  ? " "
+                  : Number(i.itemigstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -579,7 +501,7 @@ class EinvoiceTable extends React.Component {
       itemTotal */}
 
           <tr>
-            <td colSpan="2" style={{ textAlign: 'left' }}>
+            <td colSpan="2" style={{ textAlign: "left" }}>
               TOTAL :
             </td>
             <td colSpan="4" />
@@ -629,7 +551,7 @@ class EinvoiceTable extends React.Component {
                 renderText={(value) => (value != 0 ? <div>{value}</div> : "")}
               />
             </td>
-            <td key={Math.random()} >
+            <td key={Math.random()}>
               <CurrencyFormat
                 value={itemTotal.toFixed(2)}
                 displayType={"text"}
@@ -640,35 +562,51 @@ class EinvoiceTable extends React.Component {
           </tr>
         </table>
 
-
-
-
-
         <section className={styles.subcontainer_2}>
           <div className={styles.wrapper_1}>
-            <div className={styles.subwrapper_2} style={{ paddingLeft: 'auto' }}>
-
+            <div
+              className={styles.subwrapper_2}
+              style={{ paddingLeft: "auto" }}
+            >
               <div>
-                <div className='amt_words'> <strong>Amount Chargeable(in words):  INR- </strong> {indianCurrencyInWords(itemTotal)}</div>
-                <div style={{ margin: '15px 0 0px 15px', fontWeight: '600', fontSize: '11px' }}>{suptyp === "SEZWOP" ?
-                  ("\"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS UNDER BOND OR LETTER OF UNDERTAKING WITHOUT PAYMENT OF INTEGRATED TAX\"")
-                  :
-                  suptyp === "SEZWP" ? "\"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS ON PAYMENT OF INTEGRATED TAX\""
-                    : " "
-                }
+                <div className="amt_words">
+                  {" "}
+                  <strong>Amount Chargeable(in words): INR- </strong>{" "}
+                  {indianCurrencyInWords(itemTotal)}
+                </div>
+                <div
+                  style={{
+                    margin: "15px 0 0px 15px",
+                    fontWeight: "600",
+                    fontSize: "11px",
+                  }}
+                >
+                  {suptyp === "SEZWOP"
+                    ? '"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS UNDER BOND OR LETTER OF UNDERTAKING WITHOUT PAYMENT OF INTEGRATED TAX"'
+                    : suptyp === "SEZWP"
+                    ? '"SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS ON PAYMENT OF INTEGRATED TAX"'
+                    : " "}
                 </div>
               </div>
-
             </div>
-            <div className={styles.subwrapper_1} style={{ marginLeft: 'auto' }}>
-
-              <table >
-                <tr style={{ borderBottom: '1px solid black' }}>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }}>
+            <div className={styles.subwrapper_1} style={{ marginLeft: "auto" }}>
+              <table>
+                <tr style={{ borderBottom: "1px solid black" }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Total Amount Before Tax:
-          </td>
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
+                  </td>
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
                     <CurrencyFormat
                       value={taxableTotal.toFixed(2)}
                       displayType={"text"}
@@ -677,12 +615,22 @@ class EinvoiceTable extends React.Component {
                     />
                   </td>
                 </tr>
-                <tr style={{ borderBottom: '1px solid black' }}>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }}>
+                <tr style={{ borderBottom: "1px solid black" }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Add: CGST:
-          </td>
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
+                  </td>
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
                     <CurrencyFormat
                       value={cgstTotal.toFixed(2)}
                       displayType={"text"}
@@ -691,12 +639,22 @@ class EinvoiceTable extends React.Component {
                     />
                   </td>
                 </tr>
-                <tr style={{ borderBottom: '1px solid black' }}>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }}>
+                <tr style={{ borderBottom: "1px solid black" }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Add: SGST/UTGST:
-          </td>
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
+                  </td>
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
                     <CurrencyFormat
                       value={usgstTotal.toFixed(2)}
                       displayType={"text"}
@@ -705,33 +663,61 @@ class EinvoiceTable extends React.Component {
                     />
                   </td>
                 </tr>
-                <tr style={{ borderBottom: '1px solid black' }}>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }}>
+                <tr style={{ borderBottom: "1px solid black" }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Add: IGST:
-          </td>
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
+                  </td>
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
                     {igstTotal.toFixed(2)}
                   </td>
                 </tr>
-                <tr style={{ borderBottom: '1px solid black' }}>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }} >
+                <tr style={{ borderBottom: "1px solid black" }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Other Taxes(TCS):
-          </td>
-                  
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
-                   {tcs}
-          </td>
+                  </td>
 
-
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
+                    {tcs}
+                  </td>
                 </tr>
                 <tr>
-
-                  <td colSpan="6" style={{ borderRight: '1px solid black', width: '262px', borderLeft: '1px solid black', textAlign: 'left' }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      borderRight: "1px solid black",
+                      width: "262px",
+                      borderLeft: "1px solid black",
+                      textAlign: "left",
+                    }}
+                  >
                     Total Invoice Amount:
-          </td>
-                  <td colSpan="2" style={{ width: '250px', textAlign: 'right' }}>
+                  </td>
+                  <td
+                    colSpan="2"
+                    style={{ width: "250px", textAlign: "right" }}
+                  >
                     <CurrencyFormat
                       // value={itemTotal.toFixed(2)}
                       value={totalCharges}
@@ -741,16 +727,15 @@ class EinvoiceTable extends React.Component {
                     />
                   </td>
                 </tr>
-
               </table>
-
-
-
             </div>
           </div>
 
           <div className={styles.wrapper_1}>
-            <div className={styles.subwrapper_2} style={{ borderRight: '1px solid black' }}>
+            <div
+              className={styles.subwrapper_2}
+              style={{ borderRight: "1px solid black" }}
+            >
               <div>
                 <h5 className={styles.terms_heading}>Terms and Conditions</h5>
               </div>
@@ -784,7 +769,10 @@ class EinvoiceTable extends React.Component {
           </div>
 
           <div className={styles.wrapper_1}>
-            <div className={styles.subwrapper_2} style={{ borderRight: '1px solid black' }}>
+            <div
+              className={styles.subwrapper_2}
+              style={{ borderRight: "1px solid black" }}
+            >
               <h6>
                 <strong className={styles.footer_list}>
                   Electronic Reference Number
@@ -801,13 +789,12 @@ class EinvoiceTable extends React.Component {
               <Barcode
                 value="TVS SUPPLY CHAIN INVOICE"
                 className="bar_code"
-                height={15}
+                height={12}
+                width={1}
               />
             </div>
           </div>
-
         </section>
-
       </div>
     );
   }
