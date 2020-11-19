@@ -134,6 +134,16 @@ function VehicleTrackingSystem({ logout, user }) {
       });
   }, [searchValue]);
 
+  function handletripNo(tNo){
+    if(tNo.startsWith("VCV")){
+      let val = tNo.substring(3)
+      return val
+    }
+    else{
+      return tNo
+    }
+  }
+
   function handleSelectChange(value) {
     let v = value;
     let handleSelectedDatas = {
@@ -229,7 +239,7 @@ function VehicleTrackingSystem({ logout, user }) {
                               <span
                                 style={{ color: "#008DC5", fontWeight: "bold" }}
                               >
-                                {arr.tripno ? arr.tripno : "--"}
+                                { handletripNo(arr.tripno)}
                               </span>
                             </h3>
                             <h3
@@ -337,8 +347,8 @@ function VehicleTrackingSystem({ logout, user }) {
                               
                               <span
                                 style={{ color: "#008DC5", fontWeight: "bold" }}
-                              >{console.log("####ID",arr.tripno)}
-                              {arr.tripno && arr.tripno.startsWith("VCV") ? arr.tripno.substring(3) : arr.tripno }
+                              >
+                              { handletripNo(arr.tripno)}
                                 {/* {arr.tripno ? (arr.tripno.startsWith("VCV") ? arr.tripno.substring(3) : arr.tripno) : "--"} */}
                               </span>
                             </h3>
