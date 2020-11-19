@@ -446,7 +446,6 @@ class Einvoice extends React.Component {
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
                     documentTitle="Invoice"
-                    // pageStyle={styles.page}
                     trigger={() => {
                       // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
                       // to the root node of the returned component as it will be overwritten.

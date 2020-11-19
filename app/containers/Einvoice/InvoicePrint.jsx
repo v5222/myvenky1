@@ -345,7 +345,7 @@ class InvoicePrint extends React.Component {
             </Col>
           </Row>
         </section>
-        <section style={{ marginBottom: "70px" }}>
+        <section>
           <EinvoiceTable
             item={InvoiceDetailsList}
             details={details}
@@ -355,6 +355,7 @@ class InvoicePrint extends React.Component {
             {InvoiceHeaderList[0].regdofficeaddress}
           </div>
         </section>
+        <div className={styles.pagebreak} />
       </div>
     );
   }

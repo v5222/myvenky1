@@ -144,7 +144,7 @@ class EinvoiceTable extends React.Component {
       <div className="Invoicetable">
         <table
           className="table table-bordered"
-          style={{ maxWidth: "100%", margin: "auto", fontSize: "10px" }}
+          style={{ margin: "auto", fontSize: "10px" }}
         >
           <tr>
             <th style={{ width: "3%", textAlign: "center" }} rowSpan="2">

@@ -12,6 +12,25 @@
   border-radius: 15px 15px 0px 0px;
 }
 
+.idNo {
+  margin-right: 30px;
+  font-size: 11px;
+  color: grey;
+  line-height: 18px;
+}
+.vehicleNo {
+  margin-right: 10px;
+  font-size: 11px;
+  color: #123f74;
+  line-height: 15px;
+}
+.locationinfo {
+  margin-right: 30px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+}
+
 .dwm_title {
   padding-left: 25px;
   color: #262626c0;
@@ -89,11 +108,6 @@
   margin-top: 10px;
 }
 
-.d-flex {
-  display: flex;
-  justify-content: space-between;
-}
-
 button {
   background-color: red;
   color: white;
@@ -102,18 +116,6 @@ button {
   font-weight: bold;
   border: none;
 }
-
-//  .blueactivecontainer{
-//   font-style: normal;
-//   font-weight: bold;
-//   width: 1265px;
-//   height: 90px;
-//   top: 137px;
-//   background: #DFEEFF;
-//   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-//   border-radius: 0px;
-//   margin: 15px 0px  1% 1%;
-//  }
 
 .blueexpandcontainer {
   font-style: normal;
@@ -126,10 +128,13 @@ button {
 }
 
 .bluecompletedcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   font-style: normal;
   font-weight: bold;
-  width: 96vw;
-  height: 100px;
+  width: auto;
+  height: auto;
   margin-left: 1%;
   top: 137px;
   margin-top: 15px;
@@ -204,3 +209,34 @@ button {
   font-style: normal;
   margin-left: 2px;
 }
+
+.selectBox {
+  margin-left: 35%;
+}
+
+// @media only screen and (max-width: 600px) {
+//   /* For mobile phones: */
+//   .bluecompletedcontainer {
+//     display: flex;
+//     width: auto;
+//     height: 259px;
+//     align-items: center;
+//     // background: #dfeeff;
+//     background: red;
+//     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+//     border-radius: 10px;
+//   }
+
+//   .tvsit-vts-container {
+//     flex-direction: column;
+//     flex-wrap: wrap;
+//     width: auto;
+//     margin: 10px;
+//     border-radius: 20px;
+//   }
+
+//   .selectBox {
+//     padding-top: 50px;
+//     margin-left: 30%;
+//   }
+// }

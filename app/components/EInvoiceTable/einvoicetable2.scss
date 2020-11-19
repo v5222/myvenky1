@@ -1,7 +1,7 @@
 .Invoicetable {
   padding: 2px 0 10px 0;
   .table {
-    max-width: 80%;
+    max-width: 100%;
     margin-bottom: 10px;
     color: black;
     background-color: white; // Reset for nesting within parents with `background-color`.
@@ -156,17 +156,28 @@
   margin: 10px 0 0 10px;
   padding: auto;
 }
-
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
+//////////////////////
 ///responsive for print
 
 @media only print {
   .Invoicetable {
     .table {
-      max-width: 10%;
+      width: 100%;
       font-size: 8px;
       margin-bottom: 7px;
       color: black;
-      background-color: white; // Reset for nesting within parents with `background-color`.
+      background-color: red; // Reset for nesting within parents with `background-color`.
 
       th,
       td {

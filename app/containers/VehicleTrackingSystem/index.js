@@ -12,6 +12,8 @@ import ErrorBoundary from "components/ErrorBoundary";
 import history from "utils/history";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import moment from "moment";
+
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -174,57 +176,59 @@ function VehicleTrackingSystem({ logout, user }) {
             className="dashboard_header"
           />
           <div className="tvsit-vts-bgcontainer">
-            <div style={{ marginLeft: "30%", marginTop: "0.5%" }}>
-              <Select
-                id="custNameDet"
-                defaultValue="ALL"
-                style={{
-                  width: 200,
-                  background: "#FFFFFF",
-                  border: "1px solid #D9D9D9",
-                }}
-                placeholder="Select"
-                optionFilterProp="children"
-                onChange={handleSelectChange}
-              >
-                {customerName.length > 0 &&
-                  customerName.map((val, index) => {
-                    return (
-                      <>
-                        <Option value={val} key={index}>
-                          {val}
-                        </Option>
-                      </>
-                    );
-                  })}
-              </Select>
-              <Input
-                style={{
-                  marginLeft: "15px",
-                  background: "#FFFFFF",
-                  width: 200,
-                  border: "1px solid #D9D9D9",
-                }}
-                onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Enter Vehicle Number"
-              />
+            <div>
+              <div className="selectBox">
+                <Select
+                  id="custNameDet"
+                  defaultValue="ALL"
+                  style={{
+                    width: 200,
+                    background: "#FFFFFF",
+                    border: "1px solid #D9D9D9",
+                  }}
+                  placeholder="Select"
+                  optionFilterProp="children"
+                  onChange={handleSelectChange}
+                >
+                  {customerName.length > 0 &&
+                    customerName.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val} key={index}>
+                            {val}
+                          </Option>
+                        </>
+                      );
+                    })}
+                </Select>
+                <Input
+                  style={{
+                    background: "#FFFFFF",
+                    width: 200,
+                    border: "1px solid #D9D9D9",
+                  }}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder="Enter Vehicle Number"
+                />
+              </div>
+
               {/* <Button 
                   style={{marginLeft:"15px"}}
                   type="primary" icon={<SearchOutlined />}
                   >
                     Search
                   </Button> */}
-              <span
+              {/* <span
                 total={10}
                 defaultCurrent={5}
                 style={{ marginLeft: "150px" }}
               >
                 Last Refresh Date
               </span>{" "}
-              : 04/11/2020
+              : 04/11/2020 */}
             </div>
             <Tabs
-              style={{ marginLeft: "25px" }}
+              style={{ marginLeft: "2%" }}
               defaultActiveKey="1"
               onChange={callback}
             >
@@ -235,20 +239,7 @@ function VehicleTrackingSystem({ logout, user }) {
                       <div className="bluecompletedcontainer">
                         <div className="tvsit-vts-container">
                           <div className="d-flex">
-                            <div
-                              style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                color: "grey",
-                                lineHeight: "18px",
-                              }}
-                            >
-                              <p style={{ fontWeight: "700" }}>
-                                TDO{" "}
-                                <span style={{ color: "#008DC5" }}>
-                                  E15TDO0000035
-                                </span>
-                              </p>
+                            <div className="idNo">
                               <p style={{ fontWeight: "700" }}>
                                 ID{" "}
                                 <span style={{ color: "#008DC5" }}>
@@ -256,28 +247,12 @@ function VehicleTrackingSystem({ logout, user }) {
                                 </span>
                               </p>
                             </div>
-                            <div
-                              style={{
-                                marginRight: "10px",
-                                fontSize: "11px",
-                                color: "#123F74",
-                                lineHeight: "15px",
-                              }}
-                            >
+                            <div className="vehicleNo">
                               <p>
                                 {arr.vehiclenumber ? arr.vehiclenumber : "--"}
                               </p>
-                              <button
-                                style={{
-                                  backgroundColor: "green",
-                                  fontWeight: "600",
-                                  lineHeight: "10px",
-                                }}
-                              >
-                                In Transit
-                              </button>
                             </div>
-                            <div
+                            {/* <div
                               style={{
                                 alignItems: "center",
                                 textAlign: "center",
@@ -287,21 +262,13 @@ function VehicleTrackingSystem({ logout, user }) {
                                 color: "#123F74",
                                 lineHeight: "18px",
                               }}
-                            >
-                              <p>
-                                Tracking <br /> active
-                              </p>
-                            </div>
+                            /> */}
                           </div>
                           <div className="vl" />
                           <div className="d-flex">
                             <div
-                              style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                lineHeight: "18px",
-                                fontWeight: "600",
-                              }}
+                              
+                              className="locationinfo"
                             >
                               <p style={{ color: "#123F74" }}>
                                 <EnvironmentOutlined
@@ -332,7 +299,9 @@ function VehicleTrackingSystem({ logout, user }) {
                               </p>
                               <p style={{ color: "#123F74" }}>
                                 {arr.tripstarttimestamp
-                                  ? arr.tripstarttimestamp
+                                  ? moment(
+                                      parseInt(arr.tripstarttimestamp)
+                                    ).format("MMM DD YYYY")
                                   : "--"}
                               </p>
                             </div>
@@ -389,6 +358,7 @@ function VehicleTrackingSystem({ logout, user }) {
                     );
                   })}
               </TabPane>
+
               <TabPane tab="Completed" key="2">
                 {dummyArray.length > 0 &&
                   dummyArray.map((arr, ind) => {
