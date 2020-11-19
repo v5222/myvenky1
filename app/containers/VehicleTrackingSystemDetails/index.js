@@ -22,7 +22,14 @@ import {
   BlinkIcon,
   TrackMarkerDestIcon,
 } from "../../components/TrackMarkerIcon/TrackMarkerIcon";
+import moment from "moment";
 import { map } from "jquery";
+import {
+  SearchOutlined,
+  ArrowDownOutlined,
+  DownOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
 
 const { Title } = Typography;
 const { SubMenu } = Menu;
@@ -181,148 +188,135 @@ function VehicleTrackingSystemDetails({ logout, user }) {
             className="dashboard_header"
           />
           <div className="tvsit-vts-bgcontainer">
-            <div className="bluecontainer">
-              <div className="tvsit-vts-container">
-                <div className="d-flex">
-                  <div
-                    style={{
-                      marginRight: "30px",
-                      fontSize: "11px",
-                      color: "grey",
-                      lineHeight: "18px",
-                    }}
-                  >
-                    <p style={{ fontWeight: "700" }}>
-                      TDO{" "}
-                      <span style={{ color: "#008DC5" }}>E15TDO0000035</span>
-                    </p>
-                    <p style={{ fontWeight: "700" }}>
-                      ID{" "}
-                      <span style={{ color: "#008DC5" }}>
-                        {tripDet && tripDet.tripno ? tripDet.tripno : "--"}
-                      </span>
-                    </p>
-                    <p style={{ fontWeight: "600", color: "#123F74" }}>
-                      {tripDet && tripDet.originlocation
-                        ? tripDet.originlocation
-                        : "--"}
-                    </p>
-                    <p style={{ fontWeight: "600", color: "#123F74" }}>
-                      {tripDet && tripDet.destinationlocation
-                        ? tripDet.destinationlocation
-                        : "--"}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      marginRight: "10px",
-                      fontSize: "11px",
-                      color: "#123F74",
-                      lineHeight: "18px",
-                    }}
-                  >
-                    <p>
-                      {tripDet && tripDet.vehiclenumber
-                        ? tripDet.vehiclenumber
-                        : "--"}
-                    </p>
-                    <button style={{ background: "#33cc33" }}>complete</button>
-                    <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                      Total Distance
-                    </p>
-                    <p>
-                      {tripDet && tripDet.plannedkm ? tripDet.plannedkm : "--"}
-                    </p>
-                  </div>
-                </div>
-                <div className="vl" />
-                <div className="d-flex">
-                  <div
-                    style={{
-                      marginRight: "30px",
-                      fontSize: "11px",
-                      lineHeight: "18px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                      Remaining distance
-                    </p>
-                    <p style={{ color: "#123F74" }}>
-                      {tripDet && tripDet.remainingkm
-                        ? tripDet.remainingkm
-                        : "--"}
-                    </p>
-                    <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>ETA</p>
-                    <p style={{ color: "#123F74" }}>
-                      {tripDet && tripDet.plannedeta
-                        ? tripDet.plannedeta
-                        : "--"}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      marginRight: "30px",
-                      fontSize: "11px",
-                      lineHeight: "14px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                      {" "}
-                      Started Date
-                    </p>
-                    <p style={{ color: "#123F74" }}>
-                      {tripDet && tripDet.plannedeta
-                        ? tripDet.plannedeta
-                        : "--"}
-                    </p>
-                    <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                      Destination Date
-                    </p>
-                    <p style={{ color: "#123F74" }}>
-                      {tripDet && tripDet.plannedeta
-                        ? tripDet.plannedeta
-                        : "--"}
-                    </p>
-                  </div>
-                </div>
-                <div className="vl" />
-                <div
+            <div class="flex2-container2">
+              <div class="flex2-item2-left2">
+                <h3 class="title20">
+                  ID{" "}
+                  <span style={{ color: "#008DC5", fontWeight: "bold" }}>
+                    {tripDet && tripDet.tripno ? tripDet.tripno : "--"}
+                  </span>
+                </h3>
+                <h3
+                  class="title21"
                   style={{
-                    marginRight: "30px",
-                    fontSize: "11px",
+                    color: "rgba(18, 63, 116, 0.7)",
                     fontWeight: "600",
                   }}
                 >
-                  <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                    Drive Name And Number
-                  </p>
-                  <p style={{ color: "#123F74" }}>
-                    {tripDet && tripDet.drivername ? tripDet.drivername : "--"}
-                  </p>
-                  <p style={{ color: "#123F74" }}>
-                    {tripDet && tripDet.driverphonenumber
-                      ? tripDet.driverphonenumber
-                      : "--"}
-                  </p>
-                </div>
-                <div
-                  style={{
-                    marginRight: "30px",
-                    fontSize: "11px",
-                    fontWeight: "600",
-                  }}
+                  {tripDet && tripDet.vehiclenumber
+                    ? tripDet.vehiclenumber
+                    : "--"}
+                </h3>
+                <h3 class="title20">
+                  <EnvironmentOutlined
+                    style={{ color: "#123F74", fontWeight: "600" }}
+                  />
+                  {tripDet && tripDet.originlocation
+                    ? tripDet.originlocation
+                    : "--"}
+                </h3>
+                <h3 class="title20">
+                  <EnvironmentOutlined
+                    style={{ color: "#123F74", fontWeight: "600" }}
+                  />
+                  {tripDet && tripDet.destinationlocation
+                    ? tripDet.destinationlocation
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
                 >
-                  <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                    Last Known location
-                  </p>
-                  <p style={{ color: "#123F74" }}>
-                    {tripDet && tripDet.currentlocation
-                      ? tripDet.currentlocation
-                      : "--"}
-                  </p>
-                </div>
+                  Total Distance
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.plannedkm ? tripDet.plannedkm : "--"}
+                </h3>
+              </div>
+              <div class="flex2-item2-center2">
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Remaining Distance
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.remainingkm
+                    ? tripDet.remainingkm + " km"
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Started Date
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.plannedeta
+                    ? moment(parseInt(tripDet.plannedeta)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  ETA
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.plannedeta
+                    ? moment(parseInt(tripDet.plannedeta)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Destination Date
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.destinationdate
+                    ? moment(parseInt(tripDet.destinationdate)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+              </div>
+              <div class="flex2-item2-right2">
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Driver Name
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.drivername ? tripDet.drivername : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Last Known Location
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.currentlocation
+                    ? tripDet.currentlocation
+                    : "--"}
+                </h3>
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Driver Phone Number
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.driverphonenumber
+                    ? tripDet.driverphonenumber
+                    : "--"}
+                </h3>
               </div>
             </div>
             {geoJsonFlag === "True" ? (

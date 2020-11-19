@@ -89,7 +89,7 @@
     "lodash.debounce": "^4.0.8",
     "mini-css-extract-plugin": "^0.10.0",
     "minimist": "^1.2.5",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "msal": "^1.2.1",
     "number-to-words": "^1.2.4",
     "prop-types": "15.7.2",

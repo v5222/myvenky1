@@ -109,13 +109,6 @@ class Einvoice extends React.Component {
 
     this.setState({ loading: true });
 
-    // if (this.state.selectDatefrom && this.state.selectDateto === "") {
-    //   this.setState({
-    //     selectDatefrom: "2020-10-01",
-    //     selectDateto: "2020-10-10",
-    //   });
-    // }
-
     if (
       (this.state.selectDatefrom && this.state.selectDateto) ||
       (this.state.invoicenofrom && this.state.invoicenoto) ||
@@ -127,8 +120,8 @@ class Einvoice extends React.Component {
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
-            invoicenofrom: this.state.invoicenofrom,
-            invoicenoto: this.state.invoicenofrom,
+            invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
+            invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
             invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
             invoicenotodate: this.state.selectDateto || dt,
           },
@@ -181,7 +174,6 @@ class Einvoice extends React.Component {
     this.setState({ loading: false });
   };
   popUp = () => {
-    // message.info("Please select date range",
     message.info({
       content: "Please select date range or invoice Range",
       className: "custom-class",

@@ -235,6 +235,12 @@ class InvoicePrint extends React.Component {
                 <div className={styles.subheading1}>
                   GSTIN : {details.shipgstin}
                 </div>
+                <div
+                  className={styles.subheading1}
+                  style={{ color: "transparent" }}
+                >
+                  GSTIN : {details.shipgstin}
+                </div>
               </div>
             </Col>
           </Row>
@@ -288,6 +294,21 @@ class InvoicePrint extends React.Component {
                     </td>
                     <td key={Math.random()} className={styles.subtabletd}>
                       <strong style={{ fontWeight: "normal" }}>
+                        {InvoiceDetailsList[0].itemisservc}
+                      </strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.subtabletd}
+                      style={{ color: "transparent" }}
+                    >
+                      Supply of Service (Y/N) :
+                    </td>
+                    <td key={Math.random()} className={styles.subtabletd}>
+                      <strong
+                        style={{ fontWeight: "normal", color: "transparent" }}
+                      >
                         {InvoiceDetailsList[0].itemisservc}
                       </strong>
                     </td>

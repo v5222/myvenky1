@@ -12,25 +12,6 @@
   border-radius: 15px 15px 0px 0px;
 }
 
-.idNo {
-  margin-right: 30px;
-  font-size: 11px;
-  color: grey;
-  line-height: 18px;
-}
-.vehicleNo {
-  margin-right: 10px;
-  font-size: 11px;
-  color: #123f74;
-  line-height: 15px;
-}
-.locationinfo {
-  margin-right: 30px;
-  font-size: 11px;
-  line-height: 18px;
-  font-weight: 600;
-}
-
 .dwm_title {
   padding-left: 25px;
   color: #262626c0;
@@ -62,7 +43,7 @@
 
 .tvsit-vts-bgcontainer {
   width: 100%;
-  height: 96vw;
+  height: 100vw;
   margin-top: -15px;
   left: 21px;
   background: #ffffff;
@@ -108,6 +89,11 @@
   margin-top: 10px;
 }
 
+// .d-flex {
+//   display: flex;
+//   justify-content: space-between;
+// }
+
 button {
   background-color: red;
   color: white;
@@ -116,6 +102,18 @@ button {
   font-weight: bold;
   border: none;
 }
+
+//  .blueactivecontainer{
+//   font-style: normal;
+//   font-weight: bold;
+//   width: 1265px;
+//   height: 90px;
+//   top: 137px;
+//   background: #DFEEFF;
+//   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+//   border-radius: 0px;
+//   margin: 15px 0px  1% 1%;
+//  }
 
 .blueexpandcontainer {
   font-style: normal;
@@ -130,7 +128,7 @@ button {
 .bluecompletedcontainer {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   font-style: normal;
   font-weight: bold;
   width: auto;
@@ -214,29 +212,164 @@ button {
   margin-left: 35%;
 }
 
-// @media only screen and (max-width: 600px) {
-//   /* For mobile phones: */
-//   .bluecompletedcontainer {
-//     display: flex;
-//     width: auto;
-//     height: 259px;
-//     align-items: center;
-//     // background: #dfeeff;
-//     background: red;
-//     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-//     border-radius: 10px;
-//   }
+.flex-container {
+  margin-top: 0.5%;
+  display: flex;
+  flex-direction: row;
+  font-size: 10px;
+  text-align: center;
+}
 
-//   .tvsit-vts-container {
-//     flex-direction: column;
-//     flex-wrap: wrap;
-//     width: auto;
-//     margin: 10px;
-//     border-radius: 20px;
-//   }
+.flex-item-left {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  flex: 40%;
+  height: auto;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
+}
 
-//   .selectBox {
-//     padding-top: 50px;
-//     margin-left: 30%;
-//   }
-// }
+.flex-item-center {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  flex: 40%;
+  height: auto;
+  text-align: left;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
+}
+
+.flex-item-right {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  flex: 40%;
+  height: auto;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
+}
+
+.flex-item-last {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  flex: 5%;
+  height: auto;
+  margin-right: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.title1 {
+  text-align: left;
+  color: black;
+  margin-top: 0px;
+  float: left;
+  clear: both;
+}
+
+.title2 {
+  text-align: right;
+  color: #123f74;
+  font-weight: 600;
+}
+
+.title3 {
+  text-align: left;
+  font-weight: 600;
+  color: #008dc5;
+  margin-top: 0px;
+  float: left;
+  clear: both;
+}
+
+.title4 {
+  text-align: right;
+  color: #123f74;
+  font-weight: 600;
+}
+
+.title5 {
+  text-align: left;
+  color: #008dc5;
+  margin-top: 0px;
+  float: left;
+  font-weight: 600;
+
+  clear: both;
+}
+
+.title6 {
+  text-align: right;
+  color: #123f74;
+  font-weight: 600;
+}
+////
+.title7 {
+  text-align: left;
+  color: #0e1518;
+  margin-top: 0px;
+  float: left;
+  clear: both;
+}
+
+.title8 {
+  text-align: right;
+  color: #123f74;
+}
+
+.title9 {
+  text-align: left;
+  color: #123f74;
+  font-weight: 600;
+  margin-top: 0px;
+  float: left;
+  clear: both;
+}
+
+.title10 {
+  text-align: right;
+  color: #123f74;
+  font-weight: 600;
+}
+
+.centRightTit {
+  text-align: right;
+  color: #123f74;
+}
+
+/* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For mobile phones: */
+  .bluecompletedcontainer {
+    width: auto;
+    height: 259px;
+    flex-wrap: wrap;
+    align-items: center;
+    top: 787px;
+    background: #dfeeff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    flex-direction: column;
+  }
+
+  .tvsit-vts-container {
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: auto;
+    margin: 10px;
+    border-radius: 20px;
+  }
+
+  .selectBox {
+    padding-top: 50px;
+    margin-left: 30%;
+  }
+}

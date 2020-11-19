@@ -211,21 +211,6 @@ function VehicleTrackingSystem({ logout, user }) {
                   placeholder="Enter Vehicle Number"
                 />
               </div>
-
-              {/* <Button 
-                  style={{marginLeft:"15px"}}
-                  type="primary" icon={<SearchOutlined />}
-                  >
-                    Search
-                  </Button> */}
-              {/* <span
-                total={10}
-                defaultCurrent={5}
-                style={{ marginLeft: "150px" }}
-              >
-                Last Refresh Date
-              </span>{" "}
-              : 04/11/2020 */}
             </div>
             <Tabs
               style={{ marginLeft: "2%" }}
@@ -236,109 +221,92 @@ function VehicleTrackingSystem({ logout, user }) {
                 {tabData.length > 0 &&
                   tabData.map((arr, ind) => {
                     return (
-                      <div className="bluecompletedcontainer">
-                        <div className="tvsit-vts-container">
-                          <div className="d-flex">
-                            <div className="idNo">
-                              <p style={{ fontWeight: "700" }}>
-                                ID{" "}
-                                <span style={{ color: "#008DC5" }}>
-                                  {arr.tripno ? arr.tripno : "--"}
-                                </span>
-                              </p>
-                            </div>
-                            <div className="vehicleNo">
-                              <p>
-                                {arr.vehiclenumber ? arr.vehiclenumber : "--"}
-                              </p>
-                            </div>
-                            {/* <div
-                              style={{
-                                alignItems: "center",
-                                textAlign: "center",
-                                marginRight: "15px",
-                                marginLeft: "15px",
-                                fontSize: "11px",
-                                color: "#123F74",
-                                lineHeight: "18px",
-                              }}
-                            /> */}
-                          </div>
-                          <div className="vl" />
-                          <div className="d-flex">
-                            <div
-                              
-                              className="locationinfo"
+                      <div>
+                        <div class="flex-container">
+                          <div class="flex-item-left">
+                            <h3 class="title1">
+                              ID{" "}
+                              <span
+                                style={{ color: "#008DC5", fontWeight: "bold" }}
+                              >
+                                {arr.tripno ? arr.tripno : "--"}
+                              </span>
+                            </h3>
+                            <h3
+                              class="title2"
+                              style={{ color: "#123F74", fontWeight: "bold" }}
                             >
-                              <p style={{ color: "#123F74" }}>
-                                <EnvironmentOutlined
-                                  style={{ color: "#2FCB16" }}
-                                />
-                                {arr.originlocation ? arr.originlocation : "--"}
-                              </p>
-                              <p style={{ color: "#123F74" }}>
-                                <EnvironmentOutlined
-                                  style={{ color: "#FF0000" }}
-                                />
-                                {arr.destinationlocation
-                                  ? arr.destinationlocation
-                                  : "--"}
-                              </p>
-                            </div>
-                            <div
+                              {arr.vehiclenumber ? arr.vehiclenumber : "--"}
+                            </h3>
+                          </div>
+                          <div class="flex-item-center">
+                            <h3 class="title3">
+                              <EnvironmentOutlined
+                                style={{ color: "#2FCB16" }}
+                              />
+                              {arr.originlocation ? arr.originlocation : "--"}
+                            </h3>
+                            <h3 class="title5">
+                              <EnvironmentOutlined
+                                style={{ color: "#FF0000" }}
+                              />
+                              {arr.destinationlocation
+                                ? arr.destinationlocation
+                                : "--"}
+                            </h3>
+                            <h3
+                              class="title4"
                               style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                lineHeight: "18px",
+                                color: "rgba(18, 63, 116, 0.7)",
                                 fontWeight: "600",
                               }}
                             >
-                              <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                                {" "}
-                                Started Date
-                              </p>
-                              <p style={{ color: "#123F74" }}>
-                                {arr.tripstarttimestamp
-                                  ? moment(
-                                      parseInt(arr.tripstarttimestamp)
-                                    ).format("MMM DD YYYY")
-                                  : "--"}
-                              </p>
-                            </div>
+                              Started Date
+                            </h3>
+                            <h3
+                              class="title6"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
+                              {arr.tripstarttimestamp
+                                ? moment(
+                                    parseInt(arr.tripstarttimestamp)
+                                  ).format("MMM DD YYYY HH:mm A")
+                                : "--"}
+                            </h3>
                           </div>
-                          <div className="vl" />
-                          <div
-                            style={{
-                              marginRight: "30px",
-                              fontSize: "11px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
+                          <div class="flex-item-right">
+                            <h3
+                              class="title7"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
                               Remaining Distance
-                            </p>
-                            <p style={{ color: "#123F74" }}>
-                              {arr.remainingkm ? arr.remainingkm : "--"}
-                            </p>
-                          </div>
-                          <div
-                            style={{
-                              marginRight: "30px",
-                              fontSize: "11px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
+                            </h3>
+                            <h3
+                              class="title9"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
+                              {arr.remainingkm ? arr.remainingkm + " km" : "--"}
+                            </h3>
+                            <h3
+                              class="title8"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
                               Total Distance
-                            </p>
-                            <p style={{ color: "#123F74" }}>
+                            </h3>
+                            <h3
+                              class="title10"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
                               {arr.plannedkm ? arr.plannedkm : "--"}
-                            </p>
+                            </h3>
                           </div>
-                          <div className="vl" />
-                          <div
-                            style={{ marginLeft: "50px", marginTop: "15px" }}
-                          >
+                          <div class="flex-item-last">
                             <img
                               width="45px"
                               height="45px"
@@ -352,143 +320,99 @@ function VehicleTrackingSystem({ logout, user }) {
                               }
                             />
                           </div>
-                          {/* <p style={{color:"red"}}>More Details <DownOutlined/></p> */}
                         </div>
                       </div>
                     );
                   })}
               </TabPane>
-
               <TabPane tab="Completed" key="2">
-                {dummyArray.length > 0 &&
-                  dummyArray.map((arr, ind) => {
+                {tabData.length > 0 &&
+                  tabData.map((arr, ind) => {
                     return (
-                      <div className="bluecompletedcontainer">
-                        <div className="tvsit-vts-container">
-                          <div className="d-flex">
-                            <div
-                              style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                color: "grey",
-                                lineHeight: "18px",
-                              }}
-                            >
-                              <p style={{ fontWeight: "700" }}>
-                                TDO{" "}
-                                <span style={{ color: "#008DC5" }}>
-                                  E15TDO0000035
-                                </span>
-                              </p>
-                              <p style={{ fontWeight: "700" }}>
-                                ID{" "}
-                                <span style={{ color: "#008DC5" }}>
-                                  TDO0000035
-                                </span>
-                              </p>
-                            </div>
-                            <div
-                              style={{
-                                marginRight: "10px",
-                                fontSize: "11px",
-                                color: "#123F74",
-                                lineHeight: "15px",
-                              }}
-                            >
-                              <p>TS7GHSJI45678</p>
-                              <button
-                                style={{
-                                  backgroundColor: "red",
-                                  fontWeight: "600",
-                                  lineHeight: "10px",
-                                }}
+                      <div>
+                        <div class="flex-container">
+                          <div class="flex-item-left">
+                            <h3 class="title1">
+                              ID{" "}
+                              <span
+                                style={{ color: "#008DC5", fontWeight: "bold" }}
                               >
-                                Completed
-                              </button>
-                            </div>
-                            <div
-                              style={{
-                                alignItems: "center",
-                                textAlign: "center",
-                                marginRight: "15px",
-                                marginLeft: "15px",
-                                fontSize: "11px",
-                                color: "#123F74",
-                                lineHeight: "18px",
-                              }}
-                            >
-                              <p>
-                                Tracking <br /> active
-                              </p>
-                            </div>
+                                {arr.tripno ? arr.tripno : "--"}
+                              </span>
+                            </h3>
+                            <h3 class="title2">
+                              {arr.vehiclenumber ? arr.vehiclenumber : "--"}
+                            </h3>
                           </div>
-                          <div class="vl" />
-                          <div className="d-flex">
-                            <div
+                          <div class="flex-item-center">
+                            <h3 class="title3">
+                              <EnvironmentOutlined
+                                style={{ color: "#2FCB16" }}
+                              />
+                              {arr.originlocation ? arr.originlocation : "--"}
+                            </h3>
+                            <h3 class="title5">
+                              <EnvironmentOutlined
+                                style={{ color: "#FF0000" }}
+                              />
+                              {arr.destinationlocation
+                                ? arr.destinationlocation
+                                : "--"}
+                            </h3>
+                            <h3
+                              class="title4"
                               style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                lineHeight: "18px",
+                                color: "rgba(18, 63, 116, 0.7)",
                                 fontWeight: "600",
                               }}
                             >
-                              <p style={{ color: "#123F74" }}>
-                                Mathura Road Faridabad, Faridabad
-                              </p>
-                              <p style={{ color: "#123F74" }}>Kollur, Medak</p>
-                            </div>
-                            <div
+                              Started Date
+                            </h3>
+                            <h3 class="title6">
+                              {arr.tripstarttimestamp
+                                ? moment(
+                                    parseInt(arr.tripstarttimestamp)
+                                  ).format("MMM DD YYYY HH:mm A")
+                                : "--"}
+                            </h3>
+                          </div>
+                          <div class="flex-item-right">
+                            <h3
+                              class="title7"
                               style={{
-                                marginRight: "30px",
-                                fontSize: "11px",
-                                lineHeight: "18px",
+                                color: "rgba(18, 63, 116, 0.7)",
                                 fontWeight: "600",
                               }}
                             >
-                              <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
-                                {" "}
-                                Started Date
-                              </p>
-                              <p style={{ color: "#123F74" }}>
-                                Oct 24 2020 11.27PM
-                              </p>
-                            </div>
-                          </div>
-                          <div class="vl" />
-                          <div
-                            style={{
-                              marginRight: "30px",
-                              fontSize: "11px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
                               Remaining Distance
-                            </p>
-                            <p style={{ color: "#123F74" }}>52.0km</p>
-                          </div>
-                          <div
-                            style={{
-                              marginRight: "30px",
-                              fontSize: "11px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            <p style={{ color: "rgba(18, 63, 116, 0.7)" }}>
+                            </h3>
+                            <h3 class="title9">
+                              {arr.remainingkm ? arr.remainingkm + " km" : "--"}
+                            </h3>
+                            <h3
+                              class="title8"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
                               Total Distance
-                            </p>
-                            <p style={{ color: "#123F74" }}>48.00</p>
+                            </h3>
+                            <h3 class="title10">
+                              {arr.plannedkm ? arr.plannedkm : "--"}
+                            </h3>
                           </div>
-                          <div class="vl" />
-                          <div
-                            style={{ marginLeft: "50px", marginTop: "15px" }}
-                          >
+                          <div class="flex-item-last">
                             <img
                               width="45px"
                               height="45px"
                               src={require("../../images/map-location.png")}
                               onClick={() =>
-                                history.push("/vehicletrackingsystemdetails")
+                                history.push({
+                                  pathname:
+                                    "/vehicletrackingsystem/" + arr.tripkey,
+                                  state: { message: arr.tripkey },
+                                })
                               }
                             />
                           </div>
