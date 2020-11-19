@@ -209,7 +209,7 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                 </h3>
                 <h3 class="title20">
                   <EnvironmentOutlined
-                    style={{ color: "#123F74", fontWeight: "600" }}
+                    style={{ color: "#2FCB16", fontWeight: "600" }}
                   />
                   {tripDet && tripDet.originlocation
                     ? tripDet.originlocation
@@ -217,7 +217,7 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                 </h3>
                 <h3 class="title20">
                   <EnvironmentOutlined
-                    style={{ color: "#123F74", fontWeight: "600" }}
+                    style={{ color: "#FF0000", fontWeight: "600" }}
                   />
                   {tripDet && tripDet.destinationlocation
                     ? tripDet.destinationlocation

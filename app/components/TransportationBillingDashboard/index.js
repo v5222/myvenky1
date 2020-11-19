@@ -386,6 +386,9 @@ class TransportationDashboard extends React.Component {
                     </>
                   );
                 })}
+                <Option key="ALL" value="ALL">
+                  All
+                </Option>
               </Select>
             </div>
 
@@ -405,6 +408,9 @@ class TransportationDashboard extends React.Component {
                     </>
                   );
                 })}
+                <Option key="ALL" value="ALL">
+                  All
+                </Option>
               </Select>
             </div>
 
@@ -424,6 +430,9 @@ class TransportationDashboard extends React.Component {
                     </>
                   );
                 })}
+                <Option key="ALL" value="ALL">
+                  All
+                </Option>
               </Select>
             </div>
             <div className={Filterstyles.wrapper}>
@@ -442,6 +451,9 @@ class TransportationDashboard extends React.Component {
                     </>
                   );
                 })}
+                <Option key="ALL" value="ALL">
+                  All
+                </Option>
               </Select>
             </div>
             <div className={Filterstyles.wrapper}>

@@ -61,9 +61,9 @@
 }
 
 .mapcontainer {
-  width: 97.5%;
+  width: 96.3%;
   height: 436px;
-  margin-left: 2.5%;
+  margin-left: 3%;
   margin-top: 25px;
   border: 2px solid #70c1e9;
   box-sizing: border-box;
@@ -120,12 +120,12 @@ button {
   background: #dfeeff;
   color: #123f74;
   padding: 10px;
-  margin-left: 10px;
+  margin-left: 3%;
   flex: 50%;
   height: auto;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  border-right: 1px solid rgba(18, 63, 116, 0.3);
+  border: 1px solid rgba(18, 63, 116, 0.3);
 }
 
 .flex2-item2-center2 {
@@ -134,7 +134,7 @@ button {
   padding: 10px;
   flex: 50%;
   height: auto;
-  border-right: 1px solid rgba(18, 63, 116, 0.3);
+  border: 1px solid rgba(18, 63, 116, 0.3);
 }
 
 .flex2-item2-right2 {
@@ -164,73 +164,61 @@ button {
   color: #123f74;
 }
 
-// .title3 {
-//   text-align: left;
-//   color: #008DC5;
-//   margin-top: 0px;
-//   float: left;
-//   clear: both;
-// }
-
-// .title4 {
-//   text-align: right;
-//   color: #131212;
-// }
-
-// .title5{
-//   text-align: left;
-//   color: #008DC5;
-//   margin-top: 0px;
-//   float: left;
-//   clear: both;
-// }
-
-// .title6{
-//   text-align: right;
-//   color: #131212;
-// }
-// ////
-// .title7 {
-//   text-align: left;
-//   color: #0e1518;
-//   margin-top: 0px;
-//   float: left;
-//   clear: both;
-// }
-
-// .title8 {
-//   text-align: right;
-//   color: #131212;
-// }
-
-// .title9{
-//   text-align: left;
-//   color: #0d1011;
-//   margin-top: 0px;
-//   float: left;
-//   clear: both;
-// }
-
-// .title10{
-//   text-align: right;
-//   color: #131212;
-// }
-
 .centRightTit {
   text-align: right;
   color: #131212;
 }
 
-// @media only screen and (max-width: 600px) {
-//   /* For mobile phones: */
-//   .bluecontainer {
-//     width: auto;
-//     height: 330px;
-//     left: 12px;
-//     top: 69px;
-//     background: #DFEEFF;
-//     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-//     border-radius: 10px;
-//   }
+@media only screen and (max-width: 600px) {
 
+.flex2-container2{
+  flex-direction: column;
+}
+  
+.flex2-item2-left2 {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  margin-left: 3%;
+  height: auto;
+  border-radius: 0px;
+  margin-right: 2%;
+}
+
+.flex2-item2-center2 {
+  background: #dfeeff;
+  color: #123f74;
+  padding: 10px;
+  height: auto;
+  margin-left: 3%;
+  margin-right: 2%;
+}
+
+.flex2-item2-right2 {
+  background: #dfeeff;
+  color: #123f74;
+  margin-left: 3%;
+  border-radius: 0px;
+  margin-left: 3%;
+  margin-right: 2%;
+}
+
+.dwm_title{
+  font-size: medium;
+}
+// .title20 {
+//   text-align: left;
+//   margin-top: 0px;
+//   float: left;
+//   clear: both;
+//   color: #123f74;
+//   font-weight: 600;
 // }
+
+// .title21 {
+//   text-align: right;
+//   font-weight: 600;
+//   color: #123f74;
+// }
+
+}
