@@ -28,6 +28,7 @@ import { apiURLEinvoice } from "containers/App/services.js";
 import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 import { format } from "date-fns";
+import moment from "moment";
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -84,6 +85,9 @@ class Einvoice extends React.Component {
   //       });
   //     });
   // }
+  componentDidUpdate() {
+    console.log(this.state.selectDateto);
+  }
   // handleChange = (date) => {
   //   this.setState({
   //     selectStartDate: date,
@@ -100,19 +104,26 @@ class Einvoice extends React.Component {
     var ItemsLength = 0;
     var SubTotalList = [];
     var TotalList = [];
+    let d = new Date();
+    let dt = moment(d).format("YYYY-MM-DD");
 
     this.setState({ loading: true });
 
-    if (this.state.selectDatefrom && this.state.selectDateto) {
+    if (
+      (this.state.selectDatefrom && this.state.selectDateto) ||
+      (this.state.invoicenofrom && this.state.invoicenoto) ||
+      this.state.invoicenofrom ||
+      this.state.invoicenoto
+    ) {
       let options = {
         method: "POST",
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
-            invoicenofrom: this.state.invoicenofrom,
-            invoicenoto: this.state.invoicenofrom,
-            invoicenofromdate: this.state.selectDatefrom,
-            invoicenotodate: this.state.selectDateto,
+            invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
+            invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
+            invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
+            invoicenotodate: this.state.selectDateto || dt,
           },
         }),
       };
@@ -163,9 +174,8 @@ class Einvoice extends React.Component {
     this.setState({ loading: false });
   };
   popUp = () => {
-    // message.info("Please select date range",
     message.info({
-      content: "Please select date range",
+      content: "Please select date range or invoice Range",
       className: "custom-class",
       style: {
         marginTop: "1vh",

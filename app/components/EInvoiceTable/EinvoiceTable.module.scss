@@ -8,36 +8,25 @@
       border-bottom: 1px solid black;
     }
 
-    
-   
-    
-
     .subwrapper_1 {
       font-size: 12px;
       color: black;
       padding: 0px 0px 0px 1px;
       // border-right: 1px solid black;
       // border-left: 1px solid black;
-      
-      td{
+
+      td {
         font-size: 11px;
       }
-      
-     
-
-      }
-      .subwrapper_footer{
-        font-size: 12px;
+    }
+    .subwrapper_footer {
+      font-size: 12px;
       color: black;
       padding: 0px 0px 0px 10px;
       // border-right: 1px solid black;
       // border-left: 1px solid black;
-      
+    }
 
-      }
-      
-   
-     
     .subwrapper_2 {
       font-size: 10px;
       color: black;
@@ -45,48 +34,34 @@
       margin-right: 0px;
       // border-right: 1px solid black;
 
-      .terms{
+      .terms {
         font-size: 10px;
         line-height: 12px;
-        color:#595959;
+        color: #595959;
         margin-right: 290px;
         margin-left: 13px;
-        
       }
-      .terms_heading{
+      .terms_heading {
         font-size: 11px;
         font-weight: 600;
         margin-left: 13px;
-
-        
-        }
-
-      
-      
+      }
     }
-    
-    
-    .signature{
-     color:#595959;
-     margin-left: 30px;
-     margin-top: 18px;
-     line-height: 28px;
-      
+
+    .signature {
+      color: #595959;
+      margin-left: 30px;
+      margin-top: 18px;
+      line-height: 28px;
     }
-    
-   
-  
-  } 
-  .footer_list{
+  }
+  .footer_list {
     font-size: 9px;
     padding-top: 15px;
-  } 
-  
-  
+  }
 }
 
-
-@media only print{
+@media only print {
   .subcontainer_2 {
     margin-top: 20px;
     border: 1px solid black;
@@ -96,66 +71,50 @@
       &:not(:last-child) {
         border-bottom: 1px solid black;
       }
-  
-      
-     
-      
-  
-      .subwrapper_1, .subwrapper_footer {
+
+      .subwrapper_1,
+      .subwrapper_footer {
         font-size: 12px;
         color: black;
         padding: 0px 0px 0px 0px;
         // border-right: 1px solid black;
         // border-left: 1px solid black;
-        
-        td{
+
+        td {
           font-size: 11px;
         }
-        
-               }
-               
+      }
+
       .subwrapper_2 {
         font-size: 10px;
         color: black;
         padding: 0 0px 0 10px;
         // border-right: 1px solid black;
-  
-        .terms{
+
+        .terms {
           font-size: 7px;
           line-height: 12px;
-          color:#595959;
+          color: #595959;
           margin-right: 0px;
           padding-right: 35px;
-          
         }
-        .terms_heading{
+        .terms_heading {
           font-size: 8px;
           font-weight: 600;
-          
-          }
-  
-        
-        
+        }
       }
-      
-      
-      .signature{
-       color:#595959;
-       margin-left: 30px;
-       margin-top: 18px;
-       line-height: 28px;
-        
+
+      .signature {
+        color: #595959;
+        margin-left: 30px;
+        margin-top: 18px;
+        line-height: 28px;
       }
-      
-     
-    
-    } 
-    .footer_list{
+    }
+    .footer_list {
       font-size: 7px;
       padding-top: 10px;
       line-height: 10px;
-    } 
-    
-    
+    }
   }
 }

@@ -107,7 +107,11 @@
   border: 1px solid grey;
   border-radius: 10px;
 }
-
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
 // Print Responsive
 
 @media only print {
@@ -124,7 +128,7 @@
     justify-content: space-around;
     padding: 6px 10px 0 10px;
     border: 1px solid grey;
-    border-radius: 10px;
+    border-radius: 8px;
     width: 100%;
 
     .logo {
@@ -133,10 +137,11 @@
     }
 
     .companyDetails {
-      width: 100%;
-      margin-left: 40px;
+      width: 50%;
+      margin-left: 30px;
       line-height: 12px;
-      padding: 5px -15px;
+      // padding: 5px -15px;
+
       .dispatch {
         // margin-top: 5px;
         font-size: 9px;
@@ -230,5 +235,8 @@
   }
   .subtabletd {
     padding: 2px;
+  }
+  .pagebreak {
+    page-break-after: always;
   }
 }
