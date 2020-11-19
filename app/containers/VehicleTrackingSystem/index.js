@@ -176,59 +176,44 @@ function VehicleTrackingSystem({ logout, user }) {
             className="dashboard_header"
           />
           <div className="tvsit-vts-bgcontainer">
-            <div >
+            <div>
               <div className="selectBox">
-                    <Select
-                      id="custNameDet"
-                      defaultValue="ALL"
-                      style={{
-                        width: 200,
-                        background: "#FFFFFF",
-                        border: "1px solid #D9D9D9",
-                      }}
-                      placeholder="Select"
-                      optionFilterProp="children"
-                      onChange={handleSelectChange}
-                    >
-                      {customerName.length > 0 &&
-                        customerName.map((val, index) => {
-                          return (
-                            <>
-                              <Option value={val} key={index}>
-                                {val}
-                              </Option>
-                            </>
-                          );
-                        })}
-                    </Select>
-                    <Input
-                      style={{
-                        background: "#FFFFFF",
-                        width: 200,
-                        border: "1px solid #D9D9D9",
-                      }}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                      placeholder="Enter Vehicle Number"
-                    />
+                <Select
+                  id="custNameDet"
+                  defaultValue="ALL"
+                  style={{
+                    width: 200,
+                    background: "#FFFFFF",
+                    border: "1px solid #D9D9D9",
+                  }}
+                  placeholder="Select"
+                  optionFilterProp="children"
+                  onChange={handleSelectChange}
+                >
+                  {customerName.length > 0 &&
+                    customerName.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val} key={index}>
+                            {val}
+                          </Option>
+                        </>
+                      );
+                    })}
+                </Select>
+                <Input
+                  style={{
+                    background: "#FFFFFF",
+                    width: 200,
+                    border: "1px solid #D9D9D9",
+                  }}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder="Enter Vehicle Number"
+                />
               </div>
-              
-              {/* <Button 
-                  style={{marginLeft:"15px"}}
-                  type="primary" icon={<SearchOutlined />}
-                  >
-                    Search
-                  </Button> */}
-              {/* <span
-                total={10}
-                defaultCurrent={5}
-                style={{ marginLeft: "150px" }}
-              >
-                Last Refresh Date
-              </span>{" "}
-              : 04/11/2020 */}
             </div>
             <Tabs
-              style={{marginLeft:"2%"}}
+              style={{ marginLeft: "2%" }}
               defaultActiveKey="1"
               onChange={callback}
             >
@@ -239,38 +224,90 @@ function VehicleTrackingSystem({ logout, user }) {
                       <div>
                         <div class="flex-container">
                           <div class="flex-item-left">
-                              <h3 class="title1">ID{" "}<span style={{ color: "#008DC5" }}>{arr.tripno ? arr.tripno : "--"}</span></h3>
-                              <h3 class="title2">{arr.vehiclenumber ? arr.vehiclenumber : "--"}</h3>
+                            <h3 class="title1">
+                              ID{" "}
+                              <span
+                                style={{ color: "#008DC5", fontWeight: "bold" }}
+                              >
+                                {arr.tripno ? arr.tripno : "--"}
+                              </span>
+                            </h3>
+                            <h3
+                              class="title2"
+                              style={{ color: "#123F74", fontWeight: "bold" }}
+                            >
+                              {arr.vehiclenumber ? arr.vehiclenumber : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-center">
-                              <h3 class="title3">
-                                <EnvironmentOutlined
-                                      style={{ color: "#2FCB16" }}
-                                    />
-                                    {arr.originlocation ? arr.originlocation : "--"}</h3>
-                              <h3 class="title5">
+                            <h3 class="title3">
                               <EnvironmentOutlined
-                                      style={{ color: "#FF0000" }}
-                                    />
-                                    {arr.destinationlocation
-                                      ? arr.destinationlocation
-                                      : "--"}</h3>      
-                              <h3 class="title4">Started Date</h3>
-                              <h3 class="title6">{arr.tripstarttimestamp
-                                  ? moment(parseInt(arr.tripstarttimestamp)).format("MMM DD YYYY HH:mm A") 
-                                  : "--"}</h3>
+                                style={{ color: "#2FCB16" }}
+                              />
+                              {arr.originlocation ? arr.originlocation : "--"}
+                            </h3>
+                            <h3 class="title5">
+                              <EnvironmentOutlined
+                                style={{ color: "#FF0000" }}
+                              />
+                              {arr.destinationlocation
+                                ? arr.destinationlocation
+                                : "--"}
+                            </h3>
+                            <h3
+                              class="title4"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Started Date
+                            </h3>
+                            <h3
+                              class="title6"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
+                              {arr.tripstarttimestamp
+                                ? moment(
+                                    parseInt(arr.tripstarttimestamp)
+                                  ).format("MMM DD YYYY HH:mm A")
+                                : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-right">
-                              <h3 class="title7">
-                              Remaining Distance</h3>
-                              <h3 class="title9">
-                              {arr.remainingkm ? arr.remainingkm +" km" : "--"}
-                              </h3>      
-                              <h3 class="title8">Total Distance</h3>
-                              <h3 class="title10">{arr.plannedkm ? arr.plannedkm : "--"}</h3>
+                            <h3
+                              class="title7"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Remaining Distance
+                            </h3>
+                            <h3
+                              class="title9"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
+                              {arr.remainingkm ? arr.remainingkm + " km" : "--"}
+                            </h3>
+                            <h3
+                              class="title8"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Total Distance
+                            </h3>
+                            <h3
+                              class="title10"
+                              style={{ color: "#123F74", fontWeight: "600" }}
+                            >
+                              {arr.plannedkm ? arr.plannedkm : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-last">
-                          <img
+                            <img
                               width="45px"
                               height="45px"
                               src={require("../../images/map-location.png")}
@@ -283,52 +320,90 @@ function VehicleTrackingSystem({ logout, user }) {
                               }
                             />
                           </div>
-                          
                         </div>
                       </div>
                     );
                   })}
               </TabPane>
               <TabPane tab="Completed" key="2">
-              {tabData.length > 0 &&
+                {tabData.length > 0 &&
                   tabData.map((arr, ind) => {
                     return (
-                      
                       <div>
                         <div class="flex-container">
                           <div class="flex-item-left">
-                              <h3 class="title1">ID{" "}<span style={{ color: "#008DC5" }}>{arr.tripno ? arr.tripno : "--"}</span></h3>
-                              <h3 class="title2">{arr.vehiclenumber ? arr.vehiclenumber : "--"}</h3>
+                            <h3 class="title1">
+                              ID{" "}
+                              <span
+                                style={{ color: "#008DC5", fontWeight: "bold" }}
+                              >
+                                {arr.tripno ? arr.tripno : "--"}
+                              </span>
+                            </h3>
+                            <h3 class="title2">
+                              {arr.vehiclenumber ? arr.vehiclenumber : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-center">
-                              <h3 class="title3">
-                                <EnvironmentOutlined
-                                      style={{ color: "#2FCB16" }}
-                                    />
-                                    {arr.originlocation ? arr.originlocation : "--"}</h3>
-                              <h3 class="title5">
+                            <h3 class="title3">
                               <EnvironmentOutlined
-                                      style={{ color: "#FF0000" }}
-                                    />
-                                    {arr.destinationlocation
-                                      ? arr.destinationlocation
-                                      : "--"}</h3>      
-                              <h3 class="title4">Started Date</h3>
-                              <h3 class="title6">{arr.tripstarttimestamp
-                                  ? moment(parseInt(arr.tripstarttimestamp)).format("MMM DD YYYY HH:mm A") 
-                                  : "--"}</h3>
+                                style={{ color: "#2FCB16" }}
+                              />
+                              {arr.originlocation ? arr.originlocation : "--"}
+                            </h3>
+                            <h3 class="title5">
+                              <EnvironmentOutlined
+                                style={{ color: "#FF0000" }}
+                              />
+                              {arr.destinationlocation
+                                ? arr.destinationlocation
+                                : "--"}
+                            </h3>
+                            <h3
+                              class="title4"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Started Date
+                            </h3>
+                            <h3 class="title6">
+                              {arr.tripstarttimestamp
+                                ? moment(
+                                    parseInt(arr.tripstarttimestamp)
+                                  ).format("MMM DD YYYY HH:mm A")
+                                : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-right">
-                              <h3 class="title7">
-                              Remaining Distance</h3>
-                              <h3 class="title9">
-                              {arr.remainingkm ? arr.remainingkm +" km" : "--"}
-                              </h3>      
-                              <h3 class="title8">Total Distance</h3>
-                              <h3 class="title10">{arr.plannedkm ? arr.plannedkm : "--"}</h3>
+                            <h3
+                              class="title7"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Remaining Distance
+                            </h3>
+                            <h3 class="title9">
+                              {arr.remainingkm ? arr.remainingkm + " km" : "--"}
+                            </h3>
+                            <h3
+                              class="title8"
+                              style={{
+                                color: "rgba(18, 63, 116, 0.7)",
+                                fontWeight: "600",
+                              }}
+                            >
+                              Total Distance
+                            </h3>
+                            <h3 class="title10">
+                              {arr.plannedkm ? arr.plannedkm : "--"}
+                            </h3>
                           </div>
                           <div class="flex-item-last">
-                          <img
+                            <img
                               width="45px"
                               height="45px"
                               src={require("../../images/map-location.png")}
@@ -341,7 +416,6 @@ function VehicleTrackingSystem({ logout, user }) {
                               }
                             />
                           </div>
-                          
                         </div>
                       </div>
                     );

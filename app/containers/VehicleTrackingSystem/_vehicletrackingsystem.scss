@@ -43,7 +43,7 @@
 
 .tvsit-vts-bgcontainer {
   width: 100%;
-  height: 96vw;
+  height: 100vw;
   margin-top: -15px;
   left: 21px;
   background: #ffffff;
@@ -208,7 +208,7 @@ button {
   margin-left: 2px;
 }
 
-.selectBox{
+.selectBox {
   margin-left: 35%;
 }
 
@@ -221,41 +221,49 @@ button {
 }
 
 .flex-item-left {
-  background: #DFEEFF;
-  color: #123F74;
+  background: #dfeeff;
+  color: #123f74;
   padding: 10px;
   flex: 40%;
   height: auto;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
 }
 
 .flex-item-center {
-  background: #DFEEFF;
-  color: #123F74;
+  background: #dfeeff;
+  color: #123f74;
   padding: 10px;
   flex: 40%;
   height: auto;
   text-align: left;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
 }
 
 .flex-item-right {
-  background: #DFEEFF;
-  color: #123F74;
+  background: #dfeeff;
+  color: #123f74;
   padding: 10px;
   flex: 40%;
   height: auto;
+  border-right: 1px solid rgba(18, 63, 116, 0.3);
 }
 
 .flex-item-last {
-  background: #DFEEFF;
-  color: #123F74;
+  background: #dfeeff;
+  color: #123f74;
   padding: 10px;
   flex: 5%;
   height: auto;
+  margin-right: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .title1 {
   text-align: left;
-  color: #008DC5;
+  color: black;
   margin-top: 0px;
   float: left;
   clear: both;
@@ -263,12 +271,14 @@ button {
 
 .title2 {
   text-align: right;
-  color: #131212;
+  color: #123f74;
+  font-weight: 600;
 }
 
 .title3 {
   text-align: left;
-  color: #008DC5;
+  font-weight: 600;
+  color: #008dc5;
   margin-top: 0px;
   float: left;
   clear: both;
@@ -276,20 +286,24 @@ button {
 
 .title4 {
   text-align: right;
-  color: #131212;
+  color: #123f74;
+  font-weight: 600;
 }
 
-.title5{
+.title5 {
   text-align: left;
-  color: #008DC5;
+  color: #008dc5;
   margin-top: 0px;
   float: left;
+  font-weight: 600;
+
   clear: both;
 }
 
-.title6{
+.title6 {
   text-align: right;
-  color: #131212;
+  color: #123f74;
+  font-weight: 600;
 }
 ////
 .title7 {
@@ -302,26 +316,27 @@ button {
 
 .title8 {
   text-align: right;
-  color: #131212;
+  color: #123f74;
 }
 
-.title9{
+.title9 {
   text-align: left;
-  color: #0d1011;
+  color: #123f74;
+  font-weight: 600;
   margin-top: 0px;
   float: left;
   clear: both;
 }
 
-.title10{
+.title10 {
   text-align: right;
-  color: #131212;
+  color: #123f74;
+  font-weight: 600;
 }
 
-
-.centRightTit{
+.centRightTit {
   text-align: right;
-  color: #131212;
+  color: #123f74;
 }
 
 /* Responsive layout - makes a one column-layout instead of two-column layout */
@@ -331,17 +346,15 @@ button {
   }
 }
 
-
-
 @media only screen and (max-width: 600px) {
   /* For mobile phones: */
-  .bluecompletedcontainer{
+  .bluecompletedcontainer {
     width: auto;
     height: 259px;
     flex-wrap: wrap;
     align-items: center;
     top: 787px;
-    background: #DFEEFF;
+    background: #dfeeff;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     flex-direction: column;
@@ -355,10 +368,8 @@ button {
     border-radius: 20px;
   }
 
-  .selectBox{
+  .selectBox {
     padding-top: 50px;
     margin-left: 30%;
   }
-
- 
 }

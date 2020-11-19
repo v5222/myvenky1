@@ -188,79 +188,138 @@ function VehicleTrackingSystemDetails({ logout, user }) {
             className="dashboard_header"
           />
           <div className="tvsit-vts-bgcontainer">
-                        <div class="flex2-container2">
-                          <div class="flex2-item2-left2">
-                              <h3 class="title20">ID{" "}<span style={{ color: "#008DC5" }}>
-                                {tripDet && tripDet.tripno ? tripDet.tripno : "--"}</span></h3>
-                              <h3 class="title21">{tripDet &&tripDet.vehiclenumber ? tripDet.vehiclenumber : "--"}</h3>
-                              <h3 class="title20">
-                                <EnvironmentOutlined
-                                      style={{ color: "#2FCB16" }}
-                                    />
-                                    {tripDet && tripDet.originlocation
-                        ? tripDet.originlocation
-                        : "--"}</h3>
-                              <h3 class="title20">
-                              <EnvironmentOutlined
-                                      style={{ color: "#FF0000" }}
-                                    />
-                                    {tripDet && tripDet.destinationlocation
-                        ? tripDet.destinationlocation
-                        : "--"}</h3> 
-                              <h3 class="title21">Total Distance</h3>
-                              <h3 class="title21">{tripDet && tripDet.plannedkm ? tripDet.plannedkm : "--"}</h3>
-                          </div>
-                          <div class="flex2-item2-center2">
-                            <h3 class="title20">
-                                  Remaining Distance</h3>
-                                <h3 class="title20">
-                                  {tripDet && tripDet.remainingkm
-                                    ? tripDet.remainingkm+" km"
-                                    : "--"}
-                                </h3>
-                                <h3 class="title21">Started Date</h3>
-                                <h3 class="title21">
-                                
-                                  {tripDet && tripDet.plannedeta
-                                    ? moment(parseInt(tripDet.plannedeta)).format("MMM DD YYYY HH:mm A")
-                                    : "--"}
-                                </h3>
-                                <h3 class="title20">
-                                  ETA</h3>
-                                <h3 class="title20">
-                                {tripDet && tripDet.plannedeta
-                                ? moment(parseInt(tripDet.plannedeta)).format("MMM DD YYYY HH:mm A")
-                                : "--"}
-                                </h3>
-                                <h3 class="title21">Destination Date</h3>
-                                <h3 class="title21">
-                                  {tripDet && tripDet.destinationdate
-                                    ? moment(parseInt(tripDet.destinationdate)).format("MMM DD YYYY HH:mm A")
-                                    : "--"}
-                                </h3>
-
-                          </div>
-                          <div class="flex2-item2-right2">
-                          <h3 class="title20">
-                                  Driver Name</h3>
-                                <h3 class="title20">
-                                {tripDet && tripDet.drivername ? tripDet.drivername : "--"}
-                                </h3>
-                                <h3 class="title21">Last Known Location</h3>
-                                <h3 class="title21">
-                                  {tripDet && tripDet.currentlocation
-                                    ? tripDet.currentlocation
-                                    : "--"}
-                                </h3>
-                                <h3 class="title20">
-                                  Driver Phone Number</h3>
-                                <h3 class="title20">
-                                  {tripDet && tripDet.driverphonenumber
-                                    ? tripDet.driverphonenumber
-                                    : "--"}</h3>
-                          </div>
-                        </div>
-                        {geoJsonFlag === "True" ? (
+            <div class="flex2-container2">
+              <div class="flex2-item2-left2">
+                <h3 class="title20">
+                  ID{" "}
+                  <span style={{ color: "#008DC5", fontWeight: "bold" }}>
+                    {tripDet && tripDet.tripno ? tripDet.tripno : "--"}
+                  </span>
+                </h3>
+                <h3
+                  class="title21"
+                  style={{
+                    color: "rgba(18, 63, 116, 0.7)",
+                    fontWeight: "600",
+                  }}
+                >
+                  {tripDet && tripDet.vehiclenumber
+                    ? tripDet.vehiclenumber
+                    : "--"}
+                </h3>
+                <h3 class="title20">
+                  <EnvironmentOutlined
+                    style={{ color: "#2FCB16", fontWeight: "600" }}
+                  />
+                  {tripDet && tripDet.originlocation
+                    ? tripDet.originlocation
+                    : "--"}
+                </h3>
+                <h3 class="title20">
+                  <EnvironmentOutlined
+                    style={{ color: "#FF0000", fontWeight: "600" }}
+                  />
+                  {tripDet && tripDet.destinationlocation
+                    ? tripDet.destinationlocation
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Total Distance
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.plannedkm ? tripDet.plannedkm : "--"}
+                </h3>
+              </div>
+              <div class="flex2-item2-center2">
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Remaining Distance
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.remainingkm
+                    ? tripDet.remainingkm + " km"
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Started Date
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.plannedeta
+                    ? moment(parseInt(tripDet.plannedeta)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  ETA
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.plannedeta
+                    ? moment(parseInt(tripDet.plannedeta)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Destination Date
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.destinationdate
+                    ? moment(parseInt(tripDet.destinationdate)).format(
+                        "MMM DD YYYY HH:mm A"
+                      )
+                    : "--"}
+                </h3>
+              </div>
+              <div class="flex2-item2-right2">
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Driver Name
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.drivername ? tripDet.drivername : "--"}
+                </h3>
+                <h3
+                  class="title21"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Last Known Location
+                </h3>
+                <h3 class="title21">
+                  {tripDet && tripDet.currentlocation
+                    ? tripDet.currentlocation
+                    : "--"}
+                </h3>
+                <h3
+                  class="title20"
+                  style={{ color: "rgba(18, 63, 116, 0.7)", fontWeight: "600" }}
+                >
+                  Driver Phone Number
+                </h3>
+                <h3 class="title20">
+                  {tripDet && tripDet.driverphonenumber
+                    ? tripDet.driverphonenumber
+                    : "--"}
+                </h3>
+              </div>
+            </div>
+            {geoJsonFlag === "True" ? (
               <MapContainer
                 className="mapcontainer"
                 // center={ [routeOne[currLoc][1], routeOne[currLoc][0] ] }
@@ -318,7 +377,7 @@ function VehicleTrackingSystemDetails({ logout, user }) {
               ""
             )}
           </div>
-                            </main>
+        </main>
       </MainLayout>
     </ErrorBoundary>
   );
