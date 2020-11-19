@@ -334,10 +334,12 @@ function VehicleTrackingSystem({ logout, user }) {
                           <div class="flex-item-left">
                             <h3 class="title1">
                               ID{" "}
+                              
                               <span
                                 style={{ color: "#008DC5", fontWeight: "bold" }}
-                              >
-                                {arr.tripno ? arr.tripno : "--"}
+                              >{console.log("####ID",arr.tripno)}
+                              {arr.tripno && arr.tripno.startsWith("VCV") ? arr.tripno.substring(3) : arr.tripno }
+                                {/* {arr.tripno ? (arr.tripno.startsWith("VCV") ? arr.tripno.substring(3) : arr.tripno) : "--"} */}
                               </span>
                             </h3>
                             <h3 class="title2">

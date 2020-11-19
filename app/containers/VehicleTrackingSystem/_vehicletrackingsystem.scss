@@ -372,4 +372,28 @@ button {
     padding-top: 50px;
     margin-left: 30%;
   }
+
+  .flex-item-left {
+    margin-top: 1%;
+    background: #dfeeff;
+    color: #123f74;
+    border-radius: 0px;
+  }
+  
+  .flex-item-center {
+    background: #dfeeff;
+    color: #123f74;
+  }
+  
+  .flex-item-right {
+    background: #dfeeff;
+    color: #123f74;
+  }
+  
+  .flex-item-last {
+    background: #dfeeff;
+    color: #123f74;
+    width: 100%;
+    border-radius: 0px;
+  }
 }
