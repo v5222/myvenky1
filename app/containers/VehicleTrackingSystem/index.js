@@ -235,7 +235,7 @@ function VehicleTrackingSystem({ logout, user }) {
                         <div class="flex-container">
                           <div class="flex-item-left">
                             <h3 class="title1">
-                              ID{" "}
+                              ID{" "}{console.log("API_DATA's", arr)}
                               <span
                                 style={{ color: "#008DC5", fontWeight: "bold" }}
                               >
@@ -279,8 +279,8 @@ function VehicleTrackingSystem({ logout, user }) {
                             >
                               {arr.tripstarttimestamp
                                 ? moment(
-                                    parseInt(arr.tripstarttimestamp)
-                                  ).format("MMM DD YYYY HH:mm A")
+                                    arr.tripstarttimestamp
+                                  ).format("MMM DD YYYY hh:mm A")
                                 : "--"}
                             </h3>
                           </div>
