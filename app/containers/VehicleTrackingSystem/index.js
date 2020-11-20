@@ -383,8 +383,8 @@ function VehicleTrackingSystem({ logout, user }) {
                             <h3 class="title6">
                               {arr.tripstarttimestamp
                                 ? moment(
-                                    parseInt(arr.tripstarttimestamp)
-                                  ).format("MMM DD YYYY HH:mm A")
+                                    arr.tripstarttimestamp
+                                  ).format("MMM DD YYYY hh:mm A")
                                 : "--"}
                             </h3>
                           </div>

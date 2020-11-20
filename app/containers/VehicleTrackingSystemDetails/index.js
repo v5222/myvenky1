@@ -279,8 +279,8 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                 </h3>
                 <h3 class="title21">
                   {tripDet && tripDet.destinationdate
-                    ? moment(parseInt(tripDet.destinationdate)).format(
-                        "MMM DD YYYY HH:mm A"
+                    ? moment(tripDet.destinationdate).format(
+                        "MMM DD YYYY hh:mm A"
                       )
                     : "--"}
                 </h3>
