@@ -113,17 +113,22 @@ class Einvoice extends React.Component {
       (this.state.selectDatefrom && this.state.selectDateto) ||
       (this.state.invoicenofrom && this.state.invoicenoto) ||
       this.state.invoicenofrom ||
-      this.state.invoicenoto
+      this.state.invoicenoto ||
+      true
     ) {
       let options = {
         method: "POST",
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
-            invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
-            invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
-            invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
-            invoicenotodate: this.state.selectDateto || dt,
+            invoicenofrom: "TNCD20000151",
+            invoicenoto: "TNCD20000151",
+            invoicenofromdate: "2020-10-01",
+            invoicenotodate: "2020-11-20",
+            // invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
+            // invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
+            // invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
+            // invoicenotodate: this.state.selectDateto || dt,
           },
         }),
       };
@@ -402,7 +407,11 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={5}>
                 <div className={styles.label}>Report Type</div>
-                <Select onChange={this.handleSelect} style={{ width: "100%" }}>
+                <Select
+                  onChange={this.handleSelect}
+                  style={{ width: "100%" }}
+                  defaultValue="ORIGINAL FOR RECIPIENT"
+                >
                   <Option value="ORIGINAL FOR RECIPIENT">
                     ORIGINAL FOR RECIPIENT
                   </Option>

@@ -90,6 +90,7 @@
           font-size: 20px;
           color: black;
           font-weight: 500;
+          margin-top: 10px;
         }
       }
     }
@@ -104,7 +105,7 @@
         display: flex;
         flex-direction: column;
         float: right;
-        margin-right: 12rem;
+        margin-right: 5rem;
         margin-top: 0.5rem;
         border: 1px solid black;
 
@@ -132,8 +133,8 @@
         td {
           border: 2px solid black;
           text-align: center;
-          padding: 5px 10px;
-          font-size: 14px;
+          padding: 5px 5px;
+          font-size: 12px;
         }
       }
     }

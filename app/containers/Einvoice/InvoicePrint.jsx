@@ -23,7 +23,9 @@ class InvoicePrint extends React.Component {
 
     return (
       <div>
-        <div className={styles.reportType}>{selectValue}</div>
+        <div className={styles.reportType}>
+          {selectValue || "ORIGINAL FOR RECIPIENT"}
+        </div>
         <section className={styles.container}>
           <img src={TvsLogo} className={styles.logo} alt="logo" />
           <div className={styles.companyDetails}>
@@ -123,11 +125,12 @@ class InvoicePrint extends React.Component {
         </section>
 
         <div
-          style={{
-            display: "flex",
-            margin: "5px 0px",
-            justifyContent: "space-between",
-          }}
+          // style={{
+          //   display: "flex",
+          //   margin: "5px 0px",
+          //   justifyContent: "space-between",
+          // }}
+          className={styles.dummy}
         >
           <div className={styles.supplytype}>
             Supply Type : {details.suptyp}
@@ -367,11 +370,7 @@ class InvoicePrint extends React.Component {
           </Row>
         </section>
         <section>
-          <EinvoiceTable
-            item={InvoiceDetailsList}
-            details={details}
-            style={{ margin: "auto" }}
-          />
+          <EinvoiceTable item={InvoiceDetailsList} details={details} />
           <div style={{ textAlign: "center", color: "grey" }}>
             {InvoiceHeaderList[0].regdofficeaddress}
           </div>
