@@ -198,6 +198,18 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
           >
             Transportation Billing
           </Menu.Item>
+          <Menu.Item
+            key="9"
+            icon={<BarChartOutlined />}
+            onClick={() => history.push("/visibilityinbound")}
+            className={
+              selected === "/visibilityinbound"
+                ? "tvsit-main-menu-selected"
+                : "tvsit-main-menu"
+            }
+          >
+            Visibility Inbound
+          </Menu.Item>
         </Menu>
       </Drawer>
     </>
