@@ -252,9 +252,9 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                   Started Date
                 </h3>
                 <h3 class="title21">
-                  {tripDet && tripDet.plannedeta
-                    ? moment(parseInt(tripDet.plannedeta)).format(
-                        "MMM DD YYYY HH:mm A"
+                  {tripDet && tripDet.tripstarttimestamp
+                    ? moment(tripDet.tripstarttimestamp).format(
+                        "MMM DD YYYY hh:mm A"
                       )
                     : "--"}
                 </h3>
@@ -266,8 +266,8 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                 </h3>
                 <h3 class="title20">
                   {tripDet && tripDet.plannedeta
-                    ? moment(parseInt(tripDet.plannedeta)).format(
-                        "MMM DD YYYY HH:mm A"
+                    ? moment(tripDet.plannedeta).format(
+                        "MMM DD YYYY hh:mm A"
                       )
                     : "--"}
                 </h3>
@@ -279,8 +279,8 @@ function VehicleTrackingSystemDetails({ logout, user }) {
                 </h3>
                 <h3 class="title21">
                   {tripDet && tripDet.destinationdate
-                    ? moment(parseInt(tripDet.destinationdate)).format(
-                        "MMM DD YYYY HH:mm A"
+                    ? moment(tripDet.destinationdate).format(
+                        "MMM DD YYYY hh:mm A"
                       )
                     : "--"}
                 </h3>
