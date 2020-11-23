@@ -127,7 +127,7 @@
       margin-bottom: 2px;
     }
     table {
-      width: 100%;
+      width: 95%;
       border: 2px solid black;
       th,
       tr,
@@ -192,7 +192,9 @@
   }
   .terms {
     font-size: 10px;
-    font-weight: bold;
+    font-weight: normal;
+    color: #333;
+    text-align: justify;
   }
   .terms_title {
     font-size: 10px;
@@ -202,5 +204,22 @@
     display: flex;
     justify-content: space-between;
     margin-left: auto;
+  }
+}
+
+@media only print {
+  .wrapper_5 {
+    table {
+      width: 95%;
+      border: 2px solid black;
+      th,
+      tr,
+      td {
+        border: 2px solid black;
+        text-align: center;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
   }
 }

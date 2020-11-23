@@ -65,7 +65,7 @@ class CWB extends React.Component {
     };
 
     let configure = {
-      method: "post",
+      method: "POST",
       body: JSON.stringify({
         body: {
           type: "CWBPRINT",
@@ -75,23 +75,43 @@ class CWB extends React.Component {
       }),
     };
 
+    // fetch(apiUrl, configure)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("response data", data);
+    //     if (data.body.statuscode === 200) {
+    //       this.setState({
+    //         dataItems: data.body.bodymsg,
+    //       });
+    //     } else {
+    //       alert(data.body.bodymsg);
+    //     }
+    //   });
+
+    // fetch(apiUrl, bodyOptions)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     this.setState({ printValue: data.body.bodymsg, isActive: true });
+    //   });
     fetch(apiUrl, configure)
       .then((res) => res.json())
       .then((data) => {
-        console.log("response data", data);
-        if (data.body.statuscode === 200) {
-          this.setState({
-            dataItems: data.body.bodymsg,
+        return fetch(apiUrl, bodyOptions)
+          .then((res) => res.json())
+          .then((i) => {
+            this.setState({
+              printValue: i.body.bodymsg,
+              isActive: true,
+              dataItems: data.body.bodymsg,
+            });
           });
-        } else {
-          alert(data.body.bodymsg);
-        }
       });
-    fetch(apiUrl, bodyOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ printValue: data.body.bodymsg, isActive: true });
-      });
+
+    // fetch(apiUrl, bodyOptions)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     this.setState({ printValue: data.body.bodymsg, isActive: true });
+    //   });
   };
 
   render() {
