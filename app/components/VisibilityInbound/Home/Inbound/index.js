@@ -3,7 +3,9 @@ import { Form, Input, Button, Select, Radio, Row, Col } from 'antd';
 import {apiurlsi} from 'containers/VisibilityInbound/service';
 import axios from "axios";
 import { now, values } from "lodash";
-// import  {CSVLink} from "react-csv";
+import {saveAs} from "file-saver";
+import CsvDownload from 'react-json-to-csv'
+// import  {CSVDownload } from "react-csv";
 
 
 // const headers = [
@@ -63,8 +65,14 @@ const VIFORM = () => {
   const [iniForm, setIniForm] = useState();
   const [qtyVal, setQtyVal] = useState("");
   const [dispSaveBtn, setDispSaveBtn] = useState(false);
+  const [dispDownloadBtn, setDispDownloadBtn] = useState(false);
   const [scannedVal, setScannedVal] = useState(0);
-
+  const [lpnVal, setLpnVal] = useState("");
+  const [lpnArray, setLpnArray] = useState([]);
+  const [dummyArr, setDumArr] = useState([]);
+  const [customerArr, setCustomerArr] = useState([]);
+  const [custInvNo, setCustInvNo] = useState("");
+  const [lpnInput, setLpnInput] = useState(true);
 
   useEffect(() => {
     if(invData.length == 0 || warehouseData.length == 0){
@@ -128,15 +136,36 @@ const VIFORM = () => {
   const onChange = e => {
     setValue(e.target.value);
   };
+
   const onHandleChange = e => {
+    console.log("OnChange",e)
+    setCustInvNo(e.target.value)
     setValue(e.target.value);
   };
+
+  // useEffect(() => {
+  //   console.log("lpnArr", lpnArray)
+  // },[lpnArray])
+
+  // useEffect(() => {
+  //   console.log("*****CustInvNo", custInvNo)
+  // },[custInvNo])
+
+
+  function resetValues(){
+    // lpnVal = "";
+    values.InvoiceNumber="";
+    setLpnVal(" ");
+  }
  
 
   const onFinish = (values) => {
-    if( scannedVal >= qtyVal*2)
+    setLpnVal("")
+    if( lpnArray.length == qtyVal)
     {
-      setDispProcessBtn(true);
+      console.log("True",values)
+      setLpnInput(false)
+      setDispRegionalDownBtn(false);  
       if(values.radioGroup == undefined || values.radioGroup == 1){
 
         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
@@ -145,20 +174,22 @@ const VIFORM = () => {
            body:JSON.stringify({
                 "body": {
                 "type": "SAVE",
-                "documentno": values.InvoiceNumber,
-                "warehousename": values.wareHouse,
-                "transportername": values.transporterName,
-                "shippingio": values.shippingIoDetail,
-                "ewaybillno": values.ewayBill,
+                "documentno": values.regionalInvoiceNumber,
+                "warehousename": values.regionalWareHouse,
+                "transportername": values.regionalTransporterName,
+                "shippingio": values.regionalShippingIoDetail,
+                "lpn": lpnArray,
+                "ewaybillno": values.regionalEwayBill,
                 "flag":  "REGIONAL",
-                "qty": values.qty ? values.qty : "",
+                "qty": values.regionalQty ? values.regionalQty : "",
                 }
           })
        }).then(res => res.json())
          .then(data  => {
-            if(data.body.statuscode == 200){
-                setDispRegionalDownBtn(true)
-                setDispProcessBtn(true)
+           console.log("Regional--Res",data)
+            if(data.body.statuscode && data.body.statuscode == 200){
+              setDispProcessBtn(true)
+              setDispRegionalDownBtn(true)  
             }        
           })
          .catch(err=> console.log(err));
@@ -180,8 +211,9 @@ const VIFORM = () => {
           })
        }).then(res => res.json())
          .then(data  => {
-            if(data.body.statuscode == 200){
-                setDispDownBtn(true)
+          console.log("Customer--Res",data)
+            if(data.body.statuscode && data.body.statuscode == 200){
+              handleCustDownload()
                 setDispSaveBtn(true)
             }        
           })
@@ -189,37 +221,68 @@ const VIFORM = () => {
       }
     }
     else{
-      setScannedVal((scannedVal) => scannedVal + 1)
+      console.log("Array-------Update----------Area",lpnVal)
+      let r = lpnArray.concat(lpnVal);
+      setLpnArray(r)
+      resetValues()
+      // setScannedVal((scannedVal) => scannedVal + 1)
     }
     
   };
 
   function handleCustDownload(){
-    console.log("##Download BTn")
+    console.log("Download CustBtn Clicked")
+    
+    var customerDownloadReqData = {
+      "body": {
+        "type": "DOWNLOAD",
+        "EMAIL": "muneeshkumar.a@tvslsl.com",
+        "invoiceno": "GJ/KAD/DC2156"
+      }
+    }
+    console.log("ReqData-----Cust",customerDownloadReqData)
+
+    
+    axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        customerDownloadReqData
+      )
+      .then((res) => {
+        console.log("##Download--Cust---Res",res.data)
+        let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
+        setDispDownBtn(true)
+        console.log("TempData",tempDownData)
+        setCustomerArr(tempDownData)
+      })
+      .catch(err=> console.log(err));
   }
   
   function handleDownRegional(){
+    console.log("Download Btn Clicked")
+    setDispRegionalDownBtn(false);  
     var regionalDownloadReqData = {
       "body": {
         "type": "DOWNLOAD",
         "EMAIL": "muneeshkumar.a@tvslsl.com",
-        "invoice": "GJ/KAD/DC2156"
+        "invoiceno": "GJ/KAD/DC2156"   
       }
     }
-    console.log("@@handleDownRegional")
+    
     axios
       .post(
         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
         regionalDownloadReqData
       )
       .then((res) => {
-        console.log("##Download-----Res",res)
-        // if (res.data.body.statuscode == 200) {
-        //   handleCustDetailsdata(res.data.body.bodymsg);
-        // } else {
-        //   console.log("Err");
-        // }
-      });
+        console.log("##Download-----Res",res.data)
+        let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
+        setDispProcessBtn(true)
+        setDispDownloadBtn(true)
+        console.log("TempData",tempDownData)
+        setDumArr(tempDownData)
+      })
+      .catch(err=> console.log(err));
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -268,7 +331,6 @@ const VIFORM = () => {
                     allowClear>
                     {warehouseData.length > 0 &&
                     warehouseData.map((val, index) => {
-                      {console.log("wareHouse",val)}
                       return (
                         <>
                           <Option value={val.name} key={index}>
@@ -323,9 +385,8 @@ const VIFORM = () => {
               </Button> : ""}
               
               {dispDownBtn === true ? 
-              <Button type="primary"  size="large" onClick={handleCustDownload()}>
-                Download
-              </Button>  : ""
+                 <CsvDownload data={customerArr}/>
+                : ""
             }
           </Form.Item>
 
@@ -333,7 +394,7 @@ const VIFORM = () => {
     ) : "" }
     {(value == 1 || value == "" || value == undefined ) ? 
      <>
-     <Form.Item name="wareHouse" label="Warehouse" rules={[{ required: true }]}>
+     <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
            <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                  allowClear>
                  {warehouseData.length > 0 &&
@@ -348,12 +409,12 @@ const VIFORM = () => {
                  })}
            </Select>
        </Form.Item>
-       <Form.Item name="InvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
+       <Form.Item name="regionalInvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
          <Input/>
        </Form.Item>
        <Form.Item
          label="Shipping IO Detail"
-         name="shippingIoDetail"
+         name="regionalShippingIoDetail"
          rules={[
            {
              required: true,
@@ -365,7 +426,7 @@ const VIFORM = () => {
        </Form.Item>
        <Form.Item
          label="Transporter Name"
-         name="transporterName"
+         name="regionalTransporterName"
          rules={[
            {
              required: true,
@@ -377,7 +438,7 @@ const VIFORM = () => {
        </Form.Item>
        <Form.Item
          label="EWay Bill"
-         name="ewayBill"
+         name="regionalEwayBill"
          rules={[
            {
              required: true,
@@ -389,7 +450,7 @@ const VIFORM = () => {
        </Form.Item>
        <Form.Item
          label="Qty"
-         name="qty"
+         name="regionalQty"
          rules={[
            {
              required: true,
@@ -400,27 +461,39 @@ const VIFORM = () => {
          <Input onChange={event => setQtyVal(event.target.value)}/>
        </Form.Item>
        <Form.Item>
-         <Row>
+         <Row style={{marginLeft:"30%"}}>
             <Col span="6"></Col>
-            <Col span="6"></Col>
-            <Col span="6"><b>TOTAL : </b> {qtyVal*2}</Col>
-            <Col span="6"><b>SCANNED : </b> {scannedVal}</Col>
+            <Col span="6"><b>TOTAL : </b> {qtyVal}</Col>
+            <Col ><b>SCANNED : </b> {lpnArray.length} </Col>
          </Row>
-
+         <Row style={{marginLeft:"30%"}}>
+         <Col span="6"></Col>
+         {lpnInput === true ? <> <Col span="6"><b>LPN : </b></Col>
+            <Col><Input size="small" style={{width:200}} value={lpnVal}
+              onChange={event => {
+                setLpnVal(event.target.value)
+              }}/></Col> </>: ""}
+         </Row> 
        </Form.Item>
        <Form.Item {...tailLayout}>
            {dispProcessBtn === false ? 
            <Button type="primary" htmlType="submit" size="large">
-             Submit
+             Save
            </Button> : ""
          }
            {dispRegionalDownBtn === true ? 
            <Button type="primary" size="large" onClick={handleDownRegional()}>
-             Download
+             Submit
            </Button>
-          // <CSVLink {...csvreport}>Download</CSVLink>  
            : ""
          }
+         {
+           dispDownloadBtn === true ? 
+           <>
+           <CsvDownload data={dummyArr}/>
+         </> : ""
+         }
+           
        </Form.Item>
    </>   
       :"" } 
