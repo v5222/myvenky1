@@ -64,13 +64,7 @@ const VIFORM = () => {
   const [qtyVal, setQtyVal] = useState("");
   const [dispSaveBtn, setDispSaveBtn] = useState(false);
   const [scannedVal, setScannedVal] = useState(0);
-//   const [form,setform] =  useState({
-//     partnumber:"",
-//     date:"",
-//     newrevision :"",
-//     oldrevision:""
 
-//   });
 
   useEffect(() => {
     if(invData.length == 0 || warehouseData.length == 0){
@@ -142,6 +136,7 @@ const VIFORM = () => {
   const onFinish = (values) => {
     if( scannedVal >= qtyVal*2)
     {
+      setDispProcessBtn(true);
       if(values.radioGroup == undefined || values.radioGroup == 1){
 
         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
@@ -197,14 +192,35 @@ const VIFORM = () => {
       setScannedVal((scannedVal) => scannedVal + 1)
     }
     
-    // if(values.OldRevisionNumber !=values.NewRevisionNumber){
-     
-    // }
   };
 
   function handleCustDownload(){
     console.log("##Download BTn")
-  }  
+  }
+  
+  function handleDownRegional(){
+    var regionalDownloadReqData = {
+      "body": {
+        "type": "DOWNLOAD",
+        "EMAIL": "muneeshkumar.a@tvslsl.com",
+        "invoice": "GJ/KAD/DC2156"
+      }
+    }
+    console.log("@@handleDownRegional")
+    axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        regionalDownloadReqData
+      )
+      .then((res) => {
+        console.log("##Download-----Res",res)
+        // if (res.data.body.statuscode == 200) {
+        //   handleCustDetailsdata(res.data.body.bodymsg);
+        // } else {
+        //   console.log("Err");
+        // }
+      });
+  }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -301,12 +317,12 @@ const VIFORM = () => {
             <Input/>
           </Form.Item>
           <Form.Item {...tailLayout}>
-              {dispSaveBtn == false ? 
+              {dispSaveBtn === false ? 
               <Button type="primary" htmlType="submit" size="large">
                 Save
               </Button> : ""}
               
-              {dispDownBtn == true ? 
+              {dispDownBtn === true ? 
               <Button type="primary"  size="large" onClick={handleCustDownload()}>
                 Download
               </Button>  : ""
@@ -393,13 +409,13 @@ const VIFORM = () => {
 
        </Form.Item>
        <Form.Item {...tailLayout}>
-           {dispProcessBtn == false ? 
+           {dispProcessBtn === false ? 
            <Button type="primary" htmlType="submit" size="large">
-             Process
+             Submit
            </Button> : ""
          }
-           {dispRegionalDownBtn == true ? 
-           <Button type="primary" size="large">
+           {dispRegionalDownBtn === true ? 
+           <Button type="primary" size="large" onClick={handleDownRegional()}>
              Download
            </Button>
           // <CSVLink {...csvreport}>Download</CSVLink>  
