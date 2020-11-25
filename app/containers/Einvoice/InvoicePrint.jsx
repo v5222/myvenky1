@@ -112,11 +112,10 @@ class InvoicePrint extends React.Component {
             </div>
             <div>
               <div className={styles.qr_details}>
-                {" "}
-                IRN:{details.irn === null ? " " : details.irn.slice(0, 24)}{" "}
+                IRN:{details.irn === null ? " " : details.irn}
               </div>
               <div className={styles.qr_details}>
-                {details.irn === null ? " " : details.irn.slice(24, 48)}{" "}
+                {details.irn === null ? " " : details.irn}
               </div>
             </div>
           </div>
