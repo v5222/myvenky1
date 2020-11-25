@@ -31,10 +31,10 @@ export default class Label extends Component {
             </div>
             <div className={styles.cmpAddr}>
               <div className={styles.cmpName}>
-                TVS Supply Chain Solution Limited
+                TVS Supply Chain Solutions Limited
               </div>
               <div className={styles.tag}>
-                (formerly known as TVS logistics)
+                (Formerly known as TVS Logistics Services Limited)
               </div>
             </div>
           </section>
@@ -83,7 +83,7 @@ export default class Label extends Component {
           <hr />
           <section className={styles.wrapper_4}>
             <div>
-              <strong> Customer Self Decalaration:</strong> The good sold are
+              <strong> Customer Self Decalaration:</strong> The goods sold are
               intended for end user consumption. Not for resale
             </div>
           </section>

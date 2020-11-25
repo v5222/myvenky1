@@ -24,6 +24,7 @@ import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
 import GlobalStyle from "../../global-styles";
 import VehicleTrackingSystem from "containers/VehicleTrackingSystem/Loadable";
 import VehicleTrackingSystemDetails from "../VehicleTrackingSystemDetails/Loadable";
+import VisibilityInbound from "../VisibilityInbound/Loadable";
 import TestPage from "../Testing/TestPage";
 import CWB from "containers/CWB/Loadable";
 import withAuthProvider from "containers/app/AuthProvider";
@@ -53,7 +54,7 @@ function App({
   loggedIn,
   setLogin,
 }) {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   let timer;
 
   useEffect(() => {
@@ -240,6 +241,17 @@ function App({
           render={(props) =>
             authenticated ? (
               <CWB {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/visibilityinbound"
+          render={(props) =>
+            authenticated ? (
+              <VisibilityInbound {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )

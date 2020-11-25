@@ -142,10 +142,7 @@ class EinvoiceTable extends React.Component {
     } = this.state;
     return (
       <div className="Invoicetable">
-        <table
-          className="table table-bordered"
-          style={{ margin: "auto", fontSize: "10px" }}
-        >
+        <table className="table table-bordered" style={{ margin: "auto" }}>
           <tr>
             <th style={{ width: "3%", textAlign: "center" }} rowSpan="2">
               S.no
@@ -183,16 +180,16 @@ class EinvoiceTable extends React.Component {
             <th style={{ width: "5%", textAlign: "center" }} colSpan="2">
               CGST
             </th>
-            <th style={{ width: "10%", textAlign: "center" }} colSpan="2">
+            <th style={{ width: "5%", textAlign: "center" }} colSpan="2">
               SGST / UTGST
             </th>
-            <th style={{ width: "10%", textAlign: "center" }} colSpan="2">
+            <th style={{ width: "5%", textAlign: "center" }} colSpan="2">
               IGST
             </th>
             {/* <th  style={{ width: "10%" }}>
               SGST / CGST Amount
             </th> */}
-            <th style={{ width: "10%", textAlign: "center" }} rowSpan="2">
+            <th style={{ width: "5%", textAlign: "center" }} rowSpan="2">
               Item Total Amount
             </th>
           </tr>
@@ -296,9 +293,7 @@ class EinvoiceTable extends React.Component {
 
               {/* cgst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemcgstrt == 0
-                  ? " "
-                  : Number(i.itemcgstrt).toFixed(2) + "%"}
+                {i.itemcgstrt == 0 ? "" : Number(i.itemcgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -310,9 +305,7 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* sgst/ugst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemsgstrt == 0
-                  ? " "
-                  : Number(i.itemsgstrt).toFixed(2) + "%"}
+                {i.itemsgstrt == 0 ? "" : Number(i.itemsgstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat
@@ -324,9 +317,7 @@ class EinvoiceTable extends React.Component {
               </td>
               {/* Igst rate and amount */}
               <td key={Math.random()} style={{ width: "5%" }}>
-                {i.itemigstrt == 0
-                  ? " "
-                  : Number(i.itemigstrt).toFixed(2) + "%"}
+                {i.itemigstrt == 0 ? "" : Number(i.itemigstrt).toFixed(2) + "%"}
               </td>
               <td key={Math.random()} style={{ width: "5%" }}>
                 <CurrencyFormat

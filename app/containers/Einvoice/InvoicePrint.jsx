@@ -23,7 +23,9 @@ class InvoicePrint extends React.Component {
 
     return (
       <div>
-        <div className={styles.reportType}>{selectValue}</div>
+        <div className={styles.reportType}>
+          {selectValue || "ORIGINAL FOR RECIPIENT"}
+        </div>
         <section className={styles.container}>
           <img src={TvsLogo} className={styles.logo} alt="logo" />
           <div className={styles.companyDetails}>
@@ -40,7 +42,9 @@ class InvoicePrint extends React.Component {
             </div>
             <div className={styles.companyName}>{details.sellerlglnm}</div>
             <div className={styles.companyName}>
-              <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+              <span style={{ fontStyle: "italic" }}>
+                {"(Formerly known as TVS Logistics Services Limited)"}
+              </span>
             </div>
             <div className={styles.companyAddr}>{details.selleraddress1}</div>
             <div className={styles.companyAddr}>{details.selleraddress2}</div>
@@ -72,7 +76,9 @@ class InvoicePrint extends React.Component {
                 <div className={styles.companyName}>{details.sellerlglnm}</div>
 
                 <div className={styles.companyName}>
-                  <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+                  <span style={{ fontStyle: "italic" }}>
+                    {"(Formerly known as TVS Logistics Services Limited)"}
+                  </span>
                 </div>
               </div>
               {/** {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm} */}
@@ -117,16 +123,22 @@ class InvoicePrint extends React.Component {
               <div className={styles.qr_details}>
                 {details.irn === null ? " " : details.irn}
               </div>
+              <div className={styles.qr_details}>
+                {details.irn === null
+                  ? " "
+                  : details.irn.slice(48, details.irn.length)}{" "}
+              </div>
             </div>
           </div>
         </section>
 
         <div
-          style={{
-            display: "flex",
-            margin: "5px 0px",
-            justifyContent: "space-between",
-          }}
+          // style={{
+          //   display: "flex",
+          //   margin: "5px 0px",
+          //   justifyContent: "space-between",
+          // }}
+          className={styles.dummy}
         >
           <div className={styles.supplytype}>
             Supply Type : {details.suptyp}
@@ -366,11 +378,7 @@ class InvoicePrint extends React.Component {
           </Row>
         </section>
         <section>
-          <EinvoiceTable
-            item={InvoiceDetailsList}
-            details={details}
-            style={{ margin: "auto" }}
-          />
+          <EinvoiceTable item={InvoiceDetailsList} details={details} />
           <div style={{ textAlign: "center", color: "grey" }}>
             {InvoiceHeaderList[0].regdofficeaddress}
           </div>

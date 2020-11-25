@@ -21,9 +21,11 @@ export default class PrintDoc extends Component {
             </div>
 
             <div className={styles.cmpAddr}>
-              <div className={styles.cmpName}>TVS Supply Chain Limited</div>
+              <div className={styles.cmpName}>
+                TVS Supply Chain Solutions Limited
+              </div>
               <div className={styles.tag}>
-                (formerly known as TVS logistics)
+                (Formerly known as TVS Logistics Services Limited)
               </div>
               <div className={styles.addr1}>
                 N0:226, Karunal kudil, Cathderal Road,
@@ -167,13 +169,12 @@ export default class PrintDoc extends Component {
 
           <section className={styles.wrapper_5}>
             <div className={styles.title}>
-              Documents Attached : Original Invoice / Delivery Challan / Road
-              Permit / MODVAT Invoice
+              Documents Attached : Original Invoice / Delivery Challan
             </div>
-            <div className={styles.title}>
+            {/* <div className={styles.title}>
               For Terms & Conditions, Please visit :{" "}
               <a link="http://tvslsl.com">http://tvslsl.com</a>
-            </div>
+            </div> */}
             <table>
               <thead>
                 <tr>
@@ -195,13 +196,13 @@ export default class PrintDoc extends Component {
               <tbody>
                 <tr>
                   <td>{data[0].partno}</td>
-                  <td>{data[0].partqty}</td>
+                  <td>{Number(data[0].partqty).toFixed(2)}</td>
                   <td>{`${data[0].partweight} ${data[0].partweightuom}`}</td>
                   <td>{data[0].documentno}</td>
                   <td>{moment(data[0].documentdate).format("DD-MM-YYYY")}</td>
-                  <td>{data[0].partqty}</td>
-                  <td>{data[0].partqty}</td>
-                  <td> {data[0].partvalue}</td>
+                  <td>{Number(data[0].partqty).toFixed(2)}</td>
+                  <td>{Number(data[0].partqty).toFixed(2)}</td>
+                  <td> {Number(data[0].partvalue).toFixed(2)}</td>
                   <td>1344985.00 </td>
                   <td>INR</td>
                   <td />

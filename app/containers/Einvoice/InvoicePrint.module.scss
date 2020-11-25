@@ -45,6 +45,11 @@
 .supplytype {
   font-size: 12px;
 }
+.dummy {
+  display: flex;
+  margin: 5px 0px;
+  justify-content: space-between;
+}
 .invoicetype {
   margin-left: 100px;
 }
@@ -71,7 +76,7 @@
   border: 1px solid grey;
   border-radius: 10px;
   line-height: 20px;
-  margin-right: 10px;
+  margin-right: 3px;
 
   .asdf {
     padding-bottom: 38px;
@@ -107,14 +112,13 @@
   border: 1px solid grey;
   border-radius: 10px;
 }
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
+
 // Print Responsive
 
 @media only print {
+  @page {
+    // margin: -15mm;
+  }
   .reportType {
     font-size: 10px;
     font-weight: bold;
@@ -133,7 +137,7 @@
 
     .logo {
       align-self: flex-start;
-      margin: -10px -24px 0 0px;
+      margin: 0px -24px 0 0px;
     }
 
     .companyDetails {
@@ -198,6 +202,7 @@
     border: 1px solid grey;
     border-radius: 10px;
     line-height: 14px;
+    margin: 0px;
 
     // .asdf{
     //   padding-bottom: 28px;

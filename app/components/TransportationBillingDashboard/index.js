@@ -554,7 +554,7 @@ class TransportationDashboard extends React.Component {
                                       {i.routecode}
                                     </td>
                                     <td style={{ width: "15%" }}>
-                                      {i.ref_doc_status}
+                                      {i.TVS_VCV_SCN_NO}
                                     </td>
                                     <td style={{ width: "15%" }}>
                                       {i.invoiceamount}

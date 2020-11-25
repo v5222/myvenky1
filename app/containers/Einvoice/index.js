@@ -29,6 +29,7 @@ import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 import { format } from "date-fns";
 import moment from "moment";
+import ClearCache from "react-clear-cache";
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -146,6 +147,11 @@ class Einvoice extends React.Component {
             });
           } else {
             this.noResult();
+            this.setState({
+              dataItems: [],
+            });
+            this.setState({ isActive: true, search: true, loading: false });
+            this.refresh();
           }
         });
     } else {
@@ -153,9 +159,19 @@ class Einvoice extends React.Component {
     }
   };
   //Use this refresh wherever needed
-  // handleRefresh = () => {
-  //   window.location.reload(false);
-  // };
+  handleRefresh = () => {
+    window.location.reload(false);
+  };
+
+  refresh = () => {
+    setTimeout(function() {
+      window.location.reload(false);
+    }, 1000);
+  };
+
+  handleItemUpdateSuccess() {
+    history.push("app/list");
+  }
 
   noResult = () => {
     message.error(
@@ -167,12 +183,11 @@ class Einvoice extends React.Component {
           fontSize: "18px",
         },
       },
-      5
+      10
     );
-
-    // );
     this.setState({ loading: false });
   };
+
   popUp = () => {
     message.info({
       content: "Please select date range or invoice Range",
@@ -402,7 +417,11 @@ class Einvoice extends React.Component {
               </Col>
               <Col span={5}>
                 <div className={styles.label}>Report Type</div>
-                <Select onChange={this.handleSelect} style={{ width: "100%" }}>
+                <Select
+                  onChange={this.handleSelect}
+                  style={{ width: "100%" }}
+                  defaultValue="ORIGINAL FOR RECIPIENT"
+                >
                   <Option value="ORIGINAL FOR RECIPIENT">
                     ORIGINAL FOR RECIPIENT
                   </Option>
@@ -470,7 +489,6 @@ class Einvoice extends React.Component {
 
             <Row gutter={[20, 16]} />
           </section>
-          {console.log(this.state)}
           {this.state.loading ? (
             <div
               style={{

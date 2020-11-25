@@ -156,28 +156,39 @@
   margin: 10px 0 0 10px;
   padding: auto;
 }
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
-//////////////////////
+
 ///responsive for print
 
 @media only print {
+  @page {
+    margin: 5mm;
+  }
+  table {
+    page-break-after: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tfoot {
+    display: table-footer-group;
+  }
+
   .Invoicetable {
     .table {
-      width: 100%;
-      font-size: 8px;
+      max-width: 100%;
+      font-size: 7px;
       margin-bottom: 7px;
       color: black;
       background-color: white; // Reset for nesting within parents with `background-color`.
+      page-break-inside: auto;
 
       th,
       td {
@@ -189,6 +200,7 @@
       thead th {
         vertical-align: bottom;
         border-bottom: (2 * 1px) solid black;
+        display: table-header-group;
       }
 
       tbody + tbody {
@@ -203,7 +215,7 @@
     .table-sm {
       th,
       td {
-        padding: 4px 2px;
+        padding: 4px 1px;
       }
     }
 
@@ -327,7 +339,7 @@
     margin: 5px 0 0 0px;
   }
   .charges {
-    font-size: 10px;
+    font-size: 9px;
   }
 }
 
