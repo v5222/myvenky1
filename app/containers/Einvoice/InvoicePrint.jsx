@@ -42,7 +42,9 @@ class InvoicePrint extends React.Component {
             </div>
             <div className={styles.companyName}>{details.sellerlglnm}</div>
             <div className={styles.companyName}>
-              <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+              <span style={{ fontStyle: "italic" }}>
+                {"(Formerly known as TVS Logistics Services Limited)"}
+              </span>
             </div>
             <div className={styles.companyAddr}>{details.selleraddress1}</div>
             <div className={styles.companyAddr}>{details.selleraddress2}</div>
@@ -74,7 +76,9 @@ class InvoicePrint extends React.Component {
                 <div className={styles.companyName}>{details.sellerlglnm}</div>
 
                 <div className={styles.companyName}>
-                  <i>{"(Formerly known as TVS Logistics Services Limited)"}</i>
+                  <span style={{ fontStyle: "italic" }}>
+                    {"(Formerly known as TVS Logistics Services Limited)"}
+                  </span>
                 </div>
               </div>
               {/** {details.dispnm !== "NA" ? details.dispnm : details.sellerlglnm} */}
@@ -119,6 +123,11 @@ class InvoicePrint extends React.Component {
               </div>
               <div className={styles.qr_details}>
                 {details.irn === null ? " " : details.irn.slice(24, 48)}{" "}
+              </div>
+              <div className={styles.qr_details}>
+                {details.irn === null
+                  ? " "
+                  : details.irn.slice(48, details.irn.length)}{" "}
               </div>
             </div>
           </div>
