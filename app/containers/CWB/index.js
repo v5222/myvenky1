@@ -41,7 +41,7 @@ class CWB extends React.Component {
     fetch(apiUrl, bodyoptions)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log("data", data);
         this.setState({ cwbNo: data.body.bodymsg });
       });
   };

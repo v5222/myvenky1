@@ -453,7 +453,7 @@ class Einvoice extends React.Component {
                   Print
                 </div>
 
-                {isActive && (
+                {!isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
                     documentTitle="Invoice"
@@ -466,7 +466,7 @@ class Einvoice extends React.Component {
                   />
                 )}
               </Col>
-              <Col span={1} style={{ marginLeft: "33px" }}>
+              <Col span={1} style={{ marginLeft: "32px" }}>
                 <div className={styles.label} style={{ color: "transparent" }}>
                   FileTemplate
                 </div>
