@@ -3,37 +3,8 @@ import { Form, Input, Button, Select, Radio, Row, Col } from 'antd';
 import {apiurlsi} from 'containers/VisibilityInbound/service';
 import axios from "axios";
 import { now, values } from "lodash";
-import {saveAs} from "file-saver";
 import CsvDownload from 'react-json-to-csv'
-// import  {CSVDownload } from "react-csv";
 
-
-// const headers = [
-//   { label: "First Name", key: "firstName" },
-//   { label: "Last Name", key: "lastName" },
-//   { label: "Email", key: "email" },
-//   { label: "Age", key: "age" }
-// ];
- 
-// const data = [
-//   { firstName: "Warren", lastName: "Morrow", email: "sokyt@mailinator.com", age: "36" },
-//   { firstName: "Gwendolyn", lastName: "Galloway", email: "weciz@mailinator.com", age: "76" },
-//   { firstName: "Astra", lastName: "Wyatt", email: "quvyn@mailinator.com", age: "57" },
-//   { firstName: "Jasmine", lastName: "Wong", email: "toxazoc@mailinator.com", age: "42" },
-//   { firstName: "Brooke", lastName: "Mcconnell", email: "vyry@mailinator.com", age: "56" },
-//   { firstName: "Christen", lastName: "Haney", email: "pagevolal@mailinator.com", age: "23" },
-//   { firstName: "Tate", lastName: "Vega", email: "dycubo@mailinator.com", age: "87" },
-//   { firstName: "Amber", lastName: "Brady", email: "vyconixy@mailinator.com", age: "78" },
-//   { firstName: "Philip", lastName: "Whitfield", email: "velyfi@mailinator.com", age: "22" },
-//   { firstName: "Kitra", lastName: "Hammond", email: "fiwiloqu@mailinator.com", age: "35" },
-//   { firstName: "Charity", lastName: "Mathews", email: "fubigonero@mailinator.com", age: "63" }
-// ];
-
-// const csvReport = {
-//   data: data,
-//   headers: headers,
-//   filename: 'Clue_Mediator_Report.csv'
-// };
 
 const layout = {
   labelCol: {
@@ -72,7 +43,9 @@ const VIFORM = () => {
   const [dummyArr, setDumArr] = useState([]);
   const [customerArr, setCustomerArr] = useState([]);
   const [custInvNo, setCustInvNo] = useState("");
+  const [regInvNo, setRegInvNo] = useState("");
   const [lpnInput, setLpnInput] = useState(true);
+
 
   useEffect(() => {
     if(invData.length == 0 || warehouseData.length == 0){
@@ -138,7 +111,7 @@ const VIFORM = () => {
   };
 
   const onHandleChange = e => {
-    console.log("OnChange",e)
+    // console.log("OnChange",e)
     setCustInvNo(e.target.value)
     setValue(e.target.value);
   };
@@ -151,23 +124,29 @@ const VIFORM = () => {
   //   console.log("*****CustInvNo", custInvNo)
   // },[custInvNo])
 
+  // useEffect(() => {
+  //   console.log("*****RegionalInvNo", custInvNo)
+  // },[regInvNo])
+
 
   function resetValues(){
     // lpnVal = "";
-    values.InvoiceNumber="";
     setLpnVal(" ");
   }
  
 
   const onFinish = (values) => {
+    setCustInvNo(values.InvoiceNumber)
+    setRegInvNo(values.regionalInvoiceNumber)
+    // console.log("--------------Values-------------",values)
     setLpnVal("")
     if( lpnArray.length == qtyVal)
     {
-      console.log("True",values)
+      // console.log("True",values)
       setLpnInput(false)
       setDispRegionalDownBtn(false);  
       if(values.radioGroup == undefined || values.radioGroup == 1){
-
+        setRegInvNo(values.regionalInvoiceNumber)
         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
            method:"POST",
            headers:{'Content-Type': 'application/json'},
@@ -186,7 +165,7 @@ const VIFORM = () => {
           })
        }).then(res => res.json())
          .then(data  => {
-           console.log("Regional--Res",data)
+          //  console.log("Regional--Res",data)
             if(data.body.statuscode && data.body.statuscode == 200){
               setDispProcessBtn(true)
               setDispRegionalDownBtn(true)  
@@ -195,6 +174,7 @@ const VIFORM = () => {
          .catch(err=> console.log(err));
       }
       else {
+        setCustInvNo(values.InvoiceNumber)
         fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
            method:"POST",
            headers:{'Content-Type': 'application/json'},
@@ -211,7 +191,7 @@ const VIFORM = () => {
           })
        }).then(res => res.json())
          .then(data  => {
-          console.log("Customer--Res",data)
+          // console.log("Customer--Res",data)
             if(data.body.statuscode && data.body.statuscode == 200){
               handleCustDownload()
                 setDispSaveBtn(true)
@@ -221,7 +201,7 @@ const VIFORM = () => {
       }
     }
     else{
-      console.log("Array-------Update----------Area",lpnVal)
+      // console.log("Array-------Update----------Area",lpnVal)
       let r = lpnArray.concat(lpnVal);
       setLpnArray(r)
       resetValues()
@@ -231,16 +211,16 @@ const VIFORM = () => {
   };
 
   function handleCustDownload(){
-    console.log("Download CustBtn Clicked")
+    // console.log("Download CustBtn Clicked")
     
     var customerDownloadReqData = {
       "body": {
         "type": "DOWNLOAD",
         "EMAIL": "muneeshkumar.a@tvslsl.com",
-        "invoiceno": "GJ/KAD/DC2156"
+        "invoiceno": custInvNo ? custInvNo :  "GJ/KAD/DC2156"
       }
     }
-    console.log("ReqData-----Cust",customerDownloadReqData)
+    // console.log("ReqData-----Cust",customerDownloadReqData)
 
     
     axios
@@ -249,23 +229,22 @@ const VIFORM = () => {
         customerDownloadReqData
       )
       .then((res) => {
-        console.log("##Download--Cust---Res",res.data)
+        // console.log("##Download--Cust---Res",res.data)
         let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
         setDispDownBtn(true)
-        console.log("TempData",tempDownData)
+        // console.log("TempData",tempDownData)
         setCustomerArr(tempDownData)
       })
       .catch(err=> console.log(err));
   }
   
   function handleDownRegional(){
-    console.log("Download Btn Clicked")
     setDispRegionalDownBtn(false);  
     var regionalDownloadReqData = {
       "body": {
         "type": "DOWNLOAD",
         "EMAIL": "muneeshkumar.a@tvslsl.com",
-        "invoiceno": "GJ/KAD/DC2156"   
+        "invoiceno": regInvNo ? regInvNo : "GJ/KAD/DC2156"   
       }
     }
     
@@ -275,11 +254,11 @@ const VIFORM = () => {
         regionalDownloadReqData
       )
       .then((res) => {
-        console.log("##Download-----Res",res.data)
+        // console.log("##Download-----Res",res.data)
         let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
         setDispProcessBtn(true)
         setDispDownloadBtn(true)
-        console.log("TempData",tempDownData)
+        // console.log("TempData",tempDownData)
         setDumArr(tempDownData)
       })
       .catch(err=> console.log(err));
