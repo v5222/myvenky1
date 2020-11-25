@@ -17,6 +17,7 @@ import history from "utils/history";
 // import 'sanitize.css/sanitize.css';
 import "antd/dist/antd.css";
 import "./root.scss";
+import "ant-design-pro/dist/ant-design-pro.css";
 // Import root app
 import App from "containers/App";
 

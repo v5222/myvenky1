@@ -4,7 +4,7 @@ import Filters from "./Filters";
 import Myview from "./MyView/Myview";
 import Table from "./Table";
 import moment from "moment";
-import  message  from 'antd/lib/message';
+import message from "antd/lib/message";
 import { useQuery, useMutation, useQueryCache } from "react-query";
 import { apiURLDwm, dwmBody } from "containers/App/services";
 import {
@@ -40,8 +40,8 @@ function DwmUsageReport() {
   const [filtersData, setFiltersData] = useState({});
   const [summary, setSummary] = useState([]);
   const [maxDate, setMaxDate] = useState(moment());
-  const [options,setOptions] = useState({
-        
+  const [graph, setGraph] = useState([]);
+  const [options, setOptions] = useState({
     type: "INSIGHT",
     ecode: "9999",
     filterdate: "FTD",
@@ -49,9 +49,8 @@ function DwmUsageReport() {
     edate: "2020-08-11",
     customer: "-1",
     capabilitycode: "-1",
-    owner: "-1"
-  
- })
+    owner: "-1",
+  });
   // //Data filter hook
   // useEffect(() => {
   //   console.log(data);
@@ -72,7 +71,7 @@ function DwmUsageReport() {
   // }, [isLoading]);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-   myHeaders.append("Accept", "application/json");
+  myHeaders.append("Accept", "application/json");
   function getFilters(array, option, callback) {
     getFiltersdata(array, option, callback);
   }
@@ -80,33 +79,34 @@ function DwmUsageReport() {
     setFiltersData(result);
     // console.log(result);
   };
-  useEffect(()=>{
-
+  useEffect(() => {
     let option = {
       method: "POST",
-       body: JSON.stringify({body:options}),
-     headers: myHeaders,
+      body: JSON.stringify({ body: options }),
+      headers: myHeaders,
       redirect: "follow",
-    }
-    setLoading(true)
-  fetch(apiURLDwm,option)
-  .then(res=>res.json())
-  .then(datas=>{
-    console.log(datas)
-    setLoading(false)
-    let {Output,response} = datas.body.bodymsg
+    };
+    setLoading(true);
+    fetch(apiURLDwm, option)
+      .then((res) => res.json())
+      .then((datas) => {
+        console.log(datas);
+        setLoading(false);
+        let { Output, response, graph } = datas.body.bodymsg;
 
-    setTableData(response)
-    setSummary(Output)
-    setMaxDate(maxRefresDate(response))
-  })
-  .catch(err=>{
-    setLoading(false)
-    message.error('something went wrong ,please try again');
-  })
- 
-  getFilters( options, callbackFunction);
-  },[options])
+        setTableData(response);
+        setSummary(Output);
+        setGraph(graph);
+        setMaxDate(maxRefresDate(response));
+      })
+      .catch((err) => {
+        setLoading(false);
+        message.error("something went wrong ,please try again");
+      });
+
+    getFilters(options, callbackFunction);
+  }, [options]);
+
   // useEffect(() => {
   //   if (!isLoading) {
   //     setSummary(getSummary(option.dataArr, option.filters));
@@ -125,19 +125,19 @@ function DwmUsageReport() {
         setOption={setOptions}
         maxDate={maxDate}
       />
-      <Myview loading={loading} data={summary} />
-       <div className={styles.csvwrapper}> 
-      <CsvDownload
-            data={tableData}
-            filename="data.csv"
-            className={styles.csvbtn}
-          >
-            <span className="wrapper">
-              <DownloadOutlined />
-            </span>
-            Download Report
-          </CsvDownload>
-        </div>
+      <Myview loading={loading} data={summary} graph={graph} />
+      <div className={styles.csvwrapper}>
+        <CsvDownload
+          data={tableData}
+          filename="data.csv"
+          className={styles.csvbtn}
+        >
+          <span className="wrapper">
+            <DownloadOutlined />
+          </span>
+          Download Report
+        </CsvDownload>
+      </div>
       <Table tableData={tableData} column={columnData} loading={loading} />
     </div>
   );

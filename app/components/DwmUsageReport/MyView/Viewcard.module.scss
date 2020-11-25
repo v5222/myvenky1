@@ -8,7 +8,7 @@
   border-radius: 10px;
   background-color: #c1e3ff;
   // height: 235.97px;
-  width: 16%;
+  width: 32%;
 
   // width: calc(95% / 3);
   .title {
@@ -35,7 +35,7 @@
   }
   .reason {
     color: #004178;
-    margin: 15px 0 0 60px;
+    text-align: center;
     font-size: 16px;
     font-weight: 600;
     line-height: 22px;
@@ -49,9 +49,9 @@
     text-align: center;
   }
   .graph {
-    height: 35px;
-    width: 105px;
+    padding: 10px;
     margin: 10px auto;
+    width: 100%;
     // margin-top: 10px;
     // margin-left: 40px;
   }
@@ -115,14 +115,14 @@
       font-size: 11px;
       font-weight: bold;
       text-align: center;
-  
+
       line-height: 14px;
       // margin-left: 15px;
       height: 20%;
     }
     .reason {
       color: #004178;
-       margin: 0 auto;
+      margin: 0 auto;
       font-size: 16px;
       font-weight: 600;
       line-height: 22px;

@@ -29,6 +29,7 @@ import InvoiceUpload from "components/Einvoiceupload";
 import DatePicker from "antd/lib/date-picker";
 import { format } from "date-fns";
 import moment from "moment";
+import ClearCache from "react-clear-cache";
 
 const { RangePicker } = DatePicker;
 const urls =
@@ -113,22 +114,17 @@ class Einvoice extends React.Component {
       (this.state.selectDatefrom && this.state.selectDateto) ||
       (this.state.invoicenofrom && this.state.invoicenoto) ||
       this.state.invoicenofrom ||
-      this.state.invoicenoto ||
-      true
+      this.state.invoicenoto
     ) {
       let options = {
         method: "POST",
         body: JSON.stringify({
           body: {
             type: "INVOICEPRINT1",
-            invoicenofrom: "TNCD20000151",
-            invoicenoto: "TNCD20000151",
-            invoicenofromdate: "2020-10-01",
-            invoicenotodate: "2020-11-20",
-            // invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
-            // invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
-            // invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
-            // invoicenotodate: this.state.selectDateto || dt,
+            invoicenofrom: this.state.invoicenofrom || this.state.invoicenoto,
+            invoicenoto: this.state.invoicenoto || this.state.invoicenofrom,
+            invoicenofromdate: this.state.selectDatefrom || "2020-10-01",
+            invoicenotodate: this.state.selectDateto || dt,
           },
         }),
       };
@@ -151,6 +147,11 @@ class Einvoice extends React.Component {
             });
           } else {
             this.noResult();
+            this.setState({
+              dataItems: [],
+            });
+            this.setState({ isActive: true, search: true, loading: false });
+            this.refresh();
           }
         });
     } else {
@@ -158,9 +159,19 @@ class Einvoice extends React.Component {
     }
   };
   //Use this refresh wherever needed
-  // handleRefresh = () => {
-  //   window.location.reload(false);
-  // };
+  handleRefresh = () => {
+    window.location.reload(false);
+  };
+
+  refresh = () => {
+    setTimeout(function() {
+      window.location.reload(false);
+    }, 1000);
+  };
+
+  handleItemUpdateSuccess() {
+    history.push("app/list");
+  }
 
   noResult = () => {
     message.error(
@@ -172,12 +183,11 @@ class Einvoice extends React.Component {
           fontSize: "18px",
         },
       },
-      5
+      10
     );
-
-    // );
     this.setState({ loading: false });
   };
+
   popUp = () => {
     message.info({
       content: "Please select date range or invoice Range",
@@ -479,7 +489,6 @@ class Einvoice extends React.Component {
 
             <Row gutter={[20, 16]} />
           </section>
-          {console.log(this.state)}
           {this.state.loading ? (
             <div
               style={{

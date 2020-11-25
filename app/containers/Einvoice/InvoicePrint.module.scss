@@ -76,7 +76,7 @@
   border: 1px solid grey;
   border-radius: 10px;
   line-height: 20px;
-  margin-right: 10px;
+  margin-right: 3px;
 
   .asdf {
     padding-bottom: 38px;
@@ -112,139 +112,136 @@
   border: 1px solid grey;
   border-radius: 10px;
 }
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
+
 // Print Responsive
 
-// @media only print {
-//   .reportType {
-//     font-size: 10px;
-//     font-weight: bold;
+@media only print {
+  @page {
+    // margin: -15mm;
+  }
+  .reportType {
+    font-size: 10px;
+    font-weight: bold;
 
-//     color: black;
-//     text-align: end;
-//     margin-right: 200px;
-//   }
-//   .container {
-//     display: flex;
-//     justify-content: space-around;
-//     padding: 6px 10px 0 10px;
-//     border: 1px solid grey;
-//     border-radius: 8px;
-//     // width: 670px;
-//     width: 115%;
-//     margin-left: -40px;
+    color: black;
+    text-align: end;
+    margin-right: 200px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 10px 0 10px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    width: 100%;
 
-//     .logo {
-//       align-self: flex-start;
-//       margin: -10px -24px 0 0px;
-//     }
+    .logo {
+      align-self: flex-start;
+      margin: 0px -24px 0 0px;
+    }
 
-//     .companyDetails {
-//       width: 50%;
-//       margin-left: 30px;
-//       line-height: 12px;
-//       // padding: 5px -15px;
+    .companyDetails {
+      width: 50%;
+      margin-left: 30px;
+      line-height: 12px;
+      // padding: 5px -15px;
 
-//       .dispatch {
-//         // margin-top: 5px;
-//         font-size: 9px;
-//         font-weight: bolder;
-//         margin-bottom: 1px;
-//         text-transform: uppercase;
-//         color: "black";
-//       }
-//       .companyName {
-//         font-size: 9px;
-//         font-weight: bold;
-//         color: black;
-//         // margin-left: 5px;
-//       }
-//       .companyAddr {
-//         margin-top: 2px;
-//         font-size: 9px;
-//         // color: black;
-//       }
-//     }
-//   }
+      .dispatch {
+        // margin-top: 5px;
+        font-size: 9px;
+        font-weight: bolder;
+        margin-bottom: 1px;
+        text-transform: uppercase;
+        color: "black";
+      }
+      .companyName {
+        font-size: 9px;
+        font-weight: bold;
+        color: black;
+        // margin-left: 5px;
+      }
+      .companyAddr {
+        margin-top: 2px;
+        font-size: 9px;
+        // color: black;
+      }
+    }
+  }
 
-//   .supplytype {
-//     font-size: 9px;
-//   }
-//   .invoicetype {
-//     font-size: 9px;
-//     color: black;
-//     text-align: center;
-//     margin-right: 185px;
-//     transform: translateX(100px);
-//     font-weight: 600;
-//   }
+  .supplytype {
+    font-size: 9px;
+  }
+  .invoicetype {
+    font-size: 9px;
+    color: black;
+    text-align: center;
+    margin-right: 185px;
+    transform: translateX(100px);
+    font-weight: 600;
+  }
 
-//   .invoiceNo {
-//     font-size: 9px;
+  .invoiceNo {
+    font-size: 9px;
 
-//     span {
-//       font-weight: bolder;
-//       font-size: 9px;
-//     }
-//   }
-//   .invoiceNo1 {
-//     text-align: right;
-//     font-size: 9px;
-//     span {
-//       font-weight: bolder;
-//       font-size: 9px;
-//     }
-//   }
+    span {
+      font-weight: bolder;
+      font-size: 9px;
+    }
+  }
+  .invoiceNo1 {
+    text-align: right;
+    font-size: 9px;
+    span {
+      font-weight: bolder;
+      font-size: 9px;
+    }
+  }
 
-//   .subcontainer {
-//     padding: 10px 0 2px 30px;
-//     border: 1px solid grey;
-//     border-radius: 10px;
-//     line-height: 14px;
-//     margin-left: -40px;
+  .subcontainer {
+    padding: 10px 0 2px 30px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    line-height: 14px;
+    margin: 0px;
 
-//     // .asdf{
-//     //   padding-bottom: 28px;
-//     // }
+    // .asdf{
+    //   padding-bottom: 28px;
+    // }
 
-//     .subheading {
-//       font-size: 9px;
-//       font-weight: 600;
-//     }
-//     .subheading1 {
-//       font-size: 8px;
-//     }
-//   }
-//   .subtabletd {
-//     font-size: 8px;
-//   }
-//   .qrcode {
-//     align-self: center;
-//     margin-right: 10px;
-//     height: 155px;
-//     margin-top: -35px;
-//   }
-//   .qr_details {
-//     width: 100px;
-//     font-size: 7px;
-//     margin-right: 10px;
-//   }
+    .subheading {
+      font-size: 9px;
+      font-weight: 600;
+    }
+    .subheading1 {
+      font-size: 8px;
+    }
+  }
+  .subtabletd {
+    font-size: 8px;
+  }
+  .qrcode {
+    align-self: center;
+    margin-right: 10px;
+    height: 155px;
+    margin-top: -35px;
+  }
+  .qr_details {
+    width: 100px;
+    font-size: 7px;
+    margin-right: 10px;
+  }
 
-//   .subcontainer1 {
-//     padding: 0 0 8px 0px;
-//     line-height: 10px;
+  .subcontainer1 {
+    padding: 0 0 8px 0px;
+    line-height: 10px;
 
-//     border: 1px solid grey;
-//     border-radius: 10px;
-//   }
-//   .subtabletd {
-//     padding: 2px;
-//   }
-//   .pagebreak {
-//     page-break-after: always;
-//   }
-// }
+    border: 1px solid grey;
+    border-radius: 10px;
+  }
+  .subtabletd {
+    padding: 2px;
+  }
+  .pagebreak {
+    page-break-after: always;
+  }
+}

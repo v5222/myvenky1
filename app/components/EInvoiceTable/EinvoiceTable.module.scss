@@ -62,10 +62,13 @@
 }
 
 @media only print {
+  @page {
+  }
   .subcontainer_2 {
     margin-top: 20px;
     border: 1px solid black;
     border-radius: 10px;
+    page-break-inside: avoid;
     .wrapper_1 {
       display: flex;
       &:not(:last-child) {

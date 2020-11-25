@@ -19,6 +19,9 @@
 }
 
 @media only print {
+  @page {
+    margin: 0;
+  }
   .container {
     background-color: white;
     padding: auto;
