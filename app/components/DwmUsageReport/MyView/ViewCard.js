@@ -48,7 +48,7 @@ function ViewCard({ title, total, actual, comments, graphData }) {
         )}
         <div className={styles.graph}>
           {/* <img src={graph} /> */}
-          <MiniBar height={70} data={visitData} />
+          <MiniBar height={150} data={visitData} />
         </div>
       </div>
 
