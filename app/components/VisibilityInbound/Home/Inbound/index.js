@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select, Radio, Row, Col } from 'antd';
-import {apiurlsi} from 'containers/VisibilityInbound/service';
+import { Form, Input, Button, Select, Radio, Row, Col } from "antd";
+import { apiurlsi } from "containers/VisibilityInbound/service";
 import axios from "axios";
 import { now, values } from "lodash";
 import CsvDownload from 'react-json-to-csv'
@@ -24,8 +24,6 @@ const tailLayout = {
 
 let arrCpy = [];
 
-
-
 const VIFORM = () => {
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
@@ -47,29 +45,28 @@ const VIFORM = () => {
   const [regInvNo, setRegInvNo] = useState("");
   const [lpnInput, setLpnInput] = useState(true);
 
-
   useEffect(() => {
-    if(invData.length == 0 || warehouseData.length == 0){
-      handleDropDownVal()
+    if (invData.length == 0 || warehouseData.length == 0) {
+      handleDropDownVal();
     }
-  })
+  });
 
-  function handleDropDownVal(){
+  function handleDropDownVal() {
     // setIniForm("Show")
     values.radioGroup == 2;
     let reqObj = {
-      body : {
-        type : "GETINVOICE",
-        email : "Muneeshkumar.a@tvslsl.com",
-        invoice : "GJ/KAD/DC2156"
-      }
+      body: {
+        type: "GETINVOICE",
+        email: "Muneeshkumar.a@tvslsl.com",
+        invoice: "GJ/KAD/DC2156",
+      },
     };
 
     let reqWhObj = {
-      body : {
-        type : "GETWH",
-        email: "Muneeshkumar.a@tvslsl.com"
-      }
+      body: {
+        type: "GETWH",
+        email: "Muneeshkumar.a@tvslsl.com",
+      },
     };
 
     axios
@@ -85,7 +82,7 @@ const VIFORM = () => {
         }
       });
 
-      axios
+    axios
       .post(
         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
         reqWhObj
@@ -99,21 +96,21 @@ const VIFORM = () => {
       });
   }
 
-  function handleapidata(apidata){
+  function handleapidata(apidata) {
     setInvData(apidata);
   }
 
-  function handleapiwarehousedata(apidata){
+  function handleapiwarehousedata(apidata) {
     setWareHouseData(apidata);
   }
- 
-  const onChange = e => {
+
+  const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const onHandleChange = e => {
+  const onHandleChange = (e) => {
     // console.log("OnChange",e)
-    setCustInvNo(e.target.value)
+    setCustInvNo(e.target.value);
     setValue(e.target.value);
   };
 
@@ -129,91 +126,93 @@ const VIFORM = () => {
   //   console.log("*****RegionalInvNo", custInvNo)
   // },[regInvNo])
 
-
-  function resetValues(){
+  function resetValues() {
     // lpnVal = "";
     setLpnVal(" ");
   }
- 
 
   const onFinish = (values) => {
-    setCustInvNo(values.InvoiceNumber)
-    setRegInvNo(values.regionalInvoiceNumber)
+    setCustInvNo(values.InvoiceNumber);
+    setRegInvNo(values.regionalInvoiceNumber);
     // console.log("--------------Values-------------",values)
-    setLpnVal("")
-    if( lpnArray.length == qtyVal)
-    {
+    setLpnVal("");
+    if (lpnArray.length == qtyVal) {
       // console.log("True",values)
-      setLpnInput(false)
-      setDispRegionalDownBtn(false);  
-      if(values.radioGroup == undefined || values.radioGroup == 1){
-        setRegInvNo(values.regionalInvoiceNumber)
-        fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
-           method:"POST",
-           headers:{'Content-Type': 'application/json'},
-           body:JSON.stringify({
-                "body": {
-                "type": "SAVE",
-                "documentno": values.regionalInvoiceNumber,
-                "warehousename": values.regionalWareHouse,
-                "transportername": values.regionalTransporterName,
-                "shippingio": values.regionalShippingIoDetail,
-                "lpn": lpnArray,
-                "ewaybillno": values.regionalEwayBill,
-                "flag":  "REGIONAL",
-                "qty": values.regionalQty ? values.regionalQty : "",
-                }
+      setLpnInput(false);
+      setDispRegionalDownBtn(false);
+      if (values.radioGroup == undefined || values.radioGroup == 1) {
+        setRegInvNo(values.regionalInvoiceNumber);
+        fetch(
+          "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              body: {
+                type: "SAVE",
+                documentno: values.regionalInvoiceNumber,
+                warehousename: values.regionalWareHouse,
+                transportername: values.regionalTransporterName,
+                shippingio: values.regionalShippingIoDetail,
+                lpn: lpnArray,
+                ewaybillno: values.regionalEwayBill,
+                flag: "REGIONAL",
+                qty: values.regionalQty ? values.regionalQty : "",
+              },
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            //  console.log("Regional--Res",data)
+            if (data.body.statuscode && data.body.statuscode == 200) {
+              setDispProcessBtn(true);
+              setDispRegionalDownBtn(true);
+            }
           })
-       }).then(res => res.json())
-         .then(data  => {
-          //  console.log("Regional--Res",data)
-            if(data.body.statuscode && data.body.statuscode == 200){
-              setDispProcessBtn(true)
-              setDispRegionalDownBtn(true)  
-            }        
+          .catch((err) => console.log(err));
+      } else {
+        setCustInvNo(values.InvoiceNumber);
+        fetch(
+          "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              body: {
+                type: "SAVE",
+                documentno: values.InvoiceNumber,
+                warehousename: values.wareHouse,
+                transportername: values.transporterName,
+                shippingio: values.shippingIoDetail,
+                ewaybillno: values.ewayBill,
+                flag: "CUSTOMER",
+              },
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log("Customer--Res",data)
+            if (data.body.statuscode && data.body.statuscode == 200) {
+              handleCustDownload();
+              setDispSaveBtn(true);
+            }
           })
-         .catch(err=> console.log(err));
+          .catch((err) => console.log(err));
       }
-      else {
-        setCustInvNo(values.InvoiceNumber)
-        fetch("https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",{
-           method:"POST",
-           headers:{'Content-Type': 'application/json'},
-           body:JSON.stringify({
-                "body": {
-                "type": "SAVE",
-                "documentno": values.InvoiceNumber,
-                "warehousename": values.wareHouse,
-                "transportername": values.transporterName,
-                "shippingio": values.shippingIoDetail,
-                "ewaybillno": values.ewayBill,
-                "flag": "CUSTOMER",
-                }
-          })
-       }).then(res => res.json())
-         .then(data  => {
-          // console.log("Customer--Res",data)
-            if(data.body.statuscode && data.body.statuscode == 200){
-              handleCustDownload()
-                setDispSaveBtn(true)
-            }        
-          })
-         .catch(err=> console.log(err));
-      }
-    }
-    else{
+    } else {
       // console.log("Array-------Update----------Area",lpnVal)
       let r = lpnArray.concat(lpnVal);
-      setLpnArray(r)
-      resetValues()
+      setLpnArray(r);
+      resetValues();
       // setScannedVal((scannedVal) => scannedVal + 1)
     }
-    
   };
 
-  function handleCustDownload(){
+  function handleCustDownload() {
     // console.log("Download CustBtn Clicked")
-    
+
     var customerDownloadReqData = {
       "body": {
         "type": "DOWNLOAD",
@@ -229,24 +228,24 @@ const VIFORM = () => {
       )
       .then((res) => {
         // console.log("##Download--Cust---Res",res.data)
-        let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
-        setDispDownBtn(true)
+        let tempDownData = res.data ? res.data.body.bodymsg : "no Data";
+        setDispDownBtn(true);
         // console.log("TempData",tempDownData)
-        setCustomerArr(tempDownData)
+        setCustomerArr(tempDownData);
       })
-      .catch(err=> console.log(err));
+      .catch((err) => console.log(err));
   }
-  
-  function handleDownRegional(){
-    setDispRegionalDownBtn(false);  
+
+  function handleDownRegional() {
+    setDispRegionalDownBtn(false);
     var regionalDownloadReqData = {
-      "body": {
-        "type": "DOWNLOAD",
-        "EMAIL": "muneeshkumar.a@tvslsl.com",
-        "invoiceno": regInvNo ? regInvNo : "GJ/KAD/DC2156"   
-      }
-    }
-    
+      body: {
+        type: "DOWNLOAD",
+        EMAIL: "muneeshkumar.a@tvslsl.com",
+        invoiceno: regInvNo ? regInvNo : "GJ/KAD/DC2156",
+      },
+    };
+
     axios
       .post(
         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
@@ -254,22 +253,22 @@ const VIFORM = () => {
       )
       .then((res) => {
         // console.log("##Download-----Res",res.data)
-        let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
-        setDispProcessBtn(true)
-        setDispDownloadBtn(true)
+        let tempDownData = res.data ? res.data.body.bodymsg : "no Data";
+        setDispProcessBtn(true);
+        setDispDownloadBtn(true);
         // console.log("TempData",tempDownData)
-        setDumArr(tempDownData)
+        setDumArr(tempDownData);
       })
-      .catch(err=> console.log(err));
+      .catch((err) => console.log(err));
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
-
   return (
-    <Form autoComplete="off"
+    <Form
+      autoComplete="off"
       {...layout}
       name="basic"
       initialValues={{
@@ -287,39 +286,54 @@ const VIFORM = () => {
       </Radio.Group>
       {/* Customer */}
       </Form.Item>
-    {(value == 2 ) ? 
-    (
-      <>
-          <Form.Item name="InvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
-                    allowClear>
-                {invData.length > 0 &&
-                    invData.map((val, index) => {
-                      return (
-                        <>
-                          <Option value={val.documentno} key={index}>
-                            {val.documentno}
-                          </Option>
-                        </>
-                      );
-                    })}
-              </Select>
+      {value == 2 ? (
+        <>
+          <Form.Item
+            name="InvoiceNumber"
+            label="Invoice Number"
+            rules={[{ required: true }]}
+          >
+            <Select
+              defaultValue="Select"
+              style={{ width: 200 }}
+              onChange={onHandleChange}
+              allowClear
+            >
+              {invData.length > 0 &&
+                invData.map((val, index) => {
+                  return (
+                    <>
+                      <Option value={val.documentno} key={index}>
+                        {val.documentno}
+                      </Option>
+                    </>
+                  );
+                })}
+            </Select>
           </Form.Item>
-          
-          <Form.Item name="wareHouse" label="Warehouse" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
-                    allowClear>
-                    {warehouseData.length > 0 &&
-                    warehouseData.map((val, index) => {
-                      return (
-                        <>
-                          <Option value={val.name} key={index}>
-                            {val.name}
-                          </Option>
-                        </>
-                      );
-                    })}
-              </Select>
+
+          <Form.Item
+            name="wareHouse"
+            label="Warehouse"
+            rules={[{ required: true }]}
+          >
+            <Select
+              defaultValue="Select"
+              style={{ width: 200 }}
+              onChange={onHandleChange}
+              allowClear
+            >
+              {warehouseData.length > 0 &&
+                warehouseData.map((val, index) => {
+                  return (
+                    <>
+                      <Option value={val.name} key={index}>
+                        {val.name}
+                      </Option>
+                    </>
+                  );
+                })}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -328,11 +342,11 @@ const VIFORM = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter Shipping IO Detail!',
+                message: "Please enter Shipping IO Detail!",
               },
             ]}
           >
-            <Input/>
+            <Input />
           </Form.Item>
           <Form.Item
             label="Transporter Name"
@@ -340,11 +354,11 @@ const VIFORM = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter Transporter Name!',
+                message: "Please enter Transporter Name!",
               },
             ]}
           >
-            <Input/>
+            <Input />
           </Form.Item>
           <Form.Item
             label="EWay Bill"
@@ -352,14 +366,14 @@ const VIFORM = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter EWay Bill!',
+                message: "Please enter EWay Bill!",
               },
             ]}
           >
-            <Input/>
+            <Input />
           </Form.Item>
           <Form.Item {...tailLayout}>
-              {dispSaveBtn === false ? 
+            {dispSaveBtn === false ? 
               <Button type="primary" htmlType="submit" size="large">
                 Save
               </Button> : ""}
