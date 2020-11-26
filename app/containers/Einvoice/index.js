@@ -453,7 +453,7 @@ class Einvoice extends React.Component {
                   Print
                 </div>
 
-                {!isActive && (
+                {isActive && (
                   <ReactToPrint
                     bodyClass={styles.reactPrintContent}
                     documentTitle="Invoice"
