@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Select } from 'antd';
 import axios from "axios";
 import CsvDownload from 'react-json-to-csv'
 
-const layout = {
+const layout = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   labelCol: {
     span: 8,
   },
@@ -20,8 +20,6 @@ const tailLayout = {
 };
 
 
-
-
 const VisibInboundDownloadForm = () => {
   console.log("Mounted")
   const [value, setValue] = useState(1);
@@ -29,6 +27,7 @@ const VisibInboundDownloadForm = () => {
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [btnDispCss, setBtnDispCss] = useState("none");
   const [downArr, setDownArr] = useState([]);
+  const [errMsg, setErrMsg] = useState(false)
 
   useEffect(() => {
     if(invData.length == 0 ){
@@ -85,7 +84,7 @@ console.log("DownladBtn")
         "body": {
           "type": "DOWNLOAD",
           "EMAIL": "muneeshkumar.a@tvslsl.com",
-          "invoiceno": invNo ? invNo :  "GJ/KAD/DC2156"
+          "invoiceno": invNo 
         }
       }
       
@@ -95,10 +94,21 @@ console.log("DownladBtn")
           downloadReqData
         )
         .then((res) => {
-        //   console.log("##Download--Cust---Res",res.data)
-          let tempDownData = res.data ? res.data.body.bodymsg : "no Data"
-          setDownArr(tempDownData)
-          setBtnDispCss("block")
+          console.log("##Download--Cust---Res",res)
+          let tempDownData = res.data;
+          console.log("DDDDDDDDDDD",res.data.body.bodymsg)
+          if(res.data.body.bodymsg == '"no data found"')
+          {
+            console.log("No Data Found")
+            setErrMsg(true)
+            setBtnDispCss("none")
+          } 
+          else{
+            console.log("Found")
+            setDownArr(tempDownData)
+            setBtnDispCss("block")
+          }
+         
         })
         .catch(err=> console.log(err));
   }
@@ -123,7 +133,7 @@ console.log("DownladBtn")
     onFinishFailed={onFinishFailed}
   >
      <Form.Item name="InvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange} 
                     allowClear>
                 {invData.length > 0 &&
                     invData.map((val, index) => {
@@ -137,13 +147,16 @@ console.log("DownladBtn")
                     })}
               </Select>
           </Form.Item>
+          
   </Form>
+  {errMsg == false ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
+  
   <div style={{marginLeft:"35%" ,display: btnDispCss}}>
-      <CsvDownload  data={downArr}/>
+    <CsvDownload  data={downArr}/> 
   </div>
 
 </>
   );
 };
 
-export default VisibInboundDownloadForm;
+export default VisibInboundDownloadForm;                                                                                                                                                                                                                                          
