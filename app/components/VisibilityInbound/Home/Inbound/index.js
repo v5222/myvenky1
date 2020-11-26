@@ -4,7 +4,7 @@ import {apiurlsi} from 'containers/VisibilityInbound/service';
 import axios from "axios";
 import { now, values } from "lodash";
 import CsvDownload from 'react-json-to-csv'
-
+import VisibilityInboundDownload from  'components/VisibilityInboundDownload/index.js'
 
 const layout = {
   labelCol: {
@@ -14,6 +14,7 @@ const layout = {
     span: 16,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
     offset: 8,
@@ -220,8 +221,6 @@ const VIFORM = () => {
         "invoiceno": custInvNo ? custInvNo :  "GJ/KAD/DC2156"
       }
     }
-    // console.log("ReqData-----Cust",customerDownloadReqData)
-
     
     axios
       .post(
@@ -280,9 +279,11 @@ const VIFORM = () => {
       onFinishFailed={onFinishFailed}
     >
     <Form.Item name="radioGroup" label="Type">
+
       <Radio.Group onChange={onChange} value={value} defaultValue={1} id="radioBtnVal" >
           <Radio value={1} >Regional</Radio>
           <Radio value={2} >Customer</Radio>
+          <Radio value={3} >Download</Radio>
       </Radio.Group>
       {/* Customer */}
       </Form.Item>
@@ -362,11 +363,6 @@ const VIFORM = () => {
               <Button type="primary" htmlType="submit" size="large">
                 Save
               </Button> : ""}
-              
-              {dispDownBtn === true ? 
-                 <CsvDownload data={customerArr}/>
-                : ""
-            }
           </Form.Item>
 
           </>
@@ -466,17 +462,13 @@ const VIFORM = () => {
            </Button>
            : ""
          }
-         {
-           dispDownloadBtn === true ? 
-           <>
-           <CsvDownload data={dummyArr}/>
-         </> : ""
-         }
-           
        </Form.Item>
    </>   
       :"" } 
-
+      {
+        value === 3 ? 
+        <VisibilityInboundDownload/> : ""
+      }
     </Form>
   );
 };
