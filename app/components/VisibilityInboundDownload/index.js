@@ -26,10 +26,12 @@ const VisibInboundDownloadForm = () => {
   const [invData, setInvData] = useState([]);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [btnDispCss, setBtnDispCss] = useState("none");
+  const [dispSubmitBtn, setDispSubmitBtn] = useState("block");
   const [downArr, setDownArr] = useState([]);
   const [errMsg, setErrMsg] = useState(false)
 
   useEffect(() => {
+    console.log("Mounted")
     if(invData.length == 0 ){
       handleDropDownVal()
     }
@@ -41,7 +43,7 @@ const VisibInboundDownloadForm = () => {
       body : {
         type : "GETINVOICE",
         email : "Muneeshkumar.a@tvslsl.com",
-        invoice : "GJ/KAD/DC2156"
+
       }
     };
 
@@ -52,6 +54,7 @@ const VisibInboundDownloadForm = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
+          console.log("InvData",res)
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -63,6 +66,10 @@ const VisibInboundDownloadForm = () => {
 console.log("DownladBtn")
   }, [showDownloadBtn])
 
+  useEffect(() => {
+    console.log("DownArr",downArr)
+  },[downArr])
+
   function handleapidata(apidata){
     setInvData(apidata);
   }
@@ -72,9 +79,11 @@ console.log("DownladBtn")
   };
 
   const onHandleChange = e => {
+    setDispSubmitBtn("block")
+    setBtnDispCss("none")
       console.log("OnChange",e)
-      handleDownloadInvoice(e)
-    setValue(e.target.value);
+      // handleDownloadInvoice(e)
+      setValue(e.target.value);
   };
 
   function handleDownloadInvoice(invNo){
@@ -95,18 +104,21 @@ console.log("DownladBtn")
         )
         .then((res) => {
           console.log("##Download--Cust---Res",res)
-          let tempDownData = res.data;
+          let tempDownData = res.data.body.bodymsg;
           console.log("DDDDDDDDDDD",res.data.body.bodymsg)
-          if(res.data.body.bodymsg == '"no data found"')
+          if(res.data.body.statuscode == 201)
           {
             console.log("No Data Found")
             setErrMsg(true)
             setBtnDispCss("none")
           } 
           else{
-            console.log("Found")
+            let tempDownData = res.data.body.bodymsg
+            console.log("Found",res)
             setDownArr(tempDownData)
+            setDispSubmitBtn("none")
             setBtnDispCss("block")
+            setErrMsg(false)
           }
          
         })
@@ -115,6 +127,7 @@ console.log("DownladBtn")
 
   const onFinish = (values) => {
     console.log('Success:', values);
+    handleDownloadInvoice(values.InvoiceNumber)
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -133,7 +146,7 @@ console.log("DownladBtn")
     onFinishFailed={onFinishFailed}
   >
      <Form.Item name="InvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange} 
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
                 {invData.length > 0 &&
                     invData.map((val, index) => {
@@ -147,12 +160,21 @@ console.log("DownladBtn")
                     })}
               </Select>
           </Form.Item>
-          
+          <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
+                Submit
+              </Button> 
+          </Form.Item>         
   </Form>
-  {errMsg == false ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
+  {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
   
+
   <div style={{marginLeft:"35%" ,display: btnDispCss}}>
-    <CsvDownload  data={downArr}/> 
+    <CsvDownload data={downArr}/>
+    {/* <CsvDownload  
+    data={downArr}
+     filename="data.csv"
+    >Download CSV</CsvDownload> */}
   </div>
 
 </>

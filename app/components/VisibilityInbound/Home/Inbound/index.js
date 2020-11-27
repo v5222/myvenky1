@@ -27,7 +27,9 @@ let arrCpy = [];
 const VIFORM = () => {
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
+  const [custInvData, setCustInvData] = useState([]);
   const [warehouseData, setWareHouseData] = useState([]);
+  const [custWarehouseData, setCustWareHouseData] = useState([]);
   const [dispDownBtn, setDispDownBtn] = useState(false);
   const [dispRegionalDownBtn, setDispRegionalDownBtn] = useState(false);
   const [dispProcessBtn, setDispProcessBtn] = useState(false);
@@ -48,12 +50,34 @@ const VIFORM = () => {
   useEffect(() => {
     if (invData.length == 0 || warehouseData.length == 0) {
       handleDropDownVal();
+      handleCustDropDownVal();
     }
   });
 
+  function handleCustDropDownVal(){
+    let reqObj = {
+      body: {
+        type: "GETINVOICECUST",
+        email: "Muneeshkumar.a@tvslsl.com",
+      },
+    };
+
+    axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        reqObj
+      )
+      .then((res) => {
+        if (res.data.body.statuscode == 200) {
+          handleCustapidata(res.data.body.bodymsg);
+        } else {
+          console.log("Err");
+        }
+      });
+  }
+
   function handleDropDownVal() {
     // setIniForm("Show")
-    values.radioGroup == 2;
     let reqObj = {
       body: {
         type: "GETINVOICE",
@@ -98,6 +122,10 @@ const VIFORM = () => {
 
   function handleapidata(apidata) {
     setInvData(apidata);
+  }
+
+  function handleCustapidata(apidata){
+    setCustInvData(apidata);
   }
 
   function handleapiwarehousedata(apidata) {
@@ -299,8 +327,8 @@ const VIFORM = () => {
               onChange={onHandleChange}
               allowClear
             >
-              {invData.length > 0 &&
-                invData.map((val, index) => {
+              {custInvData.length > 0 &&
+                custInvData.map((val, index) => {
                   return (
                     <>
                       <Option value={val.documentno} key={index}>
