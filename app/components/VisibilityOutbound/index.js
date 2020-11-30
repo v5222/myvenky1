@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Select } from 'antd';
+import { Form, Input, Button, Checkbox, Select, Upload } from 'antd';
 import axios from "axios";
-import CsvDownload from 'react-json-to-csv'
+import CsvDownload from 'react-json-to-csv';
+import { UploadOutlined } from '@ant-design/icons';
 
 const layout = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   labelCol: {
@@ -20,7 +21,7 @@ const tailLayout = {
 };
 
 
-const VisibInboundDownloadForm = () => {
+const VisibilityOutbound = () => {
   console.log("Mounted")
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
@@ -41,9 +42,8 @@ const VisibInboundDownloadForm = () => {
     // setIniForm("Show")
     let reqObj = {
       body : {
-        type : "GETINVOICE",
+        type : "GETINVOICECUST",
         email : "Muneeshkumar.a@tvslsl.com",
-
       }
     };
 
@@ -77,6 +77,8 @@ console.log("DownladBtn")
   const onChange = e => {
     setValue(e.target.value);
   };
+
+  
 
   const onHandleChange = e => {
     setDispSubmitBtn("block")
@@ -145,7 +147,8 @@ console.log("DownladBtn")
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}
   >
-     <Form.Item name="InvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
+     
+          <Form.Item name="InvoiceNumberOne" label="Invoice Number 1" rules={[{ required: true }]}>
               <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
                 {invData.length > 0 &&
@@ -159,6 +162,54 @@ console.log("DownladBtn")
                       );
                     })}
               </Select>
+          </Form.Item>
+          <Form.Item name="InvoiceNumberTwo" label="Invoice Number 2" rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+                    allowClear>
+                {invData.length > 0 &&
+                    invData.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val.documentno} key={index}>
+                            {val.documentno}
+                          </Option>
+                        </>
+                      );
+                    })}
+              </Select>
+          </Form.Item>
+          <Form.Item name="InvoiceNumberThree" label="Invoice Number 3" rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+                    allowClear>
+                {invData.length > 0 &&
+                    invData.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val.documentno} key={index}>
+                            {val.documentno}
+                          </Option>
+                        </>
+                      );
+                    })}
+              </Select>
+          </Form.Item>
+          
+          <Form.Item
+         label="Text Box"
+         name="textBox"
+         rules={[
+           {
+             required: true,
+             message: 'Please enter Value!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item style={{marginLeft:"33%"}}>
+            <Upload >
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
           </Form.Item>
           <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
@@ -177,4 +228,4 @@ console.log("DownladBtn")
   );
 };
 
-export default VisibInboundDownloadForm;                                                                                                                                                                                                                                          
+export default VisibilityOutbound;                                                                                                                                                                                                                                          
