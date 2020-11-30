@@ -83,13 +83,23 @@ function VehicleTrackingSystem({ logout, user }) {
     },
   };
 
+  const options = {
+    headers: {
+      'user': 'Lynk', 
+      'Authorization': 'Bearer hoYNdvjFI20rCdc2nxpzaAGtvyXHOtk1dpHFh0Ha', 
+      'Content-Type': 'application/json'
+    }
+  };
+
+
   useEffect(() => {
     axios
       .post(
-        "https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts",
-        reqOpt
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/vehicletracking",
+        reqOpt,options
       )
       .then((res) => {
+        console.log("---------------",res.data)
         if (res.data.body.statuscode == 200) {
           handleapidata(res.data.body.bodymsg);
         } else {
