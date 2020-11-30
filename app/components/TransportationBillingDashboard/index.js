@@ -169,7 +169,7 @@ class TransportationDashboard extends React.Component {
     });
   };
 
-  handleFetch = (tab, value, bodyOption) => {
+  handleFetch = (bodyOption) => {
     let bodyoption = {
       method: "POST",
       body: JSON.stringify({
@@ -177,7 +177,6 @@ class TransportationDashboard extends React.Component {
         body: { ...bodyOption },
       }),
     };
-    console.log(value);
 
     fetch(apiURLTransportation, bodyoption)
       .then((res) => res.json())
@@ -186,7 +185,7 @@ class TransportationDashboard extends React.Component {
 
         if (data.body.statuscode === 200) {
           this.setState({
-            customerList1: data.body.bodymsg,
+            customerList1: [...this.state.customerList1, ...data.body.bodymsg],
             loading: false,
             isSave: true,
             spin: false,
@@ -196,7 +195,7 @@ class TransportationDashboard extends React.Component {
           this.setState({
             additionalChargeOutputList: [],
             customerList2: [],
-            customerList1: [],
+            customerList1: [...this.state.customerList1],
             loading: true,
             isSave: false,
             spin: false,
@@ -212,6 +211,8 @@ class TransportationDashboard extends React.Component {
   };
 
   handleSearch = () => {
+    let tempfrom = this.state.selectDatefrom;
+    let tempto = this.state.selectDatefrom;
     this.setState({
       loading: true,
       spin: true,
@@ -236,9 +237,38 @@ class TransportationDashboard extends React.Component {
         todate: this.state.selectDateto,
       },
     };
-    console.log("bodyoption", bodyOption);
+    console.log(moment(this.state.selectDateto).diff(moment(tempfrom), "days"));
+    while (tempto !== this.state.selectDateto) {
+      tempfrom = tempto;
+      if (moment(this.state.selectDateto).diff(moment(tempfrom), "days") > 5) {
+        tempto = moment(tempfrom)
+          .add(5, "days")
+          .format();
+        bodyOption = {
+          ...bodyOption,
+          search: {
+            ...bodyOption.search,
+            fromdate: moment(tempfrom).format("YYYY-MM-DD"),
+            todate: moment(tempto).format("YYYY-MM-DD"),
+          },
+        };
+        this.handleFetch(bodyOption);
+      } else {
+        tempto = this.state.selectDateto;
 
-    this.handleFetch(1, "1", bodyOption);
+        bodyOption = {
+          ...bodyOption,
+          search: {
+            ...bodyOption.search,
+            fromdate: moment(tempfrom).format("YYYY-MM-DD"),
+            todate: moment(tempto).format("YYYY-MM-DD"),
+          },
+        };
+        this.handleFetch(bodyOption);
+      }
+    }
+
+    // this.handleFetch(bodyOption);
     // this.handleFetch(2, "0", bodyOption);
   };
 
@@ -362,6 +392,9 @@ class TransportationDashboard extends React.Component {
         });
       });
   };
+  componentDidUpdate() {
+    console.log(this.state.customerList1, "from custlis");
+  }
 
   render() {
     const { invoiceProcess } = this.state;
@@ -461,7 +494,6 @@ class TransportationDashboard extends React.Component {
               <RangePicker
                 bordered={true}
                 allowClear={true}
-                // value={this.state.selectDate}
                 onChange={this.handleDateRange}
                 format="YYYY-MM-DD"
               />
@@ -469,12 +501,6 @@ class TransportationDashboard extends React.Component {
           </div>
           <div className={Filterstyles.container}>
             <div className={Filterstyles.wrapper} style={{ margin: "0 auto" }}>
-              {/* <div
-                className={Filterstyles.title}
-                style={{ color: "transparent" }}
-              >
-                Billing type
-              </div> */}
               <Button
                 type="primary"
                 icon={<SearchOutlined />}
@@ -559,49 +585,10 @@ class TransportationDashboard extends React.Component {
                                     <td style={{ width: "15%" }}>
                                       {i.invoiceamount}
                                     </td>
-                                    {/* {invoiceProcess && (
-                                      <>
-                                        <td style={{ width: "15%" }}>
-                                          {i.isinvoicegenerated == undefined ? (
-                                            <SyncOutlined spin />
-                                          ) : i.isinvoicegenerated ? (
-                                            i.invoicenumber
-                                          ) : (
-                                            "Error"
-                                          )}
-                                        </td>
-                                        <td style={{ width: "15%" }}>
-                                          {i.isinvoicegenerated == undefined ? (
-                                            <SyncOutlined spin />
-                                          ) : i.isinvoicegenerated ? (
-                                            <CheckCircleTwoTone twoToneColor="#52c41a" />
-                                          ) : (
-                                            <CloseCircleTwoTone twoToneColor="#bf1000" />
-                                          )}
-                                        </td>
-                                      </>
-                                    )} */}
                                   </tr>
                                 ))
                               )}
                             </tbody>
-                            {/* {this.state.isSave ? (
-                              <tfoot>
-                                <tr>
-                                  <td colSpan={5} />
-                                  <td>
-                                    <Button
-                                      type="primary"
-                                      icon={<SaveOutlined />}
-                                      style={{ marginTop: "10px" }}
-                                      onClick={this.processInvoice}
-                                    >
-                                      Processing Invoice
-                                    </Button>
-                                  </td>
-                                </tr>
-                              </tfoot>
-                            ) : null} */}
                           </table>
                         }
                       </div>
