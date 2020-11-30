@@ -21,7 +21,6 @@ const tailLayout = {
 
 
 const VisibInboundDownloadForm = () => {
-  console.log("Mounted")
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
@@ -31,11 +30,10 @@ const VisibInboundDownloadForm = () => {
   const [errMsg, setErrMsg] = useState(false)
 
   useEffect(() => {
-    console.log("Mounted")
     if(invData.length == 0 ){
       handleDropDownVal()
     }
-  })
+  },[])
 
   function handleDropDownVal(){
     // setIniForm("Show")
@@ -54,7 +52,7 @@ const VisibInboundDownloadForm = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("InvData",res)
+          // console.log("InvData",res)
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -62,13 +60,13 @@ const VisibInboundDownloadForm = () => {
       });
   }
 
-  useEffect(() => {
-console.log("DownladBtn")
-  }, [showDownloadBtn])
+//   useEffect(() => {
+// console.log("DownladBtn")
+//   }, [showDownloadBtn])
 
-  useEffect(() => {
-    console.log("DownArr",downArr)
-  },[downArr])
+  // useEffect(() => {
+  //   console.log("DownArr",downArr)
+  // },[downArr])
 
   function handleapidata(apidata){
     setInvData(apidata);
@@ -81,13 +79,13 @@ console.log("DownladBtn")
   const onHandleChange = e => {
     setDispSubmitBtn("block")
     setBtnDispCss("none")
-      console.log("OnChange",e)
+      // console.log("OnChange",e)
       // handleDownloadInvoice(e)
       setValue(e.target.value);
   };
 
   function handleDownloadInvoice(invNo){
-    console.log("InvNo",invNo)
+    // console.log("InvNo",invNo)
 
     var downloadReqData = {
         "body": {
@@ -103,9 +101,9 @@ console.log("DownladBtn")
           downloadReqData
         )
         .then((res) => {
-          console.log("##Download--Cust---Res",res)
+          // console.log("##Download--Cust---Res",res)
           let tempDownData = res.data.body.bodymsg;
-          console.log("DDDDDDDDDDD",res.data.body.bodymsg)
+          // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
           if(res.data.body.statuscode == 201)
           {
             console.log("No Data Found")
@@ -114,7 +112,7 @@ console.log("DownladBtn")
           } 
           else{
             let tempDownData = res.data.body.bodymsg
-            console.log("Found",res)
+            // console.log("Found",res)
             setDownArr(tempDownData)
             setDispSubmitBtn("none")
             setBtnDispCss("block")
@@ -126,7 +124,7 @@ console.log("DownladBtn")
   }
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     handleDownloadInvoice(values.InvoiceNumber)
   };
 

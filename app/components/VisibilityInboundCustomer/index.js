@@ -22,7 +22,6 @@ const tailLayout = {
 
 
 const VisibInboundCustomer = () => {
-  console.log("Mounted")
   const [value, setValue] = useState(1);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [btnDispCss, setBtnDispCss] = useState("none");
@@ -34,11 +33,10 @@ const VisibInboundCustomer = () => {
   const [warehouseData, setWareHouseData] = useState([]);
 
   useEffect(() => {
-    console.log("Mounted")
     if(invData.length == 0 || warehouseData.length == 0 ){
       handleDropDownVal()
     }
-  })
+  },[])
 
   function handleDropDownVal(){
     // setIniForm("Show")
@@ -63,7 +61,7 @@ const VisibInboundCustomer = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("InvData",res)
+          // console.log("InvData",res)
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -111,13 +109,13 @@ const VisibInboundCustomer = () => {
   const onHandleChange = e => {
     setDispSubmitBtn("block")
     setBtnDispCss("none")
-      console.log("OnChange",e)
+      // console.log("OnChange",e)
       // handleDownloadInvoice(e)
       setValue(e.target.value);
   };
 
   function handleSaveInvoice(savDatas){
-    console.log("handleSaveInvoice",savDatas)
+    // console.log("handleSaveInvoice",savDatas)
     fetch(
       "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
       {
@@ -138,7 +136,7 @@ const VisibInboundCustomer = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("Customer--Res",data)
+        // console.log("Customer--Res",data)
         if (data.body.statuscode && data.body.statuscode == 200) {
           handleDownloadInvoice(savDatas.InvoiceNumber)
           info()
@@ -154,7 +152,7 @@ const VisibInboundCustomer = () => {
   }
 
   function handleDownloadInvoice(invNo){
-    console.log("HandleDownloadInv",invNo)
+    // console.log("HandleDownloadInv",invNo)
 
     var downloadReqData = {
         "body": {
@@ -170,9 +168,9 @@ const VisibInboundCustomer = () => {
           downloadReqData
         )
         .then((res) => {
-          console.log("##Download--Cust---Res",res)
+          // console.log("##Download--Cust---Res",res)
           let tempDownData = res.data.body.bodymsg;
-          console.log("DDDDDDDDDDD",res.data.body.bodymsg)
+          // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
           if(res.data.body.statuscode == 201)
           {
             console.log("No Data Found")
@@ -181,7 +179,7 @@ const VisibInboundCustomer = () => {
           } 
           else{
             let tempDownData = res.data.body.bodymsg
-            console.log("Found",res)
+            // console.log("Found",res)
             setDispSaveBtn(true)
             setDownArr(tempDownData)
             setDispSubmitBtn("none")
@@ -194,7 +192,7 @@ const VisibInboundCustomer = () => {
   }
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     handleSaveInvoice(values)
   };
 

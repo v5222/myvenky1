@@ -40,7 +40,6 @@ const VisibInboundRegional = () => {
   const [dispProcessBtn, setDispProcessBtn] = useState(true);
 
   useEffect(() => {
-    console.log("Mounted")
     if(invData.length == 0 || warehouseData.length == 0 ){
       handleDropDownVal()
     }
@@ -69,7 +68,7 @@ const VisibInboundRegional = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("InvData",res)
+          // console.log("InvData",res)
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -82,7 +81,7 @@ const VisibInboundRegional = () => {
         reqWhObj
       )
       .then((res) => {
-        console.log("WH",res)
+        // console.log("WH",res)
         if (res.data.body.statuscode == 200) {
           handleapiwarehousedata(res.data.body.bodymsg);
         } else {
@@ -110,14 +109,14 @@ const VisibInboundRegional = () => {
   const onHandleChange = e => {
     setDispSubmitBtn("block")
     setBtnDispCss("none")
-      console.log("OnChange",e)
+      // console.log("OnChange",e)
       // handleDownloadInvoice(e)
       setValue(e.target.value);
   };
 
   function handleSaveInvoice(savDatas){
       setLpnVal(" ")
-    console.log("Save",values, "sAVdATAS", savDatas)
+    // console.log("Save",values, "sAVdATAS", savDatas)
 
     setRegInvNo(values.regionalInvoiceNumber);
     if (lpnArray.length == qtyVal) {
@@ -148,7 +147,7 @@ const VisibInboundRegional = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-             console.log("Regional--Res",data)
+            //  console.log("Regional--Res",data)
             if (data.body.statuscode && data.body.statuscode == 200) {
               setLpnVal(" ")
               handleDownRegional()
@@ -196,7 +195,7 @@ const VisibInboundRegional = () => {
   }
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     handleSaveInvoice(values)
   };
 
