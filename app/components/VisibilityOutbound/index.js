@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Select, Upload } from 'antd';
+import { Form, Input, Button, Checkbox, Select, Upload, message } from "antd";
 import axios from "axios";
-import CsvDownload from 'react-json-to-csv';
-import { UploadOutlined } from '@ant-design/icons';
+import CsvDownload from "react-json-to-csv";
+import { UploadOutlined } from "@ant-design/icons";
+import $ from "jquery";
+import { da } from "date-fns/locale";
 
-const layout = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+const layout = {
   labelCol: {
     span: 8,
   },
@@ -20,7 +22,6 @@ const tailLayout = {
   },
 };
 
-
 const VisibilityOutbound = () => {
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
@@ -31,29 +32,31 @@ const VisibilityOutbound = () => {
   const [dispSubmitBtn, setDispSubmitBtn] = useState("block");
   const [downArr, setDownArr] = useState([]);
   const [errMsg, setErrMsg] = useState(false);
+  const [fileName, setFileName] = useState("");
   const [delType, setDelType] = useState();
   const [labelName, setLabelName] = useState("");
   const [dispCss3rdDropDown, setDispCss3rdDropDown] = useState("none")
+  const [downArray, setDownArray] = useState([]);
 
   useEffect(() => {
-    if(invData.length == 0 ){
-      handleDropDownVal()
+    if (invData.length == 0) {
+      handleDropDownVal();
     }
-  },[])
+  }, []);
 
-  function handleDropDownVal(){
+  function handleDropDownVal() {
     // setIniForm("Show")
     let reqObj = {
-      body : {
-        type : "DDLSERVICE",
-        email : "Muneeshkumar.a@tvslsl.com",
-      }
+      body: {
+        type: "DDLSERVICE",
+        email: "Muneeshkumar.a@tvslsl.com",
+      },
     };
     let reqObj2 = {
-      body : {
-        type : "DDLDELIVERY",
-        email : "Muneeshkumar.a@tvslsl.com",
-      }
+      body: {
+        type: "DDLDELIVERY",
+        email: "Muneeshkumar.a@tvslsl.com",
+      },
     };
 
     axios
@@ -63,35 +66,33 @@ const VisibilityOutbound = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("DDLSERVICE",res)
+          // console.log("DDLSERVICE", res);
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
         }
       });
 
-      axios
+    axios
       .post(
         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
         reqObj2
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("DDLDELIVARY",res)
+          // console.log("DDLDELIVARY", res);
           handleapidata2(res.data.body.bodymsg);
         } else {
           console.log("Err");
         }
       });
-
-     
   }
 
   function handleapidata(apidata){
     setInvData(apidata);
   }
 
-  function handleapidata2(apidata){
+  function handleapidata2(apidata) {
     setInvData2(apidata);
   }
 
@@ -107,20 +108,20 @@ const VisibilityOutbound = () => {
     setInvData3(apidata);
   }
 
-  const onChange = e => {
+  const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const onHandleDeliType = e => {
-    console.log("DelType@!@!",e)
-    handleThirdDropDown(e)
-    setDelType(e.target.value)
+  const onHandleDeliType = (e) => {
+    // console.log("DelType@!@!", e);
+    handleThirdDropDown(e);
+    setDelType(e.target.value);
     setValue(e.target.value);
-  }
+  };
 
-  function handleThirdDropDown(val){
-    console.log(" in handleThirdDropDown", val)
-    setDelType(val)
+  function handleThirdDropDown(val) {
+    // console.log(" in handleThirdDropDown", val);
+    setDelType(val);
     fetch(
       "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
       {
@@ -128,15 +129,15 @@ const VisibilityOutbound = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           body: {
-            "type": "DDLDELIVERYCUST",
-            "deliveryname": val
+            type: "DDLDELIVERYCUST",
+            deliveryname: val,
           },
         }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
-         console.log("3rd Drop Down Res",data)
+        // console.log("3rd Drop Down Res", data);
         if (data.body.statuscode && data.body.statuscode == 200) {
           handleapidata3(data.body.bodymsg);
         }
@@ -144,98 +145,119 @@ const VisibilityOutbound = () => {
       .catch((err) => console.log(err));
   }
 
-  const onHandleChange = e => {
-      console.log("OnChange",e)
+  const onHandleChange = (e) => {
+    // console.log("OnChange", e);
 
-    setDispSubmitBtn("block")
-    setBtnDispCss("none")
-      // handleDownloadInvoice(e)
-      setValue(e.target.value);
+    setDispSubmitBtn("block");
+    setBtnDispCss("none");
+    // handleDownloadInvoice(e)
+    setValue(e.target.value);
+  };  
+
+  const handleUpload = async (values) => {
+    const formData = new FormData();
+    formData.append("file[]", fileName);
+
+    fetch(
+      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          body: {
+            type: "FTP",
+            email: "muneeshkumar.a",
+            filename: fileName.name,
+          },
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("dataUpload", data)
+        $.ajax({
+          type: "PUT",
+          url: data.body.bodymsg.url,
+          contentType: "application/vnd.ms-excel",
+          processData: false,
+          data: fileName,
+          success: function(response) {
+            // console.log("success--Two", response);
+             var submitDatas = {
+              "body": {
+                "type": "OUTDATABASE",
+                "EMAIL": "muneeshkumar.a@tvslsl.com",
+                "output": [
+                  {
+                    "deliveryname": values.deliveryType,
+                    "servicename": values.serviceType,
+                    "deliverycode": values.deliveryCode,
+                    "shippingiodetail": values.shippingIoDetail ? values.shippingIoDetail : "",
+                    "transportername": values.transporterName ? values.transporterName : "",
+                    "ewaybillno": values.ewayBill ? values.ewayBill : "",
+                    "destinationcode": values.destinationCode
+                  }
+                ]
+              }
+            }
+
+            axios
+              .post(
+                "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+                submitDatas
+              )
+              .then((resp) => {
+                // console.log("SAV--Res",resp)
+                if (resp.status == 200) {
+                  console.log("SumbRes",resp)
+                  setDownArray(resp.data.body.bodymsg)
+                  setDispSubmitBtn("none")
+                  setBtnDispCss("block") 
+                  // handleapidata(res.data.body.bodymsg);
+                } else {
+                  console.log("Err");
+                }
+              })
+              .catch((err) => console.log("ERR",err));
+          },
+          error: function() {
+            alert("File NOT uploaded");
+            console.log(arguments);
+          },
+        });
+      })
+      .catch((error) => console.log(error));
+    // console.log(res1);
+    return;
   };
 
-  // function handleDownloadInvoice(invNo){
-  //   // console.log("InvNo",invNo)
 
-  //   var downloadReqData = {
-  //       "body": {
-  //         "type": "DOWNLOAD",
-  //         "EMAIL": "muneeshkumar.a@tvslsl.com",
-  //         "invoiceno": invNo 
-  //       }
-  //     }
-      
-  //     axios
-  //       .post(
-  //         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-  //         downloadReqData
-  //       )
-  //       .then((res) => {
-  //         // console.log("##Download--Cust---Res",res)
-  //         let tempDownData = res.data.body.bodymsg;
-  //         // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
-  //         if(res.data.body.statuscode == 201)
-  //         {
-  //           console.log("No Data Found")
-  //           setErrMsg(true)
-  //           setBtnDispCss("none")
-  //         } 
-  //         else{
-  //           let tempDownData = res.data.body.bodymsg
-  //           // console.log("Found",res)
-  //           setDownArr(tempDownData)
-  //           setDispSubmitBtn("none")
-  //           setBtnDispCss("block")
-  //           setErrMsg(false)
-  //         }
-         
-  //       })
-  //       .catch(err=> console.log(err));
-  // }
 
   
-
   const onFinish = (values) => {
-    console.log('Success:', values);
-
-    var submitDatas = {
-      "body": {
-        "type": "OUTDATABASE",
-        "EMAIL": "muneeshkumar.a@tvslsl.com",
-        "output": [
-          {
-            "deliveryname": values.deliveryType,
-            "servicename": values.serviceType,
-            "deliverycode": values.deliveryCode,
-            "shippingiodetail": values.shippingIoDetail ? values.shippingIoDetail : "",
-            "transportername": values.transporterName ? values.transporterName : "",
-            "ewaybillno": values.ewayBill ? values.ewayBill : "",
-            "destinationcode": values.destinationCode
-          }
-        ]
-      }
-    }
-
-    axios
-      .post(
-        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-        submitDatas
-      )
-      .then((res) => {
-        console.log("Res",res)
-        if (res.data.body.status == 200) {
-          console.log("SumbRes",res)
-          // handleapidata(res.data.body.bodymsg);
-        } else {
-          console.log("Err");
-        }
-      })
-      .catch((err) => console.log("ERR",err));
-    // handleDownloadInvoice(values.InvoiceNumberOne)
+    handleUpload(values);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
+  // const onFileChange = async (value) => {
+  //   setFileName(value);
+
+  //   // if (value.file.status === "error") {
+  //   //   message.error("Something went wrong ,Please try again ");
+  //   // }
+  // };
+  const files = {
+    onRemove: (file) => {
+      setFileName("");
+    },
+    beforeUpload: (file) => {
+      setFileName(file);
+      return false;
+    },
+    fileName,
+  };
+
 
   return (
 <>
@@ -341,9 +363,12 @@ const VisibilityOutbound = () => {
          <Input/>
        </Form.Item>
        <Form.Item style={{marginLeft:"33%"}}>
-            <Upload  >
+          <Upload {...files}>
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+            {/* <Upload  >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
+            </Upload> */}
           </Form.Item>
           <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
@@ -353,13 +378,12 @@ const VisibilityOutbound = () => {
   </Form>
   {/* {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" } */}
   
+      <div style={{ marginLeft: "35%", display: btnDispCss }}>
+        <CsvDownload data={downArray} />
+      </div>
 
-  <div style={{marginLeft:"35%" ,display: btnDispCss}}>
-    <CsvDownload data={downArr}/>
-  </div>
-
-</>
+    </>
   );
 };
 
-export default VisibilityOutbound;                                                                                                                                                                                                                                          
+export default VisibilityOutbound;
