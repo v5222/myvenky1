@@ -4,6 +4,8 @@ import axios from "axios";
 import CsvDownload from "react-json-to-csv";
 import { UploadOutlined } from "@ant-design/icons";
 import $ from "jquery";
+import { da } from "date-fns/locale";
+
 const layout = {
   labelCol: {
     span: 8,
@@ -33,6 +35,8 @@ const VisibilityOutbound = () => {
   const [fileName, setFileName] = useState("");
   const [delType, setDelType] = useState();
   const [labelName, setLabelName] = useState("");
+  const [dispCss3rdDropDown, setDispCss3rdDropDown] = useState("none")
+  const [downArray, setDownArray] = useState([]);
 
   useEffect(() => {
     if (invData.length == 0) {
@@ -62,7 +66,7 @@ const VisibilityOutbound = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("DDLSERVICE", res);
+          // console.log("DDLSERVICE", res);
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -76,7 +80,7 @@ const VisibilityOutbound = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          console.log("DDLDELIVARY", res);
+          // console.log("DDLDELIVARY", res);
           handleapidata2(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -84,17 +88,7 @@ const VisibilityOutbound = () => {
       });
   }
 
-  //   useEffect(() => {
-  // console.log("DownladBtn")
-  //   }, [showDownloadBtn])
-
-  // useEffect(() => {
-  //   console.log("DownArr",downArr)
-  // },[downArr])
-
-  useEffect(() => {}, []);
-
-  function handleapidata(apidata) {
+  function handleapidata(apidata){
     setInvData(apidata);
   }
 
@@ -102,11 +96,14 @@ const VisibilityOutbound = () => {
     setInvData2(apidata);
   }
 
-  function handleapidata3(apidata) {
-    if (delType == "ENDCUSTOMER") {
-      setLabelName("Site Code");
-    } else {
-      setLabelName("Warehouse Code");
+  function handleapidata3(apidata){
+    if(delType == "ENDCUSTOMER"){
+      setDispCss3rdDropDown("block")
+      setLabelName("Site Code")
+    }
+    else{
+      setDispCss3rdDropDown("block")
+      setLabelName("Warehouse Code")
     }
     setInvData3(apidata);
   }
@@ -116,14 +113,14 @@ const VisibilityOutbound = () => {
   };
 
   const onHandleDeliType = (e) => {
-    console.log("DelType@!@!", e);
+    // console.log("DelType@!@!", e);
     handleThirdDropDown(e);
     setDelType(e.target.value);
     setValue(e.target.value);
   };
 
   function handleThirdDropDown(val) {
-    console.log(" in handleThirdDropDown", val);
+    // console.log(" in handleThirdDropDown", val);
     setDelType(val);
     fetch(
       "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
@@ -140,7 +137,7 @@ const VisibilityOutbound = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("3rd Drop Down Res", data);
+        // console.log("3rd Drop Down Res", data);
         if (data.body.statuscode && data.body.statuscode == 200) {
           handleapidata3(data.body.bodymsg);
         }
@@ -149,50 +146,15 @@ const VisibilityOutbound = () => {
   }
 
   const onHandleChange = (e) => {
-    console.log("OnChange", e);
+    // console.log("OnChange", e);
 
     setDispSubmitBtn("block");
     setBtnDispCss("none");
     // handleDownloadInvoice(e)
     setValue(e.target.value);
-  };
+  };  
 
-  function handleDownloadInvoice(invNo) {
-    // console.log("InvNo",invNo)
-
-    var downloadReqData = {
-      body: {
-        type: "DOWNLOAD",
-        EMAIL: "muneeshkumar.a@tvslsl.com",
-        invoiceno: invNo,
-      },
-    };
-
-    axios
-      .post(
-        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-        downloadReqData
-      )
-      .then((res) => {
-        // console.log("##Download--Cust---Res",res)
-        let tempDownData = res.data.body.bodymsg;
-        // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
-        if (res.data.body.statuscode == 201) {
-          console.log("No Data Found");
-          setErrMsg(true);
-          setBtnDispCss("none");
-        } else {
-          let tempDownData = res.data.body.bodymsg;
-          // console.log("Found",res)
-          setDownArr(tempDownData);
-          setDispSubmitBtn("none");
-          setBtnDispCss("block");
-          setErrMsg(false);
-        }
-      })
-      .catch((err) => console.log(err));
-  }
-  const handleUpload = async () => {
+  const handleUpload = async (values) => {
     const formData = new FormData();
     formData.append("file[]", fileName);
 
@@ -211,6 +173,7 @@ const VisibilityOutbound = () => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log("dataUpload", data)
         $.ajax({
           type: "PUT",
           url: data.body.bodymsg.url,
@@ -218,7 +181,43 @@ const VisibilityOutbound = () => {
           processData: false,
           data: fileName,
           success: function(response) {
-            console.log("success", response);
+            // console.log("success--Two", response);
+             var submitDatas = {
+              "body": {
+                "type": "OUTDATABASE",
+                "EMAIL": "muneeshkumar.a@tvslsl.com",
+                "output": [
+                  {
+                    "deliveryname": values.deliveryType,
+                    "servicename": values.serviceType,
+                    "deliverycode": values.deliveryCode,
+                    "shippingiodetail": values.shippingIoDetail ? values.shippingIoDetail : "",
+                    "transportername": values.transporterName ? values.transporterName : "",
+                    "ewaybillno": values.ewayBill ? values.ewayBill : "",
+                    "destinationcode": values.destinationCode
+                  }
+                ]
+              }
+            }
+
+            axios
+              .post(
+                "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+                submitDatas
+              )
+              .then((resp) => {
+                // console.log("SAV--Res",resp)
+                if (resp.status == 200) {
+                  console.log("SumbRes",resp)
+                  setDownArray(resp.data.body.bodymsg)
+                  setDispSubmitBtn("none")
+                  setBtnDispCss("block") 
+                  // handleapidata(res.data.body.bodymsg);
+                } else {
+                  console.log("Err");
+                }
+              })
+              .catch((err) => console.log("ERR",err));
           },
           error: function() {
             alert("File NOT uploaded");
@@ -230,10 +229,12 @@ const VisibilityOutbound = () => {
     // console.log(res1);
     return;
   };
-  const onFinish = (values) => {
-    // console.log('Success:', values);
 
-    handleDownloadInvoice(values.InvoiceNumberOne);
+
+
+  
+  const onFinish = (values) => {
+    handleUpload(values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -256,156 +257,131 @@ const VisibilityOutbound = () => {
     },
     fileName,
   };
-  return (
-    <>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          name="serviceType"
-          label="Service Type"
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue="Select"
-            style={{ width: 200 }}
-            onChange={onHandleChange}
-            allowClear
-          >
-            {invData.length > 0 &&
-              invData.map((val, index) => {
-                return (
-                  <>
-                    <Option value={val.name} key={index}>
-                      {val.name}
-                    </Option>
-                  </>
-                );
-              })}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="deliveryType"
-          label="Delivery Type"
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue="Select"
-            style={{ width: 200 }}
-            onChange={onHandleDeliType}
-            allowClear
-          >
-            {invData2.length > 0 &&
-              invData2.map((val, index) => {
-                return (
-                  <>
-                    <Option value={val.name} key={index}>
-                      {val.name}
-                    </Option>
-                  </>
-                );
-              })}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="InvoiceNumberThree"
-          label={labelName}
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue="Select"
-            style={{ width: 200 }}
-            onChange={onHandleChange}
-            allowClear
-          >
-            {invData3.length > 0 &&
-              invData3.map((val, index) => {
-                return (
-                  <>
-                    <Option value={val.name} key={index}>
-                      {val.name}
-                    </Option>
-                  </>
-                );
-              })}
-          </Select>
-        </Form.Item>
 
-        <Form.Item
-          label="Destination Code"
-          name="destinationCode"
-          rules={[
-            {
-              required: true,
-              message: "Please enter Destination Code!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Shipping IO Detail"
-          name="shippingIoDetail"
-          rules={[
-            {
-              required: false,
-              message: "Please enter Shipping IO Detail!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Transporter Name"
-          name="transporterName"
-          rules={[
-            {
-              required: false,
-              message: "Please enter TransporterName!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Eway Bill"
-          name="ewayBill"
-          rules={[
-            {
-              required: false,
-              message: "Please enter Eway Bill!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item style={{ marginLeft: "33%" }}>
+
+  return (
+<>
+    <Form
+    {...layout}
+    name="basic"
+    initialValues={{
+      remember: true,
+    }}
+    onFinish={onFinish}
+    onFinishFailed={onFinishFailed}
+  >
+     
+          <Form.Item name="serviceType" label="Service Type" rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+                    allowClear>
+                {invData.length > 0 &&
+                    invData.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val.name} key={index}>
+                            {val.name}
+                          </Option>
+                        </>
+                      );
+                    })}
+              </Select>
+          </Form.Item>
+          <Form.Item name="deliveryType" label="Delivery Type" rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleDeliType}
+                    allowClear>
+                {invData2.length > 0 &&
+                    invData2.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val.name} key={index}>
+                            {val.name}
+                          </Option>
+                        </>
+                      );
+                    })}
+              </Select>
+          </Form.Item>
+          <Form.Item name="deliveryCode" label={labelName} rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200, display:dispCss3rdDropDown }}   onChange={onHandleChange}
+                    allowClear>
+                {invData3.length > 0 &&
+                    invData3.map((val, index) => {
+                      return (
+                        <>
+                          <Option value={val.name} key={index}>
+                            {val.name}
+                          </Option>
+                        </>
+                      );
+                    })}
+              </Select>
+          </Form.Item>
+          
+          <Form.Item
+         label="Destination Code"
+         name="destinationCode"
+         rules={[
+           {
+             required: true,
+             message: 'Please enter Destination Code!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Shipping IO Detail"
+         name="shippingIoDetail"
+         rules={[
+           {
+             message: 'Please enter Shipping IO Detail!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Transporter Name"
+         name="transporterName"
+         rules={[
+           {
+             message: 'Please enter TransporterName!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Eway Bill"
+         name="ewayBill"
+         rules={[
+           {
+             message: 'Please enter Eway Bill!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item style={{marginLeft:"33%"}}>
           <Upload {...files}>
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
-            style={{ display: dispSubmitBtn }}
-          >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-      {/* {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" } */}
-
+            {/* <Upload  >
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload> */}
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
+                Submit
+              </Button> 
+          </Form.Item>         
+  </Form>
+  {/* {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" } */}
+  
       <div style={{ marginLeft: "35%", display: btnDispCss }}>
-        <CsvDownload data={downArr} />
+        <CsvDownload data={downArray} />
       </div>
+
     </>
   );
 };
