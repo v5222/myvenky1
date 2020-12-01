@@ -33,6 +33,7 @@ const VisibilityOutbound = () => {
   const [errMsg, setErrMsg] = useState(false);
   const [delType, setDelType] = useState();
   const [labelName, setLabelName] = useState("");
+  const [dispCss3rdDropDown, setDispCss3rdDropDown] = useState("none")
 
   useEffect(() => {
     if(invData.length == 0 ){
@@ -86,18 +87,6 @@ const VisibilityOutbound = () => {
      
   }
 
-//   useEffect(() => {
-// console.log("DownladBtn")
-//   }, [showDownloadBtn])
-
-  // useEffect(() => {
-  //   console.log("DownArr",downArr)
-  // },[downArr])
-
-  useEffect(() => {
-
-  },[])
-
   function handleapidata(apidata){
     setInvData(apidata);
   }
@@ -108,9 +97,11 @@ const VisibilityOutbound = () => {
 
   function handleapidata3(apidata){
     if(delType == "ENDCUSTOMER"){
+      setDispCss3rdDropDown("block")
       setLabelName("Site Code")
     }
     else{
+      setDispCss3rdDropDown("block")
       setLabelName("Warehouse Code")
     }
     setInvData3(apidata);
@@ -162,50 +153,84 @@ const VisibilityOutbound = () => {
       setValue(e.target.value);
   };
 
-  function handleDownloadInvoice(invNo){
-    // console.log("InvNo",invNo)
+  // function handleDownloadInvoice(invNo){
+  //   // console.log("InvNo",invNo)
 
-    var downloadReqData = {
-        "body": {
-          "type": "DOWNLOAD",
-          "EMAIL": "muneeshkumar.a@tvslsl.com",
-          "invoiceno": invNo 
-        }
-      }
+  //   var downloadReqData = {
+  //       "body": {
+  //         "type": "DOWNLOAD",
+  //         "EMAIL": "muneeshkumar.a@tvslsl.com",
+  //         "invoiceno": invNo 
+  //       }
+  //     }
       
-      axios
-        .post(
-          "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-          downloadReqData
-        )
-        .then((res) => {
-          // console.log("##Download--Cust---Res",res)
-          let tempDownData = res.data.body.bodymsg;
-          // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
-          if(res.data.body.statuscode == 201)
-          {
-            console.log("No Data Found")
-            setErrMsg(true)
-            setBtnDispCss("none")
-          } 
-          else{
-            let tempDownData = res.data.body.bodymsg
-            // console.log("Found",res)
-            setDownArr(tempDownData)
-            setDispSubmitBtn("none")
-            setBtnDispCss("block")
-            setErrMsg(false)
-          }
+  //     axios
+  //       .post(
+  //         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+  //         downloadReqData
+  //       )
+  //       .then((res) => {
+  //         // console.log("##Download--Cust---Res",res)
+  //         let tempDownData = res.data.body.bodymsg;
+  //         // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
+  //         if(res.data.body.statuscode == 201)
+  //         {
+  //           console.log("No Data Found")
+  //           setErrMsg(true)
+  //           setBtnDispCss("none")
+  //         } 
+  //         else{
+  //           let tempDownData = res.data.body.bodymsg
+  //           // console.log("Found",res)
+  //           setDownArr(tempDownData)
+  //           setDispSubmitBtn("none")
+  //           setBtnDispCss("block")
+  //           setErrMsg(false)
+  //         }
          
-        })
-        .catch(err=> console.log(err));
-  }
+  //       })
+  //       .catch(err=> console.log(err));
+  // }
 
   
 
   const onFinish = (values) => {
-    // console.log('Success:', values);
-    handleDownloadInvoice(values.InvoiceNumberOne)
+    console.log('Success:', values);
+
+    var submitDatas = {
+      "body": {
+        "type": "OUTDATABASE",
+        "EMAIL": "muneeshkumar.a@tvslsl.com",
+        "output": [
+          {
+            "deliveryname": values.deliveryType,
+            "servicename": values.serviceType,
+            "deliverycode": values.deliveryCode,
+            "shippingiodetail": values.shippingIoDetail ? values.shippingIoDetail : "",
+            "transportername": values.transporterName ? values.transporterName : "",
+            "ewaybillno": values.ewayBill ? values.ewayBill : "",
+            "destinationcode": values.destinationCode
+          }
+        ]
+      }
+    }
+
+    axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        submitDatas
+      )
+      .then((res) => {
+        console.log("Res",res)
+        if (res.data.body.status == 200) {
+          console.log("SumbRes",res)
+          // handleapidata(res.data.body.bodymsg);
+        } else {
+          console.log("Err");
+        }
+      })
+      .catch((err) => console.log("ERR",err));
+    // handleDownloadInvoice(values.InvoiceNumberOne)
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -254,8 +279,8 @@ const VisibilityOutbound = () => {
                     })}
               </Select>
           </Form.Item>
-          <Form.Item name="InvoiceNumberThree" label={labelName} rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+          <Form.Item name="deliveryCode" label={labelName} rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200, display:dispCss3rdDropDown }}   onChange={onHandleChange}
                     allowClear>
                 {invData3.length > 0 &&
                     invData3.map((val, index) => {
@@ -287,7 +312,6 @@ const VisibilityOutbound = () => {
          name="shippingIoDetail"
          rules={[
            {
-             required: false,
              message: 'Please enter Shipping IO Detail!',
            },
          ]}
@@ -299,7 +323,6 @@ const VisibilityOutbound = () => {
          name="transporterName"
          rules={[
            {
-             required: false,
              message: 'Please enter TransporterName!',
            },
          ]}
@@ -311,7 +334,6 @@ const VisibilityOutbound = () => {
          name="ewayBill"
          rules={[
            {
-             required: false,
              message: 'Please enter Eway Bill!',
            },
          ]}
