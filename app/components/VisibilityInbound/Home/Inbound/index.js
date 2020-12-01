@@ -162,7 +162,6 @@ const VIFORM = () => {
           .then((data) => {
              console.log("Regional--Res",data)
             if (data.body.statuscode && data.body.statuscode == 200) {
-              handleDownRegional()
               info()
               setDispProcessBtn(true);
               setDispRegionalDownBtn(true);
@@ -185,7 +184,7 @@ const VIFORM = () => {
       body: {
         type: "DOWNLOAD",
         EMAIL: "muneeshkumar.a@tvslsl.com",
-        invoiceno: regInvNo ? regInvNo : "GJ/KAD/DC2156",
+        invoiceno: regInvNo,
       },
     };
 
@@ -243,8 +242,8 @@ const VIFORM = () => {
     {(value == 1 || value == "" || value == undefined ) ? 
 
      <>
-        <VisibilityInboundRegional />
-     {/* <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
+        {/* <VisibilityInboundRegional /> */}
+     <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
            <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                  allowClear>
                  {warehouseData.length > 0 &&
@@ -337,14 +336,21 @@ const VIFORM = () => {
            </Button>
            : ""
          }
-       </Form.Item> */}
+         {
+          dispDownloadBtn === true ? 
+          <CsvDownload  data = {dummyArr}/>
+          : ""
+        }
+       </Form.Item>
    </>   
       :"" } 
       {
         value === 3 ? 
         <VisibilityInboundDownload/> : ""
       }
+      
     </Form>
+    
   );
 };
 

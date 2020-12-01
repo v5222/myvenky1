@@ -95,7 +95,7 @@ const VisibilityOutbound = () => {
   // },[downArr])
 
   useEffect(() => {
-    
+
   },[])
 
   function handleapidata(apidata){
@@ -129,6 +129,7 @@ const VisibilityOutbound = () => {
 
   function handleThirdDropDown(val){
     console.log(" in handleThirdDropDown", val)
+    setDelType(val)
     fetch(
       "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
       {
