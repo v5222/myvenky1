@@ -57,10 +57,6 @@ const VIFORM = () => {
     }
   }, []);
 
-  // info = (data) => {
-  //   message.info(data);
-  // };
-
   function info(data) {
     message.info("Saved Successfully");
   }
@@ -166,7 +162,6 @@ const VIFORM = () => {
           .then((data) => {
             console.log("Regional--Res", data);
             if (data.body.statuscode && data.body.statuscode == 200) {
-              handleDownRegional();
               info();
               setDispProcessBtn(true);
               setDispRegionalDownBtn(true);
@@ -189,7 +184,7 @@ const VIFORM = () => {
       body: {
         type: "DOWNLOAD",
         EMAIL: "muneeshkumar.a@tvslsl.com",
-        invoiceno: regInvNo ? regInvNo : "GJ/KAD/DC2156",
+        invoiceno: regInvNo,
       },
     };
 
@@ -254,101 +249,140 @@ const VIFORM = () => {
       )}
       {value == 1 || value == "" || value == undefined ? (
         <>
-          <VisibilityInboundRegional />
-          {/* <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
-           <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
-                 allowClear>
-                 {warehouseData.length > 0 &&
-                 warehouseData.map((val, index) => {
-                   return (
-                     <>
-                       <Option value={val.name} key={index}>
-                         {val.name}
-                       </Option>
-                     </>
-                   );
-                 })}
-           </Select>
-       </Form.Item>
-       <Form.Item name="regionalInvoiceNumber" label="Invoice Number" rules={[{ required: true }]}>
-         <Input/>
-       </Form.Item>
-       <Form.Item
-         label="Shipping IO Detail"
-         name="regionalShippingIoDetail"
-         rules={[
-           {
-             required: true,
-             message: 'Please enter Shipping IO Detail!',
-           },
-         ]}
-       >
-         <Input/>
-       </Form.Item>
-       <Form.Item
-         label="Transporter Name"
-         name="regionalTransporterName"
-         rules={[
-           {
-             required: true,
-             message: 'Please enter Transporter Name!',
-           },
-         ]}
-       >
-         <Input/>
-       </Form.Item>
-       <Form.Item
-         label="EWay Bill"
-         name="regionalEwayBill"
-         rules={[
-           {
-             required: true,
-             message: 'Please enter EWay Bill!',
-           },
-         ]}
-       >
-         <Input/>
-       </Form.Item>
-       <Form.Item
-         label="Qty"
-         name="regionalQty"
-         rules={[
-           {
-             required: true,
-             message: 'Please enter Qty!',
-           },
-         ]}
-       >
-         <Input onChange={event => setQtyVal(event.target.value)}/>
-       </Form.Item>
-       <Form.Item>
-         <Row style={{marginLeft:"30%"}}>
-            <Col span="6"></Col>
-            <Col span="6"><b>TOTAL : </b> {qtyVal}</Col>
-            <Col ><b>SCANNED : </b> {lpnArray.length} </Col>
-         </Row>
-         <Row style={{marginLeft:"30%"}}>
-         <Col span="6"></Col>
-         {lpnInput === true ? <> <Col span="6"><b>LPN : </b></Col>
-            <Col><Input size="small" style={{width:200}} value={lpnVal}
-              onChange={event => {
-                setLpnVal(event.target.value)
-              }}/></Col> </>: ""}
-         </Row> 
-       </Form.Item>
-       <Form.Item {...tailLayout}>
-           {dispProcessBtn === false ? 
-           <Button type="primary" htmlType="submit" size="large">
-             Save
-           </Button> : ""
-         }
-           {dispRegionalDownBtn === true ? 
-           <Button type="primary" size="large" onClick={handleDownRegional()}>
-             Submit
-           </Button>
-           : ""
-         }
-       </Form.Item> */}
+          {/* <VisibilityInboundRegional /> */}
+          <Form.Item
+            name="regionalWareHouse"
+            label="Warehouse"
+            rules={[{ required: true }]}
+          >
+            <Select
+              defaultValue="Select"
+              style={{ width: 200 }}
+              onChange={onHandleChange}
+              allowClear
+            >
+              {warehouseData.length > 0 &&
+                warehouseData.map((val, index) => {
+                  return (
+                    <>
+                      <Option value={val.name} key={index}>
+                        {val.name}
+                      </Option>
+                    </>
+                  );
+                })}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="regionalInvoiceNumber"
+            label="Invoice Number"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Shipping IO Detail"
+            name="regionalShippingIoDetail"
+            rules={[
+              {
+                required: true,
+                message: "Please enter Shipping IO Detail!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Transporter Name"
+            name="regionalTransporterName"
+            rules={[
+              {
+                required: true,
+                message: "Please enter Transporter Name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="EWay Bill"
+            name="regionalEwayBill"
+            rules={[
+              {
+                required: true,
+                message: "Please enter EWay Bill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Qty"
+            name="regionalQty"
+            rules={[
+              {
+                required: true,
+                message: "Please enter Qty!",
+              },
+            ]}
+          >
+            <Input onChange={(event) => setQtyVal(event.target.value)} />
+          </Form.Item>
+          <Form.Item>
+            <Row style={{ marginLeft: "30%" }}>
+              <Col span="6" />
+              <Col span="6">
+                <b>TOTAL : </b> {qtyVal}
+              </Col>
+              <Col>
+                <b>SCANNED : </b> {lpnArray.length}{" "}
+              </Col>
+            </Row>
+            <Row style={{ marginLeft: "30%" }}>
+              <Col span="6" />
+              {lpnInput === true ? (
+                <>
+                  {" "}
+                  <Col span="6">
+                    <b>LPN : </b>
+                  </Col>
+                  <Col>
+                    <Input
+                      size="small"
+                      style={{ width: 200 }}
+                      value={lpnVal}
+                      onChange={(event) => {
+                        setLpnVal(event.target.value);
+                      }}
+                    />
+                  </Col>{" "}
+                </>
+              ) : (
+                ""
+              )}
+            </Row>
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            {dispProcessBtn === false ? (
+              <Button type="primary" htmlType="submit" size="large">
+                Save
+              </Button>
+            ) : (
+              ""
+            )}
+            {dispRegionalDownBtn === true ? (
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleDownRegional()}
+              >
+                Submit
+              </Button>
+            ) : (
+              ""
+            )}
+            {dispDownloadBtn === true ? <CsvDownload data={dummyArr} /> : ""}
+          </Form.Item>
         </>
       ) : (
         ""
