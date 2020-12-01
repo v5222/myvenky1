@@ -30,7 +30,9 @@ const VisibilityOutbound = () => {
   const [btnDispCss, setBtnDispCss] = useState("none");
   const [dispSubmitBtn, setDispSubmitBtn] = useState("block");
   const [downArr, setDownArr] = useState([]);
-  const [errMsg, setErrMsg] = useState(false)
+  const [errMsg, setErrMsg] = useState(false);
+  const [delType, setDelType] = useState();
+  const [labelName, setLabelName] = useState("");
 
   useEffect(() => {
     if(invData.length == 0 ){
@@ -42,19 +44,13 @@ const VisibilityOutbound = () => {
     // setIniForm("Show")
     let reqObj = {
       body : {
-        type : "GETINVOICECUST",
+        type : "DDLSERVICE",
         email : "Muneeshkumar.a@tvslsl.com",
       }
     };
     let reqObj2 = {
       body : {
-        type : "GETINVOICECUST",
-        email : "Muneeshkumar.a@tvslsl.com",
-      }
-    };
-    let reqObj3 = {
-      body : {
-        type : "GETINVOICECUST",
+        type : "DDLDELIVERY",
         email : "Muneeshkumar.a@tvslsl.com",
       }
     };
@@ -66,7 +62,7 @@ const VisibilityOutbound = () => {
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          // console.log("InvData",res)
+          console.log("DDLSERVICE",res)
           handleapidata(res.data.body.bodymsg);
         } else {
           console.log("Err");
@@ -76,30 +72,18 @@ const VisibilityOutbound = () => {
       axios
       .post(
         "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-        reqObj
+        reqObj2
       )
       .then((res) => {
         if (res.data.body.statuscode == 200) {
-          // console.log("InvData",res)
+          console.log("DDLDELIVARY",res)
           handleapidata2(res.data.body.bodymsg);
         } else {
           console.log("Err");
         }
       });
 
-      axios
-      .post(
-        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
-        reqObj
-      )
-      .then((res) => {
-        if (res.data.body.statuscode == 200) {
-          // console.log("InvData",res)
-          handleapidata3(res.data.body.bodymsg);
-        } else {
-          console.log("Err");
-        }
-      });
+     
   }
 
 //   useEffect(() => {
@@ -110,6 +94,10 @@ const VisibilityOutbound = () => {
   //   console.log("DownArr",downArr)
   // },[downArr])
 
+  useEffect(() => {
+    
+  },[])
+
   function handleapidata(apidata){
     setInvData(apidata);
   }
@@ -119,6 +107,12 @@ const VisibilityOutbound = () => {
   }
 
   function handleapidata3(apidata){
+    if(delType == "ENDCUSTOMER"){
+      setLabelName("Site Code")
+    }
+    else{
+      setLabelName("Warehouse Code")
+    }
     setInvData3(apidata);
   }
 
@@ -126,12 +120,43 @@ const VisibilityOutbound = () => {
     setValue(e.target.value);
   };
 
-  
+  const onHandleDeliType = e => {
+    console.log("DelType@!@!",e)
+    handleThirdDropDown(e)
+    setDelType(e.target.value)
+    setValue(e.target.value);
+  }
+
+  function handleThirdDropDown(val){
+    console.log(" in handleThirdDropDown", val)
+    fetch(
+      "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          body: {
+            "type": "DDLDELIVERYCUST",
+            "deliveryname": val
+          },
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+         console.log("3rd Drop Down Res",data)
+        if (data.body.statuscode && data.body.statuscode == 200) {
+          handleapidata3(data.body.bodymsg);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   const onHandleChange = e => {
+      console.log("OnChange",e)
+
     setDispSubmitBtn("block")
     setBtnDispCss("none")
-      // console.log("OnChange",e)
       // handleDownloadInvoice(e)
       setValue(e.target.value);
   };
@@ -175,16 +200,7 @@ const VisibilityOutbound = () => {
         .catch(err=> console.log(err));
   }
 
-  function onFileChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  }
+  
 
   const onFinish = (values) => {
     // console.log('Success:', values);
@@ -207,45 +223,45 @@ const VisibilityOutbound = () => {
     onFinishFailed={onFinishFailed}
   >
      
-          <Form.Item name="InvoiceNumberOne" label="Invoice Number 1" rules={[{ required: true }]}>
+          <Form.Item name="serviceType" label="Service Type" rules={[{ required: true }]}>
               <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
                 {invData.length > 0 &&
                     invData.map((val, index) => {
                       return (
                         <>
-                          <Option value={val.documentno} key={index}>
-                            {val.documentno}
+                          <Option value={val.name} key={index}>
+                            {val.name}
                           </Option>
                         </>
                       );
                     })}
               </Select>
           </Form.Item>
-          <Form.Item name="InvoiceNumberTwo" label="Invoice Number 2" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+          <Form.Item name="deliveryType" label="Delivery Type" rules={[{ required: true }]}>
+              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleDeliType}
                     allowClear>
                 {invData2.length > 0 &&
                     invData2.map((val, index) => {
                       return (
                         <>
-                          <Option value={val.documentno} key={index}>
-                            {val.documentno}
+                          <Option value={val.name} key={index}>
+                            {val.name}
                           </Option>
                         </>
                       );
                     })}
               </Select>
           </Form.Item>
-          <Form.Item name="InvoiceNumberThree" label="Invoice Number 3" rules={[{ required: true }]}>
+          <Form.Item name="InvoiceNumberThree" label={labelName} rules={[{ required: true }]}>
               <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
                 {invData3.length > 0 &&
                     invData3.map((val, index) => {
                       return (
                         <>
-                          <Option value={val.documentno} key={index}>
-                            {val.documentno}
+                          <Option value={val.name} key={index}>
+                            {val.name}
                           </Option>
                         </>
                       );
@@ -254,19 +270,55 @@ const VisibilityOutbound = () => {
           </Form.Item>
           
           <Form.Item
-         label="Text Box"
-         name="textBox"
+         label="Destination Code"
+         name="destinationCode"
          rules={[
            {
              required: true,
-             message: 'Please enter Value!',
+             message: 'Please enter Destination Code!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Shipping IO Detail"
+         name="shippingIoDetail"
+         rules={[
+           {
+             required: false,
+             message: 'Please enter Shipping IO Detail!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Transporter Name"
+         name="transporterName"
+         rules={[
+           {
+             required: false,
+             message: 'Please enter TransporterName!',
+           },
+         ]}
+       >
+         <Input/>
+       </Form.Item>
+       <Form.Item
+         label="Eway Bill"
+         name="ewayBill"
+         rules={[
+           {
+             required: false,
+             message: 'Please enter Eway Bill!',
            },
          ]}
        >
          <Input/>
        </Form.Item>
        <Form.Item style={{marginLeft:"33%"}}>
-            <Upload  onChange={onFileChange}>
+            <Upload  >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>

@@ -55,11 +55,7 @@ const VIFORM = () => {
       handleDropDownVal();
       handleCustDropDownVal();
     }
-  });
-
-  // info = (data) => {
-  //   message.info(data);
-  // };
+  },[]);
 
   function info(data){
     message.info("Saved Successfully");
