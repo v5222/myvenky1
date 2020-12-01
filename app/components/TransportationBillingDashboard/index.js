@@ -537,7 +537,12 @@ class TransportationDashboard extends React.Component {
                                 )}
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody
+                              style={{
+                                height: "500px",
+                                OverflowY: "scroll",
+                              }}
+                            >
                               {this.state.spin ? (
                                 <tr>
                                   <td style={{ width: "15%" }} />

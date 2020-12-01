@@ -3,8 +3,8 @@ import { Form, Input, Button, Select, Radio, Row, Col, message } from "antd";
 import { apiurlsi } from "containers/VisibilityInbound/service";
 import axios from "axios";
 import { now, values } from "lodash";
-import CsvDownload from 'react-json-to-csv'
-import VisibilityInboundDownload from  'components/VisibilityInboundDownload/index.js'
+import CsvDownload from "react-json-to-csv";
+import VisibilityInboundDownload from "components/VisibilityInboundDownload/index.js";
 import VisibilityInboundCustomer from "components/VisibilityInboundCustomer/index.js";
 import VisibilityInboundRegional from "components/VisibilityInboundRegional/index.js";
 import VisibilityOutbound from "components/VisibilityOutbound/index.js";
@@ -55,17 +55,17 @@ const VIFORM = () => {
       handleDropDownVal();
       handleCustDropDownVal();
     }
-  });
+  }, []);
 
   // info = (data) => {
   //   message.info(data);
   // };
 
-  function info(data){
+  function info(data) {
     message.info("Saved Successfully");
-  }  
+  }
 
-  function handleCustDropDownVal(){
+  function handleCustDropDownVal() {
     let reqObj = {
       body: {
         type: "GETINVOICECUST",
@@ -110,7 +110,7 @@ const VIFORM = () => {
       });
   }
 
-  function handleCustapidata(apidata){
+  function handleCustapidata(apidata) {
     setCustInvData(apidata);
   }
 
@@ -134,7 +134,7 @@ const VIFORM = () => {
   }
 
   const onFinish = (values) => {
-      console.log("Save",values)
+    console.log("Save", values);
 
     setRegInvNo(values.regionalInvoiceNumber);
     if (lpnArray.length == qtyVal) {
@@ -164,16 +164,16 @@ const VIFORM = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-             console.log("Regional--Res",data)
+            console.log("Regional--Res", data);
             if (data.body.statuscode && data.body.statuscode == 200) {
-              handleDownRegional()
-              info()
+              handleDownRegional();
+              info();
               setDispProcessBtn(true);
               setDispRegionalDownBtn(true);
             }
           })
           .catch((err) => console.log(err));
-      } 
+      }
     } else {
       // console.log("Array-------Update----------Area",lpnVal)
       let r = lpnArray.concat(lpnVal);
@@ -224,31 +224,38 @@ const VIFORM = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-    <Form.Item name="radioGroup" label="Type">
-
-      <Radio.Group onChange={onChange} value={value} defaultValue={1} id="radioBtnVal" >
-          <Radio value={1} >Regional</Radio>
-          <Radio value={2} >Customer</Radio>
-          <Radio value={4} >OutBound</Radio>
-          <Radio value={3} >Download</Radio>
-      </Radio.Group>
-      {/* Customer */}
+      <Form.Item name="radioGroup" label="Type">
+        <Radio.Group
+          onChange={onChange}
+          value={value}
+          defaultValue={1}
+          id="radioBtnVal"
+        >
+          <Radio value={1}>Regional</Radio>
+          <Radio value={2}>Customer</Radio>
+          <Radio value={4}>OutBound</Radio>
+          <Radio value={3}>Download</Radio>
+        </Radio.Group>
+        {/* Customer */}
       </Form.Item>
       {value == 2 ? (
-          <>
-              <VisibilityInboundCustomer />
-          </>
-    ) : "" }
-     {value == 4 ? (
-          <>
-              <VisibilityOutbound />
-          </>
-    ) : "" }
-    {(value == 1 || value == "" || value == undefined ) ? 
-
-     <>
-        <VisibilityInboundRegional />
-     {/* <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
+        <>
+          <VisibilityInboundCustomer />
+        </>
+      ) : (
+        ""
+      )}
+      {value == 4 ? (
+        <>
+          <VisibilityOutbound />
+        </>
+      ) : (
+        ""
+      )}
+      {value == 1 || value == "" || value == undefined ? (
+        <>
+          <VisibilityInboundRegional />
+          {/* <Form.Item name="regionalWareHouse" label="Warehouse" rules={[{ required: true }]}>
            <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                  allowClear>
                  {warehouseData.length > 0 &&
@@ -342,12 +349,11 @@ const VIFORM = () => {
            : ""
          }
        </Form.Item> */}
-   </>   
-      :"" } 
-      {
-        value === 3 ? 
-        <VisibilityInboundDownload/> : ""
-      }
+        </>
+      ) : (
+        ""
+      )}
+      {value === 3 ? <VisibilityInboundDownload /> : ""}
     </Form>
   );
 };
