@@ -24,6 +24,8 @@ const tailLayout = {
 const VisibilityOutbound = () => {
   const [value, setValue] = useState(1);
   const [invData, setInvData] = useState([]);
+  const [invData2, setInvData2] = useState([]);
+  const [invData3, setInvData3] = useState([]);
   const [showDownloadBtn, setShowDownloadBtn] = useState(false);
   const [btnDispCss, setBtnDispCss] = useState("none");
   const [dispSubmitBtn, setDispSubmitBtn] = useState("block");
@@ -44,6 +46,18 @@ const VisibilityOutbound = () => {
         email : "Muneeshkumar.a@tvslsl.com",
       }
     };
+    let reqObj2 = {
+      body : {
+        type : "GETINVOICECUST",
+        email : "Muneeshkumar.a@tvslsl.com",
+      }
+    };
+    let reqObj3 = {
+      body : {
+        type : "GETINVOICECUST",
+        email : "Muneeshkumar.a@tvslsl.com",
+      }
+    };
 
     axios
       .post(
@@ -54,6 +68,34 @@ const VisibilityOutbound = () => {
         if (res.data.body.statuscode == 200) {
           // console.log("InvData",res)
           handleapidata(res.data.body.bodymsg);
+        } else {
+          console.log("Err");
+        }
+      });
+
+      axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        reqObj
+      )
+      .then((res) => {
+        if (res.data.body.statuscode == 200) {
+          // console.log("InvData",res)
+          handleapidata2(res.data.body.bodymsg);
+        } else {
+          console.log("Err");
+        }
+      });
+
+      axios
+      .post(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        reqObj
+      )
+      .then((res) => {
+        if (res.data.body.statuscode == 200) {
+          // console.log("InvData",res)
+          handleapidata3(res.data.body.bodymsg);
         } else {
           console.log("Err");
         }
@@ -70,6 +112,14 @@ const VisibilityOutbound = () => {
 
   function handleapidata(apidata){
     setInvData(apidata);
+  }
+
+  function handleapidata2(apidata){
+    setInvData2(apidata);
+  }
+
+  function handleapidata3(apidata){
+    setInvData3(apidata);
   }
 
   const onChange = e => {
@@ -125,6 +175,17 @@ const VisibilityOutbound = () => {
         .catch(err=> console.log(err));
   }
 
+  function onFileChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  }
+
   const onFinish = (values) => {
     // console.log('Success:', values);
     handleDownloadInvoice(values.InvoiceNumberOne)
@@ -164,8 +225,8 @@ const VisibilityOutbound = () => {
           <Form.Item name="InvoiceNumberTwo" label="Invoice Number 2" rules={[{ required: true }]}>
               <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
-                {invData.length > 0 &&
-                    invData.map((val, index) => {
+                {invData2.length > 0 &&
+                    invData2.map((val, index) => {
                       return (
                         <>
                           <Option value={val.documentno} key={index}>
@@ -179,8 +240,8 @@ const VisibilityOutbound = () => {
           <Form.Item name="InvoiceNumberThree" label="Invoice Number 3" rules={[{ required: true }]}>
               <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
                     allowClear>
-                {invData.length > 0 &&
-                    invData.map((val, index) => {
+                {invData3.length > 0 &&
+                    invData3.map((val, index) => {
                       return (
                         <>
                           <Option value={val.documentno} key={index}>
@@ -205,7 +266,7 @@ const VisibilityOutbound = () => {
          <Input/>
        </Form.Item>
        <Form.Item style={{marginLeft:"33%"}}>
-            <Upload >
+            <Upload  onChange={onFileChange}>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
