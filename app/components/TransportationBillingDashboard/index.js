@@ -23,6 +23,8 @@ import { connect } from "react-redux";
 import { format } from "date-fns";
 import { Input } from "antd";
 import { CUSTOMERCODE } from "../TransportationMasterDashboard/body";
+import FileExcelOutlined from "@ant-design/icons/FileExcelOutlined";
+import CsvDownload from "react-json-to-csv";
 import {
   CloseCircleTwoTone,
   CheckCircleTwoTone,
@@ -515,6 +517,24 @@ class TransportationDashboard extends React.Component {
               <div style={{ margin: "0px 25px" }}>
                 <Tabs defaultActiveKey="1" onChange={this.tabChange}>
                   <TabPane tab="Pending For Billing" key="1">
+                    <div
+                      style={{
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <CsvDownload
+                        data={this.state.customerList1}
+                        filename="data.csv"
+                        className="tvsit-pod_table-download"
+                        style={{
+                          backgroundColor: "#1890FF",
+                        }}
+                      >
+                        <FileExcelOutlined /> Export CSV
+                      </CsvDownload>
+                    </div>
                     <div className="tvsit-dwmdashboard_table">
                       <div className="tabel_scroll">
                         {

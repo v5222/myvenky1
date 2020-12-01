@@ -159,7 +159,7 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
                   : "tvsit-main-menu"
               }
             >
-              Transportation
+              S2B Transportation
             </Menu.Item>
           )}
           <Menu.Item
@@ -196,7 +196,7 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
                 : "tvsit-main-menu"
             }
           >
-            Transportation Billing
+            Pending For Billing Report
           </Menu.Item>
           <Menu.Item
             key="9"
