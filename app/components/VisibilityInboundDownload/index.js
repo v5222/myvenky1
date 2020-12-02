@@ -170,9 +170,9 @@ const VisibInboundDownloadForm = () => {
   <div style={{marginLeft:"35%" ,display: btnDispCss}}>
     <CsvDownload data={downArr}/>
   </div>
-
 </>
   );
 };
 
-export default VisibInboundDownloadForm;                                                                                                                                                                                                                                          
+export default VisibInboundDownloadForm;  
+                                                                                                                                                                                                                                        

@@ -155,6 +155,7 @@ function VehicleTrackingSystem({ logout, user }) {
   }
 
   function handleSelectChange(value) {
+    console.log("Selected",value)
     let v = value;
     let handleSelectedDatas = {
       body: {
@@ -166,16 +167,18 @@ function VehicleTrackingSystem({ logout, user }) {
 
     axios
       .post(
-        "https://ur06a1nev1.execute-api.ap-south-1.amazonaws.com/vehicle/vts",
-        handleSelectedDatas
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/vehicletracking",
+        handleSelectedDatas,options 
       )
       .then((res) => {
+        console.log("Res!!!!!!!!!",res);
         if (res.data.body.statuscode == 200) {
           handleCustDetailsdata(res.data.body.bodymsg);
         } else {
           console.log("Err");
         }
-      });
+      })
+      .catch((err) => {console.log("err",err)})
   }
 
   return (
