@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Select } from 'antd';
+import { Form, Input, Button, Checkbox, Select, message, Spin } from 'antd';
 import axios from "axios";
 import CsvDownload from 'react-json-to-csv'
 
@@ -28,12 +28,17 @@ const VisibInboundDownloadForm = () => {
   const [dispSubmitBtn, setDispSubmitBtn] = useState("block");
   const [downArr, setDownArr] = useState([]);
   const [errMsg, setErrMsg] = useState(false)
+  const [spinner, setSpinner] = useState("none")
 
   useEffect(() => {
     if(invData.length == 0 ){
       handleDropDownVal()
     }
   },[])
+
+  function uploadStatus(){
+    message.error("Invalid Invoice Number..!")
+  }
 
   function handleDropDownVal(){
     // setIniForm("Show")
@@ -86,7 +91,7 @@ const VisibInboundDownloadForm = () => {
 
   function handleDownloadInvoice(invNo){
     // console.log("InvNo",invNo)
-
+    setSpinner("block")
     var downloadReqData = {
         "body": {
           "type": "DOWNLOAD",
@@ -107,16 +112,19 @@ const VisibInboundDownloadForm = () => {
           if(res.data.body.statuscode == 201)
           {
             console.log("No Data Found")
-            setErrMsg(true)
+            uploadStatus()
+            setSpinner("none")
+            // setErrMsg(true)
             setBtnDispCss("none")
           } 
           else{
+            setSpinner("none")
             let tempDownData = res.data.body.bodymsg
             // console.log("Found",res)
             setDownArr(tempDownData)
             setDispSubmitBtn("none")
             setBtnDispCss("block")
-            setErrMsg(false)
+            // setErrMsg(false)
           }
          
         })
@@ -158,18 +166,20 @@ const VisibInboundDownloadForm = () => {
                     })}
               </Select>
           </Form.Item>
+          <Spin style={{display:spinner}}></Spin>
+          <div style={{marginLeft:"35%" ,display: btnDispCss}}>
+            <CsvDownload data={downArr}/>
+          </div>
           <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
                 Submit
               </Button> 
           </Form.Item>         
   </Form>
-  {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
+  {/* {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" } */}
   
 
-  <div style={{marginLeft:"35%" ,display: btnDispCss}}>
-    <CsvDownload data={downArr}/>
-  </div>
+ 
 </>
   );
 };
