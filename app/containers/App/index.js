@@ -24,6 +24,7 @@ import BarcodePrint from "containers/ClAttendance/BarcodePrint/Loadable";
 import GlobalStyle from "../../global-styles";
 import VehicleTrackingSystem from "containers/VehicleTrackingSystem/Loadable";
 import VehicleTrackingSystemDetails from "../VehicleTrackingSystemDetails/Loadable";
+import BidManagment from "../BidManagement/Loadable";
 import VisibilityInbound from "../VisibilityInbound/Loadable";
 import TestPage from "../Testing/TestPage";
 import CWB from "containers/CWB/Loadable";
@@ -125,7 +126,7 @@ function App({
           }
         />
         {/* <Redirect from="/" to="/poDashboard" /> */}
-        <Route exact path="/test" component={TestPage} />
+        {/* <Route exact path="/bidmanagment" component={BidManagment} /> */}
         <Route
           exact
           path="/courierManagement"
@@ -180,6 +181,17 @@ function App({
           render={(props) =>
             authenticated ? (
               <Transportation {...props} logout={logout} user={user} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/bidmanagment"
+          render={(props) =>
+            authenticated ? (
+              <BidManagment {...props} logout={logout} user={user} />
             ) : (
               <Redirect to="/" />
             )

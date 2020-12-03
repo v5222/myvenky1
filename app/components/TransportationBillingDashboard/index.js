@@ -198,7 +198,7 @@ class TransportationDashboard extends React.Component {
             additionalChargeOutputList: [],
             customerList2: [],
             customerList1: [...this.state.customerList1],
-            loading: true,
+            loading: false,
             isSave: false,
             spin: false,
             noData: true,
@@ -213,6 +213,9 @@ class TransportationDashboard extends React.Component {
   };
 
   handleSearch = () => {
+    this.setState({
+      customerList1: [],
+    });
     let tempfrom = this.state.selectDatefrom;
     let tempto = this.state.selectDatefrom;
     this.setState({
@@ -517,24 +520,27 @@ class TransportationDashboard extends React.Component {
               <div style={{ margin: "0px 25px" }}>
                 <Tabs defaultActiveKey="1" onChange={this.tabChange}>
                   <TabPane tab="Pending For Billing" key="1">
-                    <div
-                      style={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <CsvDownload
-                        data={this.state.customerList1}
-                        filename="data.csv"
-                        className="tvsit-pod_table-download"
-                        style={{
-                          backgroundColor: "#1890FF",
-                        }}
-                      >
-                        <FileExcelOutlined /> Export CSV
-                      </CsvDownload>
-                    </div>
+                    {!this.state.loading &&
+                      this.state.customerList1.length > 1 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            width: "100%",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <CsvDownload
+                            data={this.state.customerList1}
+                            filename="data.csv"
+                            className="tvsit-pod_table-download"
+                            style={{
+                              backgroundColor: "#1890FF",
+                            }}
+                          >
+                            <FileExcelOutlined /> Export CSV
+                          </CsvDownload>
+                        </div>
+                      )}
                     <div className="tvsit-dwmdashboard_table">
                       <div className="tabel_scroll">
                         {
