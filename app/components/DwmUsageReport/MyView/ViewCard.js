@@ -48,6 +48,7 @@ function ViewCard({ title, total, actual, comments, graphData }) {
         )}
         <div className={styles.graph}>
           {/* <img src={graph} /> */}
+          <div className={styles.reason}>Data in the Graph is for MTD</div>
           <MiniBar height={150} data={visitData} />
         </div>
       </div>
