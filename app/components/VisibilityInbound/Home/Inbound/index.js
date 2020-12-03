@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select, Radio, Row, Col, message } from "antd";
+import { Form, Input, Button, Select, Radio, Row, Col, message, Spin, Switch } from "antd";
 import { apiurlsi } from "containers/VisibilityInbound/service";
 import axios from "axios";
 import { now, values } from "lodash";
@@ -8,6 +8,7 @@ import VisibilityInboundDownload from "components/VisibilityInboundDownload/inde
 import VisibilityInboundCustomer from "components/VisibilityInboundCustomer/index.js";
 import VisibilityInboundRegional from "components/VisibilityInboundRegional/index.js";
 import VisibilityOutbound from "components/VisibilityOutbound/index.js";
+import history from "utils/history";
 
 const layout = {
   labelCol: {
@@ -38,7 +39,7 @@ const VIFORM = () => {
   const [dispProcessBtn, setDispProcessBtn] = useState(false);
   const [scanValue, setScanVal] = useState();
   const [iniForm, setIniForm] = useState();
-  const [qtyVal, setQtyVal] = useState("");
+  const [qtyVal, setQtyVal] = useState(0);
   const [dispSaveBtn, setDispSaveBtn] = useState(false);
   const [dispDownloadBtn, setDispDownloadBtn] = useState(false);
   const [scannedVal, setScannedVal] = useState(0);
@@ -49,6 +50,10 @@ const VIFORM = () => {
   const [custInvNo, setCustInvNo] = useState("");
   const [regInvNo, setRegInvNo] = useState("");
   const [lpnInput, setLpnInput] = useState(true);
+  const [showScannVal, setShowScannVal] = useState(false);
+  const [disableInp, setDisableInp] = useState(false)
+  const [loading, setLoading] = useState(false) 
+  const [switchState, setSwitchState] = useState(false)
 
   useEffect(() => {
     if (invData.length == 0 || warehouseData.length == 0) {
@@ -58,7 +63,11 @@ const VIFORM = () => {
   }, []);
 
   function info(data) {
-    message.info("Saved Successfully");
+    message.success("Saved Successfully");
+  }
+
+  function errInfo(data) {
+    message.error("Failed To Save..!");
   }
 
   function handleCustDropDownVal() {
@@ -130,10 +139,11 @@ const VIFORM = () => {
   }
 
   const onFinish = (values) => {
-    console.log("Save", values);
-
+    // console.log("Save", values);
+    setDisableInp(true)
     setRegInvNo(values.regionalInvoiceNumber);
     if (lpnArray.length == qtyVal) {
+      setLoading(true)
       setLpnInput(false);
       setDispRegionalDownBtn(false);
       if (values.radioGroup == undefined || values.radioGroup == 1) {
@@ -160,14 +170,22 @@ const VIFORM = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-            console.log("Regional--Res", data);
+            // console.log("Regional--Res", data);
             if (data.body.statuscode && data.body.statuscode == 200) {
-              info();
+              
               setDispProcessBtn(true);
+              info();
+              setLoading(false)
               setDispRegionalDownBtn(true);
             }
+            else{
+              errInfo()
+            }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+              console.log(err)
+              errInfo()
+            });
       }
     } else {
       // console.log("Array-------Update----------Area",lpnVal)
@@ -208,8 +226,37 @@ const VIFORM = () => {
     console.log("Failed:", errorInfo);
   };
 
+  function handleQtyVal(event){
+    // console.log("event",event)
+    setQtyVal(event)
+    setShowScannVal(true)
+  }
+
+  useEffect(() => {
+    // console.log("qtyVal",qtyVal)
+    if(qtyVal === ""){
+      setShowScannVal(false)
+    }
+    else{
+      console.log("else")
+    }
+  },[qtyVal])
+
+  function handleSwitch(checkedVal){
+    // console.log("Switch",checkedVal)
+    setSwitchState(checkedVal)
+  }
+
+  useEffect(() => {
+    // console.log("ssss",switchState)
+  },[switchState])
+
   return (
-    <Form
+    <>
+<Switch checkedChildren="Outbound" unCheckedChildren="Inbound" style={{marginLeft:"85%"}} onClick={(checked)=> handleSwitch(checked)}/>
+    {
+      switchState === false ? 
+      <Form
       autoComplete="off"
       {...layout}
       name="basic"
@@ -226,10 +273,9 @@ const VIFORM = () => {
           defaultValue={1}
           id="radioBtnVal"
         >
-          <Radio value={1}>Regional</Radio>
-          <Radio value={2}>Customer</Radio>
-          <Radio value={4}>OutBound</Radio>
-          <Radio value={3}>Download</Radio>
+          <Radio value={1}><b>Regional</b></Radio>
+          <Radio value={2}><b>Customer</b></Radio>
+          <Radio value={3}><b>Download</b></Radio>
         </Radio.Group>
         {/* Customer */}
       </Form.Item>
@@ -240,13 +286,7 @@ const VIFORM = () => {
       ) : (
         ""
       )}
-      {value == 4 ? (
-        <>
-          <VisibilityOutbound />
-        </>
-      ) : (
-        ""
-      )}
+      
       {value == 1 || value == "" || value == undefined ? (
         <>
           {/* <VisibilityInboundRegional /> */}
@@ -257,9 +297,10 @@ const VIFORM = () => {
           >
             <Select
               defaultValue="Select"
-              style={{ width: 200 }}
+              style={{ width: 300 }}
               onChange={onHandleChange}
-              allowClear
+              id="whId"
+              disabled={disableInp}
             >
               {warehouseData.length > 0 &&
                 warehouseData.map((val, index) => {
@@ -278,7 +319,7 @@ const VIFORM = () => {
             label="Invoice Number"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input disabled={disableInp} style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="Shipping IO Detail"
@@ -290,7 +331,7 @@ const VIFORM = () => {
               },
             ]}
           >
-            <Input />
+            <Input disabled={disableInp} style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="Transporter Name"
@@ -302,7 +343,7 @@ const VIFORM = () => {
               },
             ]}
           >
-            <Input />
+            <Input  disabled={disableInp} style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="EWay Bill"
@@ -314,7 +355,7 @@ const VIFORM = () => {
               },
             ]}
           >
-            <Input />
+            <Input disabled={disableInp} style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="Qty"
@@ -326,10 +367,12 @@ const VIFORM = () => {
               },
             ]}
           >
-            <Input onChange={(event) => setQtyVal(event.target.value)} />
+            <Input onChange={event => handleQtyVal(event.target.value)} style={{ width: 300 }} disabled={disableInp}/>
           </Form.Item>
-          <Form.Item>
-            <Row style={{ marginLeft: "30%" }}>
+          <>
+          {showScannVal === true ? 
+            <Form.Item>
+            <Row style={{ marginLeft: "33%" }}>
               <Col span="6" />
               <Col span="6">
                 <b>TOTAL : </b> {qtyVal}
@@ -338,7 +381,7 @@ const VIFORM = () => {
                 <b>SCANNED : </b> {lpnArray.length}{" "}
               </Col>
             </Row>
-            <Row style={{ marginLeft: "30%" }}>
+            <Row style={{ marginLeft: "33%" }}>
               <Col span="6" />
               {lpnInput === true ? (
                 <>
@@ -349,11 +392,11 @@ const VIFORM = () => {
                   <Col>
                     <Input
                       size="small"
-                      style={{ width: 200 }}
                       value={lpnVal}
                       onChange={(event) => {
-                        setLpnVal(event.target.value);
+                        setLpnVal(event.target.value)
                       }}
+                      style={{ width: 200 }}
                     />
                   </Col>{" "}
                 </>
@@ -362,6 +405,9 @@ const VIFORM = () => {
               )}
             </Row>
           </Form.Item>
+        :""}
+          </>
+          {loading === true ? <Spin style={{marginLeft:"35%"}}></Spin> : ""}
           <Form.Item {...tailLayout}>
             {dispProcessBtn === false ? (
               <Button type="primary" htmlType="submit" size="large">
@@ -389,6 +435,12 @@ const VIFORM = () => {
       )}
       {value === 3 ? <VisibilityInboundDownload /> : ""}
     </Form>
+    : 
+          <VisibilityOutbound />
+    }
+    </>
+
+   
   );
 };
 

@@ -1,0 +1,67 @@
+{
+  "icons": [
+    {
+      "src": "/icon_180x180.ec8b0d79f4e140e51c1ac72a18d3233b.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_167x167.0573602eaf5528b6e7b59edd9d6e2056.png",
+      "sizes": "167x167",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_152x152.63987603a9f4949d12388a6f9bb4236c.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_120x120.1ef93a7cfa3c86e7e721a78f81ca29a9.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_512x512.322c8e63d56e9613ffb60810f589de35.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_384x384.642543479969dfdcff0e2c5c6fc445cb.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_192x192.de66967d766100916f578fe2e7aad75b.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_144x144.4fab57d9c54a8667676a8c2d74f8822a.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_128x128.7a197098adb9048b4647f749990f2131.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_96x96.4c362922f2b1028916d9527bfa5b5552.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_72x72.2c166fe24edb79804ca7677e9956b55c.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ],
+  "name": "TVS Logistics",
+  "short_name": "TVSlsl",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Tvs Logistics supply chain 360 application",
+  "background_color": "#00A5E6",
+  "theme_color": "#004178"
+}

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Select, message } from 'antd';
+import { Form, Input, Button, Checkbox, Select, message, Tabs, Upload, Spin, Switch } from 'antd';
 import axios from "axios";
 import CsvDownload from 'react-json-to-csv'
 import { values } from "lodash";
+import { UploadOutlined } from "@ant-design/icons";
+import $ from "jquery";
 
 const layout = {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   labelCol: {
@@ -31,12 +33,21 @@ const VisibInboundCustomer = () => {
   const [dispSaveBtn, setDispSaveBtn] = useState(false);
   const [invData, setInvData] = useState([]);
   const [warehouseData, setWareHouseData] = useState([]);
+  const [showUploadBtn, setShowUploadBtn] = useState(true);
+  const [spinner, setSpinner] = useState("none");
+  const [fileName, setFileName] = useState("");
+  const [showSpinner, setShowSpinner] = useState("none")
+  const { TabPane } = Tabs;
 
   useEffect(() => {
     if(invData.length == 0 || warehouseData.length == 0 ){
       handleDropDownVal()
     }
   },[])
+
+  function callback(key) {
+    console.log(key);
+  }
 
   function handleDropDownVal(){
     // setIniForm("Show")
@@ -83,16 +94,20 @@ const VisibInboundCustomer = () => {
   }
 
   function info(data){
-    message.info("Saved Successfully");
+    message.success("Saved Successfully");
   }  
 
-  // useEffect(() => {
-  //   console.log("DownladBtn")
-  // }, [showDownloadBtn])
+  function UploadStatus(){
+    message.success("Uploaded Successfully..!");
+  } 
 
-  // useEffect(() => {
-  //   console.log("DownArr",downArr)
-  // },[downArr])
+  function UploadErrStatus(){
+    message.error("Upload Failed..!");
+  } 
+
+  function showFileTypeNoti(){
+    message.error("You Can Upload Only Text Files!")
+  }
 
   function handleapidata(apidata){
     setInvData(apidata);
@@ -114,7 +129,89 @@ const VisibInboundCustomer = () => {
       setValue(e.target.value);
   };
 
+  const handleUpload = async (values) => {
+    if(fileName.type === "text/plain"){
+      // console.log("upload", fileName)
+      setShowUploadBtn(false)
+      setSpinner("block")
+      const formData = new FormData();
+      formData.append("file[]", fileName);
+  
+      fetch(
+        "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            body: {
+              type: "INFTP",
+              email: "muneeshkumar.a",
+              filename: fileName.name,
+            },
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log("dataUpload", data)
+          $.ajax({
+            type: "PUT",
+            url: data.body.bodymsg.url,
+            contentType: "application/vnd.ms-excel",
+            processData: false,
+            data: fileName,
+            success: function(response) {
+              setSpinner("none")
+              // swal("Uploaded Successfully..!");
+              UploadStatus()
+              setFileName("")
+              // console.log("success--Two", response);
+              var submitDatas = {
+                "body": {
+                  "type": "DATABASE",
+                  "EMAIL": "muneeshkumar.a@tvslsl.com"
+                }
+              }
+  
+              axios
+                .post(
+                  "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
+                  submitDatas
+                )
+                .then((resp) => {
+                  console.log("Succ-----Res",resp)
+                  if (resp.status == 200) {
+                    if( resp.data.body.bodymsg.length == 0 ) {
+                      // console.log("length",resp.data.body.bodymsg.length)
+                    }
+                    else{
+                      // console.log("length",resp.data.body.bodymsg.length)
+                    }
+                     
+                    // handleapidata(res.data.body.bodymsg);
+                  } else {
+                    console.log("Err");
+                  }
+                })
+                .catch((err) => console.log("ERR",err));
+            },
+            error: function() {
+              UploadErrStatus()
+              console.log(arguments);
+            },
+          });
+        })
+        .catch((error) => console.log(error));
+      // console.log(res1);
+      return;
+    }
+    else{
+      showFileTypeNoti()
+    }
+   
+  };
+
   function handleSaveInvoice(savDatas){
+    setShowSpinner("block")
     // console.log("handleSaveInvoice",savDatas)
     fetch(
       "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
@@ -138,6 +235,8 @@ const VisibInboundCustomer = () => {
       .then((data) => {
         // console.log("Customer--Res",data)
         if (data.body.statuscode && data.body.statuscode == 200) {
+          setShowSpinner("none")
+          setDispSaveBtn("true")
           handleDownloadInvoice(savDatas.InvoiceNumber)
           info()
           // custInfo()
@@ -173,7 +272,7 @@ const VisibInboundCustomer = () => {
           // console.log("DDDDDDDDDDD",res.data.body.bodymsg)
           if(res.data.body.statuscode == 201)
           {
-            console.log("No Data Found")
+            // console.log("No Data Found")
             // setErrMsg(true)
             setBtnDispCss("none")
           } 
@@ -200,17 +299,58 @@ const VisibInboundCustomer = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const files = {
+    onRemove: (file) => {
+      setFileName("");
+    },
+    beforeUpload: (file) => {
+      setFileName(file);
+      return false;
+    },
+    fileName,
+  };
+
+  function beforeUpload(file) {
+    const isJpgOrPng = fileName.type === '.txt'
+    if (!isJpgOrPng) {
+      message.error('You can only upload Text file!');
+    }
+    
+    return isJpgOrPng;
+  }
+  
+
   return (
 <>
-    <Form
-    {...layout}
-    name="basic"
-    initialValues={{
-      remember: true,
-    }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-  >
+
+    <Tabs defaultActiveKey="2" onChange={callback} >
+    <TabPane tab="File Upload" key="2" >
+          <Form >
+            <Form.Item style={{marginLeft:"35%"}} label="Upload File ">
+              <Upload {...files} multiple={false} listType="picture-card" className="avatar-uploader" accept=".txt"
+>+
+              </Upload> 
+                <Spin size="default" style={{display:spinner, marginLeft:"-80%"}} ></Spin>
+            </Form.Item>
+            { showUploadBtn === true ?
+                <Form.Item>
+                  <Button type="primary" onClick={handleUpload} style={{marginLeft:"45%"}}>Submit</Button>
+                </Form.Item>
+            : "" }
+            
+          </Form>
+      </TabPane>
+      <TabPane tab="Invoice" key="1">
+      <Form
+          {...layout}
+          name="basic"
+          initialValues={{
+            remember: false,
+          }}
+          autoComplete= {false}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
           <Form.Item
             name="InvoiceNumber"
             label="Invoice Number"
@@ -218,7 +358,7 @@ const VisibInboundCustomer = () => {
           >
             <Select
               defaultValue="Select"
-              style={{ width: 200 }}
+              style={{ width: 300 }}
               onChange={onHandleChange}
               allowClear
             >
@@ -242,7 +382,7 @@ const VisibInboundCustomer = () => {
           >
             <Select
               defaultValue="Select"
-              style={{ width: 200 }}
+              style={{ width: 300 }}
               onChange={onHandleChange}
               allowClear
             >
@@ -269,7 +409,7 @@ const VisibInboundCustomer = () => {
               },
             ]}
           >
-            <Input />
+            <Input  style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="Transporter Name"
@@ -281,7 +421,7 @@ const VisibInboundCustomer = () => {
               },
             ]}
           >
-            <Input />
+            <Input  style={{ width: 300 }}/>
           </Form.Item>
           <Form.Item
             label="EWay Bill"
@@ -293,27 +433,25 @@ const VisibInboundCustomer = () => {
               },
             ]}
           >
-            <Input />
+            <Input style={{ width: 300 }}/>
           </Form.Item>
+          <Spin style={{ display:showSpinner}}></Spin>
           <Form.Item {...tailLayout}>
             {dispSaveBtn === false ? 
               <Button type="primary" htmlType="submit" size="large">
                 Save
               </Button> : ""}
           </Form.Item>
-
-          {/* <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
-                Submit
-              </Button> 
-          </Form.Item>          */}
   </Form>
   {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
-  
-
   <div style={{marginLeft:"35%" ,display: btnDispCss}}>
     <CsvDownload data={downArr}/>
   </div>
+      </TabPane>
+      
+    </Tabs>
+    
+  
 
 </>
   );

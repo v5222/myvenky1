@@ -201,14 +201,14 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
           <Menu.Item
             key="9"
             icon={<BarChartOutlined />}
-            onClick={() => history.push("/visibilityinbound")}
+            onClick={() => history.push("/visibilityhitachi")}
             className={
-              selected === "/visibilityinbound"
+              selected === "/visibilityhitachi"
                 ? "tvsit-main-menu-selected"
                 : "tvsit-main-menu"
             }
           >
-            Visibility Inbound
+            Visibility Hitachi
           </Menu.Item>
         </Menu>
       </Drawer>

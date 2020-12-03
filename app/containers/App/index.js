@@ -260,7 +260,7 @@ function App({
         />
         <Route
           exact
-          path="/visibilityinbound"
+          path="/visibilityhitachi"
           render={(props) =>
             authenticated ? (
               <VisibilityInbound {...props} logout={logout} user={user} />

@@ -9,8 +9,8 @@ const VisibilityInbound =({logout,user})=>{
         <ErrorBoundary logout={logout} user={user}>
         <MainLayout logout={logout} user={user}>
         <main className={styles.container}>
-        <h3 className={styles.sititle}>
-          InBound</h3>
+        <h1 className={styles.sititle} style={{fontSize:"20px"}}>
+          <strong>VISIBILITY - HITACHI</strong></h1>
           <hr className={styles.sihr}></hr>
         <div className={styles.sicontent}>
         <VIFORM></VIFORM>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Select, Upload, message } from "antd";
+import { Form, Input, Button, Checkbox, Select, Upload, message, Progress, Spin  } from "antd";
 import axios from "axios";
 import CsvDownload from "react-json-to-csv";
 import { UploadOutlined } from "@ant-design/icons";
 import $ from "jquery";
 import { da } from "date-fns/locale";
+import swal from 'sweetalert';
 
 const layout = {
   labelCol: {
@@ -34,9 +35,13 @@ const VisibilityOutbound = () => {
   const [errMsg, setErrMsg] = useState(false);
   const [fileName, setFileName] = useState("");
   const [delType, setDelType] = useState();
-  const [labelName, setLabelName] = useState("");
+  const [labelName, setLabelName] = useState("Code");
   const [dispCss3rdDropDown, setDispCss3rdDropDown] = useState("none")
   const [downArray, setDownArray] = useState([]);
+  const [showUploadBtn, setShowUploadBtn] = useState(true);
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [spinner, setSpinner] = useState("none");
+  const [downloadStatus, setDownloadStatus] = useState("");
 
   useEffect(() => {
     if (invData.length == 0) {
@@ -154,7 +159,19 @@ const VisibilityOutbound = () => {
     setValue(e.target.value);
   };  
 
+  function DownStat(){
+    message.warning("No Data To Download..!")
+  }
+
+  function uploadSuccNotif(){
+    message.success("File Uploaded Succesfully..!")
+  }
+
   const handleUpload = async (values) => {
+    console.log("upload", fileName)
+    setShowUploadBtn(false)
+    setSpinner("block")
+    setUploadStatus("Uploading...")
     const formData = new FormData();
     formData.append("file[]", fileName);
 
@@ -164,7 +181,7 @@ const VisibilityOutbound = () => {
         method: "POST",
         body: JSON.stringify({
           body: {
-            type: "FTP",
+            type: "INFTP",
             email: "muneeshkumar.a",
             filename: fileName.name,
           },
@@ -181,7 +198,9 @@ const VisibilityOutbound = () => {
           processData: false,
           data: fileName,
           success: function(response) {
-            // console.log("success--Two", response);
+            setSpinner("none")
+            uploadSuccNotif()
+            console.log("success--Two", response);
              var submitDatas = {
               "body": {
                 "type": "OUTDATABASE",
@@ -208,10 +227,21 @@ const VisibilityOutbound = () => {
               .then((resp) => {
                 // console.log("SAV--Res",resp)
                 if (resp.status == 200) {
-                  console.log("SumbRes",resp)
-                  setDownArray(resp.data.body.bodymsg)
-                  setDispSubmitBtn("none")
-                  setBtnDispCss("block") 
+                  if( resp.data.body.bodymsg.length == 0 ) {
+                    setDispSubmitBtn("none")
+                    console.log("length",resp.data.body.bodymsg.length)
+                    // setDownloadStatus("No Data To Download!")
+                    // swal("No Data To Download!");
+                    DownStat()
+                  }
+                  else{
+                    setDispSubmitBtn("none")
+                    console.log("length",resp.data.body.bodymsg.length)
+                    setDownArray(resp.data.body.bodymsg)
+                    setDispSubmitBtn("none")
+                    setBtnDispCss("block")
+                  }
+                   
                   // handleapidata(res.data.body.bodymsg);
                 } else {
                   console.log("Err");
@@ -272,7 +302,7 @@ const VisibilityOutbound = () => {
   >
      
           <Form.Item name="serviceType" label="Service Type" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleChange}
+              <Select defaultValue="Select" style={{ width: 300 }}   onChange={onHandleChange}
                     allowClear>
                 {invData.length > 0 &&
                     invData.map((val, index) => {
@@ -287,7 +317,7 @@ const VisibilityOutbound = () => {
               </Select>
           </Form.Item>
           <Form.Item name="deliveryType" label="Delivery Type" rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200 }}   onChange={onHandleDeliType}
+              <Select defaultValue="Select" style={{ width: 300 }}   onChange={onHandleDeliType}
                     allowClear>
                 {invData2.length > 0 &&
                     invData2.map((val, index) => {
@@ -302,7 +332,7 @@ const VisibilityOutbound = () => {
               </Select>
           </Form.Item>
           <Form.Item name="deliveryCode" label={labelName} rules={[{ required: true }]}>
-              <Select defaultValue="Select" style={{ width: 200, display:dispCss3rdDropDown }}   onChange={onHandleChange}
+              <Select defaultValue="Select" style={{ width: 300, }}   onChange={onHandleChange}
                     allowClear>
                 {invData3.length > 0 &&
                     invData3.map((val, index) => {
@@ -327,7 +357,7 @@ const VisibilityOutbound = () => {
            },
          ]}
        >
-         <Input/>
+         <Input style={{ width: 300 }}/>
        </Form.Item>
        <Form.Item
          label="Shipping IO Detail"
@@ -338,7 +368,7 @@ const VisibilityOutbound = () => {
            },
          ]}
        >
-         <Input/>
+         <Input style={{ width: 300 }}/>
        </Form.Item>
        <Form.Item
          label="Transporter Name"
@@ -349,7 +379,7 @@ const VisibilityOutbound = () => {
            },
          ]}
        >
-         <Input/>
+         <Input style={{ width: 300 }}/>
        </Form.Item>
        <Form.Item
          label="Eway Bill"
@@ -360,30 +390,31 @@ const VisibilityOutbound = () => {
            },
          ]}
        >
-         <Input/>
+         <Input style={{ width: 300 }}/>
        </Form.Item>
-       <Form.Item style={{marginLeft:"33%"}}>
-          <Upload {...files}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-            {/* <Upload  >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload> */}
-          </Form.Item>
+       <div style={{ marginLeft: "35%", display: btnDispCss}}>
+        <CsvDownload data={downArray} />
+      </div>
+         { showUploadBtn === true ? 
+       <Form.Item  label="Upload File ">
+        
+        <Upload {...files} multiple={false} listType="picture-card" className="avatar-uploader">+
+        </Upload> 
+        </Form.Item>
+        : "" 
+        }
+          <Spin size="default" style={{display:spinner}}></Spin>
+            <br/>
           <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" size="large" style={{display:dispSubmitBtn}}>
                 Submit
               </Button> 
           </Form.Item>         
   </Form>
-  {/* {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" } */}
-  
-      <div style={{ marginLeft: "35%", display: btnDispCss }}>
-        <CsvDownload data={downArray} />
-      </div>
-
     </>
   );
 };
 
 export default VisibilityOutbound;
+
+
