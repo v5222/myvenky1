@@ -181,7 +181,7 @@ const VisibilityOutbound = () => {
         method: "POST",
         body: JSON.stringify({
           body: {
-            type: "INFTP",
+            type: "OUTFTP",
             email: "muneeshkumar.a",
             filename: fileName.name,
           },
@@ -198,6 +198,7 @@ const VisibilityOutbound = () => {
           processData: false,
           data: fileName,
           success: function(response) {
+            console.log("FileUpl",response)
             setSpinner("none")
             uploadSuccNotif()
             console.log("success--Two", response);
@@ -225,14 +226,14 @@ const VisibilityOutbound = () => {
                 submitDatas
               )
               .then((resp) => {
-                // console.log("SAV--Res",resp)
+                console.log("SAV--Res",resp)
                 if (resp.status == 200) {
                   if( resp.data.body.bodymsg.length == 0 ) {
                     setDispSubmitBtn("none")
                     console.log("length",resp.data.body.bodymsg.length)
                     // setDownloadStatus("No Data To Download!")
                     // swal("No Data To Download!");
-                    DownStat()
+                    // DownStat()
                   }
                   else{
                     setDispSubmitBtn("none")
@@ -264,6 +265,7 @@ const VisibilityOutbound = () => {
 
   
   const onFinish = (values) => {
+    console.log("OnFinish")
     handleUpload(values);
   };
 
@@ -392,11 +394,8 @@ const VisibilityOutbound = () => {
        >
          <Input style={{ width: 300 }}/>
        </Form.Item>
-       <div style={{ marginLeft: "35%", display: btnDispCss}}>
-        <CsvDownload data={downArray} />
-      </div>
          { showUploadBtn === true ? 
-       <Form.Item  label="Upload File ">
+       <Form.Item  label="Upload File " rules={[{ required:true, message: "Please Select File..!"}]}>
         
         <Upload {...files} multiple={false} listType="picture-card" className="avatar-uploader">+
         </Upload> 
@@ -411,6 +410,9 @@ const VisibilityOutbound = () => {
               </Button> 
           </Form.Item>         
   </Form>
+  <div style={{ marginLeft: "35%", display: btnDispCss}}>
+        <CsvDownload data={downArray} />
+  </div>
     </>
   );
 };

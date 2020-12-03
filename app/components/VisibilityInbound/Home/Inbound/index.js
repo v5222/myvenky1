@@ -70,6 +70,10 @@ const VIFORM = () => {
     message.error("Failed To Save..!");
   }
 
+  function downStatus(data){
+    message.error(data);
+  }
+
   function handleCustDropDownVal() {
     let reqObj = {
       body: {
@@ -125,7 +129,13 @@ const VIFORM = () => {
 
   const onChange = (e) => {
     setValue(e.target.value);
+
   };
+
+  const onRadioBtnChange = (e) => {
+    setValue(e.target.value)
+    set
+  }
 
   const onHandleChange = (e) => {
     // console.log("OnChange",e)
@@ -142,11 +152,10 @@ const VIFORM = () => {
     // console.log("Save", values);
     setDisableInp(true)
     setRegInvNo(values.regionalInvoiceNumber);
-    if (lpnArray.length == qtyVal) {
+    if ( qtyVal == lpnArray.length) {
       setLoading(true)
       setLpnInput(false);
       setDispRegionalDownBtn(false);
-      if (values.radioGroup == undefined || values.radioGroup == 1) {
         setRegInvNo(values.regionalInvoiceNumber);
         fetch(
           "https://2bb6d5jv76.execute-api.ap-south-1.amazonaws.com/DEV/visibilityinbound",
@@ -186,7 +195,6 @@ const VIFORM = () => {
               console.log(err)
               errInfo()
             });
-      }
     } else {
       // console.log("Array-------Update----------Area",lpnVal)
       let r = lpnArray.concat(lpnVal);
@@ -195,6 +203,14 @@ const VIFORM = () => {
       // setScannedVal((scannedVal) => scannedVal + 1)
     }
   };
+
+  useEffect(() => {
+    console.log("lpnArr", lpnArray)
+    if(lpnArray.length == qtyVal){
+      setShowScannVal(false)
+      // setDispProcessBtn(true)
+    }
+  },[lpnArray])
 
   function handleDownRegional() {
     setDispRegionalDownBtn(false);
@@ -212,12 +228,18 @@ const VIFORM = () => {
         regionalDownloadReqData
       )
       .then((res) => {
-        // console.log("##Download-----Res",res.data)
-        let tempDownData = res.data ? res.data.body.bodymsg : "no Data";
-        setDispProcessBtn(true);
-        setDispDownloadBtn(true);
+        console.log("##Download-----Res",res.data)
+        if(res.data.body.statuscode === 200){
+          let tempDownData = res.data ? res.data.body.bodymsg : "no Data";
+          setDumArr(tempDownData);
+          setDispProcessBtn(true);
+          setDispDownloadBtn(true);
         // console.log("TempData",tempDownData)
-        setDumArr(tempDownData);
+        }
+        else{
+          downStatus(res.data.body.bodymsg)
+        }
+        
       })
       .catch((err) => console.log(err));
   }
@@ -256,6 +278,7 @@ const VIFORM = () => {
 <Switch checkedChildren="Outbound" unCheckedChildren="Inbound" style={{marginLeft:"85%"}} onClick={(checked)=> handleSwitch(checked)}/>
     {
       switchState === false ? 
+      <>
       <Form
       autoComplete="off"
       {...layout}
@@ -268,7 +291,7 @@ const VIFORM = () => {
     >
       <Form.Item name="radioGroup" label="Type">
         <Radio.Group
-          onChange={onChange}
+          onChange={onRadioBtnChange}
           value={value}
           defaultValue={1}
           id="radioBtnVal"
@@ -381,29 +404,29 @@ const VIFORM = () => {
                 <b>SCANNED : </b> {lpnArray.length}{" "}
               </Col>
             </Row>
-            <Row style={{ marginLeft: "33%" }}>
-              <Col span="6" />
-              {lpnInput === true ? (
-                <>
-                  {" "}
-                  <Col span="6">
-                    <b>LPN : </b>
-                  </Col>
-                  <Col>
-                    <Input
-                      size="small"
-                      value={lpnVal}
-                      onChange={(event) => {
-                        setLpnVal(event.target.value)
-                      }}
-                      style={{ width: 200 }}
-                    />
-                  </Col>{" "}
-                </>
-              ) : (
-                ""
-              )}
-            </Row>
+              <Row style={{ marginLeft: "33%" }}>
+                <Col span="6" />
+                {lpnInput === true ? (
+                  <>
+                    {" "}
+                    <Col span="6">
+                      <b>LPN : </b>
+                    </Col>
+                    <Col>
+                      <Input
+                        size="small"
+                        value={lpnVal}
+                        onChange={(event) => {
+                          setLpnVal(event.target.value)
+                        }}
+                        style={{ width: 200 }}
+                      />
+                    </Col>{" "}
+                  </>
+                ) : (
+                  ""
+                )}
+              </Row>
           </Form.Item>
         :""}
           </>
@@ -427,7 +450,6 @@ const VIFORM = () => {
             ) : (
               ""
             )}
-            {dispDownloadBtn === true ? <CsvDownload data={dummyArr} /> : ""}
           </Form.Item>
         </>
       ) : (
@@ -435,6 +457,12 @@ const VIFORM = () => {
       )}
       {value === 3 ? <VisibilityInboundDownload /> : ""}
     </Form>
+    {dispDownloadBtn === true ?
+    <div style={{marginLeft:"33%"}}>
+    <CsvDownload data={dummyArr}/>     </div>
+    : ""}
+
+    </>
     : 
           <VisibilityOutbound />
     }

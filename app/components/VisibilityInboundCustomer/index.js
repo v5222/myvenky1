@@ -38,6 +38,7 @@ const VisibInboundCustomer = () => {
   const [fileName, setFileName] = useState("");
   const [showSpinner, setShowSpinner] = useState("none")
   const { TabPane } = Tabs;
+  
 
   useEffect(() => {
     if(invData.length == 0 || warehouseData.length == 0 ){
@@ -152,7 +153,7 @@ const VisibInboundCustomer = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          // console.log("dataUpload", data)
+          console.log("dataUpload", data)
           $.ajax({
             type: "PUT",
             url: data.body.bodymsg.url,
@@ -167,7 +168,7 @@ const VisibInboundCustomer = () => {
               // console.log("success--Two", response);
               var submitDatas = {
                 "body": {
-                  "type": "DATABASE",
+                  "type": "INDATABASE",
                   "EMAIL": "muneeshkumar.a@tvslsl.com"
                 }
               }
@@ -443,10 +444,6 @@ const VisibInboundCustomer = () => {
               </Button> : ""}
           </Form.Item>
   </Form>
-  {errMsg == true ?<> <br /><h3 style={{color:"red", fontSize:"13px", marginLeft:"35%"}}>Invalid Invoice Number!</h3></> : "" }
-  <div style={{marginLeft:"35%" ,display: btnDispCss}}>
-    <CsvDownload data={downArr}/>
-  </div>
       </TabPane>
       
     </Tabs>

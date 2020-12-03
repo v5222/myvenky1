@@ -54,7 +54,7 @@ function App({
   loggedIn,
   setLogin,
 }) {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   let timer;
 
   useEffect(() => {
