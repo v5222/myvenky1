@@ -92,7 +92,7 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
             </Menu.Item>
           )}
 
-          {!usersList.includes(user.email) && userRole && (
+          {usersList.includes(user.email) === true || userRole ? (
             <Menu.Item
               key="3"
               icon={<BarChartOutlined />}
@@ -105,8 +105,10 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
             >
               DWM summary
             </Menu.Item>
+          ) : (
+            ""
           )}
-          {!usersList.includes(user.email) && userRole && (
+          {usersList.includes(user.email) === true || userRole ? (
             <Menu.Item
               key="4"
               icon={<BarChartOutlined />}
@@ -119,6 +121,8 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
             >
               DWM Report Insight
             </Menu.Item>
+          ) : (
+            ""
           )}
           {!usersList.includes(user.email) && userRole && (
             <Menu.Item
@@ -162,54 +166,62 @@ const MenuDrawer = ({ selected, user, userRole, otpLogIn }) => {
               S2B Transportation
             </Menu.Item>
           )}
-          <Menu.Item
-            key="6"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/vehicletrackingsystem")}
-            className={
-              selected === "/vehicletrackingsystem"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Vehicle Tracking System
-          </Menu.Item>
-          <Menu.Item
-            key="7"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/cwb")}
-            className={
-              selected === "/cwb"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Consignment Note
-          </Menu.Item>
-          <Menu.Item
-            key="8"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/trbilling")}
-            className={
-              selected === "/trbilling"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Pending For Billing Report
-          </Menu.Item>
-          <Menu.Item
-            key="9"
-            icon={<BarChartOutlined />}
-            onClick={() => history.push("/visibilityhitachi")}
-            className={
-              selected === "/visibilityhitachi"
-                ? "tvsit-main-menu-selected"
-                : "tvsit-main-menu"
-            }
-          >
-            Visibility Hitachi
-          </Menu.Item>
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="6"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/vehicletrackingsystem")}
+              className={
+                selected === "/vehicletrackingsystem"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Vehicle Tracking System
+            </Menu.Item>
+          )}
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="7"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/cwb")}
+              className={
+                selected === "/cwb"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Consignment Note
+            </Menu.Item>
+          )}
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="8"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/trbilling")}
+              className={
+                selected === "/trbilling"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Pending For Billing Report
+            </Menu.Item>
+          )}
+          {!usersList.includes(user.email) && userRole && (
+            <Menu.Item
+              key="9"
+              icon={<BarChartOutlined />}
+              onClick={() => history.push("/visibilityhitachi")}
+              className={
+                selected === "/visibilityhitachi"
+                  ? "tvsit-main-menu-selected"
+                  : "tvsit-main-menu"
+              }
+            >
+              Visibility Hitachi
+            </Menu.Item>
+          )}
         </Menu>
       </Drawer>
     </>

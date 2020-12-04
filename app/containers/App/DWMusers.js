@@ -15,4 +15,5 @@ export const usersList = [
   "dipti.s@tvslsl.com",
   "sampathr@tvslsl.com",
   "shivaji@tvslsl.com",
+  "dev.support8@tvslsl.com",
 ];
