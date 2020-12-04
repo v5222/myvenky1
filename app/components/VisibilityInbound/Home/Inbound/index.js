@@ -451,16 +451,17 @@ const VIFORM = () => {
               ""
             )}
           </Form.Item>
+          {dispDownloadBtn === true ?
+          <div style={{marginLeft:"33%"}}>
+          <CsvDownload data={dummyArr}/>     </div>
+          : ""}
         </>
       ) : (
         ""
       )}
       {value === 3 ? <VisibilityInboundDownload /> : ""}
     </Form>
-    {dispDownloadBtn === true ?
-    <div style={{marginLeft:"33%"}}>
-    <CsvDownload data={dummyArr}/>     </div>
-    : ""}
+    
 
     </>
     : 
